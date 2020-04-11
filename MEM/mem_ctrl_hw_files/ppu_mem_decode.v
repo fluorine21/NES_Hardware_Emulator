@@ -7,11 +7,11 @@
 module ppu_mem_decode
 (
 	input wire [15:0] addr_in,
-	output wire [15:0] addr_out
+	output reg [15:0] addr_out
 );
 
 //This does the mirroring for 4000 to 10000
-wire [15:0] addr_int = {0b00, addr_in[13:0]};
+wire [15:0] addr_int = {2'b00, addr_in[13:0]};
 
 always @ (addr_in) begin
 
@@ -20,7 +20,7 @@ always @ (addr_in) begin
 		
 		//Need to subtract 0x3F20 to find offset, do mod 0x20 and then add to 0x3000
 		
-		addr_out = ((addr_int - 16'h3F20) % 16h'0020) + 16'h3000;
+		addr_out = ((addr_int - 16'h3F20) % 16'h0020) + 16'h3000;
 		
 	end
 	
