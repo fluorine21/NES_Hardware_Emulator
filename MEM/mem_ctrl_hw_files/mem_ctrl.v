@@ -17,17 +17,21 @@ module mem_ctrl
 	output reg [7:0] ppu_ctrl1,
 	output reg [7:0] ppu_ctrl2,
 	input wire [7:0] ppu_status,
+	output reg [15:0] ppu_scroll_addr,
 
 	input wire [15:0] vram_ppu_addr,
 	output reg [7:0] vram_ppu_data,
 	
 	input wire [7:0] spram_ppu_addr,
-	output reg [7:0] spram_ppu_data
+	output reg [7:0] spram_ppu_data,
+	
+	output reg [7:0] spram_cpu_addr,
+	output reg ppu_status_read
 );
 
 //Internal signals for cpu access to vram and spram
 reg [15:0] vram_cpu_addr;
-reg [7:0] spram_cpu_addr;
+
 
 //VRAM declaration
 //Need 0x3000 + 0x20 bytes of vram_memory
@@ -78,11 +82,16 @@ always @ (posedge clk or negedge rst) begin
 		ppu_ctrl1 <= 8'b0;
 		ppu_ctrl2 <= 8'b0;
 		spram_cpu_addr <= 8'b0;
+		ppu_status_read <= 1'b0;
+		vram_cpu_addr <= 16'h0;
 	
 	end
 	
 	
 	else begin
+	
+		//Reset the read hit
+		ppu_status_read <= 1'b0;
 	
 		//If we're trying to read/write to a registers
 		if(cpu_addr_valid == 1'b0) begin
@@ -111,10 +120,11 @@ always @ (posedge clk or negedge rst) begin
 			
 			//ppu_status
 			else if(cpu_addr_int == 16'h2002) begin
-				//Need to assume a read here and clear 2005 and 2006
+				//Need to assume a read here and clear vram_cpu_addr
 				//Also need to signal to PPU to clear bit 7
 				cpu_data_out <= ppu_status;
 				vram_cpu_addr <= 16'b0;
+				ppu_status_read <= 1'b1;
 			end
 			
 			//spram addr
@@ -132,13 +142,18 @@ always @ (posedge clk or negedge rst) begin
 				//must assume read here
 				if(cpu_write_en) begin
 					spram_arr[spram_cpu_addr] <= cpu_data_in;
+					spram_cpu_addr <= spram_cpu_addr + 1;
+				end
+				else begin
+					cpu_data_out <= spram_arr[spram_cpu_addr];
 				end
 			end
 			
 			//scroll addr
 			else if(cpu_addr_int == 16'h2005) begin
 				if(cpu_write_en) begin
-					vram_cpu_addr[7:0] <= cpu_data_in;
+					ppu_scroll_addr[15:8] <= ppu_scroll_addr[7:0];
+					ppu_scroll_addr[7:0] <= cpu_data_in;
 				end
 			end
 			
