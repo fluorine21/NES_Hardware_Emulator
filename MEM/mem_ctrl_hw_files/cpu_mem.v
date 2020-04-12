@@ -1,7 +1,7 @@
 //CPU main memory with control registers
 
 
-
+//Depreciated, do not use
 
 module cpu_mem
 (
@@ -12,8 +12,8 @@ module cpu_mem
 	//Main memory control
 	input wire [15:0] addr,
 	inout wire [7:0] data,
-	input wire write_en,
-	input wire start,
+	input wire cpu_write_en,
+	input wire sysctrl_write_en,
 	output reg busy,
 	
 	
@@ -21,11 +21,14 @@ module cpu_mem
 	output reg [7:0] ppu_ctrl1,
 	output reg [7:0] ppu_ctrl2,
 	input wire [7:0] ppu_status,
+	
+	//To CPU port of PPU SPRAM
 	output reg [7:0] spram_addr,
 	output reg [7:0] spram_data,
 	output reg spram_write_en,
 	
-	output reg [15:0] vram_addr
+	//To CPU port of PPU VRAM
+	output reg [15:0] vram_addr,
 	output reg [7:0] vram_data_out,
 	input wire [7:0] vram_data_in,
 	output reg vram_write_en
@@ -104,7 +107,7 @@ always @ (posedge clk or negedge rst) begin
 			
 			//ppu_ctrl1
 			if(addr_int == 16'h2000) begin
-				if(write_en)begin
+				if(cpu_write_en)begin
 					ppu_ctrl1 <= data;
 				end
 				else begin
@@ -114,7 +117,7 @@ always @ (posedge clk or negedge rst) begin
 			
 			//ppu_ctrl2
 			else if(addr_int == 16'h2001) begin
-				if(write_en) begin
+				if(cpu_write_en) begin
 					ppu_ctrl2 <= data;
 				end
 				else begin
@@ -133,7 +136,7 @@ always @ (posedge clk or negedge rst) begin
 			
 			//spram addr
 			else if(addr_int == 16'h2003) begin
-				if(write_en) begin
+				if(cpu_write_en) begin
 					spram_addr <= data;
 				end
 				else begin
@@ -143,7 +146,7 @@ always @ (posedge clk or negedge rst) begin
 			
 			//spram data
 			else if(addr_int == 16'h2004) begin
-				if(write_en) begin
+				if(cpu_write_en) begin
 					spram_data <= data;
 					//Need to strobe spram_write_en for one cycle
 					spram_write_en <= 1'b1;
@@ -156,7 +159,7 @@ always @ (posedge clk or negedge rst) begin
 			
 			//vram addr 1
 			else if(addr_int == 16'h2005) begin
-				if(write_en) begin
+				if(cpu_write_en) begin
 					vram_addr[7:0] <= data;
 				end
 				else begin
@@ -166,7 +169,7 @@ always @ (posedge clk or negedge rst) begin
 			
 			//vram addr 2
 			else if(addr_int == 16'h2006) begin
-				if(write_en) begin
+				if(cpu_write_en) begin
 					vram_addr[15:8] <= data;
 				end
 				else begin
@@ -176,7 +179,7 @@ always @ (posedge clk or negedge rst) begin
 			
 			//vram data
 			else if(addr_int == 16'h2007) begin
-				if(write_en) begin
+				if(cpu_write_en) begin
 					mem_result <= vram_data_out
 					//Need to strobe vram_write_en for one cycle
 					vram_write_en <= 1'b1;
@@ -192,7 +195,7 @@ always @ (posedge clk or negedge rst) begin
 		//Must be trying to read from memory
 		else begin
 		
-			if(write_en) begin
+			if(cpu_write_en) begin
 				cpu_mem_arr[addr_int] <= data;
 			end
 			else begin
@@ -205,12 +208,9 @@ always @ (posedge clk or negedge rst) begin
 	end
 
 
-
-
-
 end
 
 //Data bus assignment
-assign data = write_en ? 8'bz : mem_result;
+assign data = (cpu_write_en || sysctrl_write_en) ? 8'bz : mem_result;
 
 endmodule

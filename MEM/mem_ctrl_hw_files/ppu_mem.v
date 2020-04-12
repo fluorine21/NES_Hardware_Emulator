@@ -1,6 +1,7 @@
 //Memory module for PPU
 //Includes address decoding!
 
+//Depreciated, do not use
 
 module ppu_mem
 (
