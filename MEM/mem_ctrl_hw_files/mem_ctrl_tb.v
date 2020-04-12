@@ -89,6 +89,7 @@ initial begin
 	read_vram_cpu();
 	read_spram_ppu();
 	read_mem_cpu();
+	read_vram_ppu();
 	
 	$display("MEM test complete, %d cases total, %d passed, %d failed\n", pass_count+fail_count, pass_count, fail_count);
 	
@@ -369,6 +370,13 @@ begin
 	end
 	
 	$display("CPU MEM Read test complete, %d cases total, %d passed, %d failed\n", local_fail_count+local_pass_count, local_pass_count, local_fail_count);
+
+end
+endtask
+
+task read_vram_ppu();
+begin
+
 
 end
 endtask

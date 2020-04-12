@@ -40,17 +40,18 @@ wire [15:0] vram_ppu_addr_int;
 wire [15:0] vram_cpu_addr_int;
 
 //VRAM Memory address decoder
-ppu_mem_decode read_decode(vram_ppu_addr, vram_ppu_addr_int);
-ppu_mem_decode write_decode(vram_cpu_addr, vram_cpu_addr_int);
+ppu_mem_decode read_decode(clk, rst, vram_ppu_addr, vram_ppu_addr_int);
+ppu_mem_decode write_decode(clk, rst, vram_cpu_addr, vram_cpu_addr_int);
 
 //SPRAM declaration
 reg[7:0] spram_arr[0:255];
 
 //CPU memory declaration and address decoding
 //Need 0xBFE0 + 0x800 bytes = 51,168
-reg [8:0] cpu_mem_arr[0:51167];
+reg [7:0] cpu_mem_arr[0:51167];
 wire [15:0] cpu_addr_int;
-cpu_mem_decode cpu_decode(cpu_addr, cpu_addr_int, cpu_addr_valid);
+wire cpu_addr_valid;
+cpu_mem_decode cpu_decode(clk, rst, cpu_addr, cpu_addr_int, cpu_addr_valid);
 
 
 //Process for PPU reading SPRAM and VRAM
@@ -91,7 +92,12 @@ always @ (posedge clk or negedge rst) begin
 	else begin
 	
 		//Reset the read hit
-		ppu_status_read <= 1'b0;
+		if(ppu_status_read == 1'b1) begin
+			ppu_status_read <= 1'b0;
+		end
+		
+		//TODO: implement DMA
+		busy <= 1'b0;
 	
 		//If we're trying to read/write to a registers
 		if(cpu_addr_valid == 1'b0) begin
