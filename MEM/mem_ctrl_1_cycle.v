@@ -75,7 +75,9 @@ generic_ram #(12320, 16) vram_mem (clk, vram_mem_cpu_addr, vram_mem_cpu_data_in,
 //PPU and SPRAM stuff
 wire [7:0] ppu_ctrl1_next = (cpu_addr_int == 16'h2000 && cpu_addr_valid == 1'b0 && cpu_write_en) ? cpu_data_in : ppu_ctrl1;
 wire [7:0] ppu_ctrl2_next = (cpu_addr_int == 16'h2001 && cpu_addr_valid == 1'b0 && cpu_write_en) ? cpu_data_in : ppu_ctrl2;
-wire [7:0] ppu_scroll_addr_next = (cpu_addr_int == 16'h2005 && cpu_addr_valid == 1'b0 && cpu_write_en) ? cpu_data_in : ppu_scroll_addr;
+wire [15:0] ppu_scroll_addr_next;
+assign ppu_scroll_addr_next[7:0] = (cpu_addr_int == 16'h2005 && cpu_addr_valid == 1'b0 && cpu_write_en) ? cpu_data_in : ppu_scroll_addr;
+assign ppu_scroll_addr_next[15:8] = (cpu_addr_int == 16'h2005 && cpu_addr_valid == 1'b0 && cpu_write_en) ? ppu_scroll_addr[7:0] : ppu_scroll_addr[15:0];
 wire [7:0] spram_cpu_addr_next = (cpu_addr_int == 16'h2003 && cpu_addr_valid == 1'b0 && cpu_write_en) ? cpu_data_in : (cpu_addr_int == 16'h2004 && cpu_addr_valid == 1'b0 && cpu_write_en) ? spram_cpu_addr + 1'b1 : spram_cpu_addr;
 wire ppu_status_read_next = (cpu_addr_int == 16'h2002 && cpu_addr_valid == 1'b0 && ppu_status_read == 1'b0) ? 1'b1 : 1'b0;
 
@@ -168,6 +170,12 @@ always @ * begin
 			else if(cpu_addr_int == 16'h2007) begin
 				cpu_data_out <= vram_mem_cpu_data_out;
 			end	
+			
+			else begin
+			
+				cpu_data_out <= 8'b0;
+			
+			end
 		
 		
 		end

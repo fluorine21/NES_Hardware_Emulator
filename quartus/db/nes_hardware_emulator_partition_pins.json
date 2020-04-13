@@ -264,23 +264,71 @@
 					"strict" : false
 				},
 				{
+					"name" : "cpu_addr[14]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[15]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[13]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[3]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[4]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[11]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[12]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[5]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[6]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[7]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[8]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[9]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[10]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[0]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[1]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[2]",
+					"strict" : false
+				},
+				{
 					"name" : "ppu_status[0]",
-					"strict" : false
-				},
-				{
-					"name" : "clk",
-					"strict" : false
-				},
-				{
-					"name" : "rst",
-					"strict" : false
-				},
-				{
-					"name" : "cpu_read_en",
-					"strict" : false
-				},
-				{
-					"name" : "cpu_write_en",
 					"strict" : false
 				},
 				{
@@ -316,31 +364,75 @@
 					"strict" : false
 				},
 				{
-					"name" : "cpu_data_in[1]",
+					"name" : "clk",
 					"strict" : false
 				},
 				{
-					"name" : "cpu_data_in[2]",
+					"name" : "rst",
 					"strict" : false
 				},
 				{
-					"name" : "cpu_data_in[3]",
+					"name" : "cpu_write_en",
 					"strict" : false
 				},
 				{
-					"name" : "cpu_data_in[4]",
+					"name" : "vram_ppu_addr[13]",
 					"strict" : false
 				},
 				{
-					"name" : "cpu_data_in[5]",
+					"name" : "vram_ppu_addr[0]",
 					"strict" : false
 				},
 				{
-					"name" : "cpu_data_in[6]",
+					"name" : "vram_ppu_addr[1]",
 					"strict" : false
 				},
 				{
-					"name" : "cpu_data_in[7]",
+					"name" : "vram_ppu_addr[2]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[3]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[4]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[5]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[11]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[12]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[8]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[9]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[10]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[6]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[7]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_read_en",
 					"strict" : false
 				},
 				{
@@ -376,123 +468,31 @@
 					"strict" : false
 				},
 				{
-					"name" : "cpu_addr[2]",
+					"name" : "cpu_data_in[1]",
 					"strict" : false
 				},
 				{
-					"name" : "cpu_addr[1]",
+					"name" : "cpu_data_in[2]",
 					"strict" : false
 				},
 				{
-					"name" : "cpu_addr[13]",
+					"name" : "cpu_data_in[3]",
 					"strict" : false
 				},
 				{
-					"name" : "cpu_addr[15]",
+					"name" : "cpu_data_in[4]",
 					"strict" : false
 				},
 				{
-					"name" : "cpu_addr[14]",
+					"name" : "cpu_data_in[5]",
 					"strict" : false
 				},
 				{
-					"name" : "cpu_addr[12]",
+					"name" : "cpu_data_in[6]",
 					"strict" : false
 				},
 				{
-					"name" : "cpu_addr[11]",
-					"strict" : false
-				},
-				{
-					"name" : "cpu_addr[10]",
-					"strict" : false
-				},
-				{
-					"name" : "cpu_addr[9]",
-					"strict" : false
-				},
-				{
-					"name" : "cpu_addr[8]",
-					"strict" : false
-				},
-				{
-					"name" : "cpu_addr[7]",
-					"strict" : false
-				},
-				{
-					"name" : "cpu_addr[6]",
-					"strict" : false
-				},
-				{
-					"name" : "cpu_addr[5]",
-					"strict" : false
-				},
-				{
-					"name" : "cpu_addr[3]",
-					"strict" : false
-				},
-				{
-					"name" : "cpu_addr[4]",
-					"strict" : false
-				},
-				{
-					"name" : "cpu_addr[0]",
-					"strict" : false
-				},
-				{
-					"name" : "vram_ppu_addr[0]",
-					"strict" : false
-				},
-				{
-					"name" : "vram_ppu_addr[1]",
-					"strict" : false
-				},
-				{
-					"name" : "vram_ppu_addr[2]",
-					"strict" : false
-				},
-				{
-					"name" : "vram_ppu_addr[3]",
-					"strict" : false
-				},
-				{
-					"name" : "vram_ppu_addr[4]",
-					"strict" : false
-				},
-				{
-					"name" : "vram_ppu_addr[5]",
-					"strict" : false
-				},
-				{
-					"name" : "vram_ppu_addr[11]",
-					"strict" : false
-				},
-				{
-					"name" : "vram_ppu_addr[13]",
-					"strict" : false
-				},
-				{
-					"name" : "vram_ppu_addr[12]",
-					"strict" : false
-				},
-				{
-					"name" : "vram_ppu_addr[8]",
-					"strict" : false
-				},
-				{
-					"name" : "vram_ppu_addr[9]",
-					"strict" : false
-				},
-				{
-					"name" : "vram_ppu_addr[10]",
-					"strict" : false
-				},
-				{
-					"name" : "vram_ppu_addr[6]",
-					"strict" : false
-				},
-				{
-					"name" : "vram_ppu_addr[7]",
+					"name" : "cpu_data_in[7]",
 					"strict" : false
 				}
 			]
