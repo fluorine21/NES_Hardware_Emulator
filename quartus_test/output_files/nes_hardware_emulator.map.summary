@@ -1,0 +1,14 @@
+Analysis & Synthesis Status : Successful - Sun Apr 12 21:52:22 2020
+Quartus Prime Version : 17.1.0 Build 590 10/25/2017 SJ Lite Edition
+Revision Name : nes_hardware_emulator
+Top-level Entity Name : mem_ctrl
+Family : Cyclone IV E
+Total logic elements : 559
+    Total combinational functions : 357
+    Dedicated logic registers : 273
+Total registers : 273
+Total pins : 126
+Total virtual pins : 0
+Total memory bits : 509,952
+Embedded Multiplier 9-bit elements : 0
+Total PLLs : 0

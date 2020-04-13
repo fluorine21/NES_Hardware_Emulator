@@ -1,0 +1,10 @@
+
+State Machine - |mem_ctrl|state_reg
+Name state_reg.state_read_spram state_reg.state_read_vram state_reg.state_read_cpu_mem state_reg.state_write_spram state_reg.state_write_vram state_reg.state_write_cpu_mem state_reg.state_idle 
+state_reg.state_idle 0 0 0 0 0 0 0 
+state_reg.state_write_cpu_mem 0 0 0 0 0 1 1 
+state_reg.state_write_vram 0 0 0 0 1 0 1 
+state_reg.state_write_spram 0 0 0 1 0 0 1 
+state_reg.state_read_cpu_mem 0 0 1 0 0 0 1 
+state_reg.state_read_vram 0 1 0 0 0 0 1 
+state_reg.state_read_spram 1 0 0 0 0 0 1 
