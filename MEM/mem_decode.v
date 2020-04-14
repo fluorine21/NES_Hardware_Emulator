@@ -1,7 +1,7 @@
 //Main memory controller for the PPU and CPU
 
 
-module mem_ctrl_1_cycle
+module mem_decode
 (
 	input wire clk,
 	input wire rst,
@@ -114,13 +114,6 @@ always @ (posedge clk or negedge rst) begin
 	end
 
 end
-
-
-
-
-
-//going to need one always for the scnchronous logic
-//and _next wires
 
 
 always @ * begin

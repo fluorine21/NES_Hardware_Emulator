@@ -1,7 +1,7 @@
 //Test bench for memory controller
 
 
-module mem_ctrl_tb();
+module mem_decode_tb();
 
 
 reg clk;
@@ -11,7 +11,6 @@ reg [7:0] cpu_data_in;
 wire [7:0] cpu_data_out;
 reg cpu_write_en;
 reg cpu_read_en;
-wire busy;
 
 wire [7:0] ppu_ctrl1;
 wire [7:0] ppu_ctrl2;
@@ -34,7 +33,7 @@ integer local_fail_count;
 
 reg [15:0] addr_int;
 
-mem_ctrl dut
+mem_decode dut
 (
 	clk,
 	rst,
@@ -44,7 +43,6 @@ mem_ctrl dut
 	cpu_data_out,
 	cpu_write_en,
 	cpu_read_en,
-	busy,
 	
 	ppu_ctrl1,
 	ppu_ctrl2,
@@ -139,7 +137,6 @@ begin
 	
 		cpu_data_in = addr_int[7:0];
 		clk_cycle();
-		clk_cycle();
 	
 	end
 	
@@ -154,7 +151,6 @@ begin
 	for(addr_int = 16'h3F00; addr_int < 16'h3F20; addr_int = addr_int + 1) begin
 		
 		cpu_data_in = addr_int[7:0];
-		clk_cycle();
 		clk_cycle();
 	
 	end
@@ -189,7 +185,6 @@ begin
 	for(addr_int = 16'h0; addr_int < 16'h3000; addr_int = addr_int + 1) begin
 		
 		clk_cycle();
-		clk_cycle();
 		if(cpu_data_out != addr_int[7:0]) begin
 			$display("VRAM CPU ERROR");
 			fail_count = fail_count + 1;
@@ -216,7 +211,6 @@ begin
 	//Start reading out the beginning of memory
 	for(addr_int = 16'h3F00; addr_int < 16'h3F20; addr_int = addr_int + 1) begin
 		
-		clk_cycle();
 		clk_cycle();
 		if(cpu_data_out != addr_int[7:0]) begin
 			$display("VRAM CPU ERROR");
@@ -254,11 +248,10 @@ begin
 	
 		cpu_data_in <= addr_int[7:0];
 		clk_cycle();
-		clk_cycle();
 	
 	end
 	
-	cpu_write_en <= 1'b0;
+	cpu_write_en = 1'b0;
 
 end
 endtask
@@ -275,7 +268,6 @@ begin
 		
 		spram_ppu_addr <= addr_int[7:0];
 		
-		clk_cycle();
 		clk_cycle();
 		
 		if(spram_ppu_data != addr_int[7:0]) begin
@@ -304,11 +296,11 @@ begin
 	//Start by writing 0x00 to 0x800
 	for(addr_int = 16'h0000; addr_int < 16'h0800; addr_int = addr_int + 1) begin
 		
+		cpu_write_en = 1'b1;
 		cpu_addr_in = addr_int;
 		cpu_data_in = addr_int[7:0];
-		
 		clk_cycle();
-		clk_cycle();
+	
 	
 	end
 	
@@ -319,7 +311,6 @@ begin
 		cpu_addr_in = addr_int;
 		cpu_data_in = addr_int[7:0];
 		
-		clk_cycle();
 		clk_cycle();
 	
 	end
@@ -342,7 +333,6 @@ begin
 		cpu_addr_in <= addr_int;
 		
 		clk_cycle();
-		clk_cycle();
 		
 		if(cpu_data_out != addr_int[7:0]) begin
 			$display("CPU MEM ERROR");
@@ -363,7 +353,6 @@ begin
 	
 		cpu_addr_in <= addr_int;
 		
-		clk_cycle();
 		clk_cycle();
 		
 		if(cpu_data_out != addr_int[7:0]) begin
