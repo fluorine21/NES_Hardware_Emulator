@@ -12,7 +12,7 @@ If it is my turn to draw a sprite, go to LOAD
 State 2 - LOAD
 
 Load sprite attributes (4 bytes)
-Load in 3 colors we can use (4 bytes)
+Load in 3 colors we can use (3 bytes)
 
 
 State 3 - Draw Loop
