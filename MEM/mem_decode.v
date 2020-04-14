@@ -25,7 +25,10 @@ module mem_decode
 	output wire [7:0] spram_ppu_data,
 	
 	output reg [7:0] spram_cpu_addr,
-	output reg ppu_status_read
+	output reg ppu_status_read,
+	
+	input wire [7:0] joycon_1,
+	input wire [7:0] joycon_2
 );
 
 //Internal signals for cpu access to vram and spram
@@ -121,55 +124,41 @@ always @ * begin
 		//If we're trying to read/write to a registers
 		if(cpu_addr_valid == 1'b0) begin
 		
-			//if we're trying to read/write to one of the control registers
+			case(cpu_addr_int)
 			
 			//ppu_ctrl1
-			if(cpu_addr_int == 16'h2000) begin
-				cpu_data_out <= ppu_ctrl1;
-			end
+			16'h2000: cpu_data_out <= ppu_ctrl1;
 			
 			//ppu_ctrl2
-			else if(cpu_addr_int == 16'h2001) begin
-				cpu_data_out <= ppu_ctrl2;
-			end
+			16'h2001: cpu_data_out <= ppu_ctrl2;
 			
 			//ppu_status
-			else if(cpu_addr_int == 16'h2002) begin
-				cpu_data_out <= ppu_status;
-			end
+			16'h2002: cpu_data_out <= ppu_status;
 			
 			//spram addr
-			else if(cpu_addr_int == 16'h2003) begin
-				cpu_data_out <= spram_cpu_addr;
-			end
+			16'h2003: cpu_data_out <= spram_cpu_addr;
 			
 			//spram data
-			//Need to start a memory access here
-			else if(cpu_addr_int == 16'h2004) begin
-				cpu_data_out <= spram_mem_cpu_data_out;
-			end
+			16'h2004: cpu_data_out <= spram_mem_cpu_data_out;
 			
 			//scroll addr
-			else if(cpu_addr_int == 16'h2005) begin
-				cpu_data_out <= ppu_scroll_addr;
-			end
+			16'h2005: cpu_data_out <= ppu_scroll_addr;
 			
 			//vram addr
-			else if(cpu_addr_int == 16'h2006) begin
-				cpu_data_out <= vram_cpu_addr;
-			end
-			
+			16'h2006: cpu_data_out <= vram_cpu_addr;
+				
 			//vram data
-			else if(cpu_addr_int == 16'h2007) begin
-				cpu_data_out <= vram_mem_cpu_data_out;
-			end	
+			16'h2007: cpu_data_out <= vram_mem_cpu_data_out;
 			
-			else begin
+			//joycon1
+			16'h4016: cpu_data_out <= joycon_1;
 			
-				cpu_data_out <= 8'b0;
+			//joycon2
+			16'h4017: cpu_data_out <= joycon_2;
 			
-			end
-		
+			default: cpu_data_out <= 8'b0;
+			
+			endcase
 		
 		end
 		
