@@ -10,10 +10,10 @@ module dma_module
 	input wire [7:0] cpu_data,
 	input wire cpu_write_en,
 	
-	output wire [15:0] mem_addr,
+	output reg [15:0] mem_addr,
 	input wire [7:0] mem_data_in, //Incomming data from CPU mem_addr
 	output reg [7:0] mem_data_out, // outgoing data to sprite mem
-	output reg [7:0] mem_write_en,
+	output reg mem_write_en,
 	output reg busy // Used to switch the memory bus mux
 
 );
@@ -27,25 +27,26 @@ reg [7:0] spram_addr_old;
 reg [15:0] mem_start_addr;
 reg [3:0] state;
 
-localparam [3:0] state_idle = 4h'0, 
+localparam [3:0] state_idle = 4'h0, 
 				 state_reset_spram_addr = 4'h1, 
 				 state_transfer_read = 4'h2,
 				 state_transfer_write = 4'h3,
-				 state_fix_spram_addr = 4'h4;
+				 state_fix_spram_addr = 4'h4,
+				 state_busy = 4'h5,
+				 state_transfer_wait = 4'h6;
 
 
 always @ (posedge clk or negedge rst) begin
 
 	if(rst == 1'b0) begin
 	
-		mem_data_out <= 8b0
+		reset();
 	
 	end
 	
 	else begin
 	
 		case(state)
-	
 	
 		state_idle: begin
 		
@@ -54,7 +55,7 @@ always @ (posedge clk or negedge rst) begin
 			
 				//Set the busy line
 				busy <= 1'b1;
-				
+				mem_addr <= 16'h2003;
 				//Read the current spram pointer
 				mem_addr <= 16'h2003;
 				mem_write_en <= 1'b0;
@@ -62,9 +63,7 @@ always @ (posedge clk or negedge rst) begin
 				//Set the CPU starting address
 				mem_start_addr <= {cpu_data, 8'h0};
 				
-				//go to the reset spram addr state
-				state <= state_reset_spram_addr;
-			
+				state <= state_busy;
 			end
 			else begin
 			
@@ -74,6 +73,14 @@ always @ (posedge clk or negedge rst) begin
 			
 			end
 		
+		
+		end
+	
+		state_busy: begin
+			
+			//go to the reset spram addr state
+			state <= state_reset_spram_addr;
+
 		end
 		
 		state_reset_spram_addr: begin
@@ -83,7 +90,7 @@ always @ (posedge clk or negedge rst) begin
 			
 			//Write 8'h0 to SPRAM addr
 			mem_data_out <= 8'h0;
-			mem_write_en <= 8'h0;
+			mem_write_en <= 1'b1;
 			
 			//Go to the first transfer state
 			state <= state_transfer_read;
@@ -96,6 +103,13 @@ always @ (posedge clk or negedge rst) begin
 			mem_write_en <= 1'b0;
 			mem_addr <= mem_start_addr;
 			
+			state <= state_transfer_wait;
+		
+		end
+		
+		state_transfer_wait: begin
+			
+			//goto the write state
 			state <= state_transfer_write;
 		
 		end
@@ -138,7 +152,7 @@ always @ (posedge clk or negedge rst) begin
 		default: begin
 		
 			state <= state_idle;
-		
+			reset();
 		end
 	
 	
@@ -146,20 +160,19 @@ always @ (posedge clk or negedge rst) begin
 	
 	end
 
-
-
-
-
-
-
-
 end
 
 
 task reset();
 begin
 
-
+	mem_addr <= 16'b0;
+	mem_data_out <= 8'b0;
+	mem_write_en <= 1'b0;
+	busy <= 1'b0;
+	spram_addr_old <= 8'b0;
+	mem_start_addr <= 16'b0;
+	state <= state_idle;
 
 end
 endtask

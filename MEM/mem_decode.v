@@ -27,7 +27,7 @@ module mem_decode
 	output reg [7:0] spram_cpu_addr,
 	output reg ppu_status_read,
 	
-	input wire [7:0] joycon_1,
+	input wire [7:0] joycon_1,//Need to be connected to shift register
 	input wire [7:0] joycon_2
 );
 
@@ -81,11 +81,14 @@ wire [7:0] ppu_ctrl2_next = (cpu_addr_int == 16'h2001 && cpu_addr_valid == 1'b0 
 wire [15:0] ppu_scroll_addr_next;
 assign ppu_scroll_addr_next[7:0] = (cpu_addr_int == 16'h2005 && cpu_addr_valid == 1'b0 && cpu_write_en) ? cpu_data_in : ppu_scroll_addr;
 assign ppu_scroll_addr_next[15:8] = (cpu_addr_int == 16'h2005 && cpu_addr_valid == 1'b0 && cpu_write_en) ? ppu_scroll_addr[7:0] : ppu_scroll_addr[15:0];
-wire [7:0] spram_cpu_addr_next = (cpu_addr_int == 16'h2003 && cpu_addr_valid == 1'b0 && cpu_write_en) ? cpu_data_in : (cpu_addr_int == 16'h2004 && cpu_addr_valid == 1'b0 && cpu_write_en) ? spram_cpu_addr + 1'b1 : spram_cpu_addr;
+
+wire [7:0] spram_cpu_addr_next = (cpu_addr_int == 16'h2003 && cpu_addr_valid == 1'b0 && cpu_write_en) ? cpu_data_in : (cpu_addr_int == 16'h2004 && cpu_addr_valid == 1'b0 && (cpu_write_en || cpu_read_en)) ? spram_cpu_addr + 1'b1 : spram_cpu_addr;
+
 wire ppu_status_read_next = (cpu_addr_int == 16'h2002 && cpu_addr_valid == 1'b0 && ppu_status_read == 1'b0) ? 1'b1 : 1'b0;
 
 //Vram cpu addr assignments
 wire [15:0] vram_cpu_addr_plus_1 = vram_cpu_addr + 1;
+
 wire [7:0] vram_cpu_addr_next_high = (cpu_addr_int == 16'h2006 && cpu_addr_valid == 1'b0 && cpu_write_en == 1'b1) ? vram_cpu_addr[7:0] : (cpu_addr_int == 16'h2007 && cpu_addr_valid == 1'b0 && (cpu_write_en == 1'b1 || cpu_read_en == 1'b1)) ? vram_cpu_addr_plus_1[15:8] : vram_cpu_addr[15:8];
 wire [7:0] vram_cpu_addr_next_low = (cpu_addr_int == 16'h2006 && cpu_addr_valid == 1'b0 && cpu_write_en == 1'b1) ? cpu_data_in : (cpu_addr_int == 16'h2007 && cpu_addr_valid == 1'b0 && (cpu_write_en == 1'b1 || cpu_read_en == 1'b1)) ? vram_cpu_addr_plus_1[7:0] : vram_cpu_addr[7:0];
 wire [15:0] vram_cpu_addr_next = {vram_cpu_addr_next_high, vram_cpu_addr_next_low};
@@ -120,52 +123,52 @@ end
 
 
 always @ * begin
+
+	//If we're trying to read/write to a registers
+	if(cpu_addr_valid == 1'b0) begin
 	
-		//If we're trying to read/write to a registers
-		if(cpu_addr_valid == 1'b0) begin
+		case(cpu_addr_int)
 		
-			case(cpu_addr_int)
-			
-			//ppu_ctrl1
-			16'h2000: cpu_data_out <= ppu_ctrl1;
-			
-			//ppu_ctrl2
-			16'h2001: cpu_data_out <= ppu_ctrl2;
-			
-			//ppu_status
-			16'h2002: cpu_data_out <= ppu_status;
-			
-			//spram addr
-			16'h2003: cpu_data_out <= spram_cpu_addr;
-			
-			//spram data
-			16'h2004: cpu_data_out <= spram_mem_cpu_data_out;
-			
-			//scroll addr
-			16'h2005: cpu_data_out <= ppu_scroll_addr;
-			
-			//vram addr
-			16'h2006: cpu_data_out <= vram_cpu_addr;
-				
-			//vram data
-			16'h2007: cpu_data_out <= vram_mem_cpu_data_out;
-			
-			//joycon1
-			16'h4016: cpu_data_out <= joycon_1;
-			
-			//joycon2
-			16'h4017: cpu_data_out <= joycon_2;
-			
-			default: cpu_data_out <= 8'b0;
-			
-			endcase
+		//ppu_ctrl1
+		16'h2000: cpu_data_out = ppu_ctrl1;
 		
-		end
+		//ppu_ctrl2
+		16'h2001: cpu_data_out = ppu_ctrl2;
 		
-		//Reading writing CPU mem
-		else begin
-			cpu_data_out <= cpu_mem_data_out;
-		end
+		//ppu_status
+		16'h2002: cpu_data_out = ppu_status;
+		
+		//spram addr
+		16'h2003: cpu_data_out = spram_cpu_addr;
+		
+		//spram data
+		16'h2004: cpu_data_out = spram_mem_cpu_data_out;
+		
+		//scroll addr
+		16'h2005: cpu_data_out = ppu_scroll_addr;
+		
+		//vram addr
+		16'h2006: cpu_data_out = vram_cpu_addr;
+			
+		//vram data
+		16'h2007: cpu_data_out = vram_mem_cpu_data_out;
+		
+		//joycon1
+		16'h4016: cpu_data_out = joycon_1;
+		
+		//joycon2
+		16'h4017: cpu_data_out = joycon_2;
+		
+		default: cpu_data_out = 8'b0;
+		
+		endcase
+	
+	end
+	
+	//Reading writing CPU mem
+	else begin
+		cpu_data_out = cpu_mem_data_out;
+	end
 
 end
 endmodule
