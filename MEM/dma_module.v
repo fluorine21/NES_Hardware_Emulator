@@ -55,7 +55,7 @@ always @ (posedge clk or negedge rst) begin
 			
 				//Set the busy line
 				busy <= 1'b1;
-				mem_addr <= 16'h2003;
+
 				//Read the current spram pointer
 				mem_addr <= 16'h2003;
 				mem_write_en <= 1'b0;
@@ -112,7 +112,7 @@ always @ (posedge clk or negedge rst) begin
 			//goto the write state
 			state <= state_transfer_write;
 		
-		end
+		end 
 		
 		state_transfer_write: begin
 		

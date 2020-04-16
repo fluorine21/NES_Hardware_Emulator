@@ -88,9 +88,13 @@ wire ppu_status_read_next = (cpu_addr_int == 16'h2002 && cpu_addr_valid == 1'b0 
 
 //Vram cpu addr assignments
 wire [15:0] vram_cpu_addr_plus_1 = vram_cpu_addr + 1;
+wire [15:0] vram_cpu_addr_plus_1 = vram_cpu_addr + 32;
 
-wire [7:0] vram_cpu_addr_next_high = (cpu_addr_int == 16'h2006 && cpu_addr_valid == 1'b0 && cpu_write_en == 1'b1) ? vram_cpu_addr[7:0] : (cpu_addr_int == 16'h2007 && cpu_addr_valid == 1'b0 && (cpu_write_en == 1'b1 || cpu_read_en == 1'b1)) ? vram_cpu_addr_plus_1[15:8] : vram_cpu_addr[15:8];
-wire [7:0] vram_cpu_addr_next_low = (cpu_addr_int == 16'h2006 && cpu_addr_valid == 1'b0 && cpu_write_en == 1'b1) ? cpu_data_in : (cpu_addr_int == 16'h2007 && cpu_addr_valid == 1'b0 && (cpu_write_en == 1'b1 || cpu_read_en == 1'b1)) ? vram_cpu_addr_plus_1[7:0] : vram_cpu_addr[7:0];
+wire [7:0] vram_cpu_addr_next_high = (cpu_addr_int == 16'h2006 && cpu_addr_valid == 1'b0 && cpu_write_en == 1'b1) ? vram_cpu_addr[7:0] : (cpu_addr_int == 16'h2007 && cpu_addr_valid == 1'b0 && (cpu_write_en == 1'b1 || cpu_read_en == 1'b1)) ? (ppu_ctrl1[2] ? vram_cpu_addr_plus_32[15:8] : vram_cpu_addr_plus_1[15:8]) : vram_cpu_addr[15:8];
+
+wire [7:0] vram_cpu_addr_next_low = (cpu_addr_int == 16'h2006 && cpu_addr_valid == 1'b0 && cpu_write_en == 1'b1) ? cpu_data_in : (cpu_addr_int == 16'h2007 && cpu_addr_valid == 1'b0 && (cpu_write_en == 1'b1 || cpu_read_en == 1'b1)) ? (ppu_ctrl1[2] ? vram_cpu_addr_plus_32[7:0] : vram_cpu_addr_plus_1[7:0]) : vram_cpu_addr[7:0];
+
+
 wire [15:0] vram_cpu_addr_next = {vram_cpu_addr_next_high, vram_cpu_addr_next_low};
 
 
