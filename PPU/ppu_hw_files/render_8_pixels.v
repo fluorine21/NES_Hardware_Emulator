@@ -1,15 +1,5 @@
 
 
-
-
-
-
-
-
-
-
-
-
 module render_8_pixels
 (
 	
@@ -36,10 +26,11 @@ module render_8_pixels
 	//These should already be alligned to the background patterns
 	input wire [7:0] sprite_pattern_low,
 	input wire [7:0] sprite_pattern_high,
+	input wire [7:0] sprite_attr;
 	//sprite_color_0 is background
 	input wire [7:0] sprite_color_1,
 	input wire [7:0] sprite_color_2,
-	input wire [7:0] sprite_color_3
+	input wire [7:0] sprite_color_3,
 	
 	
 	input wire [7:0] background_pattern_low,
@@ -47,6 +38,9 @@ module render_8_pixels
 	input wire [7:0] background_color_1,
 	input wire [7:0] background_color_2,
 	input wire [7:0] background_color_3,
+	
+	//Needed to determine when to draw background
+	input wire [7:0] ppu_ctrl2,
 	
 	
 	output reg busy,
@@ -104,7 +98,8 @@ always @ (posedge clk or negedge rst) begin
 			vga_write_en <= 1'b1;
 		
 			//If we need to draw a sprite pixel here:
-			if(sprite_pattern_high[pattern_index] || sprite_pattern_low[pattern_index]) begin
+			//If the sprite has a visible color and is on top of the background or the background is transparent
+			if((sprite_pattern_high[pattern_index] || sprite_pattern_low[pattern_index]) && (sprite_attr[5] || {background_pattern_high[pattern_index], background_pattern_low[pattern_index]} == 2'b0)) begin
 			
 				case({sprite_pattern_high[pattern_index], sprite_pattern_low[pattern_index]})
 				
@@ -117,7 +112,8 @@ always @ (posedge clk or negedge rst) begin
 			
 			end
 			//If we need to draw a background pixel here
-			else begin
+			//And the background is enabled
+			else if(ppu_ctrl[3]) begin
 			
 			
 				case({background_pattern_high[pattern_index], background_pattern_low[pattern_index]})

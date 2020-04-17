@@ -31,6 +31,9 @@ module mem_decode
 	input wire [7:0] joycon_2
 );
 
+//Register for buffering vram memory access
+reg [7:0] vram_mem_cpu_buffer;
+
 //Internal signals for cpu access to vram and spram
 reg [15:0] vram_cpu_addr;
 //VRAM Memory address decoder
@@ -88,7 +91,7 @@ wire ppu_status_read_next = (cpu_addr_int == 16'h2002 && cpu_addr_valid == 1'b0 
 
 //Vram cpu addr assignments
 wire [15:0] vram_cpu_addr_plus_1 = vram_cpu_addr + 1;
-wire [15:0] vram_cpu_addr_plus_1 = vram_cpu_addr + 32;
+wire [15:0] vram_cpu_addr_plus_32 = vram_cpu_addr + 32;
 
 wire [7:0] vram_cpu_addr_next_high = (cpu_addr_int == 16'h2006 && cpu_addr_valid == 1'b0 && cpu_write_en == 1'b1) ? vram_cpu_addr[7:0] : (cpu_addr_int == 16'h2007 && cpu_addr_valid == 1'b0 && (cpu_write_en == 1'b1 || cpu_read_en == 1'b1)) ? (ppu_ctrl1[2] ? vram_cpu_addr_plus_32[15:8] : vram_cpu_addr_plus_1[15:8]) : vram_cpu_addr[15:8];
 
@@ -97,6 +100,8 @@ wire [7:0] vram_cpu_addr_next_low = (cpu_addr_int == 16'h2006 && cpu_addr_valid 
 
 wire [15:0] vram_cpu_addr_next = {vram_cpu_addr_next_high, vram_cpu_addr_next_low};
 
+
+wire [7:0] vram_mem_cpu_buffer_next = (cpu_read_en && cpu_addr_int == 16'h2007 && cpu_addr_valid == 1'b0) ? vram_mem_cpu_data_out : vram_mem_cpu_buffer;
 
 always @ (posedge clk or negedge rst) begin
 
@@ -109,6 +114,7 @@ always @ (posedge clk or negedge rst) begin
 		spram_cpu_addr <= 8'b0;
 		ppu_status_read <= 1'b0;
 		vram_cpu_addr <= 16'b0;
+		vram_mem_cpu_buffer <= 8'b0;
 		
 	end
 	
@@ -120,6 +126,10 @@ always @ (posedge clk or negedge rst) begin
 		spram_cpu_addr <= spram_cpu_addr_next;
 		ppu_status_read <= ppu_status_read_next;
 		vram_cpu_addr <= vram_cpu_addr_next;
+		
+
+		vram_mem_cpu_buffer <= vram_mem_cpu_buffer_next;
+
 	
 	end
 
@@ -155,8 +165,17 @@ always @ * begin
 		16'h2006: cpu_data_out = vram_cpu_addr;
 			
 		//vram data
-		16'h2007: cpu_data_out = vram_mem_cpu_data_out;
-		
+		//Need to buffer this if we are accessing 
+		16'h2007: begin
+			//If we don't need buffering
+			if(vram_cpu_addr >= 16'h3F00) begin
+				cpu_data_out = vram_mem_cpu_data_out;
+			end
+			//If we do
+			else begin
+				cpu_data_out = vram_mem_cpu_buffer;
+			end
+		end
 		//joycon1
 		16'h4016: cpu_data_out = joycon_1;
 		

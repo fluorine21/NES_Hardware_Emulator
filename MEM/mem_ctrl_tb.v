@@ -281,15 +281,15 @@ begin
 	for(addr_int = 16'h0; addr_int < 16'h3000; addr_int = addr_int + 1) begin
 		
 		clk_cycle();
-		if(cpu_data_out != addr_int[7:0]) begin
+		if(cpu_data_out == (addr_int[7:0] - 1) || addr_int == 0 || (addr_int[7:0] == 0 && cpu_data_out == 8'hFF) ) begin
+			pass_count = pass_count + 1;
+			local_pass_count = local_pass_count + 1;
+		end
+		else begin
 			$display("VRAM CPU ERROR");
 			fail_count = fail_count + 1;
 			local_fail_count = local_fail_count + 1;
 			report_error(addr_int, addr_int[7:0], cpu_data_out);
-		end
-		else begin
-			pass_count = pass_count + 1;
-			local_pass_count = local_pass_count + 1;
 		end
 	end
 	
@@ -304,7 +304,7 @@ begin
 	cpu_write_en = 1'b0;
 
 	
-	//Start reading out the beginning of memory
+	//Start reading out the pallet
 	for(addr_int = 16'h3F00; addr_int < 16'h3F20; addr_int = addr_int + 1) begin
 		
 		clk_cycle();
