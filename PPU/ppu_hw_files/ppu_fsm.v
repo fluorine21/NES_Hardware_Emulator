@@ -4,26 +4,32 @@
 
 //PPU state machine will look as follows
 
+//Latch for row_offset
+reg [8:0] row_offset_reg;
+reg [8:0] col_offset_reg;
+
 //This needs to be set by combinational logic
 //tile pixel row col go in and a vram address comes out
 //Pixel row col
 wire [15:0] nametable_ptr;
 
+//Starting position of pixel in nametable 2x2
 wire [8:0] row_offset = {ppu_ctrl1[1], ppu_scroll[15:8]};
 wire [8:0] col_offset = {ppu_ctrl1[0], ppu_scroll[7:0]}; 
 
 //These tell us which pixel we're currently drawing relative to the nametables
-reg [8:0] tile_pixel_row;
-reg [8:0] tile_pixel_col;
+//These must start counting at 0
+reg [8:0] tile_pixel_row_cnt;
+reg [8:0] tile_pixel_col_cnt;
+
+wire [8:0] tile_pixel_row = row_offset + tile_pixel_row_cnt;
 
 
 //These tell us which pixel we're currently drawing relative to the screen
+//These will start counting at -1 * row_offset[2:0]
 reg [8:0] screen_pixel_row;
 reg [8:0] screen_pixel_col;
 
-//These tell us our start pixel position and end pixel position
-//Need to be defined combinationally
-wire [8:0] screen_pixel_row_start, screen_pixel_col_end;
 
 //On start:
 
@@ -37,9 +43,9 @@ wire [8:0] screen_pixel_row_start, screen_pixel_col_end;
 //At the start of the row, loop through the sprite attribute table and see which sprites are on this line
 
 //keeps track of how many sprites are on this scan line
-reg sprite_cnt;
+reg [2:0] sprite_cnt;
 //Keeps track of which sprite we're currently looking at in the scanline
-reg sprite_hit_cnt;
+reg [2:0] sprite_hit_cnt;
 
 case(state):
 
@@ -47,23 +53,67 @@ case(state):
 
 	state_idle: begin
 	
+		if(reset_vsync == 1'b1) begin
+			
+			cpu_vsync <= 1'b0;
+		
+		end
+	
 	
 		//If we're going to start drawing the screen:
 		if(start == 1'b1) begin
 		
+			cpu_vsync <= 1'b0;
 			
-			//These are relative to the screen
-			screen_pixel_row = 0 - row_offset[2:0];
-			screen_pixel_col = 0 - col_offset[2:0];
-		
-			//Set the starting tile row and col number
-			tile_pixel_row = row_offset;
-			tile_pixel_col = col_offset;
+			
+			//Set the absolute counter
+			screen_pixel_row = 0;
 		
 			state <= state_load_spram_1;
 		
 		end
 		
+	end
+	
+	//Start of the line draw routine
+	state_set_counters: begin
+	
+		//Just need to set the screen_pixel_col counter based on the offset
+		screen_pixel_col <= 0 - row_offset_reg[2:0];
+		
+		//Start loading data
+	
+	end
+	
+	state_increment_counters: begin
+	
+		//If we're done with the frame
+		if(screen_pixel_row >= 239) begin
+		
+		
+		
+		end
+		//if we're done with the row
+		else if(screen_pixel_col >= 255) begin
+		
+			//Load the scroll latch again
+			row_offset_reg <= row_offset;
+			col_offset_reg <= col_offset;
+			
+			//Increment the row counter
+			screen_pixel_row <= screen_pixel_row + 1;
+			
+			//Go to the set col counter state
+			
+		end
+		//Just need to count up correctly
+		else begin
+			
+			screen_pixel_col = screen_pixel_col + 8;
+		
+		end
+	
+	
 	end
 	
 	

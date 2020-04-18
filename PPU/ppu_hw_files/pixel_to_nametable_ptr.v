@@ -1,15 +1,25 @@
 
 
-
+//Takes a pixel address relative to screen and scroll ptr and turns it into a nametable address and pattern table offset
 module pixel_to_nametable_ptr
 (
 
-	input wire [8:0] pixel_row,
-	input wire [8:0] pixel_col,
+	//Relative to the nametables, not the screen
+	input wire [8:0] screen_pixel_row,
+	input wire [8:0] screen_pixel_col,
 	
-	output reg [15:0] nametable_ptr
+	input wire [15:0] cpu_scroll_addr,
+	input wire [7:0] ppu_ctrl1,
+	
+	output reg [15:0] nametable_ptr,//Where to look in the nametable for the tile
+	output wire [2:0] pattern_table_offset//Where to look in the pattern based on the tile number
 
 );
+
+assign pattern_table_offset = pixel_row[2:0];
+
+wire [8:0] pixel_row = screen_pixel_row + {ppu_ctrl1[1], cpu_scroll_addr[15:8]};
+wire [8:0] pixel_col = screen_pixel_col + {ppu_ctrl1[2], cpu_scroll_addr[7:0]};
 
 
 always @ * begin
@@ -20,7 +30,9 @@ always @ * begin
 		if(pixel_col < 256) begin
 		
 			//We're in nametable 0
-			nametable_ptr <= 16'h2000 + (pixel_row << 5) + pixel_col[7:3];
+			//Once you go up one row, go over 32 cols
+			((row/8)*32) + (col/8)
+			nametable_ptr <= 16'h2000 + (pixel_row[7:3] << 5) + pixel_col[7:3];
 		
 		end
 		else begin

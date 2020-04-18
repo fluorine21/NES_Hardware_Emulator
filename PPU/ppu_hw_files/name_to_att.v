@@ -4,13 +4,14 @@
 
 module name_to_att
 (
-	input wire [15:0] nametable_base_addr,
 	input wire [15:0] nametable_addr,
 	
 	output wire [15:0] attr_byte_addr,
-	output wire [2:0] attr_byte_offset
+	output wire [2:0] attr_bit_offset
 
 );
+
+wire [15:0] nametable_base_addr = {nametable_addr[15:10], 10'b0000000000};
 
 
 wire [15:0] nametable_offset = nametable_addr - nametable_base_addr;
@@ -42,13 +43,13 @@ always @ * begin
 		//Even row even col
 		if(nametable_col == 1'b0) begin
 			
-			attr_byte_offset = 0;
+			attr_bit_offset = 0;
 		
 		end
 		//Even row odd col
 		else begin
 			
-			attr_byte_offset = 2;
+			attr_bit_offset = 2;
 		
 		end
 	
@@ -60,13 +61,13 @@ always @ * begin
 		//Odd row even col
 		if(nametable_col == 1'b0) begin
 		
-			attr_byte_offset = 4;
+			attr_bit_offset = 4;
 		
 		end
 		//Odd row odd col
 		else begin
 		
-			attr_byte_offset = 6;
+			attr_bit_offset = 6;
 		
 		end
 	
