@@ -90,7 +90,7 @@ case(state):
 		//If we're done with the frame
 		if(screen_pixel_row >= 239) begin
 		
-		
+			//TODO
 		
 		end
 		//if we're done with the row
@@ -109,6 +109,7 @@ case(state):
 		//Just need to count up correctly
 		else begin
 			
+			//Going to next tile
 			screen_pixel_col = screen_pixel_col + 8;
 		
 		end
