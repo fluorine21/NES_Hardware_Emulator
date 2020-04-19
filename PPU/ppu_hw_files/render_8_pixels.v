@@ -13,47 +13,72 @@ module render_8_pixels
 	input wire rst,
 	
 	//These may not be in bounds, but we don't need to check
-	input wire [8;0] vga_start_row,
+	input wire [8:0] vga_start_row,
 	input wire [8:0] vga_start_col,
 	
-	//
+	//VGA connections
 	output reg [8:0] vga_addr_row,
 	output reg [8:0] vga_addr_col,
 	output reg [7:0] vga_data,
 	output reg vga_write_en,
 	
 	
-	//These should already be alligned to the background patterns  
-	input wire [7:0] sprite_pattern_low,
-	input wire [7:0] sprite_pattern_high,
-	input wire [7:0] sprite_attr,
-	//sprite_color_0 is background
-	input wire [7:0] sprite_color_1,
-	input wire [7:0] sprite_color_2,
-	input wire [7:0] sprite_color_3,
+	//Sprite 0 inputs
+	//Color is decoded in load section fsm by color_selector
+	input wire [7:0] sprite_0_pattern_low,
+	input wire [7:0] sprite_0_pattern_high,
+	input wire [7:0] sprite_0_attr,
+	input wire [31:0] sprite_0_colors,
 	
+	//Sprite 0 inputs
+	//Color is decoded in load section fsm
+	input wire [7:0] sprite_1_pattern_low,
+	input wire [7:0] sprite_1_pattern_high,
+	input wire [7:0] sprite_1_attr,
+	input wire [31:0] sprite_1_colors,
 	
+	//Background inputs
+	//Color is decoded in load section fsm
 	input wire [7:0] background_pattern_low,
 	input wire [7:0] background_pattern_high,
-	input wire [7:0] background_color_1,
-	input wire [7:0] background_color_2,
-	input wire [7:0] background_color_3,
+	input wire [31:0] background_colors,
 	
 	//Needed to determine when to draw background
 	input wire [7:0] ppu_ctrl2,
 	
-	
-	output reg busy,
-	input wire start
-	
-	
+	//Control signals for this fsm
+	input wire start,
+	output reg busy
+);
 
+//Inputs to pixel mux
+wire [63:0] pixel_out;
+pixel_mux pixel_mux_inst
+(
+	sprite_0_pattern_low,
+	sprite_0_pattern_high,
+	sprite_0_attr,
+	sprite_0_colors,
+	
+	sprite_1_pattern_low,
+	sprite_1_pattern_high,
+	sprite_1_attr,
+	sprite_1_colors,
+	
+	ppu_ctrl2,
+	
+	background_pattern_low,
+	background_pattern_high,
+	background_colors,
+	
+	pixel_out //The 8 pixels we need to draw
 );
 
 wire draw_sprite = ppu_ctrl2[4];
 wire draw_background = ppu_ctrl2[3];
 
-wire [2:0] pattern_index = (vga_addr_row - vga_start_row)[2:0];
+//Counter for determining when we're done drawing
+wire [2:0] pattern_index = (vga_addr_row - vga_start_row);
 
 localparam [1:0] state_idle = 2'b00, state_draw = 2'b01;
 
@@ -75,7 +100,7 @@ always @ (posedge clk or negedge rst) begin
 	else begin
 	
 		//Idle state
-		if(busy == 1'b0)
+		if(busy == 1'b0) begin
 		
 			vga_write_en <= 1'b0;
 		
@@ -100,36 +125,8 @@ always @ (posedge clk or negedge rst) begin
 			//Always writing in this state
 			vga_write_en <= 1'b1;
 		
-			//If we need to draw a sprite pixel here:
-			//If the sprite has a visible color and is on top of the background or the background is transparent
-			if(draw_sprite && (sprite_pattern_high[pattern_index] || sprite_pattern_low[pattern_index]) && ( (!sprite_attr[5]) || {background_pattern_high[pattern_index], background_pattern_low[pattern_index]} == 2'b0)) begin
-			
-				case({sprite_pattern_high[pattern_index], sprite_pattern_low[pattern_index]})
-				
-					0: vga_data <= 8'b0;
-					1: vga_data <= sprite_color_1;
-					2: vga_data <= sprite_color_2;
-					3: vga_data <= sprite_color_3;
-			
-				endcase
-			
-			end
-			//If we need to draw a background pixel here
-			//And the background is enabled
-			else if(draw_background) begin
-			
-			
-				case({background_pattern_high[pattern_index], background_pattern_low[pattern_index]})
-				
-					0: vga_data <= 8'b0;
-					1: vga_data <= background_color_1;
-					2: vga_data <= background_color_2;
-					3: vga_data <= background_color_3;
-			
-				endcase
-			
-			
-			end
+			//move the next pixel onto the data line
+			vga_data <= pixel_out[((vga_addr_col - vga_start_col ) << 3)+:8];
 		
 			//If we're at the end of the 8 pixels
 			if(pattern_index == 3'b111) begin
@@ -142,7 +139,6 @@ always @ (posedge clk or negedge rst) begin
 			else begin
 			
 				vga_addr_col <= vga_addr_col + 1;
-			
 			
 			end
 		

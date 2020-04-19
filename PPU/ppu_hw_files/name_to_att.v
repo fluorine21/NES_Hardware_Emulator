@@ -7,7 +7,7 @@ module name_to_att
 	input wire [15:0] nametable_addr,
 	
 	output wire [15:0] attr_byte_addr,
-	output wire [2:0] attr_bit_offset
+	output reg [1:0] attr_bit_offset
 
 );
 
@@ -49,7 +49,7 @@ always @ * begin
 		//Even row odd col
 		else begin
 			
-			attr_bit_offset = 2;
+			attr_bit_offset = 1;
 		
 		end
 	
@@ -61,13 +61,13 @@ always @ * begin
 		//Odd row even col
 		if(nametable_col == 1'b0) begin
 		
-			attr_bit_offset = 4;
+			attr_bit_offset = 2;
 		
 		end
 		//Odd row odd col
 		else begin
 		
-			attr_bit_offset = 6;
+			attr_bit_offset = 3;
 		
 		end
 	
@@ -76,4 +76,4 @@ end
 
 
 
-end
+endmodule

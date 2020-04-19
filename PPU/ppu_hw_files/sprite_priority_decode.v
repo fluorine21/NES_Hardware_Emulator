@@ -61,11 +61,20 @@ module sprite_priority_decode
 	input wire [7:0] sprite_7_attr,
 	
 	//The selected sprite to draw
-	output reg draw_sprite, //Set to 1 if this sprite needs to be drawn
-	output reg [7:0] row_out,//y
-	output reg [7:0] col_out,//x
-	output reg [7:0] table_num_out,
-	output reg [7:0] attr_out
+	output reg draw_sprite_0, //Set to 1 if this sprite needs to be drawn
+	output reg [7:0] sprite_0_row_out,//y
+	output reg [7:0] sprite_0_col_out,//x
+	output reg [7:0] sprite_0_table_num_out,
+	output reg [7:0] sprite_0_attr_out,
+	
+	output reg draw_sprite_1, //Set to 1 if this sprite needs to be drawn
+	output reg [7:0] sprite_1_row_out,//y
+	output reg [7:0] sprite_1_col_out,//x
+	output reg [7:0] sprite_1_table_num_out,
+	output reg [7:0] sprite_1_attr_out
+	
+	
+	
 );
 
 
@@ -89,7 +98,7 @@ always @ * begin
 	
 	
 	end
-	if( (sprite_1_col >= screen_curr_col && sprite_1_col < screen_curr_col + 8) || (curr_col >= sprite_1_col && curr_col < sprite_1_col + 8) ) begin
+	else if( (sprite_1_col >= screen_curr_col && sprite_1_col < screen_curr_col + 8) || (curr_col >= sprite_1_col && curr_col < sprite_1_col + 8) ) begin
 
 		draw_sprite <= 1'b1;
 		row_out <= sprite_1_row;
@@ -99,7 +108,7 @@ always @ * begin
 
 
 	end
-	if( (sprite_2_col >= screen_curr_col && sprite_2_col < screen_curr_col + 8) || (curr_col >= sprite_2_col && curr_col < sprite_2_col + 8) ) begin
+	else if( (sprite_2_col >= screen_curr_col && sprite_2_col < screen_curr_col + 8) || (curr_col >= sprite_2_col && curr_col < sprite_2_col + 8) ) begin
 
 		draw_sprite <= 1'b1;
 		row_out <= sprite_2_row;
@@ -109,7 +118,7 @@ always @ * begin
 
 
 	end
-	if( (sprite_3_col >= screen_curr_col && sprite_3_col < screen_curr_col + 8) || (curr_col >= sprite_3_col && curr_col < sprite_3_col + 8) ) begin
+	else if( (sprite_3_col >= screen_curr_col && sprite_3_col < screen_curr_col + 8) || (curr_col >= sprite_3_col && curr_col < sprite_3_col + 8) ) begin
 
 		draw_sprite <= 1'b1;
 		row_out <= sprite_3_row;
@@ -119,7 +128,7 @@ always @ * begin
 
 
 	end
-	if( (sprite_4_col >= screen_curr_col && sprite_4_col < screen_curr_col + 8) || (curr_col >= sprite_4_col && curr_col < sprite_4_col + 8) ) begin
+	else if( (sprite_4_col >= screen_curr_col && sprite_4_col < screen_curr_col + 8) || (curr_col >= sprite_4_col && curr_col < sprite_4_col + 8) ) begin
 
 		draw_sprite <= 1'b1;
 		row_out <= sprite_4_row;
@@ -129,7 +138,7 @@ always @ * begin
 
 
 	end
-	if( (sprite_5_col >= screen_curr_col && sprite_5_col < screen_curr_col + 8) || (curr_col >= sprite_5_col && curr_col < sprite_5_col + 8) ) begin
+	else if( (sprite_5_col >= screen_curr_col && sprite_5_col < screen_curr_col + 8) || (curr_col >= sprite_5_col && curr_col < sprite_5_col + 8) ) begin
 
 		draw_sprite <= 1'b1;
 		row_out <= sprite_5_row;
@@ -139,7 +148,7 @@ always @ * begin
 
 
 	end
-	if( (sprite_6_col >= screen_curr_col && sprite_6_col < screen_curr_col + 8) || (curr_col >= sprite_6_col && curr_col < sprite_6_col + 8) ) begin
+	else if( (sprite_6_col >= screen_curr_col && sprite_6_col < screen_curr_col + 8) || (curr_col >= sprite_6_col && curr_col < sprite_6_col + 8) ) begin
 
 		draw_sprite <= 1'b1;
 		row_out <= sprite_6_row;
@@ -149,7 +158,7 @@ always @ * begin
 
 
 	end
-	if( (sprite_7_col >= screen_curr_col && sprite_7_col < screen_curr_col + 8) || (curr_col >= sprite_7_col && curr_col < sprite_7_col + 8) ) begin
+	else if( (sprite_7_col >= screen_curr_col && sprite_7_col < screen_curr_col + 8) || (curr_col >= sprite_7_col && curr_col < sprite_7_col + 8) ) begin
 
 		draw_sprite <= 1'b1;
 		row_out <= sprite_7_row;
@@ -168,11 +177,6 @@ always @ * begin
 		attr_out <= 8'b0;
 	
 	end
-
-
-
-
-
 
 end
 
