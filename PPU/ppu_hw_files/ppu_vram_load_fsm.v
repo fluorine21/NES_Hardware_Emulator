@@ -93,7 +93,7 @@ wire [7:0] sprite_0_pattern_low_h = sprite_0_attr[6] ? reverse_bits(sprite_0_pat
 wire [7:0] sprite_0_pattern_high_h = sprite_0_attr[6] ? reverse_bits(sprite_0_pattern_low) : sprite_0_pattern_low;
 
 //Pointer to the lower byte in the pattern table we need to load based on if we're flipping this sprite vertically
-wire [15:0] sprite_0_tile_addr = sprite_pattern_base + (sprite_0_tile_num << 4) + //Pattern table start + table num
+wire [15:0] sprite_0_tile_addr = sprite_pattern_base + ({8'b0,sprite_0_tile_num} << 4) + //Pattern table start + table num
 //If we're not flipping, offset is curr_row - sprite_row, otherwise its 7 (or 15 for 8x16) - that value
 ( (sprite_0_attr[7] == 1'b1) ? 
 (ppu_ctrl2[5] ? 15 : 7) - (curr_row - sprite_0_row) : 
@@ -121,7 +121,7 @@ wire draw_sprite_1 = ppu_ctrl2[4] & sprite_1_on_tile;
 //If the background is enabled
 wire draw_background = ppu_ctrl2[3];
 //Sets the attribute 2 bits based on attribute shift for background
-wire [1:0] background_attr = attr_table_result[(attr_shift << 1)+:1];
+wire [1:0] background_attr = attr_table_result[({1'b0, attr_shift} << 1)+:2];
 
 
 //color decoder

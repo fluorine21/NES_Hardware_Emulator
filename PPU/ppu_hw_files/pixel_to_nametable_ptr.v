@@ -35,13 +35,13 @@ always @ * begin
 			//We're in nametable 0
 			//Once you go up one row, go over 32 cols
 			//((row/8)*32) + (col/8)
-			nametable_ptr <= 16'h2000 + (pixel_row[7:3] << 5) + pixel_col[7:3];
+			nametable_ptr <= 16'h2000 + ({8'b0, pixel_row[7:3], 3'b0} << 5) + pixel_col[7:3];
 		
 		end
 		else begin
 		
 			//We're in nametable 1
-			nametable_ptr <= 16'h2400 + (pixel_row[7:0] << 5) + pixel_col[7:3];
+			nametable_ptr <= 16'h2400 + ({8'b0, pixel_row[7:3], 3'b0} << 5) + pixel_col[7:3];
 		
 		end
 	
@@ -51,7 +51,7 @@ always @ * begin
 		if(pixel_col < 256) begin
 		
 			//We're in nametable 2
-			nametable_ptr <= 16'h2800 + (pixel_row[7:0] << 5) + pixel_col[7:3];
+			nametable_ptr <= 16'h2800 + ({8'b0, pixel_row[7:3], 3'b0} << 5) + pixel_col[7:3];
 		
 		end
 		else begin

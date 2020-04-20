@@ -27,7 +27,7 @@ wire [7:0] attr_row = (nametable_row >> 2);
 wire [7:0] attr_col = (nametable_col >> 2);
 
 //Now calculate the full attribute table address
-assign attr_byte_addr = nametable_base_addr + 16'h03C0 + (attr_row << 3) + attr_col;
+assign attr_byte_addr = nametable_base_addr + 16'h03C0 + ({8'b0, attr_row} << 3) + attr_col;
 
 //Finally get the byte offset, rows and cols for nametable
 //even row and col = d1d0

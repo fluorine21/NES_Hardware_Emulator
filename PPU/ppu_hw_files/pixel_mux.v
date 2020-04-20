@@ -47,7 +47,7 @@ always @ * begin
 		) begin
 	
 			//Then we're drawing sprite 0's color
-			pixel_out[(i<<3)+:8] <= sprite_0_colors[({sprite_0_pattern_high[i], sprite_0_pattern_low[i]} << 3)+:8];
+			pixel_out[(i<<3)+:8] <= sprite_0_colors[({6'b0, sprite_0_pattern_high[i], sprite_0_pattern_low[i]} << 3)+:8];
 	
 	
 		end
@@ -65,7 +65,7 @@ always @ * begin
 		
 		
 			//Then we're drawing sprite 1's color
-			pixel_out[(i<<3)+:8] <= sprite_1_colors[({sprite_1_pattern_high[i], sprite_1_pattern_low[i]} << 3)+:8];
+			pixel_out[(i<<3)+:8] <= sprite_1_colors[({6'b0, sprite_1_pattern_high[i], sprite_1_pattern_low[i]} << 3)+:8];
 		
 		end
 		else if
@@ -78,7 +78,7 @@ always @ * begin
 		) begin
 		
 			//Then we're drawing the background's color
-			pixel_out[(i<<3)+:8] <= background_colors[({background_pattern_high[i], background_pattern_low[i]} << 3)+:8];
+			pixel_out[(i<<3)+:8] <= background_colors[({6'b0, background_pattern_high[i], background_pattern_low[i]} << 3)+:8];
 		
 		end
 	

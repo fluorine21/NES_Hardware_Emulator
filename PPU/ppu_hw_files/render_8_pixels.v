@@ -78,7 +78,7 @@ wire draw_sprite = ppu_ctrl2[4];
 wire draw_background = ppu_ctrl2[3];
 
 //Counter for determining when we're done drawing
-wire [2:0] pattern_index = (vga_addr_row - vga_start_row);
+wire [8:0] pattern_index = (vga_addr_col - vga_start_col);
 
 localparam [1:0] state_idle = 2'b00, state_draw = 2'b01;
 
@@ -102,7 +102,7 @@ always @ (posedge clk or negedge rst) begin
 		//Idle state
 		if(busy == 1'b0) begin
 		
-			vga_write_en <= 1'b0;
+
 		
 			//If we need to start drawing these 8 pixels
 			if(start == 1'b1) begin
@@ -110,11 +110,18 @@ always @ (posedge clk or negedge rst) begin
 				//Set the busy line to go to the next state
 				busy <= 1'b1;
 				
+				//Make sure we're writing this cycle
+				vga_write_en <= 1'b1;
+				
 				//Set up the address 
 				vga_addr_row <= vga_start_row;
 				vga_addr_col <= vga_start_col;
 			
-			
+				//Set up the data to be the first pixel
+				vga_data <= pixel_out[63:56];
+			end
+			else begin
+				vga_write_en <= 1'b0;
 			end
 	
 		end
@@ -122,22 +129,22 @@ always @ (posedge clk or negedge rst) begin
 		//Draw state
 		else begin
 		
-			//Always writing in this state
-			vga_write_en <= 1'b1;
-		
-			//move the next pixel onto the data line
-			vga_data <= pixel_out[((vga_addr_col - vga_start_col ) << 3)+:8];
-		
-			//If we're at the end of the 8 pixels
+			//If we latched a 7 on the last state
 			if(pattern_index == 3'b111) begin
 				
 				//Go back go the idle state
 				busy <= 1'b0;
+				vga_write_en <= 1'b0;
 			
 			end
-			//if we need to keep going
 			else begin
-			
+				//Always writing in this state
+				vga_write_en <= 1'b1;
+		
+				//move the next pixel onto the data line
+				//Should be 8 as we need to be 1 up on pattern_index for this load
+				vga_data <= pixel_out[ ((6 - pattern_index) << 3) +:8];
+
 				vga_addr_col <= vga_addr_col + 1;
 			
 			end

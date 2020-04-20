@@ -177,7 +177,7 @@ initial begin
 	ppu_ctrl2 = 8'b00011000;
 	
 	//Set the background colors to all B
-	bacground_colors = 127'hBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB;
+	bacground_colors = 128'hFEDCBA9876543210FEDCBA9876543210;
 	
 	//We'll have the background pattern table start at 0x1000
 	background_pattern_base = 16'h1000;
@@ -185,7 +185,7 @@ initial begin
 	//Other background stuff is determined via pixel_to_nametable_inst
 	
 	//Set the sprite colors to all A
-	sprite_colors = 127'hAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA;
+	sprite_colors = 128'h0123456789ABCDEF0123456789ABCDEF;;
 	//Sprite pattern table will start at 0
 	sprite_pattern_base = 0;
 	
@@ -234,6 +234,9 @@ initial begin
 	
 	//Load the VRAM
 	load_vram();
+	
+	//Run the FSM
+	run_ppu_vram_load_fsm();
 
 end
 
@@ -347,7 +350,7 @@ integer vram_listing[100] =
 	
 	//This is the nametable entry at 2000 for the background
 	//It will point to tile 1 of pattern table 1
-	16'h2000, 16'h0001,
+	16'h2001, 16'h0001,
 	
 	//This is the attribute table entry for nametable 0 tile ptr 0
 	//The fsm should select the second set of two bits
@@ -414,7 +417,7 @@ begin
 		
 		end
 		//If I got too large
-		if(i > 500) begin
+		else if(i > 500) begin
 			
 			$display("PPU VRAM LOAD FSM ERROR, took %d cycles to complete\n", i);
 		
@@ -424,6 +427,9 @@ begin
 		end
 	
 	end
+	
+	//Run the render 8 fsm
+	repeat(100) clk_cycle();
 
 	
 

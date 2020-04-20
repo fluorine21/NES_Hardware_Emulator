@@ -19,11 +19,9 @@ module color_selector
 	
 );
 
-//lower bit pos = sprite_upper * 32 + 8 to select first color
-
-assign background_colors_out = background_colors[(background_upper << 5)+:8];
-assign sprite_0_colors = sprite_colors[(sprite_0_upper << 5) +:8];
-assign sprite_1_colors = sprite_colors[(sprite_1_upper << 5) +:8];
+assign background_colors_out = background_colors[({6'b0, background_upper} << 5)+:32];
+assign sprite_0_colors = sprite_colors[({6'b0, sprite_0_upper} << 5) +:32];
+assign sprite_1_colors = sprite_colors[({6'b0, sprite_1_upper} << 5) +:32];
 
 
 endmodule
