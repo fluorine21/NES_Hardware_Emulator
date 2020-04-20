@@ -29,6 +29,13 @@ entity instr_fetch is
 			signal y_reg: in std_logic_vector(7 downto 0); 
 			signal acc_reg: in std_logic_vector(7 downto 0)	
 			
+			-- b2b memory access
+			signal addr_1		: out std_logic_vector(15 downto 0);
+			signal addr_2		: out std_logic_vector(15 downto 0);
+			
+			signal data_1		: in std_logic_vector(7 downto 0);
+			signal data_2		: in std_logic_vector(7 downto 0);
+			
 			
 		);
 end entity instr_fetch;
@@ -398,8 +405,9 @@ architecture a of instr_fetch is
 							--indx <= '1';
 						when x"71" => --ADC_INDY
 							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
-							addr_temp <= x"00" & instr_reg[1]; -- find the data at this address
-							addr_out <= data_module_out + y_reg;
+							addr_1 <= x"00ff" and instr_reg[1]; -- "00" & LSB
+							addr_2 <= addr_1 + x"01" 
+							addr_out <= (data_2 & data_1) + y_reg;
 							new_op <= x"00";
 						when x"65" => --ADC_ZP
 							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
@@ -435,16 +443,16 @@ architecture a of instr_fetch is
 							new_op <= x"01";
 						when x"31" => --AND_INDY
 							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
-							addr_temp <= x"01" & instr_reg[1]; -- find the data at this address
+							addr_temp <= x"00" & instr_reg[1]; -- find the data at this address
 							addr_out <= data_module + y_reg;
 							new_op <= x"01";
 						when x"25" => --ADC_ZP
 							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
-							addr_out <= x"01" & instr_reg[1];
+							addr_out <= x"00" & instr_reg[1];
 							new_op <= x"01";
 						when x"35" => --ADC_ZPX
 							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
-							addr_out <= x"01" & instr_reg[1] + x_reg;
+							addr_out <= x"00" & instr_reg[1] + x_reg;
 							new_op <= x"01";
 						
 				when OTHERS =>

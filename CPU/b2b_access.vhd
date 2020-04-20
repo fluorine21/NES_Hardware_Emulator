@@ -4,13 +4,13 @@ use IEEE.numeric_std.all;
 
 entity b2b_access is
 	port(
-			addr_1		: in std_logic_vector(15 downto 0);
-			addr_2		: in std_logic_vector(15 downto 0);
+			signal addr_1		: in std_logic_vector(15 downto 0);
+			signal addr_2		: in std_logic_vector(15 downto 0);
 			
-			data_1		: out std_logic_vector(7 downto 0);
-			data_2		: out std_logic_vector(7 downto 0);
+			signal data_1		: out std_logic_vector(7 downto 0);
+			signal data_2		: out std_logic_vector(7 downto 0);
 			
-			mem_read		: out std_logic
+			signal mem_read	: out std_logic
 	);
 	
 architecture b of b2b_access is
