@@ -113,17 +113,17 @@ reg [7:0] col_neg;
 
 begin
 
-sprite_pattern_h = sprite_attr[6] ? reverse_bits(sprite_pattern) : sprite_pattern;
+sprite_pattern_h = sprite_attr[6] ? reverse_bits(sprite_1_pattern_low) : sprite_0_pattern_low;
 col_neg = ~curr_col + 1;
 
-if(curr_col[8]) begin
+if(curr_col[8:0]) begin
 
-	sprite_shift = sprite_pattern_h >> (col_neg + sprite_col);
+	sprite_shift = sprite_pattern_h >> (col_neg + sprite_pattern_h);
 
 end
 else begin
 
-	sprite_shift = (sprite_col > curr_col) ? sprite_pattern_h >> (sprite_col - curr_col) : sprite_pattern_h << (curr_col - sprite_col);
+	sprite_shift = (sprite_col > curr_col) ? sprite_pattern_h >> (sprite_col - curr_col) : sprite_pattern_h << (curr_col - sprite_1_col);
 
 end
 
