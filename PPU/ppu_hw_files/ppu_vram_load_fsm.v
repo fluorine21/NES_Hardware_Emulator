@@ -17,6 +17,7 @@ module ppu_vram_load_fsm
 	inout wire [15:0] vram_addr_wire,//tristate
 	input wire [7:0] vram_data_in,
 	
+	input wire [7:0] ppu_ctrl1,//Used for determining if 8x8 or 8x16
 	input wire [7:0] ppu_ctrl2,//Used to determine if things need to be drawn or not
 	
 	//Everything needed to draw background
@@ -87,19 +88,42 @@ reg [7:0] sprite_0_pattern_low, sprite_0_pattern_high, sprite_1_pattern_low, spr
 
 //Sprite memory and shifting definitions
 //Pointer to the lower byte in the pattern table we need to load based on if we're flipping this sprite vertically
-wire [15:0] sprite_0_tile_addr = sprite_pattern_base + ({8'b0,sprite_0_tile_num} << 4) + //Pattern table start + table num
-//If we're not flipping, offset is curr_row - sprite_row, otherwise its 7 (or 15 for 8x16) - that value
-( (sprite_0_attr[7] == 1'b1) ? 
-(ppu_ctrl2[5] ? 15 : 7) - (curr_row - sprite_0_row) : 
-curr_row - sprite_0_row);
+wire [15:0] sprite_0_tile_addr = get_sprite_tile_addr(sprite_pattern_base, sprite_0_tile_num, sprite_0_attr, sprite_0_row, curr_row);
 //Defines the final sprite pattern to be loaded into render 8 based on sprite x position
 wire [7:0] sprite_0_pattern_low_final = sprite_shift(sprite_0_pattern_low, curr_col, sprite_0_col, sprite_0_attr);
 wire [7:0] sprite_0_pattern_high_final = sprite_shift(sprite_0_pattern_high, curr_col, sprite_0_col, sprite_0_attr);
 
 //Sprite 1 definitions same as above
-wire [15:0] sprite_1_tile_addr = sprite_pattern_base + ({8'b0, sprite_1_tile_num} << 4) + ( (sprite_1_attr[7] == 1'b1) ? (ppu_ctrl2[5] ? 15 : 7) - (curr_row - sprite_1_row) : curr_row - sprite_1_row);
+wire [15:0] sprite_1_tile_addr = get_sprite_tile_addr(sprite_pattern_base, sprite_1_tile_num, sprite_1_attr, sprite_1_row, curr_row);
 wire [7:0] sprite_1_pattern_low_final = sprite_shift(sprite_1_pattern_low, curr_col, sprite_1_col, sprite_1_attr);
 wire [7:0] sprite_1_pattern_high_final = sprite_shift(sprite_1_pattern_high, curr_col, sprite_1_col, sprite_1_attr);
+
+
+
+function [15:0] get_sprite_tile_addr;
+input [15:0] sprite_base;
+input [7:0] sprite_tile_num;
+input [7:0] sprite_attr;
+input [7:0] sprite_row;
+input [8:0] curr_row;
+begin
+
+//If it's an 8x8
+if(ppu_ctrl1[5] == 0) begin
+
+	get_sprite_tile_addr = sprite_base + ({8'b0, sprite_tile_num} << 4) + (sprite_attr[7] ? (7 - (curr_row - sprite_row)) : (curr_row - sprite_row));
+
+end
+//8x16
+else begin
+
+	get_sprite_tile_addr = (sprite_tile_num[0] ? 16'h1000 : 16'h0000) + ({9'b0, sprite_tile_num[7:1]} << 4) + (sprite_attr[7] ? (15 - (curr_row - sprite_row)) : (curr_row - sprite_row));
+
+end
+
+
+end
+endfunction
 
 
 function [7:0] sprite_shift;

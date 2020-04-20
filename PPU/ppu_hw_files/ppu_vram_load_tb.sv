@@ -15,6 +15,7 @@ reg [8:0] curr_row, curr_col;//relative to screen
 wire [15:0] vram_addr;
 wire [7:0] vram_data_in;
 
+reg [7:0] ppu_ctrl1;
 reg [7:0] ppu_ctrl2;
 
 reg [127:0] bacground_colors;
@@ -55,7 +56,7 @@ reg vram_write_en;
 
 //inputs to pixel_to_nametable_ptr
 reg [15:0] cpu_scroll_addr;
-reg [7:0] ppu_ctrl1;
+
 
 pixel_to_nametable_ptr pixel_to_nametable_inst
 (
@@ -91,6 +92,7 @@ ppu_vram_load_fsm dut
 	vram_addr,
 	vram_data_in,
 	
+	ppu_ctrl1,
 	ppu_ctrl2,
 	
 	//Background info
@@ -173,6 +175,10 @@ initial begin
 	curr_row = 0;
 	curr_col = 8;
 	
+	//Enable 8x8 sprites
+	//and set nametable base address to 2000
+	ppu_ctrl1 = 0;
+	
 	//Enable sprites and background
 	ppu_ctrl2 = 8'b00011000;
 	
@@ -221,8 +227,6 @@ initial begin
 	//Set the offset to 0 for now
 	cpu_scroll_addr = 0;
 	
-	//Set nametable base address to 2000
-	ppu_ctrl1 = 0;
 	
 	
 	//////////////////////////////////////////////
@@ -239,6 +243,14 @@ initial begin
 	run_ppu_vram_load_fsm();
 	//Should have 89 89 89 fe fe 01 01
 	
+	//Row 2
+	//just change the current row to 1, should have the same thing 1 row down
+	curr_row = 1;
+	//Run the test again
+	run_ppu_vram_load_fsm();
+	//Should have 
+	
+	
 	//Off to the left side test
 	curr_col = -2;
 	cpu_scroll_addr = 2;//This should make it so we start rendering part of the way through tile 0 in nametable 0
@@ -253,6 +265,20 @@ initial begin
 	run_ppu_vram_load_fsm();
 	
 	
+	//Off to the right side test:
+	curr_col = 252;
+	//We need to start at col 4 relative to background so that 252 is on a tile boundary
+	cpu_scroll_addr = 4; //This should tell it to look at entry 0 of nametable 1
+	
+	//Set the sprite to be slightly on the screen
+	sprite_0_col = 254;
+	
+	//Run the test
+	//Should see xxxxBBSS in memory
+	run_ppu_vram_load_fsm();
+	
+	
+
 	
 
 end
@@ -303,14 +329,14 @@ end
 endtask
 
 //Memory listing for vram
-integer vram_listing[102] = 
+integer vram_listing[106] = 
 {
 	//memory address, value (upper bits are 0
 	
 	//This is the sprite pattern found at tile 0 of pattern table 0
 	//This would make the sprite 0 a solid square of color 3
 	16'h0000, 16'h00FF,
-	16'h0001, 16'h00FF,
+	16'h0001, 16'h0000,
 	16'h0002, 16'h00FF,
 	16'h0003, 16'h00FF,
 	16'h0004, 16'h00FF,
@@ -329,7 +355,7 @@ integer vram_listing[102] =
 	//This is the sprite pattern found at tile 1 of pattern table 0
 	//This would make the sprite 1 a solid square of color 3
 	16'h0010, 16'h00FF,
-	16'h0011, 16'h00FF,
+	16'h0011, 16'h0000,
 	16'h0012, 16'h00FF,
 	16'h0013, 16'h00FF,
 	16'h0014, 16'h00FF,
@@ -349,7 +375,7 @@ integer vram_listing[102] =
 	//This is the background pattern found at tile 1 of pattern table 1
 	//This would make the background a solid square of color 3
 	16'h1010, 16'h00FF,
-	16'h1011, 16'h00FF,
+	16'h1011, 16'h0000,//Need to select a different color for this row
 	16'h1012, 16'h00FF,
 	16'h1013, 16'h00FF,
 	16'h1014, 16'h00FF,
@@ -369,13 +395,12 @@ integer vram_listing[102] =
 	//It will point to tile 1 of pattern table 1
 	16'h2000, 16'h0001,
 	16'h2001, 16'h0001,
+	16'h2400, 16'h0001,
 	
 	//This is the attribute table entry for nametable 0 tile ptr 0
 	//The fsm should select the second set of two bits
-	16'h23C0, 16'b0000000000001101
-	
-	
-	
+	16'h23C0, 16'b0000000000001101,
+	16'h27C0, 16'h0//This is for nametable 1
 };
 
 
