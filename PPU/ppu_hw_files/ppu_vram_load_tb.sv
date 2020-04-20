@@ -240,15 +240,16 @@ initial begin
 	load_vram();
 	
 	//Run the FSM
-	run_ppu_vram_load_fsm();
+	run_ppu_vram_load_fsm();//Test 1
 	//Should have 89 89 89 fe fe 01 01
 	
 	//Row 2
 	//just change the current row to 1, should have the same thing 1 row down
 	curr_row = 1;
 	//Run the test again
-	run_ppu_vram_load_fsm();
+	run_ppu_vram_load_fsm();//Test 2
 	//Should have 
+	curr_row = 0;
 	
 	
 	//Off to the left side test
