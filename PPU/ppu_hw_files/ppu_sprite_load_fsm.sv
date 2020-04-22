@@ -63,7 +63,7 @@ begin
 //Default value indicating no sprite is here
 get_sprite_0_num = 8'hFF;
 
-for(i = 0; i < 64 + 8; i = i + 8) begin
+for(i = 0; i < 64; i = i + 8) begin
 	
 	//If it's this sprite and this sprite isn't invalid
 	if(check_sprite_col_0(sprite_cols_in[i+:8]) && sprite_rows_in[i+:8] != 8'hFF) begin
@@ -89,7 +89,7 @@ begin
 //Default value indicating no sprite is here
 get_sprite_1_num = 8'hFF;
 
-for(i = 0; i < 64 + 8; i = i + 8) begin
+for(i = 0; i < 64; i = i + 8) begin
 	
 	//If it's this sprite
 	if(check_sprite_col_1(sprite_cols_in[i+:8], (i>>3)) && sprite_rows_in[i+:8] != 8'hFF) begin
