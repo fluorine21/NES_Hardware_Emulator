@@ -74,8 +74,6 @@ pixel_mux pixel_mux_inst
 	pixel_out //The 8 pixels we need to draw
 );
 
-wire draw_sprite = ppu_ctrl2[4];
-wire draw_background = ppu_ctrl2[3];
 
 //Counter for determining when we're done drawing
 wire [8:0] pattern_index = (vga_addr_col - vga_start_col);

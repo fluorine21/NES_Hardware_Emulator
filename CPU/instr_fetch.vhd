@@ -32,6 +32,13 @@ entity instr_fetch is
 			signal data_1		: in std_logic_vector(7 downto 0);
 			signal data_2		: in std_logic_vector(7 downto 0)
 			
+			-- b2b memory access
+			signal addr_1		: out std_logic_vector(15 downto 0);
+			signal addr_2		: out std_logic_vector(15 downto 0);
+			
+			signal data_1		: in std_logic_vector(7 downto 0);
+			signal data_2		: in std_logic_vector(7 downto 0);
+			
 			
 		);
 end entity instr_fetch;
@@ -206,11 +213,6 @@ architecture a of instr_fetch is
 
 	constant RTS		: std_logic_vector(7 downto 0) := to_stdlogicvector(x"60");
 
-	constant SAX_ABS	: std_logic_vector(7 downto 0) := to_stdlogicvector(x"8F");
-	constant SAX_INDX	: std_logic_vector(7 downto 0) := to_stdlogicvector(x"83");
-	constant SAX_ZP	: std_logic_vector(7 downto 0) := to_stdlogicvector(x"87");
-	constant SAX_ZPY	: std_logic_vector(7 downto 0) := to_stdlogicvector(x"97");
-
 	constant SBC_ABS	: std_logic_vector(7 downto 0) := to_stdlogicvector(x"ED");
 	constant SBC_ABSX	: std_logic_vector(7 downto 0) := to_stdlogicvector(x"FD");
 	constant SBC_ABSY	: std_logic_vector(7 downto 0) := to_stdlogicvector(x"F9");
@@ -344,6 +346,7 @@ architecture a of instr_fetch is
 						
 						when x"61" => --ADC_INDX
 							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+<<<<<<< HEAD
 							addr_1 <= (x"00ff" and instr_reg[1]) + x_reg; -- (x"00" & operand1) + x_reg
 							addr_2 <= addr_1 + x"01";
 							addr_out <= data_2 & data_1;
@@ -353,6 +356,16 @@ architecture a of instr_fetch is
 							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
 							addr_1 <= x"00ff" and instr_reg[1]; -- x"00" & operand1
 							addr_2 <= addr_1 + x"01";
+=======
+							addr_1 <= (x"00ff" and instr_reg[1]) + x_reg; -- have to get data from this address (and address+1) and concatenate and put into data_module
+							addr_2 <= addr_1 + x"01" 
+							addr_out <= data_2 & data_1;
+							new_op <= x"00";
+						when x"71" => --ADC_INDY
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_1 <= x"00ff" and instr_reg[1]; -- "00" & LSB
+							addr_2 <= addr_1 + x"01" 
+>>>>>>> 3ba687d0b44fcd99341342186eac8bf933c5c584
 							addr_out <= (data_2 & data_1) + y_reg;
 							new_op <= x"00";
 						
@@ -366,7 +379,80 @@ architecture a of instr_fetch is
 							addr_out <= x"00" & instr_reg[1] + x_reg;
 							new_op <= x"00";
 							
+						
 							
+						-- LDX -- simplified opcode: x"1F" -- Load X Register
+						when x"AE" => --LDX_ABS
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(3,8)); --length 3
+							addr_out <= instr_reg[2] & instr_reg[1];
+							new_op <= x"1F";
+						when x"BE" => --LDX_ABSY
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(3,8)); --length 3
+							addr_out <= instr_reg[2] & instr_reg[1] + y_reg;
+							new_op <= x"1F";
+						when x"A2" => --LDX_IMM
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= instr_reg[1];
+							new_op <= x"1F";
+						when x"A6" => --LDX_ZP
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= x"00" & instr_reg[1];
+							new_op <= x"1F";
+						when x"B6" => --LDX_ZPY
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= x"00" & instr_reg[1] + y_reg;
+							new_op <= x"1F";
+							
+						-- LDY -- simplified opcode: x"20" -- Load Y Register
+						when x"AC" => --LDY_ABS
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(3,8)); --length 3
+							addr_out <= instr_reg[2] & instr_reg[1];
+							new_op <= x"20";
+						when x"BC" => --LDY_ABSX
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(3,8)); --length 3
+							addr_out <= instr_reg[2] & instr_reg[1] + y_reg;
+							new_op <= x"20";
+						when x"A0" => --LDY_IMM
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= instr_reg[1];
+							new_op <= x"20";
+						when x"A4" => --LDY_ZP
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= x"00" & instr_reg[1];
+							new_op <= x"20";
+						when x"B4" => --LDY_ZPX
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= x"00" & instr_reg[1] + x_reg;
+							new_op <= x"20";
+							
+						-- LSR -- simplified opcode: x"21" -- Logical Shift Right
+						when x"4E" => --LSR_ABS
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(3,8)); --length 3
+							addr_out <= instr_reg[2] & instr_reg[1];
+							new_op <= x"21";
+						when x"5E" => --LSR_ABSX
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(3,8)); --length 3
+							addr_out <= instr_reg[2] & instr_reg[1] + y_reg;
+							new_op <= x"21";
+						when x"4A" => --LSR_ACC
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= acc_reg;
+							new_op <= x"21";
+						when x"46" => --LSR_ZP
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= x"00" & instr_reg[1];
+							new_op <= x"21";
+						when x"56" => --LSR_ZPX
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= x"00" & instr_reg[1] + x_reg;
+							new_op <= x"21";
+							
+						-- NOP -- simplified opcode: x"22" -- No Operation
+						when x"EA" => --NOP -- GO OVER
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(1,8)); --length 1
+							new_op <= x"22";
+							
+<<<<<<< HEAD
 						-- AND -- simplified opcode: x"01" -- Bitwise And with Accumulator
 						when x"2D" => --AND_ABS
 							pc <= std_logic_vector(unsigned(pc) + to_unsigned(3,8)); --length 3
@@ -1043,6 +1129,206 @@ architecture a of instr_fetch is
 						when x"95" => --STA_ZPX
 							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
 							addr_out <= x"00" & instr_reg[1] + x_reg;
+=======
+						-- ORA -- simplified opcode: x"23" -- bitwise OR with Accumulator
+						when x"0D" => --ORA_ABS
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(3,8)); --length 3
+							addr_out <= instr_reg[2] & instr_reg[1];
+							new_op <= x"23";
+						when x"1D" => --ORA_ABSX
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(3,8)); --length 3
+							addr_out <= instr_reg[2] & instr_reg[1] + x_reg;
+							new_op <= x"23";
+						when x"19" => --ORA_ABSY
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(3,8)); --length 3
+							addr_out <= instr_reg[2] & instr_reg[1] + y_reg;
+							new_op <= x"23";
+						when x"09" => --ORA_IMM
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= instr_reg[1];
+							new_op <= x"23";
+						when x"01" => --ORA_INDX
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_1 <= (x"00ff" and instr_reg[1]) + x_reg; -- have to get data from this address (and address+1) and concatenate and put into data_module
+							addr_2 <= addr_1 + x"01" 
+							addr_out <= data_2 & data_1;
+							new_op <= x"23";
+						when x"11" => --ORA_INDY
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_1 <= x"00ff" and instr_reg[1]; -- "00" & LSB
+							addr_2 <= addr_1 + x"01" 
+							addr_out <= (data_2 & data_1) + y_reg;
+							new_op <= x"23";
+						when x"05" => --ORA_ZP
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= x"00" & instr_reg[1];
+							new_op <= x"23";
+						when x"15" => --ORA_ZPX
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= x"00" & instr_reg[1] + x_reg;
+							new_op <= x"23";
+							
+						-- PHA -- simplified opcode: x"24" -- Push Accumulator
+						when x"48" => --NOP -- GO OVER
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(1,8)); --length 1
+							new_op <= x"24";
+							
+						-- PHP -- simplified opcode: x"25" -- Push Processor Status
+						when x"08" => --NOP -- GO OVER
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(1,8)); --length 1
+							new_op <= x"25";
+							
+						-- PLA -- simplified opcode: x"26" -- Pull/Pop Accumulator
+						when x"68" => --NOP -- GO OVER
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(1,8)); --length 1
+							new_op <= x"26";
+							
+						-- PLP -- simplified opcode: x"27" -- Pull/Pop Processor Status
+						when x"28" => --NOP -- GO OVER
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(1,8)); --length 1
+							new_op <= x"27";
+							
+						-- ROL -- simplified opcode: x"28" -- Rotate Left
+						when x"2E" => --ROL_ABS
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(3,8)); --length 3
+							addr_out <= instr_reg[2] & instr_reg[1];
+							new_op <= x"28";
+						when x"3E" => --ROL_ABSX
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(3,8)); --length 3
+							addr_out <= instr_reg[2] & instr_reg[1] + y_reg;
+							new_op <= x"28";
+						when x"2A" => --ROL_ACC
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= acc_reg;
+							new_op <= x"28";
+						when x"26" => --ROL_ZP
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= x"00" & instr_reg[1];
+							new_op <= x"28";
+						when x"36" => --ROL_ZPX
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= x"00" & instr_reg[1] + x_reg;
+							new_op <= x"28";
+						
+						-- ROR -- simplified opcode: x"29" -- Rotate Right
+						when x"6E" => --ROR_ABS
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(3,8)); --length 3
+							addr_out <= instr_reg[2] & instr_reg[1];
+							new_op <= x"29";
+						when x"7E" => --ROR_ABSX
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(3,8)); --length 3
+							addr_out <= instr_reg[2] & instr_reg[1] + y_reg;
+							new_op <= x"29";
+						when x"6A" => --ROR_ACC
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= acc_reg;
+							new_op <= x"29";
+						when x"66" => --ROR_ZP
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= x"00" & instr_reg[1];
+							new_op <= x"29";
+						when x"76" => --ROR_ZPX
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= x"00" & instr_reg[1] + x_reg;
+							new_op <= x"29";
+						
+						-- RTI -- simplified opcode: x"2A" -- Return from Interrupt
+						when x"40" => --RTI -- GO OVER
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(1,8)); --length 1
+							new_op <= x"2A";
+							
+						-- RTS -- simplified opcode: x"2B" -- Return from Subroutine
+						when x"60" => --RTS -- GO OVER
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(1,8)); --length 1
+							new_op <= x"2B";
+							
+							
+						-- SBC -- simplified opcode: x"2D" -- Subtract with Carry
+						when x"ED" => --SBC_ABS
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(3,8)); --length 3
+							addr_out <= instr_reg[2] & instr_reg[1];
+							new_op <= x"2D";
+						when x"FD" => --SBC_ABSX
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(3,8)); --length 3
+							addr_out <= instr_reg[2] & instr_reg[1] + x_reg;
+							new_op <= x"2D";
+						when x"F9" => --SBC_ABSY
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(3,8)); --length 3
+							addr_out <= instr_reg[2] & instr_reg[1] + y_reg;
+							new_op <= x"2D";
+						when x"E9" => --SBC_IMM
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= instr_reg[1];
+							new_op <= x"2D";
+						when x"E1" => --SBC_INDX
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_1 <= (x"00ff" and instr_reg[1]) + x_reg; -- have to get data from this address (and address+1) and concatenate and put into data_module
+							addr_2 <= addr_1 + x"01" 
+							addr_out <= data_2 & data_1;
+							new_op <= x"2D";
+						when x"F1" => --SBC_INDY
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_1 <= x"00ff" and instr_reg[1]; -- "00" & LSB
+							addr_2 <= addr_1 + x"01" 
+							addr_out <= (data_2 & data_1) + y_reg;
+							new_op <= x"2D";
+						when x"E5" => --SBC_ZP
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= x"00" & instr_reg[1];
+							new_op <= x"2D";
+						when x"F5" => --SBC_ZPX
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= x"00" & instr_reg[1] + x_reg;
+							new_op <= x"2D";
+							
+						-- SEC -- simplified opcode: x"2E" -- Set Carry
+						when x"38" => --SEC -- GO OVER
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(1,8)); --length 1
+							new_op <= x"2E";
+							
+						-- SED -- simplified opcode: x"2F" -- Set Decimal
+						when x"F8" => --SED -- GO OVER
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(1,8)); --length 1
+							new_op <= x"2F";
+							
+						-- SEI -- simplified opcode: x"30" -- Set Interrupt
+						when x"78" => --SEI -- GO OVER
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(1,8)); --length 1
+							new_op <= x"30";
+							
+						-- STA -- simplified opcode: x"31" -- Store Accumulator
+						when x"8D" => --STA_ABS
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(3,8)); --length 3
+							addr_out <= instr_reg[2] & instr_reg[1];
+							new_op <= x"31";
+						when x"9D" => --STA_ABSX
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(3,8)); --length 3
+							addr_out <= instr_reg[2] & instr_reg[1] + x_reg;
+							new_op <= x"31";
+						when x"99" => --STA_ABSY
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(3,8)); --length 3
+							addr_out <= instr_reg[2] & instr_reg[1] + y_reg;
+							new_op <= x"31";
+						when x"81" => --STA_INDX
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_1 <= (x"00ff" and instr_reg[1]) + x_reg; -- have to get data from this address (and address+1) and concatenate and put into data_module
+							addr_2 <= addr_1 + x"01" 
+							addr_out <= data_2 & data_1;
+							new_op <= x"31";
+						when x"91" => --STA_INDY
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_1 <= x"00ff" and instr_reg[1]; -- "00" & LSB
+							addr_2 <= addr_1 + x"01" 
+							addr_out <= (data_2 & data_1) + y_reg;
+							new_op <= x"31";
+						when x"85" => --STA_ZP
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= x"00" & instr_reg[1];
+							new_op <= x"31";
+						when x"95" => --STA_ZPX
+							pc <= std_logic_vector(unsigned(pc) + to_unsigned(2,8)); --length 2
+							addr_out <= x"00" & instr_reg[1] + x_reg;
+>>>>>>> 3ba687d0b44fcd99341342186eac8bf933c5c584
 							new_op <= x"31";
 							
 						-- STX -- simplified opcode: x"32" -- Store X Register
@@ -1101,8 +1387,12 @@ architecture a of instr_fetch is
 						-- TYA -- simplified opcode: x"39" -- Transfer Y to A
 						when x"98" => --TYA -- GO OVER
 							pc <= std_logic_vector(unsigned(pc) + to_unsigned(1,8)); --length 1
+<<<<<<< HEAD
 							new_op <= x"39";	
 							
+=======
+							new_op <= x"39";
+>>>>>>> 3ba687d0b44fcd99341342186eac8bf933c5c584
 						
 				when OTHERS =>
 					next_state <= idle;

@@ -81,6 +81,9 @@ always @ * begin
 			pixel_out[(i<<3)+:8] <= background_colors[({6'b0, background_pattern_high[i], background_pattern_low[i]} << 3)+:8];
 		
 		end
+		else begin//Default to avoid latches
+			pixel_out[(i<<3)+:8] <= 0;
+		end
 	
 	end
 

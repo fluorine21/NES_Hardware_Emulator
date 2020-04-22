@@ -18,9 +18,10 @@ module pixel_to_nametable_ptr
 );
 
 
-
-wire [8:0] pixel_row = screen_pixel_row + {ppu_ctrl1[1], cpu_scroll_addr[15:8]};
-wire [8:0] pixel_col = screen_pixel_col + {ppu_ctrl1[2], cpu_scroll_addr[7:0]};
+//These are relative to the nametables
+//Need the 9 bits to count past 512 to do the wrap around
+wire [9:0] pixel_row = {1'b0, screen_pixel_row} + {1'b0, ppu_ctrl1[1], cpu_scroll_addr[15:8]};
+wire [9:0] pixel_col = {1'b0, screen_pixel_col} + {1'b0, ppu_ctrl1[2], cpu_scroll_addr[7:0]};
 
 assign pattern_table_offset = pixel_row[2:0];
 
@@ -28,9 +29,9 @@ assign pattern_table_offset = pixel_row[2:0];
 always @ * begin
 
 	//If we're in the upper region of the screen
-	if(pixel_row < 240) begin
+	if(pixel_row < 240 || pixel_row > 479) begin
 	
-		if(pixel_col < 256) begin
+		if(pixel_col < 256 || pixel_col > 512) begin
 		
 			//We're in nametable 0
 			//Once you go up one row, go over 32 cols
@@ -48,7 +49,7 @@ always @ * begin
 	end
 	else begin
 	
-		if(pixel_col < 256) begin
+		if(pixel_col < 256 || pixel_col > 512) begin
 		
 			//We're in nametable 2
 			nametable_ptr <= 16'h2800 + ({8'b0, pixel_row[7:3], 3'b0} << 5) + pixel_col[7:3];

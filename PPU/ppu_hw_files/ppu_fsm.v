@@ -42,10 +42,9 @@ reg [8:0] screen_pixel_col;
 
 //At the start of the row, loop through the sprite attribute table and see which sprites are on this line
 
-//keeps track of how many sprites are on this scan line
-reg [2:0] sprite_cnt;
+
 //Keeps track of which sprite we're currently looking at in the scanline
-reg [2:0] sprite_hit_cnt;
+
 
 case(state):
 

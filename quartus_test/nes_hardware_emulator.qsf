@@ -38,7 +38,7 @@
 
 set_global_assignment -name FAMILY "Cyclone IV E"
 set_global_assignment -name DEVICE EP4CE115F29C7
-set_global_assignment -name TOP_LEVEL_ENTITY mem_ctrl
+set_global_assignment -name TOP_LEVEL_ENTITY ppu_vram_load_fsm
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 17.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "18:03:26  APRIL 12, 2020"
 set_global_assignment -name LAST_QUARTUS_VERSION "17.1.0 Lite Edition"
@@ -47,14 +47,16 @@ set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
 set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 1
 set_global_assignment -name NOMINAL_CORE_SUPPLY_VOLTAGE 1.2V
-set_global_assignment -name VERILOG_FILE mem_ctrl_hw_files/ppu_mem_decode.v
-set_global_assignment -name VERILOG_FILE mem_ctrl_hw_files/mem_ctrl.v
-set_global_assignment -name VERILOG_FILE mem_ctrl_hw_files/cpu_mem_decode.v
-set_global_assignment -name SDC_FILE nes_hardware_emulator.sdc
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
-set_global_assignment -name VERILOG_FILE ../MEM/generic_ram.v
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name VERILOG_FILE ../PPU/ppu_hw_files/pixel_mux.v
+set_global_assignment -name VERILOG_FILE ../PPU/ppu_hw_files/color_selector.v
+set_global_assignment -name SDC_FILE nes_hardware_emulator.sdc
+set_global_assignment -name VERILOG_FILE ../PPU/ppu_hw_files/render_8_pixels.v
+set_global_assignment -name VERILOG_FILE ../PPU/ppu_hw_files/ppu_vram_load_fsm.v
+set_global_assignment -name SYSTEMVERILOG_FILE ../PPU/ppu_hw_files/ppu_sprite_load_fsm.sv
+set_global_assignment -name VERILOG_FILE ../PPU/ppu_hw_files/ppu_color_load_fsm.v
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
