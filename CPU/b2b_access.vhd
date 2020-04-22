@@ -4,14 +4,18 @@ use IEEE.numeric_std.all;
 
 entity b2b_access is
 	port(
-			signal addr_1		: in std_logic_vector(15 downto 0);
-			signal addr_2		: in std_logic_vector(15 downto 0);
+			clk			: in std_logic;
+			rst			: in std_logic;
 			
-			signal data_1		: out std_logic_vector(7 downto 0);
-			signal data_2		: out std_logic_vector(7 downto 0);
+			addr_1		: in std_logic_vector(15 downto 0);
+			addr_2		: in std_logic_vector(15 downto 0);
 			
-			signal mem_read	: out std_logic
+			data_1		: out std_logic_vector(7 downto 0);
+			data_2		: out std_logic_vector(7 downto 0);
+			
+			mem_read		: out std_logic
 	);
+end entity;
 	
 architecture b of b2b_access is
 	type state_type is (s0, s1, s2, s3);
@@ -21,33 +25,50 @@ architecture b of b2b_access is
 	signal mem_data_in : std_logic_vector(7 downto 0);
 	
 	begin 
-		comb_proc: process ()
+		comb_proc: process (addr_1, addr_2, mem_data_in, state)
 			
 		begin
+		
+			state <= next_state;
+			
 			case (state) is
 			
 				when s0 =>
 					
 					mem_addr <= addr_1;
 					mem_read <= '1';
-					state <= s1;
+					next_state <= s1;
 					
 				when s1 =>
 					
 					mem_read <= '1';
 					mem_addr <= addr_2;
-					state <= s2;
+					next_state <= s2;
 					
 				when s2 =>
 				
 					data_1 <= std_logic_vector(resize(unsigned(mem_data_in), 16));
 					mem_read <= '0';
-					state <= s3;
+					next_state <= s3;
 					
 				when s3 =>
 				
 					data_2 <= std_logic_vector(resize(unsigned(mem_data_in), 16));
 					
+				when OTHERS =>
+					
+					next_state <= s0;
+					
 			end case;
 		end process comb_proc;
+		
+		clk_proc: process(rst, clk)   
+		begin
+		if (rst = '1') then
+			state <= idle;
+		elsif(rising_edge(clk)) then
+			state <= next_state;
+		end if;
+	end process clk_proc;
+	
 end architecture;
