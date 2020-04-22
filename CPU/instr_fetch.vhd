@@ -7,17 +7,16 @@ entity instr_fetch is
 
 			signal clk: in std_logic;
 			signal rst: in std_logic;
-			signal ready:	in std_logic; --start
 		
 			--memory bus
 			signal addr_out: out std_logic_vector(15 downto 0); -- address bus going from IF to IE
-			
-			signal ctrl_out: out std_logic_vector(7 downto 0); -- control bus
-			
-			signal done: out std_logic;
-			signal new_op: out std_logic_vector(7 downto 0);
-			signal pc_ie: in std_logic_vector(7 downto 0);
+						
+			signal new_op  : out std_logic_vector(7 downto 0);
+			signal pc_ie   : in std_logic_vector(7 downto 0);
 			signal ie_ready: in std_logic;
+			signal instr_valid: out std_logic;
+			signal pc		: out std_logic_vector(7 downto 0); --going to IE
+
 			
 			-- special purpose registers
 			signal x_reg: in std_logic_vector(7 downto 0); 
@@ -37,15 +36,9 @@ entity instr_fetch is
 end entity instr_fetch;
 
 architecture a of instr_fetch is
-
-	
-
-	--Signals and components go here 
-
 	
 	
 	signal opcode			: std_logic_vector(15 downto 0); --{opcode, operand}
-	signal pc				: std_logic_vector(7 downto 0); --assuming PC is holding memory address
 	signal addr_pc			: std_logic_vector(15 downto 0);
 	 
 	signal accessing_mem_bus	: std_logic := '0'; --	1 means ready	
@@ -101,6 +94,7 @@ architecture a of instr_fetch is
 					
 				
 				when decode_op => --update pc, mem address, simplify opcode
+					instr_valid <= '1';
 					case (instr_reg("00")) is
 															
 						-- ADC -- simplified opcode: x"00" -- Add with Carry
@@ -889,7 +883,8 @@ architecture a of instr_fetch is
 						-- OTHERS
 						when OTHERS =>
 							new_op <= x"22";
-							
+							instr_valid <= '0';
+
 						end case;
 							
 						
