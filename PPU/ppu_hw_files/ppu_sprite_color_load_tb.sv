@@ -111,6 +111,8 @@ wire sprite_overflow;
 reg sprite_start;
 wire sprite_busy;
 reg [7:0] cpu_sprite_addr;
+wire sprite_0_is_0, sprite_1_is_0;
+
 
 integer i;
 
@@ -140,7 +142,10 @@ ppu_sprite_load_fsm sprite_load_dut
 	sprite_overflow,
 	sprite_start,
 	sprite_busy,
-	cpu_sprite_addr
+	cpu_sprite_addr,
+	
+	sprite_0_is_0,
+	sprite_1_is_0
 	
 );
 

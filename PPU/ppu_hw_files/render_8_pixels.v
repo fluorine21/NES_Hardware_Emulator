@@ -48,7 +48,10 @@ module render_8_pixels
 	
 	//Control signals for this fsm
 	input wire start,
-	output reg busy
+	output reg busy,
+	
+	output wire sprite_0_hit,
+	output wire sprite_1_hit
 );
 
 //Inputs to pixel mux
@@ -71,7 +74,10 @@ pixel_mux pixel_mux_inst
 	background_pattern_high,
 	background_colors,
 	
-	pixel_out //The 8 pixels we need to draw
+	pixel_out, //The 8 pixels we need to draw
+	
+	sprite_0_hit,
+	sprite_1_hit
 );
 
 

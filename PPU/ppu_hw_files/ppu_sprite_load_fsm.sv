@@ -29,13 +29,19 @@ module ppu_sprite_load_fsm
 	output reg sprite_overflow,//set if sprite_cnt > 8
 	input wire start,
 	output wire busy,
-	input wire [7:0] cpu_sprite_addr //Sprite mem address
+	input wire [7:0] cpu_sprite_addr, //Sprite mem address
+	
+	//Used to check sprite 0 colission
+	//If 1, this sprite is sprite 0
+	output reg sprite_0_is_0,
+	output reg sprite_1_is_0
 );
 
 
 //Variables
 reg [7:0] sprite_0_num;
 reg [7:0] sprite_1_num;
+
 
 ///////////////////
 //Functions///////
@@ -193,6 +199,7 @@ reg [63:0] sprite_tile_nums;
 reg [63:0] sprite_rows;
 reg [63:0] sprite_cols;
 reg [63:0] sprite_attrs;
+reg [7:0] is_sprite_0;
 
 
 localparam [7:0] state_idle = 0, state_wait = 1, state_check = 2, state_load_sprite = 3;
@@ -212,7 +219,22 @@ begin
 	sprite_tile_nums <= 0;
 	sprite_hit_cnt <= 0;
 	sprite_overflow <= 0;
+	is_sprite_0 <= 0;
 	
+end
+endtask
+
+task reset_sprites();
+begin
+
+	sprite_attrs <= 0;
+	sprite_rows <= 64'hFFFFFFFFFFFFFFFF;//So we know they aren't loaded
+	sprite_cols <= 0;
+	sprite_tile_nums <= 0;
+	sprite_hit_cnt <= 0;
+	sprite_overflow <= 0;
+	is_sprite_0 <= 0;
+
 end
 endtask
 
@@ -235,8 +257,8 @@ always @ (posedge clk or negedge rst) begin
 					//Put the address of the first sprite on the line
 					spram_addr_out <= {1'b0, cpu_sprite_addr};
 					
-					//Make sure we know that no sprites are loaded
-					sprite_rows <= 64'hFFFFFFFFFFFFFFFF;//So we know they aren't loaded
+					//Reset all of the sprites we previously loaded
+					reset_sprites();
 					
 					//Go to the wait one cycle state
 					state <= state_wait;
@@ -281,6 +303,14 @@ always @ (posedge clk or negedge rst) begin
 						sprite_rows[(sprite_hit_cnt << 3)+:8] = spram_data_in;
 						spram_addr_out  <= spram_addr_out  + 1;
 						state <= state_load_sprite;
+						
+						//If this sprite is sprite 0
+						if(spram_addr_out - cpu_sprite_addr == 1) begin
+						
+							is_sprite_0[sprite_hit_cnt] <= 1;
+						
+						end
+						
 					end
 				end
 				else begin
@@ -370,6 +400,7 @@ begin
 		sprite_0_row = get_sprite_val(sprite_rows, sprite_0_num);
 		sprite_0_col = get_sprite_val(sprite_cols, sprite_0_num);
 		sprite_0_attr = get_sprite_val(sprite_attrs, sprite_0_num);
+		sprite_0_is_0 = is_sprite_0[sprite_0_num];
 	end
 	else begin
 		
@@ -378,7 +409,7 @@ begin
 		sprite_0_row = 0;
 		sprite_0_col = 0;
 		sprite_0_attr = 0;
-	
+		sprite_0_is_0 = 0;
 	end
 	
 	//If we need to draw sprite 1
@@ -389,7 +420,7 @@ begin
 		sprite_1_row = get_sprite_val(sprite_rows, sprite_1_num);
 		sprite_1_col = get_sprite_val(sprite_cols, sprite_1_num);
 		sprite_1_attr = get_sprite_val(sprite_attrs, sprite_1_num);
-	
+		sprite_1_is_0 = is_sprite_0[sprite_1_num];
 	
 	end
 	else begin
@@ -399,7 +430,7 @@ begin
 		sprite_1_row = 0;
 		sprite_1_col = 0;
 		sprite_1_attr = 0;
-	
+		sprite_1_is_0 = 0;
 	
 	end
 

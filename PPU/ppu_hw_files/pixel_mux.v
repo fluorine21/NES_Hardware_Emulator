@@ -24,15 +24,35 @@ module pixel_mux
 	
 	
 	//Output pixel array to draw
-	output reg [63:0] pixel_out
+	output reg [63:0] pixel_out,
+	
+	
+	output reg sprite_0_hit,
+	output reg sprite_1_hit
 
 );
+
+
+function get_sprite_hit;
+input [7:0] sprite_pattern_low;
+input [7:0] sprite_pattern_high;
+reg [7:0] b_p, s_p;
+begin
+
+	b_p = background_pattern_low | background_pattern_high;
+	s_p = sprite_pattern_low | sprite_pattern_high;
+	//If we and these two together and the result is greater than 1, then a sprite pixel was on top of a background pixel
+	get_sprite_hit = (b_p & s_p) != 0;
+
+end
+endfunction
 
 integer i;
 
 always @ * begin
 
-
+	sprite_0_hit = get_sprite_hit(sprite_0_pattern_low, sprite_0_pattern_high);
+	sprite_1_hit = get_sprite_hit(sprite_1_pattern_low, sprite_1_pattern_high);
 
 	for(i = 0; i < 8; i = i + 1) begin
 	

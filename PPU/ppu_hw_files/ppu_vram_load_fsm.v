@@ -52,7 +52,10 @@ module ppu_vram_load_fsm
 	output wire [7:0] vga_ram_data,
 	output wire vga_write_en,
 	
-	output reg busy
+	output reg busy,
+	
+	output wire sprite_0_hit,
+	output wire sprite_1_hit
 	
 );
 
@@ -231,7 +234,10 @@ render_8_pixels render_8_inst
 	ppu_ctrl2_out,
 	
 	render_8_start_out,
-	render_8_busy
+	render_8_busy,
+	
+	sprite_0_hit,
+	sprite_1_hit
 );
 
 task reset();
