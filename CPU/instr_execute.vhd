@@ -64,8 +64,6 @@ architecture a of instr_execute is
             next_state <= ALU;
           elsif (store /= "000") then
             next_state <= store;
-          elsif ( --------------------)
-            next_state <= interrupts;
           else 
             next_state <= state;
           end if;
@@ -109,13 +107,15 @@ architecture a of instr_execute is
       when store =>
       	next_state <= done;
         
-            
-            
-      when interrupts =>
-        next_state <= idle;
+
             
       when done =>
       	ie_ready <= '1';
+        next_state <= idle;
+        ----check for interrupts-------
+              
+            
+      when interrupts =>
         next_state <= idle;
       
             
