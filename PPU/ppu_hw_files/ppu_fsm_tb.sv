@@ -10,7 +10,7 @@ wire [15:0] vram_read_addr;
 wire [7:0] vram_read_data;
 
 wire [7:0] spram_addr;
-reg [7:0] spram_data_in;
+wire [7:0] spram_data_in;
 
 reg [7:0] ppu_ctrl1;
 reg [7:0] ppu_ctrl2;
@@ -26,7 +26,7 @@ wire [8:0] vga_row;
 wire [8:0] vga_col;
 wire [7:0] vga_data;
 wire vga_write_en;
-wire [7:0] cpu_sprite_addr;
+reg [7:0] cpu_sprite_addr;
 ppu_fsm ppu_fsm_inst
 (
 	 clk,
@@ -207,6 +207,61 @@ begin
 	//#1
 end
 endtask
+
+
+initial begin
+
+	clk <= 0;
+	rst <= 0;
+	
+	cpu_addr <= 16'h2002;
+	
+	ppu_ctrl1 = 0;
+	ppu_ctrl1[3] = 1;//sprite pattern table starts at 0x1000
+	ppu_ctrl2 = 0;
+	ppu_ctrl2[3] = 1;//Enable background
+	ppu_ctrl2[4] = 1;//Enable sprites
+	
+	cpu_scroll_addr = 0;
+	
+	vga_done = 0;
+
+	vram_write_addr = 0;
+	vram_write_data = 0;
+	vram_write_en = 0;
+	
+	spram_write_addr = 0;
+	spram_write_data = 0;
+	spram_write_en = 0;
+	
+	vga_read_row = 0;
+	vga_read_col = 0;
+	
+	cpu_sprite_addr = 0;
+	
+	
+	//Reset everything
+	reset();
+	
+	//Load memory
+	load_vram();
+	write_spram();
+	
+	
+	#1
+	vga_done = 1;
+	#1
+	
+	repeat(10) clk_cycle();
+	
+	#1
+	vga_done = 0;
+	#1
+	
+	repeat(1000000) clk_cycle();
+	
+end
+
 
 
 endmodule

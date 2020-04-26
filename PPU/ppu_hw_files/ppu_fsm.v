@@ -32,8 +32,7 @@ module ppu_fsm
 
 
 //Starting position of pixel in nametable 2x2
-wire [8:0] row_offset = {1'b0, cpu_scroll_addr[15:8]} + (ppu_ctrl1[1] ? 240 : 0);
-wire [8:0] col_offset = {ppu_ctrl1[0], cpu_scroll_addr[7:0]}; 
+wire [9:0] col_offset = {1'b0, ppu_ctrl1[0], cpu_scroll_addr[7:0]}; 
 
 
 //These tell us which pixel we're currently drawing relative to the screen, not the nametables
@@ -48,7 +47,7 @@ wire sprite_1_on_tile, sprite_1_is_0;
 wire [7:0] sprite_1_tile_num, sprite_1_row, sprite_1_col, sprite_1_attr;
 reg sprite_load_start;
 wire sprite_load_busy;
-ppu_sprite_load_fsm sprite_load_int
+ppu_sprite_load_fsm sprite_load_inst
 (
 	clk,
 	rst,
@@ -130,7 +129,7 @@ wire [15:0] sprite_pattern_base = ppu_ctrl1[3] ? 16'h1000 : 0;
 wire sprite_0_hit, sprite_1_hit;
 reg vram_load_start;
 wire vram_load_busy;
-ppu_vram_load_fsm dut
+ppu_vram_load_fsm vram_load_inst
 (
 	
 	clk,
@@ -207,12 +206,15 @@ ppu_status_latch ppu_status_inst
 
 
 
-localparam [2:0] state_idle = 0, 
-				 state_wait_colors = 1, 
-				 state_wait_sprite = 2, 
-				 state_draw_row_1 = 3,
-				 state_draw_row_2 = 4,
-				 state_wait_vga = 5;
+localparam [3:0] state_idle = 0, 
+				 state_wait_colors_1 = 1,
+				 state_wait_colors_2 = 2,				 
+				 state_wait_sprite_1 = 3, 
+				 state_wait_sprite_2 = 4, 
+				 state_draw_row_1 = 5,
+				 state_draw_row_2 = 6,
+				 state_draw_row_3 = 7,
+				 state_wait_vga = 8;
 
 task reset_state();
 begin
@@ -220,6 +222,10 @@ begin
 	screen_pixel_row <= 0;
 	screen_pixel_col <= 0;
 	state <= state_idle;
+	
+	vram_load_start <= 0;
+	color_load_start <= 0;
+	sprite_load_start <= 0;
 
 end
 endtask
@@ -249,13 +255,23 @@ always @ (posedge clk or negedge rst) begin
 					set_col_counter();
 					
 					//Go to the wait_color state
-					state <= state_wait_colors;
+					state <= state_wait_colors_1;
 	
 				end
 				
 			end	
 			
-			state_wait_colors: begin
+			state_wait_colors_1: begin
+			
+				if(color_load_busy) begin
+				
+					state <= state_wait_colors_2;
+					color_load_start <= 0;
+				end
+			
+			end
+			
+			state_wait_colors_2: begin
 			
 				color_load_start <= 0;
 				
@@ -266,15 +282,23 @@ always @ (posedge clk or negedge rst) begin
 					sprite_load_start <= 1;
 					
 					//Wait on the sprite fsm to be done
-					state <= state_wait_sprite;
+					state <= state_wait_sprite_1;
 				
 				end
 			
 			end
 			
-			state_wait_sprite: begin
+			state_wait_sprite_1: begin
 			
-				sprite_load_start <= 0;
+				//If the sprite load has started
+				if(sprite_load_busy) begin
+					state <= state_wait_sprite_2;
+					sprite_load_start <= 0;
+				end
+			
+			end
+			
+			state_wait_sprite_2: begin
 				
 				//If we're done waiting on the sprite load fsm
 				if(sprite_load_busy == 0) begin
@@ -301,13 +325,23 @@ always @ (posedge clk or negedge rst) begin
 			
 			state_draw_row_2: begin
 			
-				vram_load_start <= 0;
+				//If the row draw is now btsy
+				if(vram_load_busy == 1) begin
+				
+					state <= state_draw_row_3;
+					vram_load_start <= 0;
+				end
+				
+			end
+			
+			state_draw_row_3: begin
+			
 				
 				//If it's done
 				if(vram_load_busy == 0) begin
 				
 					//if we're about to go over the edge of a column
-					if(screen_pixel_col >= 255) begin
+					if(screen_pixel_col + 8 >= 256) begin
 					
 						//if we're on the last row
 						if(screen_pixel_row >= 239) begin
@@ -323,7 +357,7 @@ always @ (posedge clk or negedge rst) begin
 							set_col_counter();
 							
 							//Need to reload sprites here
-							state <= state_wait_colors;
+							state <= state_wait_colors_2;
 						end
 					end
 					//No col or row overflow

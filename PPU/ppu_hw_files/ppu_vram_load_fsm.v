@@ -304,7 +304,7 @@ always @ (posedge clk or negedge rst) begin
 				busy <= 1'b0;
 				
 				//If we're supposed to start and need to draw the background
-				if(start == 1'b1 && (draw_background || draw_sprite_0 || draw_sprite_1)) begin
+				if(start == 1'b1) begin
 				
 					busy <= 1'b1;
 				

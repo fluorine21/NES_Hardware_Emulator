@@ -35,14 +35,14 @@ gen_spram_payload(vram_file);
 fprintf(vram_file, "integer vram_listing[] = \n{\n\n\n");
 
 
-%Pattern table 1 will be alternating solid transparent blocks
+%Both pattern tables will be alternating solid transparent blocks
 %2000 hes is
-for i = 1 : hex2dec('2000')
+for i = 0 : hex2dec('1FFF')
     
     if(mod(round((i+8)/16), 2))
         write_value(vram_file, i, 'FFFF',0);
     else
-        write_value(vram_file, i, 0,0);
+        write_value(vram_file, i, 'FFFF',0);
     end
     
 end
@@ -51,7 +51,7 @@ end
 for i = hex2dec('2000'):hex2dec('23FF')
     
     if(i < hex2dec('23C0'))
-        write_value(vram_file, i, '00AA', 0);
+        write_value(vram_file, i, 0, 0);
     else
         write_value(vram_file, i, '0000', 0);
     end
@@ -62,7 +62,7 @@ end
 for i = hex2dec('2400'):hex2dec('27FF')
     
     if(i < hex2dec('27C0'))
-        write_value(vram_file, i, '00BB', 0);
+        write_value(vram_file, i, 1, 0);
     else
         write_value(vram_file, i, '0055', 0);
     end
@@ -73,7 +73,7 @@ end
 for i = hex2dec('2800'):hex2dec('2BFF')
     
     if(i < hex2dec('2BC0'))
-        write_value(vram_file, i, '00CC', 0);
+        write_value(vram_file, i, 2, 0);
     else
         write_value(vram_file, i, '00AA', 0);
     end
@@ -85,7 +85,7 @@ end
 for i = hex2dec('2C00'):hex2dec('2EFF')
     
     if(i < hex2dec('2EC0'))
-        write_value(vram_file, i, '00DD', 0);
+        write_value(vram_file, i, 3, 0);
     else
         write_value(vram_file, i, '00FF', 0);
     end
