@@ -16,6 +16,7 @@ module ppu_fsm
 	input wire [7:0] ppu_ctrl2,
 	output wire [7:0] ppu_status,
 	input wire [15:0] cpu_scroll_addr,
+	input wire [7:0] cpu_sprite_addr,
 	
 	input wire vga_done, //Need to start when this is high
 	
@@ -145,7 +146,7 @@ ppu_vram_load_fsm dut
 	ppu_ctrl2,
 	
 	//Background info
-	bacground_colors,
+	background_colors,
 	background_pattern_base,
 	nametable_ptr,
 	pattern_table_offset,
