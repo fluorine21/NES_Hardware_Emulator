@@ -305,38 +305,38 @@ R6
 vppu_fsm_tb
 Z15 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
 Z16 DXx4 work 12 vram_listing 0 22 UioV;PLEPOzB<=cELQG@T3
-DXx4 work 18 ppu_fsm_tb_sv_unit 0 22 3AMU1?R3aQ[`QRo_2@C8Q1
+DXx4 work 18 ppu_fsm_tb_sv_unit 0 22 XX;7@3H1=h=B7k=5:8TXV2
 R1
 r1
 !s85 0
 31
 !i10b 1
-!s100 ]4G[M>lL@1U@W<_I;7^>`1
-ICeZ5k]^bTEzOc711:38_G0
+!s100 Ri6j4=2ZU9CLhUJh<kXPL3
+IZ[CCJg:67GH94L6UB@A?c1
 !s105 ppu_fsm_tb_sv_unit
 S1
 R2
-Z17 w1587924682
+Z17 w1587928446
 Z18 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm_tb.sv
 Z19 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm_tb.sv
 L0 3
 R3
-R14
-Z20 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm_tb.sv|
-Z21 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm_tb.sv|
+Z20 !s108 1587928468.000000
+Z21 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm_tb.sv|
+Z22 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm_tb.sv|
 !i113 1
-Z22 o-work work -sv
+Z23 o-work work -sv
 R6
 Xppu_fsm_tb_sv_unit
 R15
 R16
-V3AMU1?R3aQ[`QRo_2@C8Q1
+VXX;7@3H1=h=B7k=5:8TXV2
 r1
 !s85 0
 31
 !i10b 1
-!s100 9k1XFIWoY533]cINM@>NI2
-I3AMU1?R3aQ[`QRo_2@C8Q1
+!s100 3ejIZG?iWoe`hE3JK87Pj2
+IXX;7@3H1=h=B7k=5:8TXV2
 !i103 1
 S1
 R2
@@ -345,11 +345,11 @@ R18
 R19
 L0 1
 R3
-R14
 R20
 R21
-!i113 1
 R22
+!i113 1
+R23
 R6
 vppu_mem_decode
 R9
@@ -394,7 +394,7 @@ R12
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_sprite_color_load_tb.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_sprite_color_load_tb.sv|
 !i113 1
-R22
+R23
 R6
 vppu_sprite_load_fsm
 R15
@@ -418,7 +418,7 @@ R12
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_sprite_load_fsm.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_sprite_load_fsm.sv|
 !i113 1
-R22
+R23
 R6
 vppu_status_latch
 R11
@@ -484,7 +484,7 @@ R4
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_vram_load_tb.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_vram_load_tb.sv|
 !i113 1
-R22
+R23
 R6
 vrender_8_pixels
 R9
@@ -570,5 +570,5 @@ R14
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/vram_listing.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/vram_listing.sv|
 !i113 1
-R22
+R23
 R6

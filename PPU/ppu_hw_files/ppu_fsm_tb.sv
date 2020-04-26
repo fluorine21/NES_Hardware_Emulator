@@ -258,7 +258,10 @@ initial begin
 	vga_done = 0;
 	#1
 	
-	repeat(1000000) clk_cycle();
+	while(1) begin 
+		clk_cycle();
+	end
+	
 	
 end
 
