@@ -48,6 +48,9 @@ wire [7:0] vga_ram_data;
 
 wire busy;
 
+wire sprite_0_hit;
+wire sprite_1_hit;
+
 //Connections from test bench to ppu memory
 reg [15:0] vram_write_addr;
 reg [7:0] vram_write_data;
@@ -127,9 +130,10 @@ ppu_vram_load_fsm dut
 	vga_ram_data,
 	vga_write_en,
 	
-	busy
+	busy,
 	
-	
+	sprite_0_hit,
+	sprite_1_hit
 );
 
 //ppu memory

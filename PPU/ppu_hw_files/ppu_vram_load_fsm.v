@@ -52,7 +52,10 @@ module ppu_vram_load_fsm
 	output wire [7:0] vga_ram_data,
 	output wire vga_write_en,
 	
-	output reg busy
+	output reg busy,
+	
+	output wire sprite_0_hit,
+	output wire sprite_1_hit
 	
 );
 
@@ -231,7 +234,10 @@ render_8_pixels render_8_inst
 	ppu_ctrl2_out,
 	
 	render_8_start_out,
-	render_8_busy
+	render_8_busy,
+	
+	sprite_0_hit,
+	sprite_1_hit
 );
 
 task reset();
@@ -298,7 +304,7 @@ always @ (posedge clk or negedge rst) begin
 				busy <= 1'b0;
 				
 				//If we're supposed to start and need to draw the background
-				if(start == 1'b1 && (draw_background || draw_sprite_0 || draw_sprite_1)) begin
+				if(start == 1'b1) begin
 				
 					busy <= 1'b1;
 				
