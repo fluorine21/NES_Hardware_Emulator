@@ -25,7 +25,7 @@ architecture b of b2b_access is
 	signal mem_data_in : std_logic_vector(7 downto 0);
 	
 	begin 
-		comb_proc: process (addr_1, addr_2, mem_data_in, state)
+		b2b_access_process: process (addr_1, addr_2, mem_data_in, state)
 			
 		begin
 		
@@ -60,15 +60,15 @@ architecture b of b2b_access is
 					next_state <= s0;
 					
 			end case;
-		end process comb_proc;
+		end process b2b_access_process;
 		
-		clk_proc: process(rst, clk)   
+		clk_process: process(rst, clk)   
 		begin
 		if (rst = '1') then
 			state <= idle;
 		elsif(rising_edge(clk)) then
 			state <= next_state;
 		end if;
-	end process clk_proc;
+	end process clk_process;
 	
 end architecture;

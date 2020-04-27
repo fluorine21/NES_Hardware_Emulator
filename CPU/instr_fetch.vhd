@@ -69,7 +69,7 @@ architecture a of instr_fetch is
 	--Behavioral design goes here	
 	begin
 
-		comb_process : process(ie_ready, pc_ie, pc, addr_pc, state)
+		instr_fetch_process : process(ie_ready, pc_ie, pc, addr_pc, state)
 		
 		variable counter	: unsigned(15 downto 0) := (others => '0');
 
@@ -1399,7 +1399,7 @@ architecture a of instr_fetch is
 
 			end case;
 			next_state <= idle;
-		end process comb_process;
+		end process instr_fetch_process;
 	
 	clk_proc: process(rst, clk)   
 		begin
