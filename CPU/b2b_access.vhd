@@ -14,6 +14,7 @@ entity b2b_access is
 			data_2		: out std_logic_vector(7 downto 0);
 			
 			mem_read		: out std_logic
+			mem_done		:
 	);
 end entity;
 	
@@ -34,29 +35,30 @@ architecture b of b2b_access is
 			case (state) is
 			
 				when s0 =>
-					
+					mem_done <= '0';
 					mem_addr <= addr_1;
 					mem_read <= '1';
 					next_state <= s1;
 					
 				when s1 =>
-					
+					mem_done <= '0';
 					mem_read <= '1';
 					mem_addr <= addr_2;
 					next_state <= s2;
 					
 				when s2 =>
-				
+					mem_done <= '0';
 					data_1 <= std_logic_vector(resize(unsigned(mem_data_in), 16));
 					mem_read <= '0';
 					next_state <= s3;
 					
 				when s3 =>
-				
+					mem_done <= '1';
+					next_state <= s0;
 					data_2 <= std_logic_vector(resize(unsigned(mem_data_in), 16));
 					
 				when OTHERS =>
-					
+					mem_done <= '0';
 					next_state <= s0;
 					
 			end case;
