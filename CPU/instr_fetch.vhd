@@ -62,14 +62,14 @@ architecture a of instr_fetch is
 	
 	
 	--FSM signals
-	TYPE state_type is (idle, wait_state, read_op, decode_op, wait_indirect);
+	TYPE state_type is (idle, wait_state, read_op, decode_op, wait_indirect_x, wait_indirect_y);
 	signal state, next_state: state_type;
 
 
 	--Behavioral design goes here	
 	begin
 
-		instr_fetch_process : process(ie_ready, pc_ie, pc, addr_pc, state)
+		instr_fetch_process : process(ie_ready, pc_ie, pc, addr_pc, state, mem_done)
 		
 		variable counter	: unsigned(15 downto 0) := (others => '0');
 
