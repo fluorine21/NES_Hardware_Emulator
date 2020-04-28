@@ -92,8 +92,7 @@ architecture of behavior in instr_fetch_tb is
 	begin instr_fetch_inst: 
 		component instr_fetch
 			port map(
-				
-
+					--???
 				);
 		
 		
