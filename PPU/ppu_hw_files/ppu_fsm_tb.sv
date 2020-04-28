@@ -125,13 +125,6 @@ integer pass_count, fail_count, local_pass_count, local_fail_count;
 //Loop counters
 integer i, j;
 
-initial begin
-
-
-
-
-end
-
 task clk_cycle;
 begin
 	#1
