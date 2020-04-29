@@ -38,10 +38,22 @@ fprintf(vram_file, "integer vram_listing[] = \n{\n\n\n");
 
 %Write one pattern of all FF to both tables
 for i = 0 : 15
-    write_value(vram_file, i, '00FF',0);
+    %have the pattern alternate so we can see different colors show up in
+    %background
+    if(mod(i,2) == 1)
+        write_value(vram_file, i, '00FF',0);
+    else
+        write_value(vram_file, i, '0000',0);
+    end
 end
 for i = hex2dec('1000'):hex2dec('100F')
-    write_value(vram_file, i, '00FF',0);
+    %have the pattern alternate so we can see different colors show up in
+    %background
+    if(mod(i,2) == 1)
+        write_value(vram_file, i, '00FF',0);
+    else
+        write_value(vram_file, i, '0000',0);
+    end
 end
 
 

@@ -266,6 +266,8 @@ begin
 		
 		//But only if we're not reading the color
 		if(vram_listing[cnt] < 16'h3F00) begin
+			write_byte(16'h2006, vram_listing[cnt][15:8]);
+			write_byte(16'h2006, vram_listing[cnt][7:0]);
 			read_byte(16'h2007);
 		end
 		

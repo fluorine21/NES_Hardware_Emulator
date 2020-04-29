@@ -29,7 +29,7 @@ module sys_ctrl_fsm
 );
 
 //Take over the bus via the mux whenever we halt the CPU
-assign cpu_sys_mux_ctrl = cpu_halt;
+assign cpu_sys_mux_ctrl = cpu_halt & cpu_is_halted;
 
 
 localparam [7:0] HALT_CPU = 8'h00, 

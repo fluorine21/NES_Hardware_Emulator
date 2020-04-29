@@ -111,6 +111,10 @@ initial begin
 	
 	read_vram();
 	
+	load_spram();
+	
+	read_spram();
+	
 	//Set the PPU control registers
 	write_byte(16'h2000, 8'b00001000);
 	write_byte(16'h2001, 8'b00011000);
@@ -133,6 +137,10 @@ initial begin
 	while(1) begin
 	
 		clk_cycle();
+		if(ppu_vsync) begin
+
+			$display("PPU frame end");
+		end
 	
 	end
 	
@@ -185,6 +193,60 @@ begin
 		write_byte(16'h2007, vram_listing[cnt+1][7:0]);
 
 	end
+end
+endtask
+
+task load_spram();
+begin
+
+	//Write all of vram
+	for(cnt = 0; cnt <  $size(spram_listing); cnt = cnt + 2) begin
+
+		//Set the address first
+		write_byte(16'h2003, spram_listing[cnt][7:0]);
+		
+		
+		//Set the data last
+		write_byte(16'h2004, spram_listing[cnt+1][7:0]);
+
+	end
+end
+endtask
+
+task read_spram();
+begin
+
+	pass_count = 0;
+	fail_count = 0;
+
+	//Read all of CPU memory
+	for(cnt = 0; cnt <  $size(spram_listing); cnt = cnt + 2) begin
+
+		//Set the address first
+		write_byte(16'h2003, spram_listing[cnt][7:0]);
+		
+		//Read the result
+		read_byte(16'h2004);
+		
+		if(uart_result != spram_listing[cnt+1][7:0]) begin
+		
+			fail_count = fail_count + 1;
+			local_fail_count = local_fail_count + 1;
+			$display("SPRAM ERROR");
+			report_error(vram_listing[cnt], vram_listing[cnt+1][7:0], uart_result);
+		
+		end
+		else begin
+		
+			pass_count = pass_count + 1;
+			local_pass_count = local_pass_count + 1;
+		
+		end
+
+	end
+	
+	$display("SPRAM readback test complete, %d cases total, %d passed, %d failed", pass_count+fail_count, pass_count, fail_count);
+	
 end
 endtask
 
