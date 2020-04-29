@@ -747,7 +747,7 @@ architecture a of instr_fetch is
 							addr_out <= (instr_reg("10") & instr_reg("01"));
 							new_op <= x"1D";
 							store_flag <= "001"; -- store in mem in stack
-							alu_op <= "000" -- add to SP
+							alu_op <= "001" -- sub from SP
 							
 						
 						-- LDA -- simplified opcode: x"1E" -- Load Accumulator
