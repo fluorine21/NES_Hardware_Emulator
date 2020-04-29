@@ -12,7 +12,7 @@
 // (25000000)/(115200) = 217
  
 module UART_RX
-  #(parameter CLKS_PER_BIT = 217)
+  #(parameter CLKS_PER_BIT = 5)
   (
    input        i_Clock,
    input        i_RX_Serial,
@@ -152,7 +152,7 @@ endmodule // UART_RX
 // (25000000)/(115200) = 217
  
 module UART_TX 
-  #(parameter CLKS_PER_BIT = 217)
+  #(parameter CLKS_PER_BIT = 5)
   (
    input       i_Clock,
    input       i_TX_DV,

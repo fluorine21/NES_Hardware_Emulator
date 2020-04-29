@@ -12,7 +12,8 @@ module sys_ctrl_fsm
 	
 	//Connections to CPU memory bus
 	inout wire [15:0] cpu_bus_addr,
-	inout wire [7:0] cpu_bus_data,
+	input wire [7:0] cpu_bus_data_in,
+	inout wire [7:0] cpu_bus_data_out,
 	//These aren't tristate, can OR with CPU inputs
 	inout wire cpu_bus_write_en,
 	inout wire cpu_bus_read_en,
@@ -44,7 +45,7 @@ reg write_en, read_en;
 
 //Bus control
 assign cpu_bus_addr = cpu_halt && cpu_is_halted ? addr : 16'bz;
-assign cpu_bus_data = cpu_halt && cpu_is_halted && write_en ? data : 8'bz;
+assign cpu_bus_data_out = cpu_halt && cpu_is_halted && write_en ? data : 8'bz;
 assign cpu_bus_write_en = cpu_halt && cpu_is_halted ? write_en : 0;
 assign cpu_bus_read_en = cpu_halt && cpu_is_halted ? read_en : 0;
 
@@ -209,7 +210,7 @@ always @ (posedge clk or negedge rst) begin
 			state_read_4: begin
 			
 				//Send the byte to the TX module
-				tx_data <= cpu_bus_data;
+				tx_data <= cpu_bus_data_in;
 			
 				//If the TX module is ready
 				if(tx_done) begin

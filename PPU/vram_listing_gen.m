@@ -20,13 +20,65 @@ function gen_vram(vram_file)
 fprintf(vram_file, "\n\npackage vram_listing;\n\n");
 
 %Payload goes here
-gen_payload(vram_file);
+%gen_payload_1(vram_file);
+gen_payload_2(vram_file);
 
 fprintf(vram_file, "\n\nendpackage\n");
 
 end
 
-function gen_payload(vram_file)
+
+function gen_payload_2(vram_file)
+
+%Generate the spram preamble
+gen_spram_payload(vram_file);
+
+%Payload preamble
+fprintf(vram_file, "integer vram_listing[] = \n{\n\n\n");
+
+%Write one pattern of all FF to both tables
+for i = 0 : 15
+    write_value(vram_file, i, '00FF',0);
+end
+for i = hex2dec('1000'):hex2dec('100F')
+    write_value(vram_file, i, '00FF',0);
+end
+
+
+%Write the first nametable with all 0 to select tile 0
+%Also zero out the attribute table
+for i = hex2dec('2000'):hex2dec('23FF')
+    
+    if(i < hex2dec('23C0'))
+        write_value(vram_file, i, 0, 0);
+    else
+        write_value(vram_file, i, '0000', 0);
+    end
+    
+end
+
+%Color table
+for i = hex2dec('3F00'):hex2dec('3F1F')
+    
+    if(i == hex2dec('3F1F'))
+        %Select first tile
+        write_value(vram_file, i, (mod(i,32)), 1);
+        
+    else
+        %Select first tile
+        write_value(vram_file, i, (mod(i,32)), 0);
+        
+    end
+    
+end
+
+%Payload ending
+fprintf(vram_file, "\n\n\n};\n");
+
+
+end
+
+function gen_payload_1(vram_file)
 
 %Generate the spram preamble
 gen_spram_payload(vram_file);

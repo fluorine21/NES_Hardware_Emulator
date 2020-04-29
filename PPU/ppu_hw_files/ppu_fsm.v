@@ -185,7 +185,7 @@ ppu_vram_load_fsm vram_load_inst
 
 //An input to ppu status fsm
 wire sprite_0_hit_strobe = (sprite_0_hit && sprite_0_is_0) || (sprite_1_hit && sprite_1_is_0);
-reg [2:0] state;
+reg [7:0] state;
 
 //status register latch
 ppu_status_latch ppu_status_inst
@@ -206,7 +206,7 @@ ppu_status_latch ppu_status_inst
 
 
 
-localparam [3:0] state_idle = 0, 
+localparam [7:0] state_idle = 0, 
 				 state_wait_colors_1 = 1,
 				 state_wait_colors_2 = 2,				 
 				 state_wait_sprite_1 = 3, 
