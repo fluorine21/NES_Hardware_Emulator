@@ -747,7 +747,7 @@ architecture a of instr_fetch is
 							addr_out <= (instr_reg("10") & instr_reg("01"));
 							new_op <= x"1D";
 							store_flag <= "001"; -- store in mem in stack
-							alu_op <= "000" -- add to SP
+							alu_op <= "001" -- sub from SP
 							
 						
 						-- LDA -- simplified opcode: x"1E" -- Load Accumulator
@@ -1022,7 +1022,7 @@ architecture a of instr_fetch is
 							new_op <= x"24";
 							store_flag <= "001"; -- store in mem
 							reg_load_flag <= "01"; --load from acc
-							alu_op <= "000" -- add to SP
+							alu_op <= "001" -- subtract from SP
 							
 							
 						-- PHP -- simplified opcode: x"25" -- Push Processor Status
@@ -1030,7 +1030,7 @@ architecture a of instr_fetch is
 							pc <= std_logic_vector(unsigned(pc) + to_unsigned(1,8)); --length 1
 							new_op <= x"25";
 							store_flag <= "001"; -- store in mem
-							alu_op <= "000" -- add to SP
+							alu_op <= "001" -- subtract from SP
 							
 							
 						-- PLA -- simplified opcode: x"26" -- Pull/Pop Accumulator
@@ -1039,7 +1039,7 @@ architecture a of instr_fetch is
 							new_op <= x"26";
 							store_flag <= "010"; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
-							alu_op <= "001" -- subtract from SP
+							alu_op <= "000" -- add to SP
 							
 							
 						-- PLP -- simplified opcode: x"27" -- Pull/Pop Processor Status
@@ -1047,7 +1047,7 @@ architecture a of instr_fetch is
 							pc <= std_logic_vector(unsigned(pc) + to_unsigned(1,8)); --length 1
 							new_op <= x"27";
 							mem_load_flag <= '1'; -- load from mem
-							alu_op <= "001" -- subtract from SP
+							alu_op <= "000" -- add to SP
 							
 							
 						-- ROL -- simplified opcode: x"28" -- Rotate Left
