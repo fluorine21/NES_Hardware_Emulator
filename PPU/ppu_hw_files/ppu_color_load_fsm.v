@@ -41,7 +41,7 @@ begin
 end
 endtask
 
-assign vram_addr = busy ? vram_addr_int: 16'bz;
+assign vram_addr = vram_addr_int;
 assign busy = state != state_idle;
 
 always @ (posedge clk or negedge rst) begin

@@ -14,7 +14,7 @@ module ppu_vram_load_fsm
 	input wire [8:0] curr_col,
 	
 	//VRAM memory connections
-	inout wire [15:0] vram_addr_wire,//tristate
+	output wire [15:0] vram_addr_wire,
 	input wire [7:0] vram_data_in,
 	
 	input wire [7:0] ppu_ctrl1,//Used for determining if 8x8 or 8x16
@@ -60,7 +60,7 @@ module ppu_vram_load_fsm
 );
 
 reg [15:0] vram_addr;
-assign vram_addr_wire = busy ? vram_addr : 16'bz;
+assign vram_addr_wire = vram_addr;
 
 //State register and definitions
 reg [7:0] state;
@@ -160,8 +160,7 @@ endfunction
 //If sprites are enabled and there is a sprite on the line of this tile
 wire draw_sprite_0 = ppu_ctrl2[4] & sprite_0_on_tile;
 wire draw_sprite_1 = ppu_ctrl2[4] & sprite_1_on_tile;
-//If the background is enabled
-wire draw_background = ppu_ctrl2[3];
+//Will always load background even if it is not enabled
 //Sets the attribute 2 bits based on attribute shift for background
 wire [1:0] background_attr = attr_table_result[({1'b0, attr_shift} << 1)+:2];
 

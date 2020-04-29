@@ -22,9 +22,15 @@ module sys_ctrl_fsm
 	output reg cpu_halt,
 	output reg cpu_rst,
 	
-	input wire cpu_is_halted // Needed to detect when the CPU is actually halted
+	input wire cpu_is_halted, // Needed to detect when the CPU is actually halted
+	
+	output wire cpu_sys_mux_ctrl//Needed to switch the CPU mem bus into this module to avoid tristate buffers
 	
 );
+
+//Take over the bus via the mux whenever we halt the CPU
+assign cpu_sys_mux_ctrl = cpu_halt;
+
 
 localparam [7:0] HALT_CPU = 8'h00, 
 				 RESUME_CPU = 8'h01, 
@@ -44,8 +50,8 @@ reg [7:0] data;
 reg write_en, read_en;
 
 //Bus control
-assign cpu_bus_addr = cpu_halt && cpu_is_halted ? addr : 16'bz;
-assign cpu_bus_data_out = cpu_halt && cpu_is_halted && write_en ? data : 8'bz;
+assign cpu_bus_addr = addr;
+assign cpu_bus_data_out = data;
 assign cpu_bus_write_en = cpu_halt && cpu_is_halted ? write_en : 0;
 assign cpu_bus_read_en = cpu_halt && cpu_is_halted ? read_en : 0;
 

@@ -24,8 +24,8 @@ module ppu_mem_vga_top_lvl
 	output wire ppu_vsync
 
 );
-
-
+assign uart_cts = 1;
+wire clk;
 clkdiv2 clkdiv2_inst
 (
 	clk_50,
@@ -90,6 +90,7 @@ ppu_fsm ppu_fsm_inst
 
 
 wire mem_ctrl_busy;
+wire ppu_status_read;//Not used
 mem_ctrl mem_ctrl_inst
 (
 	clk,
@@ -161,6 +162,7 @@ vga_mem vga_mem_inst
 
 wire cpu_halt, cpu_rst;
 wire cpu_is_halted = 1;
+wire cpu_sys_mux_ctrl;
 sys_ctrl_fsm sys_ctrl_inst
 (
 	clk,
@@ -178,7 +180,9 @@ sys_ctrl_fsm sys_ctrl_inst
 	cpu_halt,
 	cpu_rst,
 	
-	cpu_is_halted
+	cpu_is_halted,
+	
+	cpu_sys_mux_ctrl
 	
 );
 

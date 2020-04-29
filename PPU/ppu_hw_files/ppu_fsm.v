@@ -4,7 +4,7 @@ module ppu_fsm
 	input wire clk,
 	input wire rst,
 	
-	inout wire [15:0] vram_addr,
+	output wire [15:0] vram_addr,
 	input wire [7:0] vram_data_in,
 	
 	input wire [15:0] cpu_addr,//Used to determine when to reset vsync
@@ -31,6 +31,7 @@ module ppu_fsm
 );
 
 
+
 //Starting position of pixel in nametable 2x2
 wire [9:0] col_offset = {1'b0, ppu_ctrl1[0], cpu_scroll_addr[7:0]}; 
 
@@ -47,6 +48,8 @@ wire sprite_1_on_tile, sprite_1_is_0;
 wire [7:0] sprite_1_tile_num, sprite_1_row, sprite_1_col, sprite_1_attr;
 reg sprite_load_start;
 wire sprite_load_busy;
+wire sprite_overflow;
+
 ppu_sprite_load_fsm sprite_load_inst
 (
 	clk,
@@ -84,12 +87,13 @@ ppu_sprite_load_fsm sprite_load_inst
 reg color_load_start;
 wire color_load_busy;
 wire [127:0] background_colors, sprite_colors;
+wire [15:0] color_vram_addr;
 ppu_color_load_fsm color_load_inst
 (
 	clk,
 	rst,
 	
-	vram_addr,
+	color_vram_addr,
 	vram_data_in,
 	color_load_start,
 	color_load_busy,
@@ -129,6 +133,8 @@ wire [15:0] sprite_pattern_base = ppu_ctrl1[3] ? 16'h1000 : 0;
 wire sprite_0_hit, sprite_1_hit;
 reg vram_load_start;
 wire vram_load_busy;
+
+wire [15:0] render_8_vram_addr;
 ppu_vram_load_fsm vram_load_inst
 (
 	
@@ -138,7 +144,7 @@ ppu_vram_load_fsm vram_load_inst
 	screen_pixel_row,
 	screen_pixel_col,
 	
-	vram_addr,
+	render_8_vram_addr,
 	vram_data_in,
 	
 	ppu_ctrl1,
@@ -203,7 +209,7 @@ ppu_status_latch ppu_status_inst
 );
 
 
-
+assign vram_addr = color_load_busy ? color_vram_addr : render_8_vram_addr;
 
 
 localparam [7:0] state_idle = 0, 

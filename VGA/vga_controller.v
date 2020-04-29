@@ -20,7 +20,7 @@ module vga_controller
 );
 
 assign vga_done = vga_row > 240;
-
+assign sync_n = 1;
 
 //VGA sync generator instance
 wire eof;//Not used (for now)
