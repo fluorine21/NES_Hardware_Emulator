@@ -2,8 +2,8 @@
 module ppu_mem_vga_top_lvl
 (
 	input wire clk_50, //50MHz clk from crystal to be divided to 25
-	input wire rst,
-	input wire ppu_rst,
+	input wire rst,//Reset on button 0
+	input wire ppu_rst,///On button 1
 	
 	//UART connections
 	input wire uart_rx,
@@ -19,7 +19,7 @@ module ppu_mem_vga_top_lvl
 	output wire vga_blank_n,
 	output wire [7:0] vga_r, vga_g, vga_b,
 	
-	input wire [7:0] joycon_1, joycon_2,
+	input wire [7:0] joycon_1, joycon_2,//connected to dip switches in bit order
 	
 	output wire ppu_vsync
 

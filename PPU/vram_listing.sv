@@ -8,19 +8,19 @@ integer spram_listing[64] =
 //Sprite 0
 8'h00, 8'h00, //row 0
 8'h01, 8'h00, // Tile 1F
-8'h02, 8'h00, // Attribute bytes
+8'h02, 8'h80, // Attribute bytes
 8'h03, 8'h00, //Col 0
 
 //Sprite 1
 8'h04, 8'h08, //row 0
 8'h05, 8'h00, // Tile 1F
-8'h06, 8'h01, // Attribute bytes
+8'h06, 8'h40, // Attribute bytes
 8'h07, 8'h08, //Col 8
 
 //Sprite 2
 8'h08, 8'h10, //row 0
 8'h09, 8'h00, // Tile 1F
-8'h0A, 8'h02, // Attribute bytes
+8'h0A, 8'hC2, // Attribute bytes
 8'h0B, 8'h10, //Col 16
 
 //Sprite 3
