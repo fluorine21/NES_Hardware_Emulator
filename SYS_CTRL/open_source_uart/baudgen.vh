@@ -26,3 +26,4 @@
 `define B300    40000
 
 `define B_25_9600 2604
+`define B_MODELSIM 5

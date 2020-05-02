@@ -16,8 +16,8 @@ module vga_mem
 );
 
 //Checking to make sure ppu_row and col are within range
-wire [15:0] ppu_addr = (ppu_row < 240 && ppu_col < 256) ? {ppu_row[7:0], ppu_col[7:0]} : 16'b0;
-wire ppu_w_e = (ppu_row < 240 && ppu_col < 256) ? ppu_write_en : 1'b0;
+wire [15:0] ppu_addr = {ppu_row[7:0], ppu_col[7:0]};
+wire ppu_w_e = ppu_write_en;
 
 //Connections for generic ram
 wire [7:0] ram_data_out;

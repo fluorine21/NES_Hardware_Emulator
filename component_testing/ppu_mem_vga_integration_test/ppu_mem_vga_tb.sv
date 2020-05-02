@@ -33,7 +33,7 @@ clkdiv2 clkdiv2_inst
 	clk//25MHz
 );
 
-
+wire [6:0] addr_0, addr_1, addr_2, addr_3, data_0, data_1, state_out;
 ppu_mem_vga_top_lvl dut
 (
 	clk_50, //50MHz clk from crystal to be divided to 25
@@ -56,7 +56,12 @@ ppu_mem_vga_top_lvl dut
 	
 	joycon_1, joycon_2,
 
-	ppu_vsync
+	ppu_vsync,
+	cpu_halt,
+	
+	addr_0, addr_1, addr_2, addr_3,
+	data_0, data_1,
+	state_out
 
 );
 
@@ -78,9 +83,10 @@ UART_TX uart_command_tx
 //RX module for reading out bytes
 wire rx_valid;
 wire [7:0] rx_data;
-UART_RX uart_command_rx
+uart_rx uart_command_rx
 (
 	clk,
+	rst,
 	uart_tx,
 	rx_valid,
 	rx_data
@@ -90,7 +96,7 @@ UART_RX uart_command_rx
 initial begin
 
 	clk_50 = 0;
-	rst = 0;
+	rst = 1;
 	ppu_rst = 0;
 	
 	cnt = 0;

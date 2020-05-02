@@ -19,7 +19,8 @@
 
 //-- Serial receiver unit module
 module uart_rx #(
-         parameter BAUDRATE = `B_25_9600   //-- Default baudrate
+       parameter BAUDRATE = `B_25_9600   //-- Default baudrate
+		 //parameter BAUDRATE = `B_MODELSIM
 )(
          input wire clk,         //-- System clock (12MHz in the ICEstick)
          input wire rstn,        //-- Reset (Active low)
@@ -70,16 +71,24 @@ always @(posedge clk)
 //-- Shift register for storing the received bits
 reg [9:0] raw_data;
 
-always @(posedge clk)
-  if (clk_baud == 1)
-    raw_data <= {rx_r, raw_data[9:1]};
+always @(posedge clk or negedge rstn) begin
+	if(!rstn) begin
+		raw_data <= 0;
+	end
+	
+	else begin
+		if (clk_baud == 1)
+			raw_data <= {rx_r, raw_data[9:1]};
+	end
+end
 
 //-- Data register. Store the character received
-always @(posedge clk)
-  if (rstn == 0)
+always @(posedge clk or negedge rstn)begin
+  if (!rstn)
     data <= 0;
   else if (load)
     data <= raw_data[8:1];
+end
 
 //-------------------------------------------
 //-- CONTROLLER  (Finite state machine)
@@ -96,7 +105,7 @@ reg [1:0] state;
 reg [1:0] next_state;
 
 //-- Transition between states
-always @(posedge clk)
+always @(posedge clk or negedge rstn)
   if (!rstn)
     state <= IDLE;
   else

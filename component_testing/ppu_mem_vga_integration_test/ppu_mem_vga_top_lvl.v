@@ -65,7 +65,7 @@ assign ppu_vsync = ppu_status[7];
 ppu_fsm ppu_fsm_inst
 (
 	clk,
-	(rst & ppu_rst),
+	(rst & ppu_rst & (!cpu_halt)),//Hold in reset if we are writing to memory
 	
 	ppu_vram_addr,
 	ppu_vram_data,

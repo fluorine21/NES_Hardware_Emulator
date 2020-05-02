@@ -4,8 +4,8 @@ module vga_controller
 (
 	input wire clk,
 	//VGA buffer connections
-	output wire [9:0] vga_row, 
-	output wire [9:0] vga_col,
+	output wire [9:0] vga_row_out, 
+	output wire [9:0] vga_col_out,
 	input wire [7:0] vga_data,
 	output wire vga_done,
 	
@@ -24,6 +24,9 @@ assign sync_n = 1;
 
 //VGA sync generator instance
 wire eof;//Not used (for now)
+wire [9:0] vga_row, vga_col;
+assign vga_row_out = vga_row - 7;
+assign vga_col_out = vga_col - 7;
 VGA_SYNC vga_sync_inst
 (
 	clk,

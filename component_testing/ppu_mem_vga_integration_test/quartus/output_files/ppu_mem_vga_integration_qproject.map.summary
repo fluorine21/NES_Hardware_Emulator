@@ -1,14 +1,14 @@
-Analysis & Synthesis Status : Successful - Fri May 01 23:16:42 2020
+Analysis & Synthesis Status : Successful - Sat May 02 12:15:12 2020
 Quartus Prime Version : 17.1.0 Build 590 10/25/2017 SJ Lite Edition
 Revision Name : ppu_mem_vga_integration_qproject
 Top-level Entity Name : ppu_mem_vga_top_lvl
 Family : Cyclone IV E
-Total logic elements : 3,983
-    Total combinational functions : 3,324
-    Dedicated logic registers : 1,331
-Total registers : 1331
+Total logic elements : 5,426
+    Total combinational functions : 4,171
+    Dedicated logic registers : 2,305
+Total registers : 2305
 Total pins : 103
 Total virtual pins : 0
-Total memory bits : 1,001,472
+Total memory bits : 2,869,248
 Embedded Multiplier 9-bit elements : 0
 Total PLLs : 0
