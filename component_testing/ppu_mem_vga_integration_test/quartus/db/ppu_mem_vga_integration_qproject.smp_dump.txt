@@ -1,15 +1,16 @@
 
 State Machine - |ppu_mem_vga_top_lvl|sys_ctrl_fsm:sys_ctrl_inst|state
-Name state.state_write_3 state.state_write_2 state.state_write_1 state.state_read_4 state.state_read_3 state.state_read_2 state.state_read_1 state.state_idle state.state_reset_cpu 
-state.state_idle 0 0 0 0 0 0 0 0 0 
-state.state_read_1 0 0 0 0 0 0 1 1 0 
-state.state_read_2 0 0 0 0 0 1 0 1 0 
-state.state_read_3 0 0 0 0 1 0 0 1 0 
-state.state_read_4 0 0 0 1 0 0 0 1 0 
-state.state_write_1 0 0 1 0 0 0 0 1 0 
-state.state_write_2 0 1 0 0 0 0 0 1 0 
-state.state_write_3 1 0 0 0 0 0 0 1 0 
-state.state_reset_cpu 0 0 0 0 0 0 0 1 1 
+Name state.state_send_ack state.state_reset_cpu state.state_write_3 state.state_write_2 state.state_write_1 state.state_read_4 state.state_read_3 state.state_read_2 state.state_read_1 state.state_idle 
+state.state_idle 0 0 0 0 0 0 0 0 0 0 
+state.state_read_1 0 0 0 0 0 0 0 0 1 1 
+state.state_read_2 0 0 0 0 0 0 0 1 0 1 
+state.state_read_3 0 0 0 0 0 0 1 0 0 1 
+state.state_read_4 0 0 0 0 0 1 0 0 0 1 
+state.state_write_1 0 0 0 0 1 0 0 0 0 1 
+state.state_write_2 0 0 0 1 0 0 0 0 0 1 
+state.state_write_3 0 0 1 0 0 0 0 0 0 1 
+state.state_reset_cpu 0 1 0 0 0 0 0 0 0 1 
+state.state_send_ack 1 0 0 0 0 0 0 0 0 1 
 
 State Machine - |ppu_mem_vga_top_lvl|sys_ctrl_fsm:sys_ctrl_inst|UART_TX:uart_tx_inst|r_SM_Main
 Name r_SM_Main.TX_STOP_BIT r_SM_Main.TX_DATA_BITS r_SM_Main.TX_START_BIT r_SM_Main.000 r_SM_Main.CLEANUP 
@@ -19,13 +20,12 @@ r_SM_Main.TX_DATA_BITS 0 1 0 1 0
 r_SM_Main.TX_STOP_BIT 1 0 0 1 0 
 r_SM_Main.CLEANUP 0 0 0 1 1 
 
-State Machine - |ppu_mem_vga_top_lvl|sys_ctrl_fsm:sys_ctrl_inst|UART_RX:uart_rx_inst|r_SM_Main
-Name r_SM_Main.RX_STOP_BIT r_SM_Main.RX_DATA_BITS r_SM_Main.RX_START_BIT r_SM_Main.000 r_SM_Main.CLEANUP 
-r_SM_Main.000 0 0 0 0 0 
-r_SM_Main.RX_START_BIT 0 0 1 1 0 
-r_SM_Main.RX_DATA_BITS 0 1 0 1 0 
-r_SM_Main.RX_STOP_BIT 1 0 0 1 0 
-r_SM_Main.CLEANUP 0 0 0 1 1 
+State Machine - |ppu_mem_vga_top_lvl|sys_ctrl_fsm:sys_ctrl_inst|uart_rx:uart_rx_inst|state
+Name state.DAV state.LOAD state.RECV state.IDLE 
+state.IDLE 0 0 0 0 
+state.RECV 0 0 1 1 
+state.LOAD 0 1 0 1 
+state.DAV 1 0 0 1 
 
 State Machine - |ppu_mem_vga_top_lvl|mem_ctrl:mem_ctrl_inst|dma_module:dma_module_inst|state
 Name state.state_transfer_wait state.state_busy state.state_fix_spram_addr state.state_transfer_write state.state_transfer_read state.state_reset_spram_addr state.state_idle 

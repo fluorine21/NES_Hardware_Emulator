@@ -13,7 +13,7 @@ wire uart_rx;
 wire uart_tx;
 
 wire [15:0] cpu_addr;
-wire [7:0] cpu_data;
+wire [7:0] cpu_data_in, cpu_data_out;
 wire write_en;
 wire read_en;
 
@@ -24,6 +24,8 @@ reg cpu_is_halted = 1;//CPU is always halted for this TB
 reg [31:0] cnt;
 
 reg [7:0] uart_result;
+
+wire mux_ctrl;
 
 integer pass_count;
 integer fail_count;
@@ -40,19 +42,21 @@ sys_ctrl_fsm dut
 	uart_tx,
 	
 	cpu_addr,
-	cpu_data,
+	cpu_data_in,
+	cpu_data_out,
 	write_en,
 	read_en,
 	
 	cpu_halt,
 	cpu_rst,
 	
-	cpu_is_halted
+	cpu_is_halted,
+	
+	mux_ctrl
 	
 );
 
 //CPU memory
-wire [7:0] cpu_dummy_data_out;
 wire [15:0] vram_read_addr;
 wire [7:0] vram_read_data;
 generic_ram #(65535, 16) vram_inst
@@ -60,8 +64,8 @@ generic_ram #(65535, 16) vram_inst
 	clk,
 	
 	cpu_addr,
-	cpu_data,
-	cpu_dummy_data_out,
+	cpu_data_out,
+	cpu_data_in,
 	write_en,
 	
 	//Connections for vram load fsm
@@ -120,6 +124,12 @@ initial begin
 	load_mem();
 	
 	read_mem();
+	
+	while(1) begin
+	
+		halt_cpu();
+	
+	end
 
 end
 
@@ -350,10 +360,12 @@ begin
 		clk_cycle();
 	end
 	
-	repeat(3) clk_cycle();
+	repeat(10) clk_cycle();
 
 end
 endtask
+
+
 
 task report_error
 (

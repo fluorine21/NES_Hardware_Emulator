@@ -1,0 +1,29 @@
+
+State Machine - |sys_ctrl_test_top_lvl|sys_ctrl_fsm:sys_ctrl|state
+Name state.state_send_ack state.state_reset_cpu state.state_write_3 state.state_write_2 state.state_write_1 state.state_read_4 state.state_read_3 state.state_read_2 state.state_read_1 state.state_idle 
+state.state_idle 0 0 0 0 0 0 0 0 0 0 
+state.state_read_1 0 0 0 0 0 0 0 0 1 1 
+state.state_read_2 0 0 0 0 0 0 0 1 0 1 
+state.state_read_3 0 0 0 0 0 0 1 0 0 1 
+state.state_read_4 0 0 0 0 0 1 0 0 0 1 
+state.state_write_1 0 0 0 0 1 0 0 0 0 1 
+state.state_write_2 0 0 0 1 0 0 0 0 0 1 
+state.state_write_3 0 0 1 0 0 0 0 0 0 1 
+state.state_reset_cpu 0 1 0 0 0 0 0 0 0 1 
+state.state_send_ack 1 0 0 0 0 0 0 0 0 1 
+
+State Machine - |sys_ctrl_test_top_lvl|sys_ctrl_fsm:sys_ctrl|UART_TX:uart_tx_inst|r_SM_Main
+Name r_SM_Main.TX_STOP_BIT r_SM_Main.TX_DATA_BITS r_SM_Main.TX_START_BIT r_SM_Main.000 r_SM_Main.CLEANUP 
+r_SM_Main.000 0 0 0 0 0 
+r_SM_Main.TX_START_BIT 0 0 1 1 0 
+r_SM_Main.TX_DATA_BITS 0 1 0 1 0 
+r_SM_Main.TX_STOP_BIT 1 0 0 1 0 
+r_SM_Main.CLEANUP 0 0 0 1 1 
+
+State Machine - |sys_ctrl_test_top_lvl|sys_ctrl_fsm:sys_ctrl|UART_RX:uart_rx_inst|r_SM_Main
+Name r_SM_Main.RX_STOP_BIT r_SM_Main.RX_DATA_BITS r_SM_Main.RX_START_BIT r_SM_Main.000 r_SM_Main.CLEANUP 
+r_SM_Main.000 0 0 0 0 0 
+r_SM_Main.RX_START_BIT 0 0 1 1 0 
+r_SM_Main.RX_DATA_BITS 0 1 0 1 0 
+r_SM_Main.RX_STOP_BIT 1 0 0 1 0 
+r_SM_Main.CLEANUP 0 0 0 1 1 

@@ -11,12 +11,12 @@ module sys_ctrl_fsm
 	output wire uart_tx,
 	
 	//Connections to CPU memory bus
-	inout wire [15:0] cpu_bus_addr,
+	output wire [15:0] cpu_bus_addr,
 	input wire [7:0] cpu_bus_data_in,
-	inout wire [7:0] cpu_bus_data_out,
+	output wire [7:0] cpu_bus_data_out,
 	//These aren't tristate, can OR with CPU inputs
-	inout wire cpu_bus_write_en,
-	inout wire cpu_bus_read_en,
+	output wire cpu_bus_write_en,
+	output wire cpu_bus_read_en,
 	
 	//Outputs to CPU control
 	output reg cpu_halt,
@@ -24,7 +24,8 @@ module sys_ctrl_fsm
 	
 	input wire cpu_is_halted, // Needed to detect when the CPU is actually halted
 	
-	output wire cpu_sys_mux_ctrl//Needed to switch the CPU mem bus into this module to avoid tristate buffers
+	output wire cpu_sys_mux_ctrl,//Needed to switch the CPU mem bus into this module to avoid tristate buffers
+	output wire [7:0] state_out
 	
 );
 
@@ -36,7 +37,8 @@ localparam [7:0] HALT_CPU = 8'h00,
 				 RESUME_CPU = 8'h01, 
 				 WRITE_BYTE = 8'h02, 
 				 READ_BYTE = 8'h03,
-				 RESET_CPU = 8'h04;//
+				 RESET_CPU = 8'h04,
+				 PING = 8'h05;//
 
 //This module can do the following things
 //Halt the CPU - 0x00
@@ -63,17 +65,20 @@ localparam [7:0] state_idle = 0,
 				 state_write_1 = 5,
 				 state_write_2 = 6,
 				 state_write_3 = 7,
-				 state_reset_cpu = 8;
+				 state_reset_cpu = 8,
+				 state_send_ack = 9;
 
 reg [7:0] state;
+assign state_out = state;
 reg [8:0] cnt;
 
 //Uart RX
 wire rx_valid;
 wire [7:0] rx_data;
-UART_RX uart_rx_inst
+uart_rx uart_rx_inst
 (
 	clk,
+	rst,
 	uart_rx,
 	rx_valid,
 	rx_data
@@ -103,7 +108,7 @@ begin
 	read_en <= 0;
 	cnt <= 0;
 	cpu_halt <= 0;
-	cpu_rst <= 0;
+	cpu_rst <= 1;
 	tx_start <= 0;
 	tx_data <= 0;
 
@@ -125,6 +130,9 @@ always @ (posedge clk or negedge rst) begin
 
 			state_idle: begin
 			
+				//Stop resetting
+				cpu_rst <= 1;
+			
 				//Reset TX start
 				tx_start <= 0;
 			
@@ -143,14 +151,14 @@ always @ (posedge clk or negedge rst) begin
 						
 							//Set the CPU halt flag
 							cpu_halt <= 1'b1;
-						
+							state <= state_send_ack;
 						end
 						
 						RESUME_CPU: begin
 						
 							//Reset the CPU halt flag
 							cpu_halt <= 1'b0;
-							
+							state <= state_send_ack;
 						end
 						
 						WRITE_BYTE: begin
@@ -170,6 +178,14 @@ always @ (posedge clk or negedge rst) begin
 							cpu_rst <= 0;
 							//Go to the reset state
 							state <= state_reset_cpu;
+						end
+						
+						PING: begin
+							state <= state_send_ack;
+						end
+						
+						default: begin
+							reset_regs();
 						end
 					
 					endcase
@@ -265,7 +281,7 @@ always @ (posedge clk or negedge rst) begin
 					write_en <= 1;
 					
 					//Go back to idle
-					state <= state_idle;
+					state <= state_send_ack;
 				
 				end
 			end
@@ -277,15 +293,30 @@ always @ (posedge clk or negedge rst) begin
 				if(cnt[8] == 1) begin
 					
 					//Stop resetting
-					cpu_rst <= 0;
+					cpu_rst <= 1;
 					
 					//Go back to idle
-					state <= state_idle;
+					state <= state_send_ack;
 				
 				end
 				else begin
 					//Keep counting
 					cnt <= cnt + 1;
+				end
+			
+			end
+			
+			state_send_ack: begin
+			
+				if(tx_done) begin
+				
+					//Go back to idle
+					state <= state_idle;
+					
+					//Send 0
+					tx_data <= 0;
+					tx_start <= 1;
+
 				end
 			
 			end

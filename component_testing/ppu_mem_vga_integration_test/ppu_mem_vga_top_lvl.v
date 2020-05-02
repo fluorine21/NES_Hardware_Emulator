@@ -21,7 +21,12 @@ module ppu_mem_vga_top_lvl
 	
 	input wire [7:0] joycon_1, joycon_2,//connected to dip switches in bit order
 	
-	output wire ppu_vsync
+	output wire ppu_vsync,
+	output wire cpu_halt,
+	
+	output wire [6:0] addr_0, addr_1, addr_2, addr_3,
+	output wire [6:0] data_0, data_1,
+	output wire [6:0] state_out
 
 );
 assign uart_cts = 1;
@@ -160,9 +165,10 @@ vga_mem vga_mem_inst
 
 );
 
-wire cpu_halt, cpu_rst;
+wire cpu_rst;
 wire cpu_is_halted = 1;
 wire cpu_sys_mux_ctrl;
+wire [7:0] state;
 sys_ctrl_fsm sys_ctrl_inst
 (
 	clk,
@@ -182,10 +188,55 @@ sys_ctrl_fsm sys_ctrl_inst
 	
 	cpu_is_halted,
 	
-	cpu_sys_mux_ctrl
+	cpu_sys_mux_ctrl,
+	
+	state
 	
 );
 
+
+leddcd addr_0_dec
+(
+	cpu_addr_in[3:0],
+	addr_0
+);
+
+leddcd addr_1_dec
+(
+	cpu_addr_in[7:4],
+	addr_1
+);
+
+leddcd addr_2_dec
+(
+	cpu_addr_in[11:8],
+	addr_2
+);
+
+leddcd addr_3_dec
+(
+	cpu_addr_in[15:12],
+	addr_3
+);
+
+
+leddcd data_0_dec
+(
+	cpu_data_in[3:0],
+	data_0
+);
+
+leddcd data_1_dec
+(
+	cpu_data_in[7:4],
+	data_1
+);
+
+leddcd state_dec
+(
+	state[3:0],
+	state_out
+);
 
 
 

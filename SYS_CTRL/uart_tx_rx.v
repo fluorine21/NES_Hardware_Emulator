@@ -11,10 +11,11 @@
 // Example: 25 MHz Clock, 115200 baud UART
 // (25000000)/(115200) = 217
  
-module UART_RX
-  #(parameter CLKS_PER_BIT = 5)
+/* module UART_RX
+  #(parameter CLKS_PER_BIT = 2604)
   (
    input        i_Clock,
+	input 		 rst,
    input        i_RX_Serial,
    output       o_RX_DV,
    output [7:0] o_RX_Byte
@@ -26,7 +27,7 @@ module UART_RX
   parameter RX_STOP_BIT  = 3'b011;
   parameter CLEANUP      = 3'b100;
   
-  reg [7:0] r_Clock_Count = 0;
+  reg [15:0] r_Clock_Count = 0;
   reg [2:0] r_Bit_Index   = 0; //8 bits total
   reg [7:0] r_RX_Byte     = 0;
   reg       r_RX_DV       = 0;
@@ -34,8 +35,17 @@ module UART_RX
   
   
   // Purpose: Control RX state machine
-  always @(posedge i_Clock)
-  begin
+  always @(posedge i_Clock or negedge rst)begin
+  if(rst == 0) begin
+	r_Clock_Count <= 0;
+	r_Bit_Index <= 0;
+	r_RX_Byte <= 0;
+	r_RX_DV <= 0;
+	r_SM_Main <= 0;
+  end
+  
+  
+  else begin
       
     case (r_SM_Main)
       IDLE :
@@ -130,11 +140,11 @@ module UART_RX
       
     endcase
   end    
-  
+ end
   assign o_RX_DV   = r_RX_DV;
   assign o_RX_Byte = r_RX_Byte;
   
-endmodule // UART_RX
+endmodule // UART_RX */
 
 
 
@@ -152,7 +162,7 @@ endmodule // UART_RX
 // (25000000)/(115200) = 217
  
 module UART_TX 
-  #(parameter CLKS_PER_BIT = 5)
+  #(parameter CLKS_PER_BIT = 2604)
   (
    input       i_Clock,
    input       i_TX_DV,
@@ -169,7 +179,7 @@ module UART_TX
   parameter CLEANUP      = 3'b100;
   
   reg [2:0] r_SM_Main     = 0;
-  reg [7:0] r_Clock_Count = 0;
+  reg [15:0] r_Clock_Count = 0;
   reg [2:0] r_Bit_Index   = 0;
   reg [7:0] r_TX_Data     = 0;
   reg       r_TX_Done     = 0;
@@ -191,6 +201,7 @@ module UART_TX
             r_TX_Active <= 1'b1;
             r_TX_Data   <= i_TX_Byte;
             r_SM_Main   <= TX_START_BIT;
+			r_TX_Done     <= 1'b0;
           end
           else
             r_SM_Main <= IDLE;

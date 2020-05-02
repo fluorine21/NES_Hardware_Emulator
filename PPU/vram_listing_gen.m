@@ -1,7 +1,14 @@
-
+clear;clc;close all;
 filename = "vram_listing.sv";
 
 %fid = edit(filename);
+global py_fid;
+py_fid = fopen("../python_driver/vram_listing.py", 'wt');
+if py_fid ~= -1
+    fprintf(py_fid, "vram_listing = [\n");
+else
+   fprintf("\nWarning, cannot open python file\n ");
+end
 
 fid = fopen(filename, 'wt');
 if fid ~= -1
@@ -13,6 +20,8 @@ else
     warningMessage = sprintf('Cannot open file %s', filename);
     uiwait(warndlg(warningMessage));
 end
+
+fclose(py_fid);
 
 
 function gen_vram(vram_file)
@@ -178,7 +187,7 @@ fprintf(vram_file, "\n\n\n};\n");
 end
 
 function gen_spram_payload(vram_file)
-
+    
     spram_file = fopen("spram_listing.v");
     txt = textscan(spram_file,'%s','delimiter','\n');
     result_cell = txt{1};
@@ -191,7 +200,7 @@ function gen_spram_payload(vram_file)
 end
 
 function write_value(vram_file, addr, value, isend)
-
+global py_fid;
 val_new = value;
 if(~ischar(value))
     val_new = dec2hex(value, 4);
@@ -199,10 +208,12 @@ end
 if(isend)
     
     fprintf(vram_file, "16'h%s, 16'h%s\n", dec2hex(addr, 4), val_new);
+    fprintf(py_fid, "0x%s, 0x%s\n]\n", dec2hex(addr, 4), val_new);
     
 else
     
     fprintf(vram_file, "16'h%s, 16'h%s,\n", dec2hex(addr, 4), val_new);
+    fprintf(py_fid, "0x%s, 0x%s,\n", dec2hex(addr, 4), val_new);
     
 end
 
