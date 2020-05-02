@@ -90,48 +90,112 @@ architecture of behavior in instr_fetch_tb is
 		signal instr_valid			: std_logic;
 	
 	begin instr_fetch_inst: 
+		component generic_ram
+			uut: generic_ram port map (
+				cpu_mem_addr_1 => addr_1,
+				cpu_mem_data_in => data_in_1, --what is this for? aren't we only inputting addresses?
+				cpu_mem_wr_en => write_en,
+				
+				cpu_mem_data_out_1 <= data_out_1, -- is the backwards arrow ok - or facing same way for outputs coming in?
+				);
+			generic_ram: process is
+				constant size := '100';
+				constant addr_width := '16';
+				
+				type array_1 is array(0 to 7) of std_logic_vector(size-1 downto 0);
+				signal mem_array	: array_1;
+			
+			wait;
+			end process generic_ram;
+		
+		
 		component instr_fetch
 			port map(
-					--???
+					clk => clk, 
+					rst => rst,
+					addr_out => addr_out,			
+					new_op => new_op,   
+					alu_op => alu_op,   
+					pc_ie => pc_ie,
+					pc => pc,	   	
+					x_reg => x_reg, 
+					y_reg => y_reg,
+					acc_reg => acc_reg,
+					
+					addr_1 => cpu_mem_addr_1,		
+					addr_2 => cpu_mem_addr_2,		
+					
+					data_1 <= cpu_mem_data_out_1,		
+					data_2 <= cpu_mem_data_out_1,		
+					
+				
+					accessing_mem_bus	=> accessing_mem_bus,
+					ie_ready	=> ie_ready,
+					imm_mode	=> imm_mode,		
+					store_flag => store_flag,																			
+					reg_load_flag => reg_load_flag,																		
+					mem_load_flag => mem_load_flag,	
+					instr_valid => instr_valid
 				);
 		
-		
+		--mux statements (inputs of generic ram) to write to mem
+			cpu_mem_addr_1 <= testbench_addr_1 when rst = '0' else cpu_addr_1;
+			
+			cpu_mem_data_in <= testbench_data_in when rst = '0' else cpu_data_in;
+			
+			cpu_mem_wr_en <= testbench_wr_en when rst = '0' else cpu_wr_en;
 		instr_fetch: process is
 			constant period: time := 50 ns;
-			begin
-			wait for 1 ns;
 			
-		--stuff
+			begin
+				FILE asm_prog:TEXT; 
+				constant filename: string := "/cpu_if_mem_listing.txt";
+				variable L: line := 1;
+				variable addy1, data1: integer := 0;
+				
+				begin
+					rst <= '0'; -- setting rst to 0 bc we want testbench to write to mem
+
+					file_open(f, filename, read_mode);
+		
+					while (not ENDFILE(asm_prog)) loop 
+						wait until (clk = '1');
+						wait until (clk = '0');
+						write_addy_data_mem: for ii in 0 to 37 loop
+						
+							if (ie_ready = '1') then 
+								readline(asm_prog, L);
+								hread(L, addy1);	
+								cpu_addr_line <= std_logic_vector(addy1);
+								hread(L, data1);	
+								cpu_data_line <= data1;
+							
+								cpu_wr_en<= '1';
+							
+							end loop write_addy_data_mem;
+							
+						else 
+							cpu_wr_en<= '0';
+						end if;
+					end loop;
 			
 			wait;
 		end process instr_fetch;
 		
 		
---		clk_process : process is
---			begin	
---				clk <= '0';
---				wait for 1 ns;
---				for i in 0 to 20 loop
---				clk <= '1';
---				wait for 5 ns;
---				clk <= '0';
---				wait for 5 ns;
---				end loop;
---				wait;
---		end process clk_process;
---
---			
---		rst_process: process is
---			begin
---				rst <= '0'; 
---				wait until (clock = '0');
---				wait until (clock = '1');
---				rst <= '1';
---				wait until (clock = '0');
---				wait until (clock = '1');
---				reset <= '0';
---				wait;
---		end process rst_process;
+		clk_process : process is
+			begin	
+				clk <= '0';
+				wait for 1 ns;
+				for i in 0 to 20 loop
+				clk <= '1';
+				wait for 5 ns;
+				clk <= '0';
+				wait for 5 ns;
+				end loop;
+				wait;
+		end process clk_process;
+
 		
 		wait;
 
