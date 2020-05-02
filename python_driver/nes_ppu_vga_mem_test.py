@@ -45,6 +45,11 @@ if(NES_obj.mem_test() == -1):
     print("Mem test failed")
 else:
     print("Mem test passed!")
+    
+if(NES_obj.vram_test() == -1):
+    print("VRAM test failed")
+else:
+    print("VRAM test passed!")
         
 
 

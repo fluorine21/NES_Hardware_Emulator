@@ -1,12 +1,12 @@
-Fitter Status : Successful - Fri May 01 21:54:19 2020
+Fitter Status : Successful - Fri May 01 23:17:12 2020
 Quartus Prime Version : 17.1.0 Build 590 10/25/2017 SJ Lite Edition
 Revision Name : ppu_mem_vga_integration_qproject
 Top-level Entity Name : ppu_mem_vga_top_lvl
 Family : Cyclone IV E
 Device : EP4CE115F29C7
 Timing Models : Final
-Total logic elements : 3,594 / 114,480 ( 3 % )
-    Total combinational functions : 3,321 / 114,480 ( 3 % )
+Total logic elements : 3,595 / 114,480 ( 3 % )
+    Total combinational functions : 3,324 / 114,480 ( 3 % )
     Dedicated logic registers : 1,331 / 114,480 ( 1 % )
 Total registers : 1331
 Total pins : 103 / 529 ( 19 % )

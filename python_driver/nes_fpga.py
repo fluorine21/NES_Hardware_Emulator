@@ -13,6 +13,8 @@ RESET_CPU = 0x04
 PING_BOARD = 0x05
 ACK_RESPONSE = 0
 
+#02 20 06 00 02 20 06 00 02 20 07 AB
+#02 20 06 00 02 20 06 00 03 20 07
 
 class NES_FPGA:
     port = None
@@ -164,14 +166,9 @@ class NES_FPGA:
             
             result = 0
             
-            #Write the high address byte to 2007
-            result += self.write_byte(0x2007, int(listing[i*2]/256))
-            
-            #Write the low address byte to 2007
-            result += self.write_byte(0x2007, int(listing[i*2]&255))
-            
-            #Write the data to 2008
-            result += self.write_byte(0x2008, int(listing[(i*2)+1]&255))
+            #Write the high address byte to 2006
+            result += self.write_vram_byte(listing[i*2], listing[(i*2)+1])
+        
             
             if(result != 0):
                 print("Error writing bytes: addr = " + hex(int(listing[i*2]/256)) + hex(int(listing[i*2]&255)))
@@ -196,19 +193,10 @@ class NES_FPGA:
             
             result = 0
             
-            #Write the high address byte to 2007
-            result += self.write_byte(0x2007, int(listing[i*2]/256))
-            
-            #Write the low address byte to 2007
-            result += self.write_byte(0x2007, int(listing[i*2]&255))
-            
-            #Read from 2008
-            byte_result = self.read_byte(0x2008)
-            
-            #Now do that all again because of the double buffer bug
-            result += self.write_byte(0x2007, int(listing[i*2]/256))
-            result += self.write_byte(0x2007, int(listing[i*2]&255))
-            byte_result = self.read_byte(0x2008)
+            #Write the high address byte to 2006
+            byte_result = self.read_vram_byte(listing[i*2])
+            byte_result = self.read_vram_byte(listing[i*2])
+            byte_result = self.read_vram_byte(listing[i*2])
             
             if(result != 0):
                 print("Error, timeout while verifying vram listing\n")
@@ -304,11 +292,16 @@ class NES_FPGA:
         
         if(b_res != 0xAB):
             print("Unable to access memory at 0x0000")
+            self.resume_cpu()
             return -1
             
         #Try writing C000
         self.write_byte(0xC000, 0x12)
         b_res = self.read_byte(0xC000)
+        
+        #unhalt the CPU
+        
+        self.resume_cpu()
         
         if(b_res != 0x12):
             print("Unable to access memory at 0xC000")
@@ -316,13 +309,85 @@ class NES_FPGA:
             
         return 0
     
-    
-        #unhalt the CPU
+    def write_vram_byte(self, addr, data):
         
-        self.reset_cpu()
+        self.halt_cpu()
+        ret_v = 0
+        payload = [WRITE_BYTE, 0x20, 0x06, int(addr/256)&255, WRITE_BYTE, 0x20, 0x06, int(addr)&255, WRITE_BYTE, 0x20, 0x07, int(data)&255]
+        self.port.write(payload)
+        self.port.flushOutput()
+        port_res = self.port.read(3)
+        if(port_res[0] != 0x00 or port_res[1] != 0x00 or port_res[2] != 0x00):
+            print("Unexpected output from VRAM when writing byte")
+            ret_v = -1
+        self.port.flushInput()
+    
+        return ret_v
+        
+    def read_vram_byte(self, addr):
+        
+        self.halt_cpu()
+        self.port.flushInput()
+        payload = [WRITE_BYTE, 0x20, 0x06, int(addr/256)&255, WRITE_BYTE, 0x20, 0x06, int(addr)&255, READ_BYTE, 0x20, 0x07]
+        self.port.write(payload)
+        self.port.flushOutput()
+        byte_arr = self.port.read(3)
+        if(byte_arr[0] != 0x00 or byte_arr[1] != 0x00):
+            print("Unexpected output from VRAM when reading byte")
+            
+        self.port.flushInput()
+    
+        return byte_arr[2]
+        
+        
+    
+    def vram_test(self):
+        
+        ret_v = 0
+        
+        self.halt_cpu()
+        
+        #Try writing to 0x0000
+        self.write_vram_byte(0x0000, 0xAB)
+        
+        #Try reading back 0x0000
+        byte_result = self.read_vram_byte(0x0000)
+        byte_result = self.read_vram_byte(0x0000)
+        byte_result = self.read_vram_byte(0x0000)
+
+        if(byte_result != 0xAB):
+            print("Unable to access VRAM at 0x0000")
+            ret_v = -1
+        
+        
+        # and 0x2000
+        self.write_vram_byte(0x2000, 0xCD)
+        
+        
+            
+        #Try reading back 0x2000
+        byte_result = self.read_vram_byte(0x2000)
+        byte_result = self.read_vram_byte(0x2000)
+        byte_result = self.read_vram_byte(0x2000)
+        
+        if(byte_result != 0xCD):
+            print("Unable to access VRAM at 0x0000")
+            ret_v = -1
             
             
+        #Try reading back 0x0000 again
+        byte_result = self.read_vram_byte(0x0000)
+        byte_result = self.read_vram_byte(0x0000)
+        byte_result = self.read_vram_byte(0x0000)
+        
+        if(byte_result != 0xAB):
+            print("Unable to access VRAM at 0x0000 on second access")
+            ret_v = -1
+        
+       
+        self.resume_cpu()   
             
+        return ret_v
             
             
             

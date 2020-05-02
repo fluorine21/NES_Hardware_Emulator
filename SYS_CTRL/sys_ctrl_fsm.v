@@ -308,6 +308,8 @@ always @ (posedge clk or negedge rst) begin
 			
 			state_send_ack: begin
 			
+				write_en <= 0;
+			
 				if(tx_done) begin
 				
 					//Go back to idle
