@@ -13,14 +13,15 @@ entity b2b_access is
 			data_1		: out std_logic_vector(7 downto 0);
 			data_2		: out std_logic_vector(7 downto 0);
 			
-			mem_read		: out std_logic
-			mem_done		:
+			mem_read		: out std_logic;
+			mem_done		: out std_logic
 	);
-end entity;
+end entity b2b_access;
 	
 architecture b of b2b_access is
 	type state_type is (s0, s1, s2, s3);
-	signal state, next_state: state_type;
+	signal state: state_type;
+	signal next_state: state_type;
 	
 	signal mem_addr : std_logic_vector(15 downto 0);
 	signal mem_data_in : std_logic_vector(7 downto 0);
@@ -30,7 +31,7 @@ architecture b of b2b_access is
 			
 		begin
 		
-			state <= next_state;
+			--state <= next_state;
 			
 			case (state) is
 			
@@ -48,14 +49,14 @@ architecture b of b2b_access is
 					
 				when s2 =>
 					mem_done <= '0';
-					data_1 <= std_logic_vector(resize(unsigned(mem_data_in), 16));
+					data_1 <= mem_data_in;
 					mem_read <= '0';
 					next_state <= s3;
 					
 				when s3 =>
 					mem_done <= '1';
 					next_state <= s0;
-					data_2 <= std_logic_vector(resize(unsigned(mem_data_in), 16));
+					data_2 <= mem_data_in;
 					
 				when OTHERS =>
 					mem_done <= '0';
@@ -67,10 +68,10 @@ architecture b of b2b_access is
 		clk_process: process(rst, clk)   
 		begin
 		if (rst = '1') then
-			state <= idle;
+			state <= s0;
 		elsif(rising_edge(clk)) then
 			state <= next_state;
 		end if;
-	end process clk_process;
+		end process clk_process;
 	
-end architecture;
+end architecture b;

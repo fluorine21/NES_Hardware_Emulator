@@ -5,54 +5,15 @@ use IEEE.std_logic_textio.all;
 use STD.textio.all;
 
 entity instr_fetch_tb is 
-end entity instr_fetch_tb;
-
-architecture of behavior in instr_fetch_tb is
-	component instr_fetch is
-	port(
-
-			  clk       : in std_logic;
-			  rst       : in std_logic;
-		
-			--memory bus
-			  addr_out  : out std_logic_vector(15 downto 0); -- address bus going from IF to IE			
-			  new_op    : out std_logic_vector(7 downto 0);
-			  alu_op    : out std_logic_vector(2 downto 0); -- 000 = add, 001 = subtract, 010 = shift
-																				-- 011 = and, 100 = or, 101 = xor
-			  pc_ie     : in std_logic_vector(7 downto 0);
-			  pc	   	: out std_logic_vector(7 downto 0); --going to IE
-
-			
-			-- special purpose registers
-			  x_reg     : in std_logic_vector(7 downto 0); 
-			  y_reg     : in std_logic_vector(7 downto 0); 
-			  acc_reg   : in std_logic_vector(7 downto 0);
-			
-		-- PORT MAP
-			-- b2b memory access
-			  addr_1		: out std_logic_vector(15 downto 0);
-			  addr_2		: out std_logic_vector(15 downto 0);
-			
-			  data_1		: in std_logic_vector(7 downto 0);
-			  data_2		: in std_logic_vector(7 downto 0);
-			
-			
-			--flags
-			  accessing_mem_bus	: out std_logic := '0'; --	1 means ready	
-			  ie_ready				: in std_logic;         -- 0 is ie computing, 1 is ie is ready for instruction
-			  imm_mode				: out std_logic := '0'; -- immediate addy mode flag, 0 if no, 1 if yes
-			
-			  store_flag			: out std_logic_vector(2 downto 0) := "000"; -- 000 = not used, 001 = store in mem
-																									-- 010 = acc, 011 = xreg, 100 = yreg
-			  reg_load_flag		: out std_logic_vector(1 downto 0) := "00";  -- 00 = not used, 01 = load from acc
-																									-- 10 = load from xreg, 11 = yreg 
-			  mem_load_flag		: out std_logic := '0'; -- load to mem flag, 0 if no, 1 if loading from mem
-			
-			  instr_valid			: out std_logic;
-			
+	generic(
+		constant filename: string := "/cpu_if_mem_listing.txt";
+		constant addr_width: integer := 16
 		);
-	end component 
+end instr_fetch_tb;
 
+architecture behavior of instr_fetch_tb is
+		signal clk       : std_logic;
+	 	signal rst       : std_logic;
 	--memory bus
 		signal addr_out: std_logic_vector(15 downto 0); -- address bus going from IF to IE			
 		signal new_op  : std_logic_vector(7 downto 0);
@@ -88,56 +49,87 @@ architecture of behavior in instr_fetch_tb is
 		signal mem_load_flag			: std_logic := '0'; -- load to mem flag, 0 if no, 1 if loading from mem
 		
 		signal instr_valid			: std_logic;
+
+	component instr_fetch 
+	port(
+	  signal clk       : in std_logic;
+	  signal rst       : in std_logic;
+
+	--memory bus
+	  signal addr_out  : out std_logic_vector(15 downto 0); -- address bus going from IF to IE			
+	  signal new_op    : out std_logic_vector(7 downto 0);
+	  signal alu_op    : out std_logic_vector(2 downto 0); 
+	  signal pc_ie     : in std_logic_vector(7 downto 0);
+	  signal pc	   : out std_logic_vector(7 downto 0); --going to IE
+		
+	-- special purpose registers
+	  signal x_reg     : in std_logic_vector(7 downto 0); 
+	  signal y_reg     : in std_logic_vector(7 downto 0); 
+	  signal acc_reg   : in std_logic_vector(7 downto 0);
+	
+	-- PORT MAP
+	-- b2b memory access
+	  signal addr_1		: out std_logic_vector(15 downto 0);
+	  signal addr_2		: out std_logic_vector(15 downto 0);
+	
+	  signal data_1		: in std_logic_vector(7 downto 0);
+	  signal data_2		: in std_logic_vector(7 downto 0);
+	
+	
+	--flags
+	  signal accessing_mem_bus	: out std_logic := '0'; --	1 means ready	
+	  signal ie_ready		: in std_logic;         -- 0 is ie computing, 1 is ie is ready for instruction
+	  signal imm_mode		: out std_logic := '0'; -- immediate addy mode flag, 0 if no, 1 if yes
+	  signal store_flag		: out std_logic_vector(2 downto 0) := "000"; -- 000 = not used, 001 = store in mem																					-- 010 = acc, 011 = xreg, 100 = yreg
+	  signal reg_load_flag		: out std_logic_vector(1 downto 0) := "00";  -- 00 = not used, 01 = load from acc																					-- 10 = load from xreg, 11 = yreg 
+	  signal mem_load_flag		: out std_logic := '0'; -- load to mem flag, 0 if no, 1 if loading from mem
+	  signal instr_valid		: out std_logic
+	
+	);
+	end component; 
+
 	
 	begin instr_fetch_inst: 
+		
 		component generic_ram
-			uut: generic_ram port map (
+			--uut: generic_ram 
+			port map(
 				cpu_mem_addr_1 => addr_1,
 				cpu_mem_data_in => data_in_1, --what is this for? aren't we only inputting addresses?
 				cpu_mem_wr_en => write_en,
-				
-				cpu_mem_data_out_1 <= data_out_1, -- is the backwards arrow ok - or facing same way for outputs coming in?
+				cpu_mem_data_out_1 => data_out_1 -- is the backwards arrow ok - or facing same way for outputs coming in?
 				);
-			generic_ram: process is
-				constant size := '100';
-				constant addr_width := '16';
-				
-				type array_1 is array(0 to 7) of std_logic_vector(size-1 downto 0);
-				signal mem_array	: array_1;
+		end component;
 			
-			wait;
-			end process generic_ram;
-		
-		
+			
 		component instr_fetch
 			port map(
-					clk => clk, 
-					rst => rst,
+					clk      => clk, 
+					rst      => rst,
 					addr_out => addr_out,			
-					new_op => new_op,   
-					alu_op => alu_op,   
-					pc_ie => pc_ie,
-					pc => pc,	   	
-					x_reg => x_reg, 
-					y_reg => y_reg,
-					acc_reg => acc_reg,
+					new_op   => new_op,   
+					alu_op   => alu_op,   
+					pc_ie    => pc_ie,
+					pc       => pc,	   	
+					x_reg    => x_reg, 
+					y_reg    => y_reg,
+					acc_reg  => acc_reg,
 					
 					addr_1 => cpu_mem_addr_1,		
 					addr_2 => cpu_mem_addr_2,		
 					
-					data_1 <= cpu_mem_data_out_1,		
-					data_2 <= cpu_mem_data_out_1,		
-					
+					cpu_mem_data_out_1 => data_1,		
+					cpu_mem_data_out_2 => data_2,				
 				
-					accessing_mem_bus	=> accessing_mem_bus,
-					ie_ready	=> ie_ready,
-					imm_mode	=> imm_mode,		
-					store_flag => store_flag,																			
-					reg_load_flag => reg_load_flag,																		
-					mem_load_flag => mem_load_flag,	
-					instr_valid => instr_valid
+					accessing_mem_bus => accessing_mem_bus,
+					ie_ready	  => ie_ready,
+					imm_mode       	  => imm_mode,		
+					store_flag        => store_flag,																			
+					reg_load_flag     => reg_load_flag,																		
+					mem_load_flag     => mem_load_flag,	
+					instr_valid       => instr_valid
 				);
-		
+			
 		--mux statements (inputs of generic ram) to write to mem
 			cpu_mem_addr_1 <= testbench_addr_1 when rst = '0' else cpu_addr_1;
 			
@@ -149,7 +141,7 @@ architecture of behavior in instr_fetch_tb is
 			
 			begin
 				FILE asm_prog:TEXT; 
-				constant filename: string := "/cpu_if_mem_listing.txt";
+				
 				variable L: line := 1;
 				variable addy1, data1: integer := 0;
 				
