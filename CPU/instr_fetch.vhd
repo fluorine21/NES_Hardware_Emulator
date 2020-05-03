@@ -22,16 +22,7 @@ entity instr_fetch is
 			-- special purpose registers
 			signal x_reg: in std_logic_vector(7 downto 0); 
 			signal y_reg: in std_logic_vector(7 downto 0); 
-			signal acc_reg: in std_logic_vector(7 downto 0);
-			
-		-- PORT MAP
-			-- b2b memory access
-			signal addr_1		: out std_logic_vector(15 downto 0);
-			signal addr_2		: out std_logic_vector(15 downto 0);
-			
-			signal data_1		: in std_logic_vector(7 downto 0);
-			signal data_2		: in std_logic_vector(7 downto 0);
-			
+			signal acc_reg: in std_logic_vector(7 downto 0);			
 			
 			--flags
 			signal accessing_mem_bus	: out std_logic := '0'; --	1 means ready	
@@ -44,25 +35,45 @@ entity instr_fetch is
 																											-- 10 = load from xreg, 11 = yreg 
 			signal mem_load_flag			: out std_logic := '0'; -- load to mem flag, 0 if no, 1 if loading from mem
 			
-			signal mem_done				: in std_logic;			
-			signal instr_valid			: out std_logic := '0'-- IF done
-
-			
-			
+			signal instr_valid			: out std_logic := '0'-- IF done	
 		);
 end entity instr_fetch;
 
 architecture a of instr_fetch is
-	
+
+	component b2b_access is
+		port(
+			clk			: in std_logic;
+			rst			: in std_logic;
+			
+			addr_1		: in std_logic_vector(15 downto 0);
+			addr_2		: in std_logic_vector(15 downto 0);
+			
+			data_1		: out std_logic_vector(7 downto 0);
+			data_2		: out std_logic_vector(7 downto 0);
+			
+			mem_read		: out std_logic;
+			mem_done		: out std_logic
+		);
+	end component b2b_access;	
 	
 	signal opcode			: std_logic_vector(15 downto 0); --{opcode, operand}
 	signal addr_pc			: std_logic_vector(15 downto 0);
-	signal addr_1_temp		: std_logic_vector(15 downto 0); -- for indirect x calcs
-	 	
+	signal addr_1_temp	: std_logic_vector(15 downto 0); -- for indirect x calcs
+	
+	signal addr_1			: std_logic_vector(15 downto 0);
+	signal addr_2			: std_logic_vector(15 downto 0);
+			
+	signal data_1			: std_logic_vector(7 downto 0);
+	signal data_2			: std_logic_vector(7 downto 0);	
+	
+	signal mem_read		: std_logic;
+	signal mem_done		: std_logic;
+
+ 	
 	-- ARRAY length 3 for {opcode, operand, operand}
 	type array_if is array(0 to 2) of std_logic_vector(7 downto 0);
 	signal instr_reg	: array_if;
-	
 	
 	
 	--FSM signals
@@ -72,11 +83,15 @@ architecture a of instr_fetch is
 
 	--Behavioral design goes here	
 	begin
-		instr_fetch_process : process(ie_ready, pc_ie, addr_pc, state, mem_done)
+	
+	b2b_inst : b2b_access
+		port map( clk, rst, addr_1, addr_2, data_1, data_2, mem_read, mem_done);
+	
+		instr_fetch_process : process(ie_ready, pc_ie, addr_pc, state, mem_done, data_1, data_2, instr_reg, x_reg, y_reg, acc_reg, addr_1_temp)
 		variable counter	: unsigned(15 downto 0) := (others => '0');
 		begin
 			--state <= next_state;
-
+			
 			case (state) is				
 				when idle =>
 					if (ie_ready = '1') then
@@ -286,7 +301,7 @@ architecture a of instr_fetch is
 						
 						when x"0A" => --ASL_ACC
 							pc <= std_logic_vector(resize(unsigned(addr_pc),8) + to_unsigned(1,8)); --length 1
-							addr_out <= acc_reg;
+							addr_out <= std_logic_vector(resize(unsigned(acc_reg),16));
 							new_op <= x"02";
 							store_flag <= "010"; -- store in acc
 							reg_load_flag <= "01"; --load from acc
@@ -905,7 +920,7 @@ architecture a of instr_fetch is
 					
 						when x"4A" => --LSR_ACC
 							pc <= std_logic_vector(resize(unsigned(addr_pc),8) + to_unsigned(2,8)); --length 2
-							addr_out <= acc_reg;
+							addr_out <= std_logic_vector(resize(unsigned(acc_reg),16));
 							new_op <= x"21";
 							store_flag <= "010"; -- store in acc
 							reg_load_flag <= "01"; --load from acc
@@ -1066,7 +1081,7 @@ architecture a of instr_fetch is
 							
 						when x"2A" => --ROL_ACC
 							pc <= std_logic_vector(resize(unsigned(addr_pc),8) + to_unsigned(2,8)); --length 2
-							addr_out <= acc_reg;
+							addr_out <= std_logic_vector(resize(unsigned(acc_reg),16));
 							new_op <= x"28";
 							store_flag <= "010"; -- store in acc
 							reg_load_flag <= "01"; --load from acc
@@ -1108,7 +1123,7 @@ architecture a of instr_fetch is
 							
 						when x"6A" => --ROR_ACC
 							pc <= std_logic_vector(resize(unsigned(addr_pc),8) + to_unsigned(2,8)); --length 2
-							addr_out <= acc_reg;
+							addr_out <= std_logic_vector(resize(unsigned(acc_reg),16));
 							new_op <= x"29";
 							store_flag <= "010"; -- store in acc
 							reg_load_flag <= "01"; --load from acc
