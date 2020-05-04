@@ -80,6 +80,7 @@ architecture a of instr_fetch is
 	TYPE state_type is (idle, wait_state, read_op, decode_op, wait_indirect_x, wait_indirect_y);
 	signal state, next_state: state_type;
 
+	signal counter	: unsigned(15 downto 0) := (others => '0');
 
 	--Behavioral design goes here	
 	begin
@@ -87,20 +88,25 @@ architecture a of instr_fetch is
 	b2b_inst : b2b_access
 		port map( clk, rst, addr_1, addr_2, data_1, data_2, mem_read, mem_done);
 	
-		instr_fetch_process : process(ie_ready, pc_ie, addr_pc, state, mem_done, data_1, data_2, instr_reg, x_reg, y_reg, acc_reg, addr_1_temp)
-		variable counter	: unsigned(15 downto 0) := (others => '0');
+		instr_fetch_process : process(clk, rst)
+		
 		begin
 			--state <= next_state;
-			
+		if rst <= '0' then
+			state <= idle;
+			pc <= (others => '0');
+			counter <= (others => '0');
+		elsif (rising_edge(clk)) then
 			case (state) is				
 				when idle =>
 					if (ie_ready = '1') then
 						accessing_mem_bus <= '1'; -- 1 cycle delay
 						--pc <= pc_ie; -- IE giving us new value for PC
 						addr_pc <= std_logic_vector(resize(unsigned(pc_ie),16));
+						counter <= (others => '0');
 						next_state <= wait_state;
 					else 
-						next_state <= idle; --check
+						--next_state <= idle; --check
 					end if;
 					
 					
@@ -109,13 +115,14 @@ architecture a of instr_fetch is
 					next_state <= read_op;
 
 				when read_op =>
-					counter := unsigned(addr_pc) - resize(unsigned(pc_ie),16) - to_unsigned(1,16); --conversion needed
+					
 					if counter >= to_unsigned(3,16) then
 						next_state<= decode_op;
 					else	
 						addr_1 <= addr_pc;
 						instr_reg(to_integer(counter)) <= data_1; -- addr_pc would go into decoder module, and the data would go into instr_reg
 						addr_pc <= std_logic_vector(unsigned(addr_pc)+to_unsigned(1,16));
+						counter <= unsigned(addr_pc) - resize(unsigned(pc_ie),16) - to_unsigned(1,16); --conversion needed
 						next_state <= read_op;
 					end if;
 					
@@ -1406,7 +1413,7 @@ architecture a of instr_fetch is
 						when OTHERS =>
 							new_op <= x"22";
 							instr_valid <= '0';
-
+							next_state <= idle;
 						end case;
 						
 				when wait_indirect_x =>
@@ -1425,14 +1432,15 @@ architecture a of instr_fetch is
 					next_state <= idle;
 
 				end case;
+		end if;
 		end process instr_fetch_process;
 	
-	clk_proc: process(rst, clk)   
-		begin
-		if (rst = '1') then
-			state <= idle;
-		elsif(rising_edge(clk)) then
-			state <= next_state;
-		end if;
-	end process clk_proc;
+--	clk_process: process(rst, clk)   
+--		begin
+--		if (rst = '0') then
+--			state <= idle;
+--		elsif(rising_edge(clk)) then
+--			state <= next_state;
+--		end if;
+--	end process clk_process;
 end architecture a;
