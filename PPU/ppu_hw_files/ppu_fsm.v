@@ -202,6 +202,7 @@ ppu_status_latch ppu_status_inst
 	sprite_0_hit_strobe,
 	sprite_overflow,
 	state,
+	ppu_ctrl1,
 	
 	cpu_addr,
 	ppu_status
