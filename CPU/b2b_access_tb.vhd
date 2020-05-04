@@ -7,7 +7,7 @@ use STD.textio.all;
 entity b2b_access_tb is 
 end entity b2b_access_tb;
 
-architecture of behavior in b2b_access_tb is
+architecture behavior of b2b_access_tb is
 	component b2b_access is
 			port(
 			clk			: in std_logic;
@@ -21,7 +21,7 @@ architecture of behavior in b2b_access_tb is
 			
 			mem_read		: out std_logic
 			);
-	end component 
+	end component; 
 
 	signal clk			: std_logic;
 	signal rst			: std_logic;
@@ -115,7 +115,5 @@ architecture of behavior in b2b_access_tb is
 --				wait;
 --		end process rst_process;
 		
-		wait;
-
 end architecture behavior;
 		

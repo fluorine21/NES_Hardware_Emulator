@@ -98,10 +98,11 @@ architecture a of instr_execute is
             
             
       when ALU =>
-      	if (store /= "000") then
-          next_state <= store;
-        else 
-          next_state <= done;
+			if (store /= "000") then
+				next_state <= store;
+			else 
+				next_state <= done;
+			end if;
             
             
       when store =>
