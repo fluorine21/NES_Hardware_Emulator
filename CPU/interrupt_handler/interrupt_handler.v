@@ -79,7 +79,7 @@ assign accessing_memory = state != state_idle;
 //Latches
 //Check next address to figure out which flag to reset
 reg soft_reset_int;
-reg [7:0] ppu_status_int;
+reg ppu_status_int;
 
 
 always @ (posedge clk or negedge rst) begin
