@@ -11,14 +11,14 @@ entity instr_fetch_tb is
 end instr_fetch_tb;
 
 architecture behavior of instr_fetch_tb is
-		signal clk       : std_logic;
+		signal clk       : std_logic := '0';
 	 	signal rst       : std_logic;
 	--memory bus
 		signal addr_out: std_logic_vector(15 downto 0); -- address bus going from IF to IE			
 		signal new_op  : std_logic_vector(7 downto 0);
 		signal alu_op  : std_logic_vector(2 downto 0); -- 000 = add, 001 = subtract, 010 = shift
 																			-- 011 = and, 100 = or, 101 = xor
-		signal pc_ie   : std_logic_vector(7 downto 0);
+		--signal pc_ie   : std_logic_vector(7 downto 0);
 		signal pc		: std_logic_vector(7 downto 0); --going to IE
 
 		
@@ -29,7 +29,7 @@ architecture behavior of instr_fetch_tb is
 		
 		--flags
 		signal accessing_mem_bus	: std_logic := '0'; --	1 means ready	
-		signal ie_ready				: std_logic; -- 0 is ie computing, 1 is ie is ready for instruction
+		signal ie_ready				: std_logic := '1'; -- 0 is ie computing, 1 is ie is ready for instruction
 		signal imm_mode				: std_logic := '0'; -- immediate addy mode flag, 0 if no, 1 if yes		
 		signal store_flag				: std_logic_vector(2 downto 0) := "000"; -- 000 = not used, 001 = store in mem																										-- 010 = acc, 011 = xreg, 100 = yreg
 		signal reg_load_flag			: std_logic_vector(1 downto 0) := "00";  -- 00 = not used, 01 = load from acc																										-- 10 = load from xreg, 11 = yreg 
@@ -103,7 +103,7 @@ architecture behavior of instr_fetch_tb is
 				addr_out => addr_out,			
 				new_op   => new_op,   
 				alu_op   => alu_op,   
-				pc_ie    => pc_ie,
+				pc_ie    => pc,
 				pc       => pc,	   	
 				x_reg    => x_reg, 
 				y_reg    => y_reg,
@@ -129,18 +129,20 @@ architecture behavior of instr_fetch_tb is
 	
 -------------------------------------------------------------
 	
-		clk_process : process is
-			begin	
-				clk <= '0';
-				wait for 1 ns;
-				for i in 0 to 40 loop
-				clk <= '1';
-				wait for 5 ns;
-				clk <= '0';
-				wait for 5 ns;
-				end loop;
-				wait;
-		end process clk_process;
+--		clk_process : process is
+--			begin	
+--				clk <= '0';
+--				wait for 1 ns;
+--				for i in 0 to 40 loop
+--				clk <= '1';
+--				wait for 5 ns;
+--				clk <= '0';
+--				wait for 5 ns;
+--				end loop;
+--				wait;
+--		end process clk_process;
+
+		clk <= not clk after 1 ns / 2;
 
 -------------------------------------------------------------
 		
@@ -152,37 +154,38 @@ architecture behavior of instr_fetch_tb is
 			variable data1		: std_logic_vector(7 downto 0);
 			
 			file infile : text open read_mode is "cpu_if_mem_listing.txt";
-			
-			begin
-				
-				rst <= '0'; -- setting rst to 0 bc we want testbench to write to mem
-	
+		
+				begin
+					rst <= '0'; -- setting rst to 0 bc we want testbench to write to mem	
+					ie_ready <= '1';
+					cpu_mem_wr_en <= '1';
+					wait for 1 ns;
+
 					while not (endfile(infile)) loop 
 						
 						wait until (clk = '1');
 						wait until (clk = '0');
 											
-						if (ie_ready = '1' and rst = '0') then 
+						--if (ie_ready = '1' and rst = '0') then 
 							
 							--read from input file
 							readline(infile, my_line);
-							read(my_line, addy1);
+							hread(my_line, addy1);
 							cpu_mem_addr_1 <= addy1;
 							
-							read(my_line, data1);
+							hread(my_line, data1);
 							cpu_mem_data_in <= data1;
 							
-							cpu_mem_wr_en <= '1';
-						
-						else
-						
-							cpu_mem_wr_en <= '0';
 							
-						end if;
 						
-						wait for 10 ns; 
+						--else
+						
+							--cpu_mem_wr_en <= '0';
+							
+						--end if;
 						
 					end loop;
-				wait;
+					rst <= '1';
+				wait for 1000ns;
 		end process file_process;
 end architecture behavior;
