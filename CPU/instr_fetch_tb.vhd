@@ -17,15 +17,17 @@ architecture behavior of instr_fetch_tb is
 		signal addr_out: std_logic_vector(15 downto 0); -- address bus going from IF to IE			
 		signal new_op  : std_logic_vector(7 downto 0);
 		signal alu_op  : std_logic_vector(2 downto 0); -- 000 = add, 001 = subtract, 010 = shift
+		signal mem_addr_out: std_logic_vector(15 downto 0); -- address bus going from IF to mem
+		signal mem_data_in: std_logic_vector(7 downto 0); -- data bus going from mem to IF
 																			-- 011 = and, 100 = or, 101 = xor
 		--signal pc_ie   : std_logic_vector(7 downto 0);
-		signal pc		: std_logic_vector(7 downto 0); --going to IE
+		signal pc		: std_logic_vector(15 downto 0); --going to IE
 
 		
 		-- special purpose registers
-		signal x_reg: std_logic_vector(7 downto 0); 
-		signal y_reg: std_logic_vector(7 downto 0); 
-		signal acc_reg: std_logic_vector(7 downto 0);
+		signal x_reg: std_logic_vector(7 downto 0) := (others => '0'); 
+		signal y_reg: std_logic_vector(7 downto 0):= (others => '0'); 
+		signal acc_reg: std_logic_vector(7 downto 0):= (others => '0');
 		
 		--flags
 		signal accessing_mem_bus	: std_logic := '0'; --	1 means ready	
@@ -58,8 +60,10 @@ architecture behavior of instr_fetch_tb is
 		  signal addr_out  : out std_logic_vector(15 downto 0); -- address bus going from IF to IE			
 		  signal new_op    : out std_logic_vector(7 downto 0);
 		  signal alu_op    : out std_logic_vector(2 downto 0); 
-		  signal pc_ie     : in std_logic_vector(7 downto 0);
-		  signal pc	   : out std_logic_vector(7 downto 0); --going to IE
+		  signal pc_ie     : in std_logic_vector(15 downto 0);
+		  signal pc	   : out std_logic_vector(15 downto 0); --going to IE
+		  signal mem_addr_out: out std_logic_vector(15 downto 0); -- address bus going from IF to mem
+	 	  signal mem_data_in: in std_logic_vector(7 downto 0); -- data bus going from mem to IF
 			
 		-- special purpose registers
 		  signal x_reg     : in std_logic_vector(7 downto 0); 
@@ -115,7 +119,9 @@ architecture behavior of instr_fetch_tb is
 				store_flag        => store_flag,																			
 				reg_load_flag     => reg_load_flag,																		
 				mem_load_flag     => mem_load_flag,	
-				instr_valid       => instr_valid
+				instr_valid       => instr_valid,
+				mem_addr_out	=> cpu_mem_addr_2,
+				mem_data_in 	=> cpu_mem_data_out_2
 			);
 			
 -------------------------------------------------------------
