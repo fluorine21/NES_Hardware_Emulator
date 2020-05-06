@@ -19,7 +19,7 @@ module vga_controller
 	output wire [7:0] R, G, B
 );
 
-assign vga_done = vga_row > 240;
+assign vga_done = vga_row_out > 240;
 assign sync_n = 1;
 
 //VGA sync generator instance
