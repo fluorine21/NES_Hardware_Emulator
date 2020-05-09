@@ -20,14 +20,23 @@ module simple_op_decode
 	output wire is_rti,	
 	output wire is_break,
 	output wire is_stack_op,
+	output wire is_nop,
+	output wire is_flag_inst,//Instruction for changing cpu flags
 	
 	output reg [7:0] alu_input_a_flags,
 	output reg [7:0] alu_input_b_flags,
 	output reg [7:0] alu_output_flags,
-	output wire [3:0] alu_op_out
+	output wire [3:0] alu_op_out,
+	output wire [7:0] alu_status_edit
 	
 	
 );
+
+assign is_flag_inst = (simple_op >= 8'h0D && simple_op <= 8'h10);
+
+assign is_stack_op = (simple_op >= 8'h24 && simple_op <= 8'h27);
+
+assign is_nop = simple_op == 8'h22;
 
 assign is_load = mem_load_flag;
 assign is_store = store_flag == 3'b001;
@@ -86,17 +95,22 @@ end
 
 //always for input a
 always @ * begin
-
-
-
-	case(reg_load_flag)
 	
-		2'b01: alu_input_a_flags <= a_reg;
-		2'b10: alu_input_a_flags <= x_reg;
-		2'b11: alu_input_a_flags <= y_reg;
-		2'b00: alu_input_a_flags <= mem_load;
+	if(simple_op == 8'h25)
+		alu_input_a_flags <= status_reg;
+	end
+	else begin
+
+		case(reg_load_flag)
+		
+			2'b01: alu_input_a_flags <= a_reg;
+			2'b10: alu_input_a_flags <= x_reg;
+			2'b11: alu_input_a_flags <= y_reg;
+			2'b00: alu_input_a_flags <= mem_load;
+			
+		endcase
 	
-	endcase
+	end
 
 end
 
@@ -116,7 +130,14 @@ always @ * begin
 end
 
 
-//
+//Always for ALU status edit
+always @ * begin
+
+	//Default case
+	alu_status_edit <= 0;
+
+
+end
 
 
 

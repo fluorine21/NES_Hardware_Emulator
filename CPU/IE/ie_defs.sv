@@ -10,7 +10,8 @@ y_reg = 3,//source/dest
 mem_load = 4,//source
 mem_store = 5,//dest
 imm = 6,//source
-one = 7;
+one = 7,//Source
+status_reg = 8;
 
 //Branch instructions		   
 localparam [7:0] BCC = 8'h04,//Branch on carry clear

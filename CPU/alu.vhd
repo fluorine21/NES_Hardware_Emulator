@@ -111,7 +111,6 @@ architecture a of alu is
             ignore_output <= '1';
     end case;
 
-
     ------- do checks to set flags N Z VC
 
     if proc_status_edit(1) = '1' then   ---- zero (1)

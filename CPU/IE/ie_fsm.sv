@@ -1,3 +1,5 @@
+import ie_defs::*;
+
 
 module ie_fsm
 (
@@ -30,7 +32,7 @@ module ie_fsm
 	
 	//Outpits to IF
 	output reg [15:0] pc_next,
-	output reg [7:0] status,
+	output reg [7:0] ie_status,
 	//CPU registers
 	output reg [7:0] a, x, y,
 	output reg [7:0] stack_ptr
@@ -143,7 +145,7 @@ reg [7:0] alu_input_b;
 //Output from ALU
 wire [7:0] alu_output;
 
-import ie_defs::*;
+
 //pc next is output
 
 
@@ -204,6 +206,8 @@ begin
 		y_reg: alu_input_a <= y_reg;
 		mem_load: alu_input_a <= mem_data_in;
 		imm: alu_input_a <= if_addr_in[7:0];
+		one: alu_input_a <= 1;
+		status: alu_input_a <= ie_status;
 		default: alu_input_a <= 0;
 	
 	endcase
@@ -225,6 +229,9 @@ endtask
 
 task store_alu_output();
 begin
+
+	//Store the new status
+	ie_status <= alu_status_out;
 	
 	//Don't do anything for mem store here, happens automatically in set_store_output
 	case(alu_output_flags)
@@ -232,6 +239,7 @@ begin
 		a_reg: a <= alu_output;
 		x_reg: x <= alu_output;
 		y_reg: y <= alu_output;
+		status: ie_status <= alu_output;
 		
 	endcase
 
@@ -383,6 +391,31 @@ always @ (posedge clk or negedge rst) begin
 						//Go to the load_1 state to wait on data
 						state <= state_load_1;
 					
+					end
+					
+					//Otherwise if this is a flag instruction
+					else if(is_flag_inst) begin
+					
+						//Store the new alu output
+						ie_status <= alu_status_out;
+						
+						//Start the IF again
+						if_start <= 1;
+						
+						//Go to the IF wait state
+						state <= state_if_wait;
+					
+					end
+					
+					//If this is a no-op instruction
+					else if(is_nop) begin
+					
+						//Start the IF again
+						if_start <= 1;
+						
+						//Go to the IF wait state
+						state <= state_if_wait;
+						
 					end
 					
 					//Otherwise just need to go to the ALU operation
