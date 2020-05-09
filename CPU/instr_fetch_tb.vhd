@@ -62,7 +62,7 @@ architecture behavior of instr_fetch_tb is
 		  signal alu_op    : out std_logic_vector(2 downto 0); 
 		  signal pc_ie     : in std_logic_vector(15 downto 0);
 		  signal pc	   : out std_logic_vector(15 downto 0); --going to IE
-		  signal mem_addr_out: out std_logic_vector(15 downto 0); -- address bus going from IF to mem
+		  signal mem_addr_out_s: out std_logic_vector(15 downto 0); -- address bus going from IF to mem
 	 	  signal mem_data_in: in std_logic_vector(7 downto 0); -- data bus going from mem to IF
 			
 		-- special purpose registers
@@ -120,7 +120,7 @@ architecture behavior of instr_fetch_tb is
 				reg_load_flag     => reg_load_flag,																		
 				mem_load_flag     => mem_load_flag,	
 				instr_valid       => instr_valid,
-				mem_addr_out	=> cpu_mem_addr_2,
+				mem_addr_out_s	=> cpu_mem_addr_2,
 				mem_data_in 	=> cpu_mem_data_out_2
 			);
 			

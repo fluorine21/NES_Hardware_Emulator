@@ -12,7 +12,7 @@ entity instr_fetch is
 		
 			--memory bus
 			signal addr_out: out std_logic_vector(15 downto 0); -- address bus going from IF to IE	
-			signal mem_addr_out: out std_logic_vector(15 downto 0); -- address bus going from IF to mem	
+			signal mem_addr_out_s: out std_logic_vector(15 downto 0); -- address bus going from IF to mem	
 			signal mem_data_in: in std_logic_vector(7 downto 0); -- address bus going from mem to IF	
 			signal new_op  : out std_logic_vector(7 downto 0);
 			signal alu_op  : out std_logic_vector(2 downto 0); -- 000 = add, 001 = subtract, 010 = shift
@@ -22,9 +22,9 @@ entity instr_fetch is
 
 			
 			-- special purpose registers
-			signal x_reg: in std_logic_vector(7 downto 0); 
-			signal y_reg: in std_logic_vector(7 downto 0); 
-			signal acc_reg: in std_logic_vector(7 downto 0);			
+			signal x_reg: in std_logic_vector(7 downto 0) := (others => '0'); 
+			signal y_reg: in std_logic_vector(7 downto 0) := (others => '0'); 
+			signal acc_reg: in std_logic_vector(7 downto 0) := (others => '0');			
 			
 			--flags
 			signal accessing_mem_bus	: out std_logic := '0'; --	1 means ready	
@@ -55,14 +55,20 @@ architecture a of instr_fetch is
 			data_2		: out std_logic_vector(7 downto 0);
 			
 			mem_read		: out std_logic;
-			mem_done		: out std_logic
+			mem_done		: out std_logic;
+			b2b_start		: in std_logic;
+			b2b_busy		: out std_logic;
+
+			mem_addr 		: out std_logic_vector(15 downto 0);
+			mem_data_in 		: in std_logic_vector(7 downto 0)
 		);
 	end component b2b_access;	
 	
 	signal opcode			: std_logic_vector(15 downto 0); --{opcode, operand}
 	signal addr_pc			: std_logic_vector(15 downto 0);
-	signal addr_1_temp	: std_logic_vector(15 downto 0); -- for indirect x calcs
+	signal addr_1_temp	        : std_logic_vector(15 downto 0); -- for indirect x calcs
 	
+
 	signal addr_1			: std_logic_vector(15 downto 0);
 	signal addr_2			: std_logic_vector(15 downto 0);
 			
@@ -71,7 +77,11 @@ architecture a of instr_fetch is
 	
 	signal mem_read		: std_logic;
 	signal mem_done		: std_logic;
+	signal b2b_start		: std_logic := '0';
+	signal b2b_busy    		: std_logic := '0';
 
+	signal mem_addr				: std_logic_vector(15 downto 0);
+	signal mem_data			: std_logic_vector(7 downto 0);	
  	
 	-- ARRAY length 3 for {opcode, operand, operand}
 	type array_if is array(0 to 2) of std_logic_vector(7 downto 0);
@@ -83,17 +93,20 @@ architecture a of instr_fetch is
 	signal state: state_type;
 
 	signal counter	: unsigned(15 downto 0) := (others => '0');
+	signal mem_addr_out : std_logic_vector(15 downto 0);
 
 	--Behavioral design goes here	
 	begin
-	
+	mem_addr_out_s <= mem_addr_out when (b2b_busy = '0' and b2b_start = '0') else mem_addr;
 	b2b_inst : b2b_access
-		port map( clk, rst, addr_1, addr_2, data_1, data_2, mem_read, mem_done);
+		port map( clk, rst, addr_1, addr_2, data_1, data_2, mem_read, mem_done, b2b_start, b2b_busy, mem_addr, mem_data);
 	instr_valid <= '1' when state = idle else '0';
 		instr_fetch_process : process(clk, rst)
 		begin
+		
 	
-		if rst <= '0' then
+
+		if rst = '0' then
 			state <= idle;
 			pc <= (others => '0');
 			counter <= (others => '0');
@@ -124,7 +137,7 @@ architecture a of instr_fetch is
 					else	
 						mem_addr_out <= addr_pc;
 						instr_reg(to_integer(counter)) <= mem_data_in; -- addr_pc would go into decoder module, and the data would go into instr_reg
-						addr_pc <= std_logic_vector(unsigned(addr_pc)+to_unsigned(1,16));
+						addr_pc <= std_logic_vector(unsigned(addr_pc)+to_unsigned(1,16));	
 						counter <= unsigned(addr_pc) - resize(unsigned(pc_ie),16) - to_unsigned(1,16); --conversion needed
 						state <= read_op;
 					end if;
@@ -880,11 +893,12 @@ architecture a of instr_fetch is
 						
 						when x"B1" => --LDA_INDY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1_temp <= x"00ff" and instr_reg(1); -- x"00" & operand1
-							addr_2 <= addr_1_temp + x"01";
+							addr_1 <= x"0000" + instr_reg(1);			
+							addr_2 <= x"0000" + instr_reg(1) + x"0001";
 							new_op <= x"1E";
 							store_flag <= "010"; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
+							b2b_start <= '1';
 							state <= wait_indirect_y;
 						
 						when x"A5" => --LDA_ZP
@@ -1558,6 +1572,7 @@ architecture a of instr_fetch is
 						end if;
 				
 				when wait_indirect_y =>
+						b2b_start <= '0';
 						if mem_done = '1' then
 							addr_out <= (data_2 & data_1) + y_reg;
 							state <= idle;	
