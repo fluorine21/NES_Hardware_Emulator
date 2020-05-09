@@ -192,6 +192,7 @@ ppu_vram_load_fsm vram_load_inst
 //An input to ppu status fsm
 wire sprite_0_hit_strobe = (sprite_0_hit && sprite_0_is_0) || (sprite_1_hit && sprite_1_is_0);
 reg [7:0] state;
+reg ppu_vsync_reg;
 
 //status register latch
 ppu_status_latch ppu_status_inst
@@ -201,7 +202,7 @@ ppu_status_latch ppu_status_inst
 	
 	sprite_0_hit_strobe,
 	sprite_overflow,
-	state,
+	ppu_vsync_reg,
 	ppu_ctrl1,
 	
 	cpu_addr,
@@ -233,6 +234,7 @@ begin
 	vram_load_start <= 0;
 	color_load_start <= 0;
 	sprite_load_start <= 0;
+	ppu_vsync_reg <= 0;
 
 end
 endtask
@@ -355,7 +357,9 @@ always @ (posedge clk or negedge rst) begin
 							//We're done rendering this frame
 							
 							//Wait for VGA to start rendering the screen
-							state <= state_wait_vga;//Automatically sets vsync
+							state <= state_wait_vga;
+							
+							ppu_vsync_reg <= 1;
 							
 						end
 						else begin
@@ -379,6 +383,8 @@ always @ (posedge clk or negedge rst) begin
 			end
 			
 			state_wait_vga: begin
+			
+				ppu_vsync_reg <= 0;
 			
 				//If VGA has started to read out the screen
 				if(vga_done == 0) begin

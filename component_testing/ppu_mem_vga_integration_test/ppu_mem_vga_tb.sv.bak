@@ -96,7 +96,7 @@ uart_rx uart_command_rx
 initial begin
 
 	clk_50 = 0;
-	rst = 0;
+	rst = 1;
 	ppu_rst = 0;
 	
 	cnt = 0;
@@ -131,6 +131,9 @@ initial begin
 	
 	//set the sprite address
 	write_byte(16'h2003, 8'b0);
+	
+	//unhalt the cpu to take ppu out of reset
+	resume_cpu();
 
 	//Set the CPU address so we're always resetting vsync
 	read_byte(16'h2002);	
@@ -443,6 +446,28 @@ begin
 
 	//Send the command 2
 	tx_data <= 8'h00;
+	
+	//
+	tx_start <= 1;
+	
+	clk_cycle();
+	
+	tx_start <= 0;
+	
+	while(tx_active) begin
+		clk_cycle();
+	end
+	
+	repeat(3) clk_cycle();
+
+end
+endtask
+
+task resume_cpu();
+begin
+
+	//Send the command 2
+	tx_data <= 8'h01;
 	
 	//
 	tx_start <= 1;

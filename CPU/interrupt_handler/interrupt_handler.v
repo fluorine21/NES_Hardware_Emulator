@@ -178,7 +178,7 @@ always @ (posedge clk or negedge rst) begin
 							state <= state_return_1;
 							
 							//Queue read on high byte of return address
-							cpu_addr <= stack_ptr_in + 1;
+							cpu_addr <= {8'h01, stack_ptr_in + 1};
 						
 						end
 						
@@ -244,7 +244,7 @@ always @ (posedge clk or negedge rst) begin
 				addr_low <= cpu_data_in;
 				
 				//Queue up the program counter for a write
-				cpu_addr <= stack_ptr_in;
+				cpu_addr <= {8'h01, stack_ptr_in};
 				cpu_data_out <= pc_in[7:0];
 				cpu_write_en <= 1;
 				
@@ -260,7 +260,7 @@ always @ (posedge clk or negedge rst) begin
 				pc_out = {cpu_data_in, addr_low};
 			
 				//Push the program counter and the status register
-				cpu_addr <= stack_ptr_in - 1;
+				cpu_addr <= {8'h01, stack_ptr_in - 1};
 				cpu_data_out <= pc_in[15:8];
 				
 				////Set the interrupt disable flag
@@ -279,7 +279,7 @@ always @ (posedge clk or negedge rst) begin
 				//Go to wait 1 state so we have enough time to do the write
 				state <= state_wait_1;
 				
-				cpu_addr <= stack_ptr_in - 2;
+				cpu_addr <= {8'h01, stack_ptr_in - 2};
 				cpu_data_out <= status_in;
 			
 				//Push the new stack pointer
@@ -292,7 +292,7 @@ always @ (posedge clk or negedge rst) begin
 			state_return_1: begin
 			
 				//Queue up the PC's address
-				cpu_addr <= stack_ptr_in + 2;
+				cpu_addr <= {8'h01, stack_ptr_in + 2};
 				
 				//Go to next state
 				state <= state_return_2;
@@ -305,7 +305,7 @@ always @ (posedge clk or negedge rst) begin
 				status_out <= cpu_data_in;
 				
 				//Queue up the status register
-				cpu_addr <= stack_ptr_in + 3;
+				cpu_addr <= {8'h01, stack_ptr_in + 3};
 				
 				//Set the next stack ptr
 				stack_ptr_out <= stack_ptr_in + 3;

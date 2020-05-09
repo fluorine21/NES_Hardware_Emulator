@@ -122,7 +122,7 @@ initial begin
 	read_spram();
 	
 	//Set the PPU control registers
-	write_byte(16'h2000, 8'b00001000);
+	write_byte(16'h2000, 8'b10001000);
 	write_byte(16'h2001, 8'b00011000);
 	
 	//Set the scroll pointer
@@ -131,6 +131,9 @@ initial begin
 	
 	//set the sprite address
 	write_byte(16'h2003, 8'b0);
+	
+	//unhalt the cpu to take ppu out of reset
+	resume_cpu();
 
 	//Set the CPU address so we're always resetting vsync
 	read_byte(16'h2002);	
@@ -443,6 +446,28 @@ begin
 
 	//Send the command 2
 	tx_data <= 8'h00;
+	
+	//
+	tx_start <= 1;
+	
+	clk_cycle();
+	
+	tx_start <= 0;
+	
+	while(tx_active) begin
+		clk_cycle();
+	end
+	
+	repeat(3) clk_cycle();
+
+end
+endtask
+
+task resume_cpu();
+begin
+
+	//Send the command 2
+	tx_data <= 8'h01;
 	
 	//
 	tx_start <= 1;
