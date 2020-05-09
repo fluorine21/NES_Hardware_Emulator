@@ -699,6 +699,7 @@ architecture a of instr_fetch is
 							new_op <= x"19";
 							store_flag <= "001"; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
+							reg_load_flag <= "00";-- load memory into input a
 							alu_op <= "000"; -- add
 							
 						when x"FE" => --INC_ABSX

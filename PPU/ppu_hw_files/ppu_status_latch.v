@@ -8,7 +8,7 @@ module ppu_status_latch
 	
 	input wire sprite_0_hit,
 	input wire sprite_overflow,
-	input wire [7:0] ppu_state,
+	input wire ppu_vsync_reg,
 	input wire [7:0] ppu_ctrl1,
 	
 	input wire [15:0] cpu_addr,//Needed to determine when CPU is reading 2002
@@ -93,7 +93,7 @@ always @ (posedge clk or negedge rst) begin
 		if(vsync_reg == 0) begin
 			//If we need to set the flag
 			//if we're in the PPU wait state
-			if(ppu_state == 8 && ppu_ctrl1[7]) begin
+			if(ppu_vsync_reg && ppu_ctrl1[7]) begin
 				vsync_reg <= 1;
 			end
 		end
