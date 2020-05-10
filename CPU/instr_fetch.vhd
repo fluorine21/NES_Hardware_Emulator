@@ -208,8 +208,8 @@ architecture a of instr_fetch is
 						
 						when x"71" => --ADC_INDY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1 <= indirect_addr(instr_reg(1), y_reg, x"00");
-							addr_2 <= indirect_addr(instr_reg(1), y_reg, x"01");
+							addr_1 <= indirect_addr(instr_reg(1), x"00", x"00");
+							addr_2 <= indirect_addr(instr_reg(1), x"00", x"01");
 							new_op <= x"00";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -293,8 +293,8 @@ architecture a of instr_fetch is
 						
 						when x"31" => --AND_INDY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1 <= indirect_addr(instr_reg(1), y_reg, x"00"); -- x"00" & operand1
-							addr_2 <= indirect_addr(instr_reg(1), y_reg, x"01");
+							addr_1 <= indirect_addr(instr_reg(1), x"00", x"00"); -- x"00" & operand1
+							addr_2 <= indirect_addr(instr_reg(1), x"00", x"01");
 							new_op <= x"01";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -530,8 +530,8 @@ architecture a of instr_fetch is
 						
 						when x"D1" => --CMP_INDY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1 <= indirect_addr(instr_reg(1), y_reg, x"00");-- x"00" & operand1
-							addr_2 <= indirect_addr(instr_reg(1), y_reg, x"01");
+							addr_1 <= indirect_addr(instr_reg(1), x"00", x"00");-- x"00" & operand1
+							addr_2 <= indirect_addr(instr_reg(1), x"00", x"01");
 							new_op <= x"11";
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
@@ -730,8 +730,8 @@ architecture a of instr_fetch is
 						
 						when x"51" => --EOR_INDY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1 <= indirect_addr(instr_reg(1), y_reg, x"00"); -- x"00" & operand1
-							addr_2 <= indirect_addr(instr_reg(1), y_reg, x"01");
+							addr_1 <= indirect_addr(instr_reg(1), x"00", x"00"); -- x"00" & operand1
+							addr_2 <= indirect_addr(instr_reg(1), x"00", x"01");
 							new_op <= x"17";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -909,8 +909,8 @@ architecture a of instr_fetch is
 						
 						when x"B1" => --LDA_INDY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1 <= indirect_addr(instr_reg(1), y_reg, x"00");			
-							addr_2 <= indirect_addr(instr_reg(1), y_reg, x"01");
+							addr_1 <= indirect_addr(instr_reg(1), x"00", x"00");			
+							addr_2 <= indirect_addr(instr_reg(1), x"00", x"01");
 							new_op <= x"1E";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -1150,8 +1150,8 @@ architecture a of instr_fetch is
 							
 						when x"11" => --ORA_INDY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1 <= indirect_addr(instr_reg(1), y_reg, x"00"); -- "00" & LSB
-							addr_2 <= indirect_addr(instr_reg(1), y_reg, x"01");
+							addr_1 <= indirect_addr(instr_reg(1), x"00", x"00"); -- "00" & LSB
+							addr_2 <= indirect_addr(instr_reg(1), x"00", x"01");
 							new_op <= x"23";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -1382,8 +1382,8 @@ architecture a of instr_fetch is
 							
 						when x"F1" => --SBC_INDY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1 <= indirect_addr(instr_reg(1), y_reg, x"00"); -- "00" & LSB
-							addr_2 <= indirect_addr(instr_reg(1), y_reg, x"01");
+							addr_1 <= indirect_addr(instr_reg(1), x"00", x"00"); -- "00" & LSB
+							addr_2 <= indirect_addr(instr_reg(1), x"00", x"01");
 							new_op <= x"2D";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -1469,8 +1469,8 @@ architecture a of instr_fetch is
 							
 						when x"91" => --STA_INDY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1 <= indirect_addr(instr_reg(1), y_reg, x"00");
-							addr_2 <= indirect_addr(instr_reg(1), y_reg, x"01");
+							addr_1 <= indirect_addr(instr_reg(1), x"00", x"00");
+							addr_2 <= indirect_addr(instr_reg(1), x"00", x"01");
 							addr_out <= (data_2 & data_1) + y_reg;
 							new_op <= x"31";
 							store_flag <= MEM_STORE; -- store in mem
