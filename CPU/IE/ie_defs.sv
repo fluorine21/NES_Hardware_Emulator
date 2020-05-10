@@ -67,7 +67,11 @@ integer mem_listing_1[] =
 	16'h0124, 8'h32,
 	16'h0125, 8'h30,
 	16'h0126, 8'hDB,
-	16'h0127, 8'h60
+	16'h0127, 8'h60,
+	
+	//Constants in memory
+	16'h0000, 8'hAA,
+	16'h0001, 8'hBB
 
 };
 

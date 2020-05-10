@@ -186,7 +186,7 @@ architecture a of instr_fetch is
 							
 						when x"69" => --ADC_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= instr_reg(1);--Put immediate value on addr_out line
+							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
 							new_op <= x"00";
 							imm_mode <= '1';
 							store_flag <= A_STORE; -- store in acc
@@ -271,7 +271,7 @@ architecture a of instr_fetch is
 							
 						when x"29" => --AND_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= instr_reg(1);--Put immediate value on addr_out line
+							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
 							new_op <= x"01";
 							imm_mode <= '1';
 							store_flag <= A_STORE; -- store in acc
@@ -510,7 +510,7 @@ architecture a of instr_fetch is
 						
 						when x"C9" => --CMP_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= instr_reg(1);--Put immediate value on addr_out line
+							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
 							new_op <= x"11";
 							imm_mode <= '1';
 							mem_load_flag <= '0'; -- load from mem
@@ -569,7 +569,7 @@ architecture a of instr_fetch is
 							
 						when x"E0" => --CPX_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= instr_reg(1);--Put immediate value on addr_out line
+							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
 							new_op <= x"12";
 							imm_mode <= '1';
 							mem_load_flag <= '0'; -- load from mem
@@ -599,7 +599,7 @@ architecture a of instr_fetch is
 							
 						when x"C0" => --CPY_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= instr_reg(1);--Put immediate value on addr_out line
+							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
 							new_op <= x"13";
 							imm_mode <= '1';
 							mem_load_flag <= '0'; -- load from mem
@@ -708,7 +708,7 @@ architecture a of instr_fetch is
 						
 						when x"49" => --EOR_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= instr_reg(1);--Put immediate value on addr_out line
+							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
 							new_op <= x"17";
 							imm_mode <= '1';
 							store_flag <= A_STORE; -- store in acc
@@ -887,7 +887,7 @@ architecture a of instr_fetch is
 						
 						when x"A9" => --LDA_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= instr_reg(1);--Put immediate value on addr_out line
+							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
 							new_op <= x"1E";
 							imm_mode <= '1';
 							store_flag <= A_STORE; -- store in acc
@@ -963,7 +963,7 @@ architecture a of instr_fetch is
 							
 						when x"A2" => --LDX_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= instr_reg(1);--Put immediate value on addr_out line
+							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
 							new_op <= x"1F";
 							imm_mode <= '1';
 							store_flag <= X_STORE; -- store in xreg
@@ -1013,7 +1013,7 @@ architecture a of instr_fetch is
 							
 						when x"A0" => --LDY_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= instr_reg(1);--Put immediate value on addr_out line
+							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
 							new_op <= x"20";
 							imm_mode <= '1';
 							store_flag <= Y_STORE; -- store in yreg
@@ -1128,7 +1128,7 @@ architecture a of instr_fetch is
 							
 						when x"09" => --ORA_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= instr_reg(1);--Put immediate value on addr_out line
+							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
 							new_op <= x"23";
 							imm_mode <= '1';
 							store_flag <= A_STORE; -- store in acc
@@ -1360,7 +1360,7 @@ architecture a of instr_fetch is
 							
 						when x"E9" => --SBC_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= instr_reg(1);--Put immediate value on addr_out line
+							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
 							new_op <= x"2D";
 							imm_mode <= '1';
 							store_flag <= A_STORE; -- store in acc
