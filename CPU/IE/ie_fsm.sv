@@ -13,6 +13,10 @@ module ie_fsm
 	output wire [7:0] mem_data_out,
 	input wire [7:0] mem_data_in,
 	output wire mem_write_en,
+	output reg mem_read_en,
+	
+	//Default PC to go to on hard reset
+	input wire [15:0] pc_reset,
 	
 	//Inputs from instruction fetch
 	
@@ -184,6 +188,9 @@ assign mem_write_en = interrupt_busy ? interrupt_write_en : ie_write_en;
 task set_load_output();
 begin
 
+	//Doing a read here, need to pulse read_en
+	mem_read_en <= 1;
+
 	//Determine the address we are loading from
 	//Will either be if_addr_in or stack_ptr
 	if(is_stack_op) begin
@@ -239,7 +246,8 @@ begin
 		mem_load: alu_input_a <= mem_data_in;
 		imm: alu_input_a <= if_addr_in[7:0];
 		one: alu_input_a <= 1;
-		status: alu_input_a <= ie_status;
+		status_reg: alu_input_a <= ie_status;
+		stack_reg: alu_input_a <= stack_ptr;
 		default: alu_input_a <= 0;
 	
 	endcase
@@ -271,7 +279,8 @@ begin
 		a_reg: a <= alu_output;
 		x_reg: x <= alu_output;
 		y_reg: y <= alu_output;
-		status: ie_status <= alu_output;
+		status_reg: ie_status <= alu_output;
+		stack_reg: stack_ptr <= alu_output;
 		
 	endcase
 
@@ -365,6 +374,35 @@ localparam [7:0] state_idle = 0,
 				 state_return_2 = 9, 
 				 state_return_3 = 10, 
 				 state_if_wait = 11;
+				 
+				 
+task reset_regs();
+begin
+
+	//Default register values
+	mem_read_en <= 0;
+	ie_status <= 0;
+	a <= 0;
+	x <= 0;
+	y <= 0;
+	stack_ptr <= 16'hFF;
+	interrupt_start <= 0;
+	alu_input_a <= 0;
+	alu_input_b <= 0;
+	
+	ie_addr <= 0;
+	ie_data_out <= 0;
+	ie_write_en <= 0;
+
+	//load in the reset vector PC into PC and PC next
+	pc <= pc_reset;
+	pc_next <= pc_reset;
+
+	//Start in the wait if state to load the next instruction
+	if_start <= 1;
+	state <= state_if_wait;
+
+end
 
 
 always @ (posedge clk or negedge rst) begin
@@ -486,6 +524,9 @@ always @ (posedge clk or negedge rst) begin
 			
 			
 			state_load_1: begin
+				
+				//Reset the read flag
+				mem_read_en <= 0;
 			
 				//Just go to the load 2 state
 				state <= state_load_2;

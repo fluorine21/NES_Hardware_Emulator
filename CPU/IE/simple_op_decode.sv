@@ -98,8 +98,11 @@ end
 //always for input a
 always @ * begin
 	
-	if(simple_op == 8'h25)begin
+	if(simple_op == 8'h25)begin//Push processor status to stack
 		alu_input_a_flags <= status_reg;
+	end
+	else if(simple_op == 8'h36) begin//Transfer stack ptr to x
+		alu_input_a_flags <= stack_reg;
 	end
 	else begin
 
@@ -126,6 +129,7 @@ always @ * begin
 		3'b100: alu_output_flags <= y_reg;
 		3'b001: alu_output_flags <= mem_store;
 		3'b111: alu_output_flags <= status_reg;
+		3'b110: alu_output_flags <= stack_reg;
 		default: alu_output_flags <= zero;//Don't store anywhere
 
 	endcase

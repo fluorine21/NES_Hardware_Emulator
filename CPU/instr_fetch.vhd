@@ -1600,6 +1600,7 @@ architecture a of instr_fetch is
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(1,16)); --length 1
 							new_op <= x"38";
 							reg_load_flag <= X_REG_F; --load from xreg
+							
 							state <= idle;
 							
 							
