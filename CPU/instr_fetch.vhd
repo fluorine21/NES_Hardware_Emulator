@@ -7,37 +7,36 @@ use IEEE.std_logic_unsigned.all;
 entity instr_fetch is
 	port(
 
-			signal clk: in std_logic;
-			signal rst: in std_logic;
+			clk: in std_logic;
+			rst: in std_logic;
 		
 			--memory bus
-			signal addr_out: out std_logic_vector(15 downto 0); -- address bus going from IF to IE	
-			signal mem_addr_out_s: out std_logic_vector(15 downto 0); -- address bus going from IF to mem	
-			signal mem_data_in: in std_logic_vector(7 downto 0); -- address bus going from mem to IF	
-			signal new_op  : out std_logic_vector(7 downto 0);
-			signal alu_op  : out std_logic_vector(2 downto 0); -- 000 = add, 001 = subtract, 010 = shift
+			addr_out: out std_logic_vector(15 downto 0); -- address bus going from IF to IE	
+			mem_addr_out_s: out std_logic_vector(15 downto 0); -- address bus going from IF to mem	
+			mem_data_in: in std_logic_vector(7 downto 0); -- address bus going from mem to IF	
+			new_op  : out std_logic_vector(7 downto 0);
+			alu_op  : out std_logic_vector(2 downto 0); -- 000 = add, 001 = subtract, 010 = shift
 																				-- 011 = and, 100 = or, 101 = xor
-			signal pc_ie   : in std_logic_vector(15 downto 0);
-			signal pc      : out std_logic_vector(15 downto 0); --going to IE
-
+			pc_ie   : in std_logic_vector(15 downto 0);
+			pc      : out std_logic_vector(15 downto 0); --going to IE
 			
 			-- special purpose registers
-			signal x_reg: in std_logic_vector(7 downto 0) := (others => '0'); 
-			signal y_reg: in std_logic_vector(7 downto 0) := (others => '0'); 
-			signal acc_reg: in std_logic_vector(7 downto 0) := (others => '0');			
+			x_reg: in std_logic_vector(7 downto 0) := (others => '0'); 
+			y_reg: in std_logic_vector(7 downto 0) := (others => '0'); 
+			acc_reg: in std_logic_vector(7 downto 0) := (others => '0');			
 			
 			--flags
-			signal accessing_mem_bus	: out std_logic := '0'; --	1 means ready	
-			signal ie_ready				: in std_logic; -- 0 is ie computing, 1 is ie is ready for instruction
-			signal imm_mode				: out std_logic := '0'; -- immediate addy mode flag, 0 if no, 1 if yes
-			
-			signal store_flag				: out std_logic_vector(2 downto 0) := "000"; -- 000 = not used, 001 = store in mem
+			accessing_mem_bus	: out std_logic := '0'; --	1 means ready	
+			ie_ready				: in std_logic; -- 0 is ie computing, 1 is ie is ready for instruction
+			imm_mode				: out std_logic := '0'; -- immediate addy mode flag, 0 if no, 1 if yes
+		
+			store_flag				: out std_logic_vector(2 downto 0) := "000"; -- 000 = not used, 001 = store in mem
 																											-- 010 = acc, 011 = xreg, 100 = yreg
-			signal reg_load_flag			: out std_logic_vector(1 downto 0) := "00";  -- 00 = not used, 01 = load from acc
+			reg_load_flag			: out std_logic_vector(1 downto 0) := "00";  -- 00 = not used, 01 = load from acc
 																											-- 10 = load from xreg, 11 = yreg 
-			signal mem_load_flag			: out std_logic := '0'; -- load to mem flag, 0 if no, 1 if loading from mem
+			mem_load_flag			: out std_logic := '0'; -- load to mem flag, 0 if no, 1 if loading from mem
 			
-			signal instr_valid			: out std_logic := '0'-- IF done	
+			instr_valid			: out std_logic := '0'-- IF done	
 		);
 end entity instr_fetch;
 
@@ -66,14 +65,14 @@ architecture a of instr_fetch is
 	
 	signal opcode			: std_logic_vector(15 downto 0); --{opcode, operand}
 	signal addr_pc			: std_logic_vector(15 downto 0);
-	signal addr_1_temp	        : std_logic_vector(15 downto 0); -- for indirect x calcs
-	
+		
 
 	signal addr_1			: std_logic_vector(15 downto 0);
 	signal addr_2			: std_logic_vector(15 downto 0);
 			
 	signal data_1			: std_logic_vector(7 downto 0);
 	signal data_2			: std_logic_vector(7 downto 0);	
+	--signal mem_data_in		: std_logic_vector(7 downto 0);	
 	
 	signal mem_read		: std_logic;
 	signal mem_done		: std_logic;
@@ -81,7 +80,7 @@ architecture a of instr_fetch is
 	signal b2b_busy    		: std_logic := '0';
 
 	signal mem_addr				: std_logic_vector(15 downto 0);
-	signal mem_data			: std_logic_vector(7 downto 0);	
+	--signal mem_data			: std_logic_vector(7 downto 0);	
  	
 	-- ARRAY length 3 for {opcode, operand, operand}
 	type array_if is array(0 to 2) of std_logic_vector(7 downto 0);
@@ -99,7 +98,7 @@ architecture a of instr_fetch is
 	begin
 	mem_addr_out_s <= mem_addr_out when (b2b_busy = '0' and b2b_start = '0') else mem_addr;
 	b2b_inst : b2b_access
-		port map( clk, rst, addr_1, addr_2, data_1, data_2, mem_read, mem_done, b2b_start, b2b_busy, mem_addr, mem_data);
+		port map( clk, rst, addr_1, addr_2, data_1, data_2, mem_read, mem_done, b2b_start, b2b_busy, mem_addr, mem_data_in);
 	instr_valid <= '1' when state = idle else '0';
 		instr_fetch_process : process(clk, rst)
 		begin
@@ -191,24 +190,26 @@ architecture a of instr_fetch is
 							
 						when x"61" => --ADC_INDX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1_temp <= (x"00ff" and instr_reg(1)) + x_reg; -- (x"00" & operand1) + x_reg
-							addr_2 <= addr_1_temp + x"01";
+							addr_1 <= (x"0000" + instr_reg(1)) + x_reg; -- (x"00" & operand1) + x_reg
+							addr_2 <= (x"0000" + instr_reg(1)) + x_reg + x"01";
 							new_op <= x"00";
 							store_flag <= "010"; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= "01"; --load from acc
 							alu_op <= "000"; -- add
+							b2b_start <= '1';
 							state <= wait_indirect_x;
 						
 						when x"71" => --ADC_INDY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1_temp <= x"00ff" and instr_reg(1); -- x"00" & operand1
-							addr_2 <= addr_1_temp + x"01";
+							addr_1 <= x"0000" + instr_reg(1); -- x"00" & operand1
+							addr_2 <= x"0000" + instr_reg(1) + x"0001";
 							new_op <= x"00";
 							store_flag <= "010"; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= "01"; --load from acc
 							alu_op <= "000"; -- add
+							b2b_start <= '1';
 							state <= wait_indirect_y;
 						
 						when x"65" => --ADC_ZP
@@ -276,24 +277,26 @@ architecture a of instr_fetch is
 							
 						when x"21" => --AND_INDX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1_temp <= (x"00ff" and instr_reg(1)) + x_reg; -- (x"00" & operand1) + x_reg
-							addr_2 <= addr_1_temp + x"01";
+							addr_1 <= (x"0000" + instr_reg(1)) + x_reg; -- (x"00" & operand1) + x_reg
+							addr_2 <= (x"0000" + instr_reg(1)) + x_reg + x"01";
 							new_op <= x"01";
 							store_flag <= "010"; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= "01"; --load from acc
 							alu_op <= "011"; -- and
+							b2b_start <= '1';
 							state <= wait_indirect_x;
 						
 						when x"31" => --AND_INDY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1_temp <= x"00ff" and instr_reg(1); -- x"00" & operand1
-							addr_2 <= addr_1_temp + x"01";
+							addr_1 <= x"0000" + instr_reg(1); -- x"00" & operand1
+							addr_2 <= x"0000" + instr_reg(1) + x"0001";
 							new_op <= x"01";
 							store_flag <= "010"; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= "01"; --load from acc
 							alu_op <= "011"; -- and
+							b2b_start <= '1';
 							state <= wait_indirect_y;
 						
 						when x"25" => --AND_ZP
@@ -514,22 +517,24 @@ architecture a of instr_fetch is
 						
 						when x"C1" => --CMP_INDX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1_temp <= (x"00ff" and instr_reg(1)) + x_reg; -- (x"00" & operand1) + x_reg
-							addr_2 <= addr_1_temp + x"01";
+							addr_1 <= (x"0000" + instr_reg(1)) + x_reg; -- (x"00" & operand1) + x_reg
+							addr_2 <= (x"0000" + instr_reg(1)) + x_reg + x"01";
 							new_op <= x"11";
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= "01"; --load from acc
 							alu_op <= "001"; -- subtract
+							b2b_start <= '1';
 							state <= wait_indirect_x;
 						
 						when x"D1" => --CMP_INDY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1_temp <= x"00ff" and instr_reg(1); -- x"00" & operand1
-							addr_2 <= addr_1_temp + x"01";
+							addr_1 <= x"0000" + instr_reg(1); -- x"00" & operand1
+							addr_2 <= x"0000" + instr_reg(1) + x"0001";
 							new_op <= x"11";
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= "01"; --load from acc
 							alu_op <= "001"; -- subtract
+							b2b_start <= '1';
 							state <= wait_indirect_y;
 						
 						when x"C5" => --CMP_ZP
@@ -713,24 +718,26 @@ architecture a of instr_fetch is
 						
 						when x"41" => --EOR_INDX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1_temp <= (x"00ff" and instr_reg(1)) + x_reg; -- (x"00" & operand1) + x_reg
-							addr_2 <= addr_1_temp + x"01";
+							addr_1 <= (x"0000" + instr_reg(1)) + x_reg; -- (x"00" & operand1) + x_reg
+							addr_2 <= (x"0000" + instr_reg(1)) + x_reg + x"01";
 							new_op <= x"17";
 							store_flag <= "010"; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= "01"; --load from acc
 							alu_op <= "101"; -- xor
+							b2b_start <= '1';
 							state <= wait_indirect_x;
 						
 						when x"51" => --EOR_INDY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1_temp <= x"00ff" and instr_reg(1); -- x"00" & operand1
-							addr_2 <= addr_1_temp + x"01";
+							addr_1 <= x"0000" + instr_reg(1); -- x"00" & operand1
+							addr_2 <= x"0000" + instr_reg(1) + x"0001";
 							new_op <= x"17";
 							store_flag <= "010"; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= "01"; --load from acc
 							alu_op <= "101"; -- xor
+							b2b_start <= '1';
 							state <= wait_indirect_y;
 						
 						when x"45" => --EOR_ZP
@@ -769,7 +776,6 @@ architecture a of instr_fetch is
 							new_op <= x"19";
 							store_flag <= "001"; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
-							reg_load_flag <= "00";-- load memory into input a
 							alu_op <= "000"; -- add
 							state <= idle;
 							
@@ -832,9 +838,10 @@ architecture a of instr_fetch is
 						when x"6C" => --JMP_IND
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
 							addr_1 <= (instr_reg(2) & instr_reg(1));
-							addr_2 <= addr_1_temp + x"01";
+							addr_2 <= (instr_reg(2) & instr_reg(1)) + x"01";
 							new_op <= x"1C";
 							alu_op <= "000"; -- add to PC
+							b2b_start <= '1';
 							state <= wait_indirect_x;
 							
 
@@ -884,11 +891,12 @@ architecture a of instr_fetch is
 						
 						when x"A1" => --LDA_INDX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1_temp <= (x"00ff" and instr_reg(1)) + x_reg; -- (x"00" & operand1) + x_reg
-							addr_2 <= addr_1_temp + x"01";
+							addr_1 <= (x"0000" + instr_reg(1)) + x_reg; -- (x"00" & operand1) + x_reg
+							addr_2 <= (x"0000" + instr_reg(1)) + x_reg + x"01";
 							new_op <= x"1E";
 							store_flag <= "010"; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
+							b2b_start <= '1';
 							state <= wait_indirect_x;
 						
 						when x"B1" => --LDA_INDY
@@ -1101,24 +1109,26 @@ architecture a of instr_fetch is
 							
 						when x"01" => --ORA_INDX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1_temp <= (x"00ff" and instr_reg(1)) + x_reg; -- have to get data from this address (and address+1) and concatenate and put into data_module
-							addr_2 <= addr_1_temp + x"01";
+							addr_1 <= (x"0000" + instr_reg(1)) + x_reg; -- have to get data from this address (and address+1) and concatenate and put into data_module
+							addr_2 <= (x"0000" + instr_reg(1)) + x_reg + x"01";
 							new_op <= x"23";
 							store_flag <= "010"; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= "01"; --load from acc
 							alu_op <= "100"; -- or
+							b2b_start <= '1';
 							state <= wait_indirect_x;
 							
 						when x"11" => --ORA_INDY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1_temp <= x"00ff" and instr_reg(1); -- "00" & LSB
-							addr_2 <= addr_1_temp + x"01";
+							addr_1 <= x"0000" + instr_reg(1); -- "00" & LSB
+							addr_2 <= x"0000" + instr_reg(1) + x"0001";
 							new_op <= x"23";
 							store_flag <= "010"; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= "01"; --load from acc
 							alu_op <= "100"; -- or
+							b2b_start <= '1';
 							state <= wait_indirect_y;
 							
 						when x"05" => --ORA_ZP
@@ -1332,24 +1342,26 @@ architecture a of instr_fetch is
 							
 						when x"E1" => --SBC_INDX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1_temp <= (x"00ff" and instr_reg(1)) + x_reg; -- have to get data from this address (and address+1) and concatenate and put into data_module
-							addr_2 <= addr_1_temp + x"01";
+							addr_1 <= (x"0000" + instr_reg(1)) + x_reg; -- have to get data from this address (and address+1) and concatenate and put into data_module
+							addr_2 <= ((x"00ff" and instr_reg(1)) + x_reg) + x"01";
 							new_op <= x"2D";
 							store_flag <= "010"; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= "01"; --load from acc
 							alu_op <= "001"; -- subtract
+							b2b_start <= '1';
 							state <= wait_indirect_x;
 							
 						when x"F1" => --SBC_INDY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1_temp <= x"00ff" and instr_reg(1); -- "00" & LSB
-							addr_2 <= addr_1_temp + x"01";
+							addr_1 <= x"0000" + instr_reg(1); -- "00" & LSB
+							addr_2 <= x"0000" + instr_reg(1) + x"0001";
 							new_op <= x"2D";
 							store_flag <= "010"; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= "01"; --load from acc
 							alu_op <= "001"; -- subtract
+							b2b_start <= '1';
 							state <= wait_indirect_y;
 							
 						when x"E5" => --SBC_ZP
@@ -1421,21 +1433,23 @@ architecture a of instr_fetch is
 							
 						when x"81" => --STA_INDX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1_temp <= (x"00ff" and instr_reg(1)) + x_reg; -- have to get data from this address (and address+1) and concatenate and put into data_module
-							addr_2 <= addr_1_temp + x"01"; 
+							addr_1 <= (x"0000" + instr_reg(1)) + x_reg; -- have to get data from this address (and address+1) and concatenate and put into data_module
+							addr_2 <= (x"0000" + instr_reg(1)) + x_reg + x"01"; 
 							new_op <= x"31";
 							store_flag <= "001"; -- store in mem
 							reg_load_flag <= "01"; --load from acc
+							b2b_start <= '1';
 							state <= wait_indirect_x;
 							
 						when x"91" => --STA_INDY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_1_temp <= x"00ff" and instr_reg(1); -- "00" & LSB
-							addr_2 <= addr_1_temp + x"01"; 
+							addr_1 <= x"0000" + instr_reg(1); -- "00" & LSB
+							addr_2 <= x"0000" + instr_reg(1) + x"0001"; 
 							addr_out <= (data_2 & data_1) + y_reg;
 							new_op <= x"31";
 							store_flag <= "001"; -- store in mem
 							reg_load_flag <= "01"; --load from acc
+							b2b_start <= '1';
 							state <= wait_indirect_y;
 							
 						when x"85" => --STA_ZP
@@ -1566,6 +1580,7 @@ architecture a of instr_fetch is
 						end case;
 						
 				when wait_indirect_x =>
+						b2b_start <= '0';
 						if mem_done = '1' then
 							addr_out <= data_2 & data_1;
 							state <= idle;
