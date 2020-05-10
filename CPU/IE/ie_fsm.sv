@@ -403,6 +403,7 @@ begin
 	state <= state_if_wait;
 
 end
+endtask
 
 
 always @ (posedge clk or negedge rst) begin

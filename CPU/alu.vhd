@@ -2,11 +2,14 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
+library work;
+use work.instr_fetch_pkg.all;
+
 entity alu is
     port(
 	inputA : in std_logic_vector(7 downto 0);
         inputB: in std_logic_vector(7 downto 0);
-        alu_op: in std_logic_vector(2 downto 0);
+        alu_op: in std_logic_vector(3 downto 0);
         opcode : in std_logic_vector(7 downto 0);
         proc_status_in : in std_logic_vector(7 downto 0);
         proc_status_edit : in std_logic_vector(7 downto 0);
@@ -45,7 +48,7 @@ architecture a of alu is
     ignore_output <= '0';
 
     case (alu_op) is
-        when "000" => -------add
+        when ADD_OP => -------add
             if (opcode = x"00") then ---add with carry
 
                 unsigned_out := unsigned(inputA) + unsigned(inputB) + to_integer(proc_status_in(0));
@@ -58,7 +61,7 @@ architecture a of alu is
                 temp_output := std_logic_vector(unsigned(inputA) + to_unsigned(1,8));
             end if;
 
-        when "001" => -----sub
+        when SUB_OP => -----sub
         ---dec, dex,dey, jsr, pha,php
             if (opcode = x"14" or opcode = x"15" or opcode = x"16"
             or opcode = x"24" or opcode = x"25" or opcode = x"1D") then
@@ -81,7 +84,7 @@ architecture a of alu is
                 temp_output := std_logic_vector(resize((sbc_with_carry - unsigned(inputB)),8));
             end if;
             
-        when "010" => ------shift
+        when SHIFT_OP => ------shift
             if  (opcode = x"28") then--- rotate left
                 temp_output := inputA(6 downto 0) & proc_status_in(3);
                 proc_status_temp(0) := inputA(7); ----- carry flag
@@ -96,16 +99,22 @@ architecture a of alu is
                 temp_output := '0' & inputA(7 downto 1) ;
             end if;
 
-        when "011" => ----- and
+        when AND_OP => ----- and
             temp_output := inputA and inputB;
 
-        when "100" => ----- or 
+        when OR_OP => ----- or 
 
             temp_output := inputA or inputB;
 
-        when "101" => ------ xor
+        when XOR_OP => ------ xor
             temp_output := inputA xor inputB;
 
+		when TRA_OP =>
+			temp_output := inputA;
+			
+		when TRB_OP =>
+			temp_output := inputB;
+			
         when OTHERS => 
             temp_output := inputA;
             ignore_output <= '1';

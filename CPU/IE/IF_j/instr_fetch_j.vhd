@@ -113,6 +113,8 @@ architecture a of instr_fetch is
 		elsif (rising_edge(clk)) then
 			case (state) is				
 				when idle =>
+					--default not accessing memory
+					accessing_mem_bus <= '0';
 					if (ie_ready = '1') then
 						accessing_mem_bus <= '1'; -- 1 cycle delay
 						--pc <= pc_ie; -- IE giving us new value for PC
