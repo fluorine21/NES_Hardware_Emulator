@@ -204,6 +204,7 @@ architecture a of instr_fetch is
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
 							alu_op <= ADD_OP; -- add
+							b2b_start <= '1';
 							state <= wait_indirect_x;
 						
 						when x"71" => --ADC_INDY
@@ -215,6 +216,7 @@ architecture a of instr_fetch is
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
 							alu_op <= ADD_OP; -- add
+							b2b_start <= '1';
 							state <= wait_indirect_y;
 						
 						when x"65" => --ADC_ZP
@@ -289,6 +291,7 @@ architecture a of instr_fetch is
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
 							alu_op <= AND_OP; -- and
+							b2b_start <= '1';
 							state <= wait_indirect_x;
 						
 						when x"31" => --AND_INDY
@@ -300,6 +303,7 @@ architecture a of instr_fetch is
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
 							alu_op <= AND_OP; -- and
+							b2b_start <= '1';
 							state <= wait_indirect_y;
 						
 						when x"25" => --AND_ZP
@@ -526,6 +530,7 @@ architecture a of instr_fetch is
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
 							alu_op <= SUB_OP; -- subtract
+							b2b_start <= '1';
 							state <= wait_indirect_x;
 						
 						when x"D1" => --CMP_INDY
@@ -536,6 +541,7 @@ architecture a of instr_fetch is
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
 							alu_op <= SUB_OP; -- subtract
+							b2b_start <= '1';
 							state <= wait_indirect_y;
 						
 						when x"C5" => --CMP_ZP
@@ -726,6 +732,7 @@ architecture a of instr_fetch is
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
 							alu_op <= XOR_OP; -- xor
+							b2b_start <= '1';
 							state <= wait_indirect_x;
 						
 						when x"51" => --EOR_INDY
@@ -737,6 +744,7 @@ architecture a of instr_fetch is
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
 							alu_op <= XOR_OP; -- xor
+							b2b_start <= '1';
 							state <= wait_indirect_y;
 						
 						when x"45" => --EOR_ZP
@@ -841,6 +849,7 @@ architecture a of instr_fetch is
 							addr_2 <= (instr_reg(2) & instr_reg(1)) + 1;
 							new_op <= x"1C";
 							alu_op <= ADD_OP; -- add to PC
+							b2b_start <= '1';
 							state <= wait_indirect_x;
 							
 
@@ -1146,6 +1155,7 @@ architecture a of instr_fetch is
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
 							alu_op <= OR_OP; -- or
+							b2b_start <= '1';
 							state <= wait_indirect_x;
 							
 						when x"11" => --ORA_INDY
@@ -1157,6 +1167,7 @@ architecture a of instr_fetch is
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
 							alu_op <= OR_OP; -- or
+							b2b_start <= '1';
 							state <= wait_indirect_y;
 							
 						when x"05" => --ORA_ZP
@@ -1378,6 +1389,7 @@ architecture a of instr_fetch is
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
 							alu_op <= SUB_OP; -- subtract
+							b2b_start <= '1';
 							state <= wait_indirect_x;
 							
 						when x"F1" => --SBC_INDY
@@ -1389,6 +1401,7 @@ architecture a of instr_fetch is
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
 							alu_op <= SUB_OP; -- subtract
+							b2b_start <= '1';
 							state <= wait_indirect_y;
 							
 						when x"E5" => --SBC_ZP
@@ -1465,6 +1478,7 @@ architecture a of instr_fetch is
 							new_op <= x"31";
 							store_flag <= MEM_STORE; -- store in mem
 							reg_load_flag <= A_REG_F; --load from acc
+							b2b_start <= '1';
 							state <= wait_indirect_x;
 							
 						when x"91" => --STA_INDY
@@ -1475,6 +1489,7 @@ architecture a of instr_fetch is
 							new_op <= x"31";
 							store_flag <= MEM_STORE; -- store in mem
 							reg_load_flag <= A_REG_F; --load from acc
+							b2b_start <= '1';
 							state <= wait_indirect_y;
 							
 						when x"85" => --STA_ZP
@@ -1605,7 +1620,6 @@ architecture a of instr_fetch is
 						end case;
 						
 				when wait_indirect_x =>
-						b2b_start <= '0';
 						if mem_done = '1' then
 							addr_out <= data_2 & data_1;
 							state <= idle;
