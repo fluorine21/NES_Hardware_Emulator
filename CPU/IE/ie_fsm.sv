@@ -15,8 +15,9 @@ module ie_fsm
 	output wire mem_write_en,
 	
 	//Inputs from instruction fetch
+	
+	input wire if_ready,
 	input wire [15:0] if_addr_in,//Can also be immediate or branch target
-
 	input wire [15:0] if_pc_next,
 	input wire [7:0] simple_op,
 	input wire [3:0] alu_op_in,
@@ -24,6 +25,9 @@ module ie_fsm
 	input wire [1:0] reg_load_flag,
 	input wire mem_load_flag,
 	input wire immediate_flag,//if 1, treat addr_in as an immediate value
+	
+	//IF control
+	output reg if_start,
 	
 	
 	//Inputs from PPU
@@ -36,12 +40,14 @@ module ie_fsm
 	//CPU registers
 	output reg [7:0] a, x, y,
 	output reg [7:0] stack_ptr
+	
+	
 
 );
 
 //simple op code decoder
 
-wire is_load, is_store, is_branch, is_jsr, is_rts, is_rti, is_break, is_stack_op;
+wire is_load, is_store, is_branch, is_jsr, is_rts, is_rti, is_break, is_stack_op, is_nop, is_flag_inst;
 
 wire [7:0] alu_input_a_flags, alu_input_b_flags, alu_output_flags;
 wire [3:0] alu_op_out;
@@ -68,10 +74,13 @@ simple_op_decode simple_op_decode_inst
 	is_rti, 
 	is_break, 
 	is_stack_op,
+	is_nop,
+	is_flag_inst,
 	
 	alu_input_a_flags, 
 	alu_input_b_flags, 
-	alu_output_flags
+	alu_output_flags,
+	alu_status_edit,
 
 );
 
@@ -82,10 +91,14 @@ reg [15:0] pc;
 //Interrupt handler//
 /////////////////////
 
+wire [15:0] interrupt_addr;
+wire [7:0] interrupt_data_out;
+reg interrupt_start;
 wire interrupt_busy;
-wire [15:0] interrupt_pc_out,
-wire [7:0] interrupt_status_out,
-wire [7:0] interrupt_stack_out
+wire interrupt_write_en;
+wire [15:0] interrupt_pc_out;
+wire [7:0] interrupt_status_out;
+wire [7:0] interrupt_stack_out;
 interrupt_handler interrupt_handler_inst
 (
 
@@ -119,9 +132,40 @@ interrupt_handler interrupt_handler_inst
 
 );
 
+//Inputs to AlU
+reg [7:0] alu_input_a;
+reg [7:0] alu_input_b;
+//Output from ALU
+wire [7:0] alu_output;
+wire [7:0] alu_status_out;
+wire ignore_output;
+//ALU declaration
+alu alu_inst(
 
+	//inputA : in std_logic_vector(7 downto 0);
+	ali_input_a,
+	//inputB: in std_logic_vector(7 downto 0);
+	alu_input_b,
+	//alu_op: in std_logic_vector(3 downto 0);
+	alu_op_in,
+	//opcode : in std_logic_vector(7 downto 0);
+	simple_op,
+	//proc_status_in : in std_logic_vector(7 downto 0);
+	ie_status,
+	//proc_status_edit : in std_logic_vector(7 downto 0);
+	alu_status_edit,
+	//ignore_output : out std_logic;
+	ignore_output,
+	//proc_status_out : out std_logic_vector(7 downto 0);
+	alu_status_out,
+	//alu_out : out std_logic_vector(7 downto 0)
+	alu_output
+);
 
-
+wire carry_flag = ie_status[0];
+wire minus_flag = ie_status[7];
+wire ovf_flag = ie_status[6];
+wire zero_flag = ie_status[1]; 
 
 
 //Memory access registers for IE
@@ -132,18 +176,6 @@ reg ie_write_en;
 assign mem_addr = interrupt_busy ? interrupt_addr : ie_addr;
 assign mem_data_out = interrupt_busy ? interrupt_data_out : ie_data_out;
 assign mem_write_en = interrupt_busy ? interrupt_write_en : ie_write_en;
-
-
-//Connections to simple decoder
-wire [7:0] alu_input_a_flags;
-wire [7:0] alu_input_b_flags;
-wire [7:0] alu_output_flags;
-
-//Inputs to AlU
-reg [7:0] alu_input_a;
-reg [7:0] alu_input_b;
-//Output from ALU
-wire [7:0] alu_output;
 
 
 //pc next is output
@@ -263,7 +295,7 @@ begin
 	    (simple_op == BPL && minus_flag == 0) ||
 	    (simple_op == BVC && ovf_flag   == 0) ||
 	    (simple_op == BVS && ovf_flag   == 1) ||
-		(simple_op = JMP)
+		(simple_op == JMP)
 	)begin
 	
 		//Take the branch
@@ -314,9 +346,25 @@ endtask
 task read_back_interrupt_result();
 begin
 
-
+	//Read back pc next
+	pc_next <= interrupt_pc_out;
+	
 end
 endtask
+
+reg [7:0] state;
+localparam [7:0] state_idle = 0, 
+				 state_load_1 = 1, 
+				 state_load_2 = 2, 
+				 state_alu_store_output = 3,
+				 state_interrupt_1 = 4, 
+				 state_interrupt_2 = 5, 
+				 state_interrupt_3 = 6, 
+				 state_jump_1 = 7, 
+				 state_return_1 = 8, 
+				 state_return_2 = 9, 
+				 state_return_3 = 10, 
+				 state_if_wait = 11;
 
 
 always @ (posedge clk or negedge rst) begin
@@ -329,12 +377,15 @@ always @ (posedge clk or negedge rst) begin
 	end
 	else begin
 
-		case(state):
+		case(state)
 		
 			state_idle: begin
 			
 				//If we are being presented with a valid instruction
 				if(if_ready) begin
+				
+					//Go to the next PC by default
+					pc <= if_pc_next;
 				
 					
 					//If this is a branch instruction
@@ -399,22 +450,22 @@ always @ (posedge clk or negedge rst) begin
 						//Store the new alu output
 						ie_status <= alu_status_out;
 						
-						//Start the IF again
-						if_start <= 1;
+						//Start the interrupt handler
+						interrupt_start <= 1;
 						
-						//Go to the IF wait state
-						state <= state_if_wait;
+						//Go to interrupt handler 2
+						state <= state_interrupt_2;
 					
 					end
 					
 					//If this is a no-op instruction
 					else if(is_nop) begin
 					
-						//Start the IF again
-						if_start <= 1;
+						//Start the interrupt handler
+						interrupt_start <= 1;
 						
-						//Go to the IF wait state
-						state <= state_if_wait;
+						//Go to interrupt handler 2
+						state <= state_interrupt_2;
 						
 					end
 					
@@ -474,7 +525,7 @@ always @ (posedge clk or negedge rst) begin
 			state_interrupt_1: begin
 			
 				//Just need to reset write enable here
-				mem_write_en <= 0;
+				ie_write_en <= 0;
 			
 				//Start the interrupt handler
 				interrupt_start <= 1;
@@ -514,7 +565,7 @@ always @ (posedge clk or negedge rst) begin
 				if_start <= 0;
 			
 				//Reset write enable
-				if_write_en <= 0;
+				ie_write_en <= 0;
 			
 				//If instruction fetch is busy loading
 				if(!if_ready) begin
@@ -532,12 +583,13 @@ always @ (posedge clk or negedge rst) begin
 				push(if_pc_next[15:8]);
 				
 				//set pc next to addr in
-				pc <= addr_in;
+				pc <= if_addr_in;
 				
-				state_if_start <= 1;
-				
-				//Go wait on if_wait
-				state <= state_if_wait;
+				//Start the interrupt handler
+				interrupt_start <= 1;
+						
+				//Go to interrupt handler 2
+				state <= state_interrupt_2;
 				
 				
 			end
@@ -565,11 +617,11 @@ always @ (posedge clk or negedge rst) begin
 				//Read in the low byte
 				pc[7:0] <= mem_data_in;
 				
-				//Start if
-				if_start <= 1;
+				//Start the interrupt handler
+				interrupt_start <= 1;
 				
-				//Go to the wait if state
-				state <= state_if_wait;
+				//Go to interrupt handler 2
+				state <= state_interrupt_2;
 			
 			
 			end

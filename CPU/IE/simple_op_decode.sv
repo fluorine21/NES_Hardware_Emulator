@@ -27,16 +27,18 @@ module simple_op_decode
 	output reg [7:0] alu_input_b_flags,
 	output reg [7:0] alu_output_flags,
 	output wire [3:0] alu_op_out,
-	output wire [7:0] alu_status_edit
+	output reg [7:0] alu_status_edit
 	
 	
 );
+
+
 
 assign is_flag_inst = (simple_op >= 8'h0D && simple_op <= 8'h10);
 
 assign is_stack_op = (simple_op >= 8'h24 && simple_op <= 8'h27);
 
-assign is_nop = simple_op == 8'h22;
+assign is_nop = (simple_op == 8'h22 || simple_op == 8'h18);
 
 assign is_load = mem_load_flag;
 assign is_store = store_flag == 3'b001;
@@ -96,7 +98,7 @@ end
 //always for input a
 always @ * begin
 	
-	if(simple_op == 8'h25)
+	if(simple_op == 8'h25)begin
 		alu_input_a_flags <= status_reg;
 	end
 	else begin
@@ -120,9 +122,10 @@ always @ * begin
 	case(store_flag)
 	
 		3'b010: alu_output_flags <= a_reg;
-		3'b100: alu_output_flags <= y_reg;
 		3'b011: alu_output_flags <= x_reg;
+		3'b100: alu_output_flags <= y_reg;
 		3'b001: alu_output_flags <= mem_store;
+		3'b111: alu_output_flags <= status_reg;
 		default: alu_output_flags <= zero;//Don't store anywhere
 
 	endcase
@@ -134,8 +137,7 @@ end
 always @ * begin
 
 	//Default case
-	alu_status_edit <= 0;
-
+	alu_status_edit <= 8'b10000001;
 
 end
 

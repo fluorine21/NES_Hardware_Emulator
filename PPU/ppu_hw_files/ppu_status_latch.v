@@ -10,6 +10,7 @@ module ppu_status_latch
 	input wire sprite_overflow,
 	input wire ppu_vsync_reg,
 	input wire [7:0] ppu_ctrl1,
+	input wire [7:0] ppu_state,
 	
 	input wire [15:0] cpu_addr,//Needed to determine when CPU is reading 2002
 	

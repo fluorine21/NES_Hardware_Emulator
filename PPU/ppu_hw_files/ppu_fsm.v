@@ -204,6 +204,7 @@ ppu_status_latch ppu_status_inst
 	sprite_overflow,
 	ppu_vsync_reg,
 	ppu_ctrl1,
+	state,
 	
 	cpu_addr,
 	ppu_status
