@@ -1,5 +1,6 @@
 import ie_defs::*;
 
+`define DEBUG // Turns on instruction debug output during fetch cycle
 
 module ie_fsm
 (
@@ -49,7 +50,9 @@ module ie_fsm
 
 );
 
-//simple op code decoder
+//////////////////////////
+//simple op code decoder//
+//////////////////////////
 
 wire is_load, is_store, is_branch, is_jsr, is_rts, is_rti, is_break, is_stack_op, is_nop, is_flag_inst;
 
@@ -361,6 +364,17 @@ begin
 end
 endtask
 
+
+task debug_print();
+begin
+
+	$display("IF OUTPUTS: Simple op: %x, ALU op: %x, reg load flag: %x, store flag: %x, mem load flag: %x, immediate flag: %x, addr in: %x, IF pc next: %x\n", simple_op, alu_op, reg_load_flag, store_flag, mem_load_flag, immediate_flag, addr_in, if_pc_next);
+	
+	$display("OP DECODE OUTPUTS: is load: %x, is store: %x, is branch: %x, is jsr: %x, is rts: %x, is rti: %x, is break: %x, is stack op: %x, is nop: %x, is flag inst: %x, input a flags: %x, input b flags: %x, output flags: %x", is_load, is_store, is_branch, is_jsr, is_rts, is_rti, is_break, is_stack_op, is_nop, is_flag_inst, alu_input_a_flags, alu_input_b_flags, alu_output_flags);
+
+end
+endtask
+
 reg [7:0] state;
 localparam [7:0] state_idle = 0, 
 				 state_load_1 = 1, 
@@ -422,6 +436,14 @@ always @ (posedge clk or negedge rst) begin
 			
 				//If we are being presented with a valid instruction
 				if(if_ready) begin
+				
+					//If we're in debug mode print out the current instruction
+					`ifdef DEBUG
+					
+						debug_print();
+					
+					`endif
+					
 				
 					//Go to the next PC by default
 					pc <= if_pc_next;
