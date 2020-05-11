@@ -39,12 +39,12 @@ module interrupt_handler
 	//Status inputs from IE
 	input wire [15:0] pc_in,
 	input wire [7:0] status_in,
-	input wire [15:0] stack_ptr_in,
+	input wire [7:0] stack_ptr_in,
 	
 	//Next state of these registers when state machine finishes
 	output reg [15:0] pc_out,
 	output reg [7:0] status_out,
-	output reg [15:0] stack_ptr_out
+	output reg [7:0] stack_ptr_out
 	
 );
 

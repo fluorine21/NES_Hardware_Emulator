@@ -105,7 +105,7 @@ begin
 	#1
 
 	//Load the program listing itself first
-	for(tb_mem_addr = 16'h0200; tb_mem_addr < 16'h0200 + $size(prpgram_listing_1); tb_mem_addr = tb_mem_addr + 1) begin
+	for(tb_mem_addr = 16'h0200; tb_mem_addr < 16'h0200 + $size(program_listing_1); tb_mem_addr = tb_mem_addr + 1) begin
 	
 		//Set the data line
 		tb_mem_data = program_listing_1[tb_mem_addr - 16'h0200];

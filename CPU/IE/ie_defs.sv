@@ -80,11 +80,30 @@ integer mem_listing_1[] =
 //Simple look through memory and add values program
 integer program_listing_1[] =
 {
-	
+	8'hA2, 8'h00, 
+	8'h8A, 
+	8'h18, 
+	8'h75, 8'h00, 
+	8'hE8, 
+	8'h75, 8'h00, 
+	8'hE8, 
+	8'h75, 8'h00, 
+	8'hE8, 
+	8'h75, 8'h00, 
+	8'hE8,
+	8'h75, 8'h00, 
+	8'hE8, 
+	8'h95, 8'h00
 };
 
 integer program_listing_1_mem[] =
 {
+	16'h0000, 8'h01,
+	16'h0001, 8'h02,
+	16'h0002, 8'h03,
+	16'h0003, 8'h04,
+	16'h0004, 8'h05,
+	16'h0005, 8'h00 //should see 15 (0x0F) here
 	
 };
 

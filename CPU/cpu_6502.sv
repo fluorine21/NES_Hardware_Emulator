@@ -68,6 +68,8 @@ instr_fetch instr_fetch_inst
 //Instruction Execute
 wire [7:0] ie_status;
 wire [7:0] stack_ptr;
+wire [15:0] ie_mem_addr;
+
 ie_fsm inst_exec_inst
 (
 	clk,

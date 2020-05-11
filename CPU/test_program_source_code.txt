@@ -1,0 +1,18 @@
+
+//Simple program for adding numbers in memory in zero page
+//Adds 5 numbers from addr 0 - 4 and stores result at 5
+
+LDX #0
+TXA 
+CLC
+ADC $00,X
+INX
+ADC $00,X
+INX
+ADC $00,X
+INX
+ADC $00,X
+INX
+ADC $00,X
+INX
+STA $00,X

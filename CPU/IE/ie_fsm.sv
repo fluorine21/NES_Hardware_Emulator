@@ -58,6 +58,8 @@ wire is_load, is_store, is_branch, is_jsr, is_rts, is_rti, is_break, is_stack_op
 
 wire [7:0] alu_input_a_flags, alu_input_b_flags, alu_output_flags;
 wire [3:0] alu_op_out;
+wire [7:0] alu_status_edit;
+
 
 simple_op_decode simple_op_decode_inst
 (
@@ -87,7 +89,7 @@ simple_op_decode simple_op_decode_inst
 	alu_input_a_flags, 
 	alu_input_b_flags, 
 	alu_output_flags,
-	alu_status_edit,
+	alu_status_edit
 
 );
 
@@ -130,7 +132,7 @@ interrupt_handler interrupt_handler_inst
 	interrupt_busy,
 	
 	pc,
-	status,
+	ie_status,
 	stack_ptr,
 	
 	interrupt_pc_out,
@@ -150,7 +152,7 @@ wire ignore_output;
 alu alu_inst(
 
 	//inputA : in std_logic_vector(7 downto 0);
-	ali_input_a,
+	alu_input_a,
 	//inputB: in std_logic_vector(7 downto 0);
 	alu_input_b,
 	//alu_op: in std_logic_vector(3 downto 0);
@@ -368,7 +370,7 @@ endtask
 task debug_print();
 begin
 
-	$display("IF OUTPUTS: Simple op: %x, ALU op: %x, reg load flag: %x, store flag: %x, mem load flag: %x, immediate flag: %x, addr in: %x, IF pc next: %x\n", simple_op, alu_op, reg_load_flag, store_flag, mem_load_flag, immediate_flag, addr_in, if_pc_next);
+	$display("IF OUTPUTS: Simple op: %x, ALU op: %x, reg load flag: %x, store flag: %x, mem load flag: %x, immediate flag: %x, addr in: %x, IF pc next: %x\n", simple_op, alu_op_in, reg_load_flag, store_flag, mem_load_flag, immediate_flag, if_addr_in, if_pc_next);
 	
 	$display("OP DECODE OUTPUTS: is load: %x, is store: %x, is branch: %x, is jsr: %x, is rts: %x, is rti: %x, is break: %x, is stack op: %x, is nop: %x, is flag inst: %x, input a flags: %x, input b flags: %x, output flags: %x", is_load, is_store, is_branch, is_jsr, is_rts, is_rti, is_break, is_stack_op, is_nop, is_flag_inst, alu_input_a_flags, alu_input_b_flags, alu_output_flags);
 

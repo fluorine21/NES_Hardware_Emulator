@@ -26,7 +26,6 @@ module simple_op_decode
 	output reg [7:0] alu_input_a_flags,
 	output reg [7:0] alu_input_b_flags,
 	output reg [7:0] alu_output_flags,
-	output wire [3:0] alu_op_out,
 	output reg [7:0] alu_status_edit
 	
 	
@@ -43,7 +42,6 @@ assign is_nop = (simple_op == 8'h22 || simple_op == 8'h18);
 assign is_load = mem_load_flag;
 assign is_store = store_flag == 3'b001;
 
-assign alu_op_out = alu_op_in;
 
 
 assign is_jsr = simple_op == 8'h1D;
