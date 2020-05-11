@@ -93,9 +93,6 @@ simple_op_decode simple_op_decode_inst
 
 );
 
-//need an internal state for the PC
-reg [15:0] pc;
-
 /////////////////////
 //Interrupt handler//
 /////////////////////
@@ -131,7 +128,7 @@ interrupt_handler interrupt_handler_inst
 	interrupt_done,
 	interrupt_busy,
 	
-	pc,
+	pc_next,
 	ie_status,
 	stack_ptr,
 	
@@ -315,13 +312,13 @@ begin
 		//Take the branch
 		
 		//Set pc next to if_addr_in
-		pc <= if_addr_in;
+		pc_next <= if_addr_in;
 	
 	end
 	else begin
 	
 		//Set pC next to if_pc_next
-		pc <= if_pc_next;
+		pc_next <= if_pc_next;
 	
 	end
 
@@ -411,7 +408,6 @@ begin
 	ie_write_en <= 0;
 
 	//load in the reset vector PC into PC and PC next
-	pc <= pc_reset;
 	pc_next <= pc_reset;
 
 	//Start in the wait if state to load the next instruction
@@ -448,7 +444,7 @@ always @ (posedge clk or negedge rst) begin
 					
 				
 					//Go to the next PC by default
-					pc <= if_pc_next;
+					pc_next <= if_pc_next;
 				
 					
 					//If this is a branch instruction
@@ -461,11 +457,14 @@ always @ (posedge clk or negedge rst) begin
 					
 					end
 					
-					//If this is a jump instruction
+					//If this is a jump to subroutine instruction
 					else if(is_jsr) begin
 					
 						//Queue up a push of pc_next low
 						push(if_pc_next[7:0]);
+						
+						//set pc next to addr in
+						pc_next <= if_addr_in;
 					
 						//Go to the jsr state
 						state <= state_jump_1;
@@ -648,9 +647,6 @@ always @ (posedge clk or negedge rst) begin
 				//Queue up the high byte next
 				push(if_pc_next[15:8]);
 				
-				//set pc next to addr in
-				pc <= if_addr_in;
-				
 				//Start the interrupt handler
 				interrupt_start <= 1;
 						
@@ -672,7 +668,7 @@ always @ (posedge clk or negedge rst) begin
 			state_return_2: begin
 				
 				//Read the high byte off the data bus
-				pc[15:8] <= mem_data_in;
+				pc_next[15:8] <= mem_data_in;
 				
 				state <= state_return_3;
 			
@@ -681,7 +677,7 @@ always @ (posedge clk or negedge rst) begin
 			state_return_3: begin
 				
 				//Read in the low byte
-				pc[7:0] <= mem_data_in;
+				pc_next[7:0] <= mem_data_in;
 				
 				//Start the interrupt handler
 				interrupt_start <= 1;

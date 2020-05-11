@@ -1238,6 +1238,7 @@ architecture a of instr_fetch is
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
 							alu_op <= SHIFT_OP; -- shift
+							reg_load_flag <= MEM_REG_F;
 							state <= idle;
 							
 						when x"3E" => --ROL_ABSX
@@ -1247,6 +1248,7 @@ architecture a of instr_fetch is
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
 							alu_op <= SHIFT_OP; -- shift
+							reg_load_flag <= MEM_REG_F;
 							state <= idle;
 							
 						when x"2A" => --ROL_ACC
@@ -1285,6 +1287,7 @@ architecture a of instr_fetch is
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
 							alu_op <= SHIFT_OP; -- shift
+							reg_load_flag <= MEM_REG_F;
 							state <= idle;
 							
 						when x"7E" => --ROR_ABSX
@@ -1293,6 +1296,7 @@ architecture a of instr_fetch is
 							new_op <= x"29";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
+							reg_load_flag <= MEM_REG_F;
 							alu_op <= SHIFT_OP; -- shift
 							state <= idle;
 							
@@ -1311,6 +1315,7 @@ architecture a of instr_fetch is
 							new_op <= x"29";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
+							reg_load_flag <= MEM_REG_F;
 							alu_op <= SHIFT_OP; -- shift
 							state <= idle;
 							
@@ -1320,6 +1325,7 @@ architecture a of instr_fetch is
 							new_op <= x"29";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
+							reg_load_flag <= MEM_REG_F;
 							alu_op <= SHIFT_OP; -- shift
 							state <= idle;
 						
