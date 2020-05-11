@@ -214,6 +214,8 @@ ppu_status_latch ppu_status_inst
 
 assign vram_addr = color_load_busy ? color_vram_addr : render_8_vram_addr;
 
+reg [15:0] cnt;//Counter used for delay to slow down ppu
+localparam [15:0] wait_cycles = 100;
 
 localparam [7:0] state_idle = 0, 
 				 state_wait_colors_1 = 1,
@@ -223,7 +225,8 @@ localparam [7:0] state_idle = 0,
 				 state_draw_row_1 = 5,
 				 state_draw_row_2 = 6,
 				 state_draw_row_3 = 7,
-				 state_wait_vga = 8;
+				 state_wait_vga = 8,
+				 state_wait = 9;
 
 task reset_state();
 begin
@@ -236,6 +239,7 @@ begin
 	color_load_start <= 0;
 	sprite_load_start <= 0;
 	ppu_vsync_reg <= 0;
+	cnt <= 0;
 
 end
 endtask
@@ -369,7 +373,11 @@ always @ (posedge clk or negedge rst) begin
 							set_col_counter();
 							
 							//Need to reload sprites here
-							state <= state_wait_colors_2;
+							//state <= state_wait_colors_2;
+							
+							//Need to wait 100 cycles at the end of the line
+							state <= state_wait;
+							
 						end
 					end
 					//No col or row overflow
@@ -380,6 +388,21 @@ always @ (posedge clk or negedge rst) begin
 					
 					end
 				end//vram load done
+			
+			end
+			
+			state_wait: begin
+			
+				if(cnt > wait_cycles) begin
+				
+					cnt <= 0;
+				
+					//Need to reload sprites here
+					state <= state_wait_colors_2;
+				end
+				else begin
+					cnt <= cnt + 1;
+				end
 			
 			end
 			
