@@ -12,7 +12,7 @@ entity alu is
         alu_op: in std_logic_vector(3 downto 0);
         opcode : in std_logic_vector(7 downto 0);
         proc_status_in : in std_logic_vector(7 downto 0);
-        proc_status_edit : in std_logic_vector(7 downto 0);
+        proc_status_edit : in std_logic;
         
         ignore_output : out std_logic;
         proc_status_out : out std_logic_vector(7 downto 0);
@@ -137,7 +137,7 @@ architecture a of alu is
 
     ------- do checks to set flags N Z VC
 
-    if proc_status_edit(1) = '1' then   ---- zero (1)
+    if proc_status_edit = '1' then   ---- zero (1)
         
         if temp_output = "00000000" then 
             proc_status_temp(1) := '1';
@@ -146,7 +146,7 @@ architecture a of alu is
         end if;
     end if;
 
-    if proc_status_edit(7) = '1' then   ---- negative(7), carry(0)
+    if proc_status_edit = '1' then   ---- negative(7), carry(0)
         if (opcode = x"03") then ------ BIT
             proc_status_temp(7) := inputB(7) ;----------n(7) bit 7 of byte in memory
             proc_status_temp(6) := inputB(6) ; -----------v(6) bit 6 of byte in memory
