@@ -39,7 +39,8 @@ entity instr_fetch is
 																											-- 10 = load from xreg, 11 = yreg 
 			signal mem_load_flag			: out std_logic := '0'; -- load to mem flag, 0 if no, 1 if loading from mem
 			
-			signal instr_valid			: out std_logic := '0'-- IF done	
+			signal instr_valid			: out std_logic := '0';-- IF done	
+			signal halt : in std_logic
 		);
 end entity instr_fetch;
 
@@ -131,7 +132,7 @@ architecture a of instr_fetch is
 			state <= idle;
 			pc <= (others => '0');
 			counter <= (others => '0');
-		elsif (rising_edge(clk)) then
+		elsif (rising_edge(clk) and halt = '0') then
 			case (state) is				
 				when idle =>
 					if (ie_ready = '1') then

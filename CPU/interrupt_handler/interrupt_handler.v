@@ -45,7 +45,9 @@ module interrupt_handler
 	output reg [15:0] pc_out,
 	output reg [7:0] status_out,
 	output reg [7:0] stack_ptr_out,
-	output wire ie_dis
+	output wire ie_dis,
+	
+	input wire halt
 	
 );
 
@@ -152,7 +154,7 @@ always @ (posedge clk or negedge rst) begin
 	
 	end
 	
-	else begin
+	else if(!halt) begin
 	
 		case(state)		
 		

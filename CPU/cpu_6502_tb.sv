@@ -17,7 +17,7 @@ reg [15:0] pc_reset = 16'h0200;//Just above the stack
 reg [7:0] ppu_status = 0;
 
 integer i = 0;
-
+reg halt = 0;
 cpu_6502 cpu_6502_dut
 (
 	clk,
@@ -32,7 +32,9 @@ cpu_6502 cpu_6502_dut
 	
 	pc_reset,
 	
-	ppu_status
+	ppu_status,
+	
+	halt
 );
 
 reg [15:0] tb_mem_addr;

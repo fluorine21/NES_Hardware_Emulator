@@ -44,9 +44,10 @@ module ie_fsm
 	output reg [7:0] ie_status,
 	//CPU registers
 	output reg [7:0] a, x, y,
-	output reg [7:0] stack_ptr
+	output reg [7:0] stack_ptr,
 	
 	
+	input wire halt//CPU halts execution if 1
 
 );
 
@@ -136,7 +137,9 @@ interrupt_handler interrupt_handler_inst
 	interrupt_pc_out,
 	interrupt_status_out,
 	interrupt_stack_out,
-	interrupt_disable
+	interrupt_disable,
+	
+	halt
 
 );
 
@@ -160,8 +163,6 @@ alu alu_inst(
 	simple_op,
 	//proc_status_in : in std_logic_vector(7 downto 0);
 	ie_status,
-	//proc_status_edit : in std_logic_vector(7 downto 0);
-	alu_status_edit,
 	//ignore_output : out std_logic;
 	ignore_output,
 	//proc_status_out : out std_logic_vector(7 downto 0);
@@ -453,7 +454,7 @@ always @ (posedge clk or negedge rst) begin
 		reset_regs();
 	
 	end
-	else begin
+	else if(!halt) begin
 
 		case(state)
 		
@@ -640,14 +641,14 @@ always @ (posedge clk or negedge rst) begin
 			
 			state_if_wait: begin
 			
-				//Reset if start
-				if_start <= 0;
-			
 				//Reset write enable
 				ie_write_en <= 0;
 			
 				//If instruction fetch is busy loading
 				if(!if_ready) begin
+				
+					//Reset if start
+					if_start <= 0;
 				
 					//Go back to the idle state
 					state <= state_idle;

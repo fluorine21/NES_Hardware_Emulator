@@ -19,7 +19,9 @@ module cpu_6502
 	//Hard reset program vector
 	input wire [15:0] pc_reset,
 	
-	input wire [7:0] ppu_status
+	input wire [7:0] ppu_status,
+	
+	input wire halt
 
 );
 
@@ -61,7 +63,8 @@ instr_fetch instr_fetch_inst
 	store_flag,
 	reg_load_flag,
 	mem_load_flag,
-	instr_valid//equivalent to if_ready
+	instr_valid,//equivalent to if_ready
+	halt
 
 );
 
@@ -101,7 +104,8 @@ ie_fsm inst_exec_inst
 	pc_from_ie,//to if, pc_next
 	ie_status,
 	acc_reg, x_reg, y_reg,
-	stack_ptr
+	stack_ptr,
+	halt
 	
 );
 
