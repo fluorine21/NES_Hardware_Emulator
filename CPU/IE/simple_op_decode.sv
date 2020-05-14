@@ -26,10 +26,12 @@ module simple_op_decode
 	output reg [7:0] alu_input_a_flags,
 	output reg [7:0] alu_input_b_flags,
 	output reg [7:0] alu_output_flags,
-	output reg [7:0] alu_status_edit
+	output wire [7:0] alu_status_edit
 	
 	
 );
+
+assign alu_status_edit = 8'b10000001;
 
 assign is_break = simple_op == 8'h0C;
 
@@ -133,18 +135,5 @@ always @ * begin
 	endcase
 
 end
-
-
-//Always for ALU status edit
-always @ * begin
-
-	//Default case
-	alu_status_edit <= 8'b10000001;
-
-end
-
-
-
-
 
 endmodule

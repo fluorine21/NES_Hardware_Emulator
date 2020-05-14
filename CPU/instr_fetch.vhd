@@ -419,6 +419,7 @@ architecture a of instr_fetch is
 						-- BCC -- simplified opcode: x"04" -- Branch on Carry Clear
 						when x"90" =>
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
+							addr_out <= branch_addr(pc_ie, instr_reg(1));
 							new_op <= x"04";
 							alu_op <= ADD_OP; -- add
 							state <= idle;
@@ -426,6 +427,7 @@ architecture a of instr_fetch is
 						-- BCS -- simplified opcode: x"05" -- Branch on Carry Set
 						when x"B0" =>
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
+							addr_out <= branch_addr(pc_ie, instr_reg(1));
 							new_op <= x"05";
 							alu_op <= ADD_OP; -- add
 							state <= idle;
@@ -433,6 +435,7 @@ architecture a of instr_fetch is
 						-- BEQ -- simplified opcode: x"06" -- Branch on Equal
 						when x"F0" =>
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
+							addr_out <= branch_addr(pc_ie, instr_reg(1));
 							new_op <= x"06";
 							alu_op <= ADD_OP; -- add
 							state <= idle;
@@ -440,6 +443,7 @@ architecture a of instr_fetch is
 						-- BMI -- simplified opcode: x"07" -- Branch on Minus
 						when x"30" =>
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
+							addr_out <= branch_addr(pc_ie, instr_reg(1));
 							new_op <= x"07";
 							alu_op <= ADD_OP; -- add
 							state <= idle;
@@ -447,6 +451,7 @@ architecture a of instr_fetch is
 						-- BNE -- simplified opcode: x"08" -- Branch on Not Equal
 						when x"D0" =>
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
+							addr_out <= branch_addr(pc_ie, instr_reg(1));
 							new_op <= x"08";
 							alu_op <= ADD_OP; -- add
 							state <= idle;
@@ -454,6 +459,7 @@ architecture a of instr_fetch is
 						-- BPL -- simplified opcode: x"09" -- Branch on Plus
 						when x"10" =>
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
+							addr_out <= branch_addr(pc_ie, instr_reg(1));
 							new_op <= x"09";
 							alu_op <= ADD_OP; -- add
 							state <= idle;
@@ -461,6 +467,7 @@ architecture a of instr_fetch is
 						-- BVC -- simplified opcode: x"0A" -- Branch on Overflow Clear
 						when x"50" =>
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
+							addr_out <= branch_addr(pc_ie, instr_reg(1));
 							new_op <= x"0A";
 							alu_op <= ADD_OP; -- add
 							state <= idle;
@@ -468,6 +475,7 @@ architecture a of instr_fetch is
 						-- BVS -- simplified opcode: x"0B" -- Branch on Overflow Set
 						when x"70" =>
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
+							addr_out <= branch_addr(pc_ie, instr_reg(1));
 							new_op <= x"0B";
 							alu_op <= ADD_OP; -- add
 							state <= idle;

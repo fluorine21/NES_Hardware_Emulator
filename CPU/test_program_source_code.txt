@@ -21,12 +21,9 @@ STA $00,X
 //Add with branch
 LDX #0
 TXA
-CLC
-//Load the current variable from memory
 L1 CLC 
-ADC *$00,X
-//Compare X to 5
+ADC $00,X
+INX
 CPX #5
 BMI L1
 STA $00,x
-

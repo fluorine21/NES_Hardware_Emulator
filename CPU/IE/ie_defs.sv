@@ -113,12 +113,13 @@ integer program_listing_1_mem[] =
 integer program_listing_2[] = 
 {
 
-	8'hA2, 8'h00, 
+	8'hA2, 00, 
 	8'h8A, 
 	8'h18, 
 	8'h7D, 8'h00, 8'h00, 
-	8'hE0, 8'h05, 
-	8'h30, 8'hF9, 
+	8'hE8,
+	8'hE0, 05, 
+	8'h30, 8'hF7, 
 	8'h9D, 8'h00, 8'h00
 	
 };
