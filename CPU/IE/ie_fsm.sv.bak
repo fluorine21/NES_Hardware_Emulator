@@ -262,8 +262,8 @@ begin
 	
 		zero: alu_input_a <= 0;
 		a_reg: alu_input_a <= a;
-		x_reg: alu_input_a <= x;
-		y_reg: alu_input_a <= y;
+		x_reg: alu_input_a <= x_reg;
+		y_reg: alu_input_a <= y_reg;
 		mem_load: alu_input_a <= mem_data_in;
 		imm: alu_input_a <= if_addr_in[7:0];
 		one: alu_input_a <= 1;

@@ -3,7 +3,8 @@
 package ie_defs;
 
 //Flags for determining where to load/store things from
-localparam [7:0] zero = 0,//source
+localparam [7:0] 
+zero = 0,//source
 a_reg = 1,//source/dest
 x_reg = 2,//source/dest
 y_reg = 3,//source/dest
@@ -15,7 +16,8 @@ status_reg = 8,
 stack_reg = 9;
 
 //Branch instructions		   
-localparam [7:0] BCC = 8'h04,//Branch on carry clear
+localparam [7:0] 
+BCC = 8'h04,//Branch on carry clear
 BCS = 8'h05,//Branch on carry set
 BEQ = 8'h06,//Branch on zero set
 BMI = 8'h07,//Branch on minus set
@@ -107,7 +109,7 @@ integer program_listing_1_mem[] =
 	
 };
 
-
+//add with branch
 integer program_listing_2[] = 
 {
 

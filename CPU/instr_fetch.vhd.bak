@@ -112,7 +112,7 @@ architecture a of instr_fetch is
 			
 		else
 		
-			instr_valid <= '0';
+			instr_valid <= '1';
 		
 		end if;
 
@@ -167,12 +167,10 @@ architecture a of instr_fetch is
 				when decode_op => --update pc, mem address, simplify opcode
 					
 					--Default flag assignments
-					pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16));
 					alu_op <= TRA_OP;
 					mem_load_flag <= '0';
 					store_flag <= "000";
 					reg_load_flag <= A_REG_F;
-					imm_mode <= '0';
 					
 					case (instr_reg(0)) is
 										

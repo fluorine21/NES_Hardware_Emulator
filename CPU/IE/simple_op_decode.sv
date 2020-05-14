@@ -31,7 +31,7 @@ module simple_op_decode
 	
 );
 
-
+assign is_break = simple_op == 8'h0C;
 
 assign is_flag_inst = (simple_op >= 8'h0D && simple_op <= 8'h10);
 
