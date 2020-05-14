@@ -106,7 +106,7 @@ ie_fsm inst_exec_inst
 );
 
 //MUX for memory 
-assign mem_addr = accessing_mem ? if_mem_addr : ie_mem_addr;
+assign mem_addr = instr_valid ? ie_mem_addr : if_mem_addr;
 //Only need to mux mem addr, everything else goes to ie
 
 endmodule

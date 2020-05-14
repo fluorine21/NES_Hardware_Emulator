@@ -3,7 +3,8 @@
 package ie_defs;
 
 //Flags for determining where to load/store things from
-localparam [7:0] zero = 0,//source
+localparam [7:0] 
+zero = 0,//source
 a_reg = 1,//source/dest
 x_reg = 2,//source/dest
 y_reg = 3,//source/dest
@@ -15,7 +16,8 @@ status_reg = 8,
 stack_reg = 9;
 
 //Branch instructions		   
-localparam [7:0] BCC = 8'h04,//Branch on carry clear
+localparam [7:0] 
+BCC = 8'h04,//Branch on carry clear
 BCS = 8'h05,//Branch on carry set
 BEQ = 8'h06,//Branch on zero set
 BMI = 8'h07,//Branch on minus set
@@ -107,18 +109,59 @@ integer program_listing_1_mem[] =
 	
 };
 
-
+//add with branch
 integer program_listing_2[] = 
 {
 
-	8'hA2, 8'h00, 
+	8'hA2, 00, 
 	8'h8A, 
 	8'h18, 
 	8'h7D, 8'h00, 8'h00, 
-	8'hE0, 8'h05, 
-	8'h30, 8'hF9, 
+	8'hE8,
+	8'hE0, 05, 
+	8'h30, 8'hF7, 
 	8'h9D, 8'h00, 8'h00
 	
 };
+
+
+integer bs_mem [] = 
+{
+
+	16'h0000, 8'h09,
+	16'h0001, 8'h07,
+	16'h0002, 8'h00,
+	16'h0003, 8'h02,
+	16'h0004, 8'h01,
+	16'h0005, 8'h05,
+	16'h0006, 8'h03,
+	16'h0007, 8'h04,
+	16'h0008, 8'h08,
+	16'h0009, 8'h06
+	
+};
+
+
+typedef integer queue_of_int[$];
+
+function automatic void load_raw_listing(ref integer listing[], string filename);
+
+/* 	fd = $fopen (filename, "r");
+	if(fd) $display("Successfully opened %s" filename);
+	else $display("Failed to open %s" filename);
+	
+	while(!$feof(fd)) begin
+	
+		//Read the line
+		
+	
+	end */
+	
+	$readmemh(filename, listing);
+	
+
+
+
+endfunction
 
 endpackage

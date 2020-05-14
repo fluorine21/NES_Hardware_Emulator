@@ -37,6 +37,11 @@ package instr_fetch_pkg is
 		offset_reg : in std_logic_vector(7 downto 0);
 		offset_const: in std_logic_vector(7 downto 0))
 		return std_logic_vector;
+		
+	function branch_addr(
+		pc_in : in std_logic_vector(15 downto 0);
+		instr_byte_1 : in std_logic_vector(7 downto 0))
+		return std_logic_vector;
    
 end;
 
@@ -61,6 +66,18 @@ package body instr_fetch_pkg is
 		end if;
 	
 		return addr;
+	end;
+	
+	
+	function branch_addr(
+			pc_in : in std_logic_vector(15 downto 0);
+			instr_byte_1 : in std_logic_vector(7 downto 0))
+			return std_logic_vector is variable pc_out : std_logic_vector(15 downto 0) := x"0000";
+	begin
+	
+		--Add two because it's relative to next address
+		pc_out := std_logic_vector(to_unsigned(to_integer(signed(pc_in)) + to_integer(signed(instr_byte_1)) + 2, 16));
+		return pc_out;
 	end;
  
 end package body;
