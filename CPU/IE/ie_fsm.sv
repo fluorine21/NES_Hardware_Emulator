@@ -163,6 +163,9 @@ alu alu_inst(
 	simple_op,
 	//proc_status_in : in std_logic_vector(7 downto 0);
 	ie_status,
+	1'b1,
+	
+	
 	//ignore_output : out std_logic;
 	ignore_output,
 	//proc_status_out : out std_logic_vector(7 downto 0);
@@ -218,7 +221,7 @@ begin
 	if(is_stack_op) begin
 		//If address is stack_ptr, increment by 1
 		//doing a pull here
-		ie_addr <= {8'h01, (stack_ptr+1)};
+		ie_addr <= 16'h0100 | ((stack_ptr+1) & 8'hFF);
 		stack_ptr <= stack_ptr + 1;
 	end
 	else begin
@@ -351,7 +354,7 @@ task push
 );
 begin
 
-	ie_addr <= {8'h01, stack_ptr};;
+	ie_addr <= {8'h01, stack_ptr};
 	ie_data_out <= val;
 	ie_write_en <= 1;
 	stack_ptr <= stack_ptr - 1;
@@ -629,13 +632,6 @@ always @ (posedge clk or negedge rst) begin
 					//Go to the IF wait state
 					state <= state_if_wait;
 					
-					//Report the current state
-					`ifdef DEBUG
-					
-						report_state();
-					
-					`endif
-					
 				end
 			end
 			
@@ -652,6 +648,13 @@ always @ (posedge clk or negedge rst) begin
 				
 					//Go back to the idle state
 					state <= state_idle;
+					
+					//Report the current state
+					`ifdef DEBUG
+					
+						report_state();
+					
+					`endif
 				
 				end
 			end

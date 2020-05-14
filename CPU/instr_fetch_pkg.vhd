@@ -30,6 +30,7 @@ package instr_fetch_pkg is
 	constant Y_STORE 	  : std_logic_vector(2 downto 0) := "100";
 	constant MEM_STORE 	  : std_logic_vector(2 downto 0) := "001";
 	constant STATUS_STORE : std_logic_vector(2 downto 0) := "111";
+	constant STACK_STORE  : std_logic_vector(2 downto 0) := "110";
 	
 	
 	function indirect_addr(

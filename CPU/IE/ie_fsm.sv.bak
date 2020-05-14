@@ -44,9 +44,10 @@ module ie_fsm
 	output reg [7:0] ie_status,
 	//CPU registers
 	output reg [7:0] a, x, y,
-	output reg [7:0] stack_ptr
+	output reg [7:0] stack_ptr,
 	
 	
+	input wire halt//CPU halts execution if 1
 
 );
 
@@ -136,7 +137,9 @@ interrupt_handler interrupt_handler_inst
 	interrupt_pc_out,
 	interrupt_status_out,
 	interrupt_stack_out,
-	interrupt_disable
+	interrupt_disable,
+	
+	halt
 
 );
 
@@ -160,8 +163,9 @@ alu alu_inst(
 	simple_op,
 	//proc_status_in : in std_logic_vector(7 downto 0);
 	ie_status,
-	//proc_status_edit : in std_logic_vector(7 downto 0);
-	alu_status_edit,
+	1'b1,
+	
+	
 	//ignore_output : out std_logic;
 	ignore_output,
 	//proc_status_out : out std_logic_vector(7 downto 0);
@@ -401,7 +405,7 @@ endtask
 task debug_print();
 begin
 
-	$display("IF OUTPUTS: Simple op: %x, ALU op: %x, reg load flag: %x, store flag: %x, mem load flag: %x, immediate flag: %x, addr in: %x, IF pc next: %x\n", simple_op, alu_op_in, reg_load_flag, store_flag, mem_load_flag, immediate_flag, if_addr_in, if_pc_next);
+	$display("IF OUTPUTS: Simple op: %x, ALU op: %x, reg load flag: %x, store flag: %x, mem load flag: %x, immediate flag: %x, addr in: %x, IF pc next: %x", simple_op, alu_op_in, reg_load_flag, store_flag, mem_load_flag, immediate_flag, if_addr_in, if_pc_next);
 	
 	$display("OP DECODE OUTPUTS: is load: %x, is store: %x, is branch: %x, is jsr: %x, is rts: %x, is rti: %x, is break: %x, is stack op: %x, is nop: %x, is flag inst: %x, input a flags: %x, input b flags: %x, output flags: %x", is_load, is_store, is_branch, is_jsr, is_rts, is_rti, is_break, is_stack_op, is_nop, is_flag_inst, alu_input_a_flags, alu_input_b_flags, alu_output_flags);
 	
@@ -412,7 +416,7 @@ endtask
 
 task report_state();
 begin
-	$display("State after is: a: %x, x: %x, y: %x, status: %x, stack ptr: %x, pc next: %x, interrupt disable: %x", a, x, y, ie_status, stack_ptr, pc_next, interrupt_disable); 
+	$display("State after is: a: %x, x: %x, y: %x, status: %x, stack ptr: %x, pc next: %x, interrupt disable: %x\n", a, x, y, ie_status, stack_ptr, pc_next, interrupt_disable); 
 end
 endtask			 
 				 
@@ -453,7 +457,7 @@ always @ (posedge clk or negedge rst) begin
 		reset_regs();
 	
 	end
-	else begin
+	else if(!halt) begin
 
 		case(state)
 		
@@ -628,20 +632,10 @@ always @ (posedge clk or negedge rst) begin
 					//Go to the IF wait state
 					state <= state_if_wait;
 					
-					//Report the current state
-					`ifdef DEBUG
-					
-						report_state();
-					
-					`endif
-					
 				end
 			end
 			
 			state_if_wait: begin
-			
-				//Reset if start
-				if_start <= 0;
 			
 				//Reset write enable
 				ie_write_en <= 0;
@@ -649,8 +643,18 @@ always @ (posedge clk or negedge rst) begin
 				//If instruction fetch is busy loading
 				if(!if_ready) begin
 				
+					//Reset if start
+					if_start <= 0;
+				
 					//Go back to the idle state
 					state <= state_idle;
+					
+					//Report the current state
+					`ifdef DEBUG
+					
+						report_state();
+					
+					`endif
 				
 				end
 			end

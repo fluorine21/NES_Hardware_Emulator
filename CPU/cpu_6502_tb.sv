@@ -214,13 +214,13 @@ begin
 
 	while(1) begin
 	
-		repeat(100) clk_cycle();
+		repeat(300) clk_cycle();
 		
 		soft_rst = 0;
-		repeat(5) clk_cycle();
+		repeat(2) clk_cycle();
 		soft_rst = 1;
 		
-		repeat(100) clk_cycle();
+		repeat(300) clk_cycle();
 	
 	end
 

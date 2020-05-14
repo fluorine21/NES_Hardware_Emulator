@@ -214,7 +214,7 @@ architecture a of instr_fetch is
 							new_op <= x"00";
 							imm_mode <= '1';
 							store_flag <= A_STORE; -- store in acc
-							mem_load_flag <= '1'; -- load from mem
+							mem_load_flag <= '0'; -- Don't load anything from memory
 							reg_load_flag <= A_REG_F; --load from acc
 							alu_op <= ADD_OP; -- add
 							state <= idle;
@@ -1229,7 +1229,7 @@ architecture a of instr_fetch is
 							new_op <= x"24";
 							store_flag <= MEM_STORE; -- store in mem
 							reg_load_flag <= A_REG_F; --load from acc
-							alu_op <= SUB_OP; -- subtract from SP
+							alu_op <= TRA_OP; --Just transfer A to the output of the ALU
 							state <= idle;
 							
 							
@@ -1237,8 +1237,9 @@ architecture a of instr_fetch is
 						when x"08" => 
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(1,16)); --length 1
 							new_op <= x"25";
+							--Don't need to set reg load flag, happens automatically for this instruction
 							store_flag <= MEM_STORE; -- store in mem
-							alu_op <= SUB_OP; -- subtract from SP
+							alu_op <= TRA_OP; -- subtract from SP
 							state <= idle;
 							
 							
@@ -1247,8 +1248,9 @@ architecture a of instr_fetch is
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(1,16)); --length 1
 							new_op <= x"26";
 							store_flag <= A_STORE; -- store in acc
+							reg_load_flag <= MEM_REG_F; -- load from memory into acc
 							mem_load_flag <= '1'; -- load from mem
-							alu_op <= ADD_OP; -- add to SP
+							alu_op <= TRA_OP; -- add to SP
 							state <= idle;
 							
 							
@@ -1257,7 +1259,8 @@ architecture a of instr_fetch is
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(1,16)); --length 1
 							new_op <= x"27";
 							mem_load_flag <= '1'; -- load from mem
-							alu_op <= ADD_OP; -- add to SP
+							reg_load_flag <= MEM_REG_F; -- load from memory into acc
+							alu_op <= TRA_OP; -- add to SP
 							state <= idle;
 							store_flag <= STATUS_STORE;
 							
@@ -1638,7 +1641,8 @@ architecture a of instr_fetch is
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(1,16)); --length 1
 							new_op <= x"38";
 							reg_load_flag <= X_REG_F; --load from xreg
-							
+							store_flag <= STACK_STORE;
+							alu_op <= TRA_OP;
 							state <= idle;
 							
 							
@@ -1648,6 +1652,7 @@ architecture a of instr_fetch is
 							new_op <= x"39";	
 							store_flag <= A_STORE; -- store in acc
 							reg_load_flag <= Y_REG_F; --load from yreg
+							alu_op <= TRA_OP;
 							state <= idle;
 							
 						
