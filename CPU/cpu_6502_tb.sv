@@ -1,6 +1,7 @@
 import ie_defs::*;
 
 string fn = "../test_programs/bubble.txt";
+string fn_i = "../test_programs/interrupt_test.txt";
 
 module cpu_6502_tb();
 
@@ -45,7 +46,7 @@ wire mem_write_en = rst ? cpu_write_en : tb_write_en;
 reg [15:0] dummy_addr = 0;
 wire [7:0] dummy_data;
 
-generic_ram #(1024, 16) mem_inst
+generic_ram #(65536, 16) mem_inst
 (
 	clk,
 	
@@ -73,10 +74,14 @@ initial begin
 	
 	//Load the program while the CPU is in reset
 	//load_program();
-	load_bubble();
+	//load_bubble();
+	load_interrupt();
 	
 	//Take the cpu out of reset
 	rst = 1;
+	
+	//Run the interrupt task
+	run_interrupt();
 	
 	//Run the program 
 	while(1) begin
@@ -170,6 +175,53 @@ begin
 	#1
 	tb_write_en = 0;
 	
+end
+endtask
+
+task load_interrupt();
+begin
+
+	#1
+	tb_write_en = 1;
+	#1
+
+	load_raw_listing(listing, fn_i);
+	
+		//Load the program listing itself first
+	for(tb_mem_addr = 16'h0200; tb_mem_addr < 16'h0200 + $size(listing); tb_mem_addr = tb_mem_addr + 1) begin
+	
+		//Set the data line
+		tb_mem_data = listing[tb_mem_addr - 16'h0200];
+		
+		//cycle the clock
+		clk_cycle();
+	
+	end
+	
+	
+	#1
+	tb_write_en = 0;
+	#1
+	tb_write_en = 0;
+	
+end
+endtask
+
+task run_interrupt();
+begin
+
+	while(1) begin
+	
+		repeat(100) clk_cycle();
+		
+		soft_rst = 0;
+		repeat(5) clk_cycle();
+		soft_rst = 1;
+		
+		repeat(100) clk_cycle();
+	
+	end
+
 end
 endtask
 	

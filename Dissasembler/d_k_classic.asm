@@ -18849,3 +18849,8 @@ __fff7:     jmp __f415         ; $fff7: 4c 15 f4
 vectors:    .dw nmi                        ; $fffa: 3f ee     Vector table
             .dw reset                      ; $fffc: b7 ed     Vector table
             .dw irq                        ; $fffe: 8c ee     Vector table
+
+;-------------------------------------------------------------------------------
+; CHR-ROM
+;-------------------------------------------------------------------------------
+            .incbin d_k_classic.chr ; Include CHR-ROM

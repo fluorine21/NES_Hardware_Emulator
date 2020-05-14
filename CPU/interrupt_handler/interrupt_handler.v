@@ -187,7 +187,7 @@ always @ (posedge clk or negedge rst) begin
 							state <= state_return_1;
 							
 							//Queue read on high byte of return address
-							cpu_addr <= 16'h0100 | ((stack_ptr+1) & 8'hFF);;
+							cpu_addr <= 16'h0100 | ((stack_ptr_in+1) & 8'hFF);
 						
 						end
 					
@@ -258,7 +258,7 @@ always @ (posedge clk or negedge rst) begin
 				pc_out = {cpu_data_in, addr_low};
 			
 				//Push the program counter and the status register
-				cpu_addr <= 16'h0100 | ((stack_ptr_in-1) & 8'hFF);;
+				cpu_addr <= 16'h0100 | ((stack_ptr_in-1) & 8'hFF);
 				cpu_data_out <= pc_in[15:8];
 				
 				////Set the interrupt disable flag

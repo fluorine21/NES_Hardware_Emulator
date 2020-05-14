@@ -67,3 +67,51 @@ SP
 	LDY #1
 	STY $12
 	RTS
+	
+	
+	
+//Interrupt tester
+//Vector at FFFC (low) and FFFD (high)
+
+*=$0200
+
+LDA #$00
+STA $FFFC
+LDA #$00
+STA $FFFD
+
+LDA #0
+TAX
+LDY #$FF
+L0 
+ADC #2
+INX
+DEY
+JMP L0
+
+
+ISR
+
+PHA
+TXA
+PHA
+TYA
+PHA
+
+LDA #$FF
+STA 0
+
+PLA
+TAY
+PLA
+TAX
+PLA
+
+RTI
+
+
+
+
+
+
+
