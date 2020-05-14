@@ -31,11 +31,12 @@ module simple_op_decode
 	
 );
 
-assign alu_status_edit = 8'b10000001;
+assign alu_status_edit = 8'b10000010;
 
 assign is_break = simple_op == 8'h0C;
 
-assign is_flag_inst = (simple_op >= 8'h0D && simple_op <= 8'h10);
+//Sets and clears
+assign is_flag_inst = (simple_op >= 8'h0D && simple_op <= 8'h10) || (simple_op >= 8'h2E && simple_op <= 8'h30);
 
 assign is_stack_op = (simple_op >= 8'h24 && simple_op <= 8'h27);
 

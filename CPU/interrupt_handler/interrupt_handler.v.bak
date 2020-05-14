@@ -190,12 +190,6 @@ always @ (posedge clk or negedge rst) begin
 							cpu_addr <= {8'h01, stack_ptr_in + 1};
 						
 						end
-						
-						else begin
-						
-							
-						
-						end
 					
 					end	
 						

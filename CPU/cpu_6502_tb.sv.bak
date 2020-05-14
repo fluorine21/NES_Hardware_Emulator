@@ -1,6 +1,6 @@
 import ie_defs::*;
 
-string fn = "../test_programs/bubble.txt";
+string filename = "../test_programs/bubble.txt";
 
 module cpu_6502_tb();
 
@@ -151,16 +151,6 @@ begin
 		tb_mem_data = listing[tb_mem_addr - 16'h0200];
 		
 		//cycle the clock
-		clk_cycle();
-	
-	end
-	
-	
-	//Load the memory listing for bubble
-	for(i = 0; i < $size(bs_mem); i = i + 2) begin
-	
-		tb_mem_addr = bs_mem[i];
-		tb_mem_data = bs_mem[i+1];
 		clk_cycle();
 	
 	end

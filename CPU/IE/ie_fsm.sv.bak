@@ -262,8 +262,8 @@ begin
 	
 		zero: alu_input_a <= 0;
 		a_reg: alu_input_a <= a;
-		x_reg: alu_input_a <= x_reg;
-		y_reg: alu_input_a <= y_reg;
+		x_reg: alu_input_a <= x;
+		y_reg: alu_input_a <= y;
 		mem_load: alu_input_a <= mem_data_in;
 		imm: alu_input_a <= if_addr_in[7:0];
 		one: alu_input_a <= 1;
@@ -365,7 +365,7 @@ task pull
 );
 begin
 
-	ie_addr <= {8'h01, (stack_ptr+1)};
+	ie_addr <= 16'h0100 | ((stack_ptr+1) & 8'hFF);
 	ie_write_en <= 0;
 	stack_ptr <= stack_ptr + 1;
 

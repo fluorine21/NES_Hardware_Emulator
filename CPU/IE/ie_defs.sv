@@ -124,4 +124,44 @@ integer program_listing_2[] =
 	
 };
 
+
+integer bs_mem [] = 
+{
+
+	16'h0000, 8'h09,
+	16'h0001, 8'h07,
+	16'h0002, 8'h00,
+	16'h0003, 8'h02,
+	16'h0004, 8'h01,
+	16'h0005, 8'h05,
+	16'h0006, 8'h03,
+	16'h0007, 8'h04,
+	16'h0008, 8'h08,
+	16'h0009, 8'h06
+	
+};
+
+
+typedef integer queue_of_int[$];
+
+function automatic void load_raw_listing(ref integer listing[], string filename);
+
+/* 	fd = $fopen (filename, "r");
+	if(fd) $display("Successfully opened %s" filename);
+	else $display("Failed to open %s" filename);
+	
+	while(!$feof(fd)) begin
+	
+		//Read the line
+		
+	
+	end */
+	
+	$readmemh(filename, listing);
+	
+
+
+
+endfunction
+
 endpackage
