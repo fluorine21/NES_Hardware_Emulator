@@ -18,7 +18,7 @@ module interrupt_handler
 	//////////////////////////////////////////////
 	//Interrupt sources, these will be latched internally
 	//Whenever a BRK instruction occurs
-	input wire break_flag,
+	input wire break_in,
 	
 	//Whenever ppu_vblank occurs
 	//Non-maskable interrupt
@@ -69,6 +69,8 @@ localparam [7:0] state_idle = 0,
 //Interrupt disable flag is in status 2
 assign break_disable = status_in[2];
 
+reg break_flag;
+
 reg [7:0] addr_low;//Low byte of the interrupt vector
 
 reg interrupt_disable;//If we're executing an interrupt
@@ -92,6 +94,7 @@ always @ (posedge clk or negedge rst) begin
 	
 		soft_reset_int = 0;
 		ppu_status_int = 0;
+		break_flag = 0;
 	
 	end
 	
@@ -107,6 +110,10 @@ always @ (posedge clk or negedge rst) begin
 		if(ppu_status[7]) begin
 			ppu_status_int = 1;
 		end
+		//If we need to set break
+		if(break_in) begin
+			break_flag = 1;
+		end
 		
 		//If we need to reset soft reset
 		if(cpu_addr_next == 16'hFFFD) begin
@@ -120,6 +127,10 @@ always @ (posedge clk or negedge rst) begin
 		
 			ppu_status_int = 0;
 		
+		end
+		
+		if(cpu_addr_next == 16'hFFFF) begin
+			break_flag = 0;
 		end
 	
 	
@@ -224,6 +235,8 @@ always @ (posedge clk or negedge rst) begin
 						state <= state_handle_1;
 					
 					end
+					
+					
 				end
 						
 						

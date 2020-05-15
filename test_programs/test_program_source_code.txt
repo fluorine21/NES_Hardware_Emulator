@@ -112,6 +112,12 @@ RTI
 
 
 
+////All instructions program
+
+
+
+
+
 
 
 
