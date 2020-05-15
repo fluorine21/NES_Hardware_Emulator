@@ -103,7 +103,7 @@ package body instr_fetch_pkg is
 	begin
 	
 	
-		addr := (x"00" & instr_byte_1) + (x"00" & reg_byte);	
+		addr := (x"00" & (x"FF" AND (instr_byte_1 + reg_byte)));	
 		return addr;		
 	
 	end;

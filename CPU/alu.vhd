@@ -176,8 +176,6 @@ architecture a of alu is
                 end if;
 
             end if;
-			
-		when others => ignore_out := '1';
     end case;
 
     proc_status_out <= proc_status_temp;
