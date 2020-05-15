@@ -210,7 +210,7 @@ architecture a of instr_fetch is
 							
 						when x"69" => --ADC_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
+							addr_out <= zpg_addr(instr_reg(1), x"00");--Put immediate value on addr_out line
 							new_op <= x"00";
 							imm_mode <= '1';
 							store_flag <= A_STORE; -- store in acc
@@ -245,7 +245,7 @@ architecture a of instr_fetch is
 						
 						when x"65" => --ADC_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= x"00" & instr_reg(1);
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"00";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -255,7 +255,7 @@ architecture a of instr_fetch is
 							
 						when x"75" => --ADC_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"00";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -297,7 +297,7 @@ architecture a of instr_fetch is
 							
 						when x"29" => --AND_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
+							addr_out <= zpg_addr(instr_reg(1), x"00");--Put immediate value on addr_out line
 							new_op <= x"01";
 							imm_mode <= '1';
 							store_flag <= A_STORE; -- store in acc
@@ -332,7 +332,7 @@ architecture a of instr_fetch is
 						
 						when x"25" => --AND_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"01";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -342,7 +342,7 @@ architecture a of instr_fetch is
 							
 						when x"35" => --AND_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"01";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -381,7 +381,7 @@ architecture a of instr_fetch is
 
 						when x"06" => --ASL_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"02";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -390,7 +390,7 @@ architecture a of instr_fetch is
 						
 						when x"16" => --ASL_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"02";	
 							store_flag <= MEM_STORE; -- store in mem	
 							mem_load_flag <= '1'; -- load from mem
@@ -409,7 +409,7 @@ architecture a of instr_fetch is
 							
 						when x"2C" => --BIT_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"03";
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
@@ -546,7 +546,7 @@ architecture a of instr_fetch is
 						
 						when x"C9" => --CMP_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
+							addr_out <= zpg_addr(instr_reg(1), x"00");--Put immediate value on addr_out line
 							new_op <= x"11";
 							imm_mode <= '1';
 							mem_load_flag <= '0'; -- load from mem
@@ -578,7 +578,7 @@ architecture a of instr_fetch is
 						
 						when x"C5" => --CMP_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"11";
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
@@ -587,7 +587,7 @@ architecture a of instr_fetch is
 						
 						when x"D5" => --CMP_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"11";
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
@@ -607,7 +607,7 @@ architecture a of instr_fetch is
 							
 						when x"E0" => --CPX_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
+							addr_out <= zpg_addr(instr_reg(1), x"00");--Put immediate value on addr_out line
 							new_op <= x"12";
 							imm_mode <= '1';
 							mem_load_flag <= '0'; -- load from mem
@@ -617,7 +617,7 @@ architecture a of instr_fetch is
 							
 						when x"E4" => --CPX_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"12";
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= X_REG_F; --load from xreg
@@ -637,7 +637,7 @@ architecture a of instr_fetch is
 							
 						when x"C0" => --CPY_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
+							addr_out <= zpg_addr(instr_reg(1), x"00");--Put immediate value on addr_out line
 							new_op <= x"13";
 							imm_mode <= '1';
 							mem_load_flag <= '0'; -- load from mem
@@ -647,7 +647,7 @@ architecture a of instr_fetch is
 							
 						when x"C4" => --CPY_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"13";
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= Y_REG_F; --load from yreg
@@ -676,7 +676,7 @@ architecture a of instr_fetch is
 						
 						when x"C6" => --DEC_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"14";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -685,7 +685,7 @@ architecture a of instr_fetch is
 						
 						when x"D6" => --DEC_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"14";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -746,7 +746,7 @@ architecture a of instr_fetch is
 						
 						when x"49" => --EOR_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
+							addr_out <= zpg_addr(instr_reg(1), x"00");--Put immediate value on addr_out line
 							new_op <= x"17";
 							imm_mode <= '1';
 							store_flag <= A_STORE; -- store in acc
@@ -781,7 +781,7 @@ architecture a of instr_fetch is
 						
 						when x"45" => --EOR_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"17";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -791,7 +791,7 @@ architecture a of instr_fetch is
 						
 						when x"55" => --EOR_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"17";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -830,7 +830,7 @@ architecture a of instr_fetch is
 						
 						when x"E6" => --INC_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"19";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -839,7 +839,7 @@ architecture a of instr_fetch is
 						
 						when x"F6" => --INC_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"19";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -928,7 +928,7 @@ architecture a of instr_fetch is
 						
 						when x"A9" => --LDA_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
+							addr_out <= zpg_addr(instr_reg(1), x"00");--Put immediate value on addr_out line
 							new_op <= x"1E";
 							imm_mode <= '1';
 							store_flag <= A_STORE; -- store in acc
@@ -962,7 +962,7 @@ architecture a of instr_fetch is
 						
 						when x"A5" => --LDA_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"1E";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -972,7 +972,7 @@ architecture a of instr_fetch is
 						
 						when x"B5" => --LDA_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"1E";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -1004,7 +1004,7 @@ architecture a of instr_fetch is
 							
 						when x"A2" => --LDX_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
+							addr_out <= zpg_addr(instr_reg(1), x"00");--Put immediate value on addr_out line
 							new_op <= x"1F";
 							imm_mode <= '1';
 							store_flag <= X_STORE; -- store in xreg
@@ -1014,7 +1014,7 @@ architecture a of instr_fetch is
 							
 						when x"A6" => --LDX_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"1F";
 							store_flag <= X_STORE; -- store in xreg
 							mem_load_flag <= '1'; -- load from mem
@@ -1024,7 +1024,7 @@ architecture a of instr_fetch is
 							
 						when x"B6" => --LDX_ZPY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + y_reg;
+							addr_out <= zpg_addr(instr_reg(1), y_reg);
 							new_op <= x"1F";
 							store_flag <= X_STORE; -- store in xreg
 							mem_load_flag <= '1'; -- load from mem
@@ -1054,7 +1054,7 @@ architecture a of instr_fetch is
 							
 						when x"A0" => --LDY_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
+							addr_out <= zpg_addr(instr_reg(1), x"00");--Put immediate value on addr_out line
 							new_op <= x"20";
 							imm_mode <= '1';
 							store_flag <= Y_STORE; -- store in yreg
@@ -1064,7 +1064,7 @@ architecture a of instr_fetch is
 							
 						when x"A4" => --LDY_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"20";
 							store_flag <= Y_STORE; -- store in yreg
 							mem_load_flag <= '1'; -- load from mem
@@ -1074,7 +1074,7 @@ architecture a of instr_fetch is
 							
 						when x"B4" => --LDY_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"20";
 							store_flag <= Y_STORE; -- store in yreg
 							mem_load_flag <= '1'; -- load from mem
@@ -1112,7 +1112,7 @@ architecture a of instr_fetch is
 							
 						when x"46" => --LSR_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"21";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -1121,7 +1121,7 @@ architecture a of instr_fetch is
 							
 						when x"56" => --LSR_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"21";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -1169,7 +1169,7 @@ architecture a of instr_fetch is
 							
 						when x"09" => --ORA_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
+							addr_out <= zpg_addr(instr_reg(1), x"00");--Put immediate value on addr_out line
 							new_op <= x"23";
 							imm_mode <= '1';
 							store_flag <= A_STORE; -- store in acc
@@ -1204,7 +1204,7 @@ architecture a of instr_fetch is
 							
 						when x"05" => --ORA_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"23";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -1214,7 +1214,7 @@ architecture a of instr_fetch is
 							
 						when x"15" => --ORA_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"23";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -1297,7 +1297,7 @@ architecture a of instr_fetch is
 							
 						when x"26" => --ROL_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"28";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -1306,7 +1306,7 @@ architecture a of instr_fetch is
 							
 						when x"36" => --ROL_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"28";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -1346,7 +1346,7 @@ architecture a of instr_fetch is
 							
 						when x"66" => --ROR_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"29";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -1356,7 +1356,7 @@ architecture a of instr_fetch is
 							
 						when x"76" => --ROR_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"29";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -1412,7 +1412,7 @@ architecture a of instr_fetch is
 							
 						when x"E9" => --SBC_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
+							addr_out <= zpg_addr(instr_reg(1), x"00");--Put immediate value on addr_out line
 							new_op <= x"2D";
 							imm_mode <= '1';
 							store_flag <= A_STORE; -- store in acc
@@ -1447,7 +1447,7 @@ architecture a of instr_fetch is
 							
 						when x"E5" => --SBC_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"2D";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -1457,7 +1457,7 @@ architecture a of instr_fetch is
 							
 						when x"F5" => --SBC_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"2D";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -1535,7 +1535,7 @@ architecture a of instr_fetch is
 							
 						when x"85" => --STA_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"31";
 							store_flag <= MEM_STORE; -- store in mem
 							reg_load_flag <= A_REG_F; --load from acc
@@ -1543,7 +1543,7 @@ architecture a of instr_fetch is
 							
 						when x"95" => --STA_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"31";
 							store_flag <= MEM_STORE; -- store in mem
 							reg_load_flag <= A_REG_F; --load from acc
@@ -1561,7 +1561,7 @@ architecture a of instr_fetch is
 							
 						when x"86" => --STX_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"32";
 							store_flag <= MEM_STORE; -- store in mem
 							reg_load_flag <= X_REG_F; --load from xreg
@@ -1569,7 +1569,7 @@ architecture a of instr_fetch is
 							
 						when x"96" => --STX_ZPY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + y_reg;
+							addr_out <= zpg_addr(instr_reg(1), y_reg);
 							new_op <= x"32";
 							store_flag <= MEM_STORE; -- store in mem
 							reg_load_flag <= X_REG_F; --load from xreg
@@ -1586,7 +1586,7 @@ architecture a of instr_fetch is
 							
 						when x"84" => --STY_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"33";
 							store_flag <= MEM_STORE; -- store in mem
 							reg_load_flag <= Y_REG_F; --load from yreg
@@ -1594,7 +1594,7 @@ architecture a of instr_fetch is
 							
 						when x"94" => --STY_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"33";
 							store_flag <= MEM_STORE; -- store in mem
 							reg_load_flag <= Y_REG_F; --load from yreg
