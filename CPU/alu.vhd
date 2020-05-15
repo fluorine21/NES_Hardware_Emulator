@@ -161,6 +161,7 @@ architecture a of alu is
                 proc_status_temp(1) := '0';
             end if;
             ignore_out:= '1';
+        when OTHERS =>
             if ignore_out /= '1' then
 
                 if temp_output = "00000000" then 
