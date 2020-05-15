@@ -71,8 +71,7 @@ architecture a of alu is
 
         when SUB_OP => -----sub
         ---dec, dex,dey, jsr, pha,php
-            if (opcode = x"14" or opcode = x"15" or opcode = x"16"
-            or opcode = x"24" or opcode = x"25" or opcode = x"1D") then
+            if (opcode = x"14" or opcode = x"15" or opcode = x"16") then
                 temp_output := std_logic_vector(unsigned(inputA) - to_unsigned(1,8));
             ------ cpx, cpy, cmp inputA is from acc and input B from memory
             elsif (opcode = x"11" or opcode = x"12" or opcode = x"13") then
