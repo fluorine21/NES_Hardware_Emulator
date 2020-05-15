@@ -163,7 +163,6 @@ alu alu_inst(
 	simple_op,
 	//proc_status_in : in std_logic_vector(7 downto 0);
 	ie_status,
-	1'b1,
 	
 	
 	//ignore_output : out std_logic;
@@ -409,7 +408,7 @@ begin
 	
 	$display("OP DECODE OUTPUTS: is load: %x, is store: %x, is branch: %x, is jsr: %x, is rts: %x, is rti: %x, is break: %x, is stack op: %x, is nop: %x, is flag inst: %x, input a flags: %x, input b flags: %x, output flags: %x", is_load, is_store, is_branch, is_jsr, is_rts, is_rti, is_break, is_stack_op, is_nop, is_flag_inst, alu_input_a_flags, alu_input_b_flags, alu_output_flags);
 	
-	$display("State before is: a: %x, x: %x, y: %x, status: %x, stack ptr: %x, pc next: %x, interrupt disable: %x", a, x, y, ie_status, stack_ptr, pc_next, interrupt_disable); 
+	$display("State before is: a: %x, x: %x, y: %x, status: %x, stack ptr: %x, pc now: %x, interrupt disable: %x", a, x, y, ie_status, stack_ptr, pc_next, interrupt_disable); 
 
 end
 endtask

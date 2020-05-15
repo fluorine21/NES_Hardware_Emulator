@@ -43,12 +43,24 @@ package instr_fetch_pkg is
 		pc_in : in std_logic_vector(15 downto 0);
 		instr_byte_1 : in std_logic_vector(7 downto 0))
 		return std_logic_vector;
+		
+	function abs_addr(
+		instr_byte_1 : in std_logic_vector(7 downto 0);--LO
+		instr_byte_2 : in std_logic_vector(7 downto 0);--HI
+		reg_byte : in std_logic_vector(7 downto 0))
+		return std_logic_vector;
+		
+	function zpg_addr(
+		instr_byte_1 : in std_logic_vector(7 downto 0);--LO
+		reg_byte : in std_logic_vector(7 downto 0))
+		return std_logic_vector;
    
 end;
 
 -- Package Body Section
 package body instr_fetch_pkg is
   
+  --Set reg to 0 for y
   function indirect_addr(
 		instr_byte : in std_logic_vector(7 downto 0);
 		offset_reg : in std_logic_vector(7 downto 0);
@@ -67,6 +79,33 @@ package body instr_fetch_pkg is
 		end if;
 	
 		return addr;
+	end;
+	
+	
+	function abs_addr(
+		instr_byte_1 : in std_logic_vector(7 downto 0);--LO
+		instr_byte_2 : in std_logic_vector(7 downto 0);--HI
+		reg_byte : in std_logic_vector(7 downto 0))
+		return std_logic_vector is variable addr : std_logic_vector(15 downto 0) := x"0000";
+	begin
+	
+	
+		addr := (instr_byte_2 & instr_byte_1) + (x"00" & reg_byte);	
+		return addr;	
+	
+	end;
+	
+	--Use 0 in reg_byte for zpg direct
+	function zpg_addr(
+		instr_byte_1 : in std_logic_vector(7 downto 0);--LO
+		reg_byte : in std_logic_vector(7 downto 0))
+		return std_logic_vector is variable addr : std_logic_vector(15 downto 0) := x"0000";
+	begin
+	
+	
+		addr := (x"00" & instr_byte_1) + (x"00" & reg_byte);	
+		return addr;		
+	
 	end;
 	
 	
