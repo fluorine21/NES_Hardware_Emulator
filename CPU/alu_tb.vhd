@@ -15,7 +15,6 @@ architecture behavioral of alu_tb is
         alu_op: in std_logic_vector(3 downto 0);
         opcode : in std_logic_vector(7 downto 0);
         proc_status_in : in std_logic_vector(7 downto 0);
-        proc_status_edit : in std_logic;
         
         ignore_output : out std_logic;
         proc_status_out : out std_logic_vector(7 downto 0);
@@ -28,7 +27,6 @@ architecture behavioral of alu_tb is
     signal alu_op:  std_logic_vector(3 downto 0);
     signal opcode :  std_logic_vector(7 downto 0);
     signal proc_status_in :  std_logic_vector(7 downto 0);
-    signal proc_status_edit :  std_logic;
         
     signal ignore_output :  std_logic;
     signal proc_status_out :  std_logic_vector(7 downto 0);
@@ -42,7 +40,6 @@ architecture behavioral of alu_tb is
             alu_op => alu_op,
             opcode => opcode,
             proc_status_in => proc_status_in,
-            proc_status_edit =>  proc_status_edit,
             
             ignore_output  => ignore_output,
             proc_status_out  => proc_status_out,
@@ -55,25 +52,24 @@ architecture behavioral of alu_tb is
 	begin
 	-- INX -- check negative flag
 	inputA <= "01111111";
-        inputB <= "00000000";
-        alu_op <= ADD_OP;
-        opcode <= x"1A";
-        proc_status_in <= "00000000";
-        proc_status_edit <= '1';
+    inputB <= "00000000";
+    alu_op <= ADD_OP;
+    opcode <= x"1A";
+    proc_status_in <= "00000000";
  	wait for 5 ns;
 	--DEX -- check zero flag
 	inputA <= "00000001";
-        inputB <= "00000000";
-        alu_op <= SUB_OP;
-        opcode <= x"15";
-        proc_status_in <= "00000000";
+    inputB <= "00000000";
+    alu_op <= SUB_OP;
+    opcode <= x"15";
+    proc_status_in <= "00000000";
  	wait for 5 ns;
 	--SBC with carry
 	inputA <= "00000011";
-        inputB <= "00000100";
-        alu_op <= SUB_OP;
-        opcode <= x"2D";
-        proc_status_in <= "00000001";
+    inputB <= "00000100";
+    alu_op <= SUB_OP;
+    opcode <= x"2D";
+    proc_status_in <= "00000001";
 	wait for 5 ns;
 	--SBC without carry
 	inputB <= "00000001";
@@ -98,7 +94,7 @@ architecture behavioral of alu_tb is
 	inputA <= "11110000";
 	inputB <= "11101010";
 	wait for 5 ns;
-    	--CPX
+    --CPX
 	proc_status_in <= "00000000";
 	alu_op <=  SUB_OP;
 	opcode <= x"11";
@@ -140,7 +136,6 @@ architecture behavioral of alu_tb is
 	wait for 5 ns;
 	---clear FLAGS
 	proc_status_in <= "11111111";
-    proc_status_edit <= '0';
 	alu_op <= "1000";
 	opcode <= x"0D";
 	wait for 5 ns;
@@ -168,7 +163,6 @@ architecture behavioral of alu_tb is
     alu_op <= SUB_OP;
     opcode <= x"2D";
     proc_status_in <= "00000001";
-    proc_status_edit <= '1';
 	wait for 5 ns;
 	inputA <= "11110000";
 	wait for 5 ns;

@@ -12,7 +12,6 @@ entity alu is
         alu_op: in std_logic_vector(3 downto 0);
         opcode : in std_logic_vector(7 downto 0);
         proc_status_in : in std_logic_vector(7 downto 0);
-        proc_status_edit : in std_logic;
         
         ignore_output : out std_logic;
         proc_status_out : out std_logic_vector(7 downto 0);
@@ -28,7 +27,7 @@ architecture a of alu is
 
     begin
 
-    comb_process: process(alu_op, inputA, inputB, opcode, proc_status_in, proc_status_edit) 
+    comb_process: process(alu_op, inputA, inputB, opcode, proc_status_in) 
 	function to_integer( s : std_logic ) return natural is
 		begin
 	  if s = '1' then
@@ -42,11 +41,12 @@ architecture a of alu is
 	variable proc_status_temp : std_logic_vector(7 downto 0);
 	variable temp_output : std_logic_vector(7 downto 0);
 	variable signed_diff : signed(8 downto 0);
+    variable ignore_out : std_logic;
 
     begin
 
     proc_status_temp := proc_status_in; ----set new proc status to old proc status then edit what you are allowed to
-    ignore_output <= '0';
+    ignore_out:= '0';
 
     case (alu_op) is
         when ADD_OP => -------add
@@ -132,54 +132,55 @@ architecture a of alu is
 			
         when OTHERS => 
             temp_output := inputA;
-            ignore_output <= '1';
+            ignore_out := '1';
     end case;
 
     ------- do checks to set flags N Z VC
 
-    if proc_status_edit = '1' then   ---- zero (1)
-        
-        if temp_output = "00000000" then 
-            proc_status_temp(1) := '1';
-        else
-            proc_status_temp(1) := '0';
-        end if;
-    end if;
+    case (opcode) is
+        when x"0D" =>  -- CLC
+            proc_status_temp(0) := '0';
+        when x"0E" =>  --CLD
+            proc_status_temp(3) := '0';
+        when x"0F" =>  --CLI
+            proc_status_temp(2) := '0';
+        when x"10" =>  --CLV
+            proc_status_temp(6) := '0';
+        when x"2E" =>  --SEC
+            proc_status_temp(0) := '1';
+        when x"30" =>  --SEI
+            proc_status_temp(2) := '1';
+        when x"2F" =>   --SED
+            proc_status_temp(3) := '1';
+        when x"03" =>   --BIT
+            proc_status_temp(7) := inputB(7) ;----------neg(7) bit 7 of byte in memory 
+            proc_status_temp(6) := inputB(6) ; -----------overflow(6) bit 6 of byte in memory
+            if temp_output = "00000000" then 
+                proc_status_temp(1) := '1';
+            else
+                proc_status_temp(1) := '0';
+            end if;
+            ignore_out:= '1';
+            if ignore_out /= '1' then
 
-    if proc_status_edit = '1' then   ---- negative(7), carry(0)
-        if (opcode = x"03") then ------ BIT
-            proc_status_temp(7) := inputB(7) ;----------n(7) bit 7 of byte in memory
-            proc_status_temp(6) := inputB(6) ; -----------v(6) bit 6 of byte in memory
-            ignore_output <= '1';
-        elsif temp_output(7) = '1' then 
-            proc_status_temp(7) := '1';
-        else
-            proc_status_temp(7) := '0';
-        end if;
-    end if;
+                if temp_output = "00000000" then 
+                    proc_status_temp(1) := '1';
+                else
+                    proc_status_temp(1) := '0';
+                end if;
 
-	if (opcode = x"0D") then  -- CLC
-		proc_status_temp(0) := '0';
-	elsif (opcode = x"0E") then --CLD
-		proc_status_temp(3) := '0';
-	elsif (opcode = x"0F") then --CLI
-		proc_status_temp(2) := '0';
-	elsif (opcode = x"10") then --CLV
-		proc_status_temp(6) := '0';
-	elsif (opcode = x"2E") then --SEC
-		proc_status_temp(0) := '1';
-	elsif (opcode = x"30") then --SEI
-		proc_status_temp(2) := '1';
-	elsif (opcode = x"2F") then  --SED
-		proc_status_temp(3) := '1';
-	end if;
-    
+                if temp_output(7) = '1' then 
+                    proc_status_temp(7) := '1';
+                else
+                    proc_status_temp(7) := '0';
+                end if;
 
+            end if;
+    end case;
 
     proc_status_out <= proc_status_temp;
     alu_out <= temp_output;
+    ignore_output <= ignore_out;
     end process;
    
-    
-
 end architecture a;
