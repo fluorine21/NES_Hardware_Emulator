@@ -303,7 +303,9 @@ task store_alu_output();
 begin
 
 	//Store the new status
-	ie_status <= alu_status_out;
+	if(alu_output_flags != status_reg) begin
+		ie_status <= alu_status_out;
+	end
 	
 	//Don't do anything for mem store here, happens automatically in set_store_output
 	case(alu_output_flags)
@@ -312,7 +314,7 @@ begin
 		x_reg: x <= alu_output;
 		y_reg: y <= alu_output;
 		//Don't store reserved and break if we're pulling into status reg
-		//status_reg: ie_status <= alu_output & 8'h11001111;
+		status_reg: ie_status <= alu_output & 8'b11001111;
 		status_reg: ie_status <= alu_output;
 		stack_reg: stack_ptr <= alu_output;
 		

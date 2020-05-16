@@ -485,7 +485,9 @@ architecture a of instr_fetch is
 --				
 						-- BRK -- simplified opcode: x"0C" -- break
 						when x"00" =>
-							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(1,16)); --length 1
+						--Despite doccumentation, is actually length 2
+						--see http://nesdev.com/the%20%27B%27%20flag%20&%20BRK%20instruction.txt
+							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 1
 							new_op <= x"0C";
 							state <= idle;
 							

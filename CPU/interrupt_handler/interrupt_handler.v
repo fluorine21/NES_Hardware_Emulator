@@ -69,7 +69,7 @@ localparam [7:0] state_idle = 0,
 //Interrupt disable flag is in status 2
 assign break_disable = status_in[2];
 
-reg break_flag;
+wire break_flag = break_in;
 
 reg [7:0] addr_low;//Low byte of the interrupt vector
 
@@ -94,32 +94,19 @@ always @ (posedge clk or negedge rst) begin
 	
 		soft_reset_int = 0;
 		ppu_status_int = 0;
-		break_flag = 0;
 	
 	end
 	
 	else begin
-	
-	
-		//If we need to set soft_reset (inverted)
-		if(!soft_reset_n) begin
-			soft_reset_int = 1;
-		end
-		
-		//If we need to set ppu_status_int
-		if(ppu_status[7]) begin
-			ppu_status_int = 1;
-		end
-		//If we need to set break
-		if(break_in) begin
-			break_flag = 1;
-		end
 		
 		//If we need to reset soft reset
 		if(cpu_addr_next == 16'hFFFD) begin
 		
 			soft_reset_int = 0;
 		
+		end
+		else if(!soft_reset_n) begin
+			soft_reset_int = 1;
 		end
 		
 		//If we need to reset ppu status
@@ -128,9 +115,8 @@ always @ (posedge clk or negedge rst) begin
 			ppu_status_int = 0;
 		
 		end
-		
-		if(cpu_addr_next == 16'hFFFF) begin
-			break_flag = 0;
+		else if(ppu_status[7]) begin
+			ppu_status_int = 1;
 		end
 	
 	
@@ -159,7 +145,7 @@ endtask
 
 always @ (posedge clk or negedge rst) begin
 
-	if(rst == 0) begin
+	if(!rst) begin
 	
 		reset_regs();
 	
@@ -226,8 +212,9 @@ always @ (posedge clk or negedge rst) begin
 						state <= state_handle_1;
 					
 					end
-					//or be a BRK, no need to latch this one, only externals
-					else if(break_flag && !break_disable) begin
+					//or be a BRK
+					//else if(break_flag && !break_disable) begin
+					else if(break_flag) begin
 					
 						//Lookup the interrupt vector at 0xFFFE (low) and 0xFFFF (high)
 						cpu_addr <= 16'hFFFE;
@@ -279,9 +266,6 @@ always @ (posedge clk or negedge rst) begin
 				////Set the interrupt disable flag
 				interrupt_disable <= 1;
 				
-				//Push the new status register
-				status_out <= status_in;
-				
 				state <= state_handle_4;
 				
 
@@ -294,11 +278,18 @@ always @ (posedge clk or negedge rst) begin
 				
 				cpu_addr <= 16'h0100 | ((stack_ptr_in-2) & 8'hFF);
 				
+				//If we're doing BRK (see B flag NES)
 				if(cpu_addr_next == 16'hFFFF) begin
-					cpu_data_out <= status_in | 8'h00110000;
+					//Set R, B and interrupt disable
+					cpu_data_out <= status_in | 8'b00110000;
+					status_out <= status_in | 8'b00000100;
 				end
 				else begin
-					cpu_data_out <= status_in | 8'h00100000;
+					//cpu_data_out <= status_in | 8'h00100000;
+					//If we're doing NMI or RST (see B flag NES)
+					//Set only R and interrupt disable
+					cpu_data_out <= {status_in[7:6], 2'b10, (status_in[3:0])};
+					status_out <= {status_in[7:6], 2'b00, (status_in[3:0] | 4'h4)};
 				end
 			
 				//Push the new stack pointer
@@ -321,7 +312,10 @@ always @ (posedge clk or negedge rst) begin
 			state_return_2: begin
 			
 				//Read in the address high byte
-				status_out <= cpu_data_in & 8'h11001111;
+				//Mask out R B
+				//Keep I
+				
+				status_out <= cpu_data_in & 8'b11001111;
 				
 				//Queue up the status register
 				cpu_addr <= 16'h0100 | ((stack_ptr_in+3) & 8'hFF);
