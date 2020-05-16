@@ -1,7 +1,7 @@
 AS65 Assembler for R6502 [1.42].  Copyright 1994-2007, Frank A. Kingswood                                                Page    1
 -------------------------------------------------------- func_test_1.a65 ---------------------------------------------------------
 
-6114 lines read, no errors in pass 1.
+6115 lines read, no errors in pass 1.
                         
                         
                         ;as65.exe -l ../func_test_1.a65 -m -h0 -l -w
@@ -2360,7 +2360,8 @@ ffff =                  ram_top = -1
 0857 : a253                     ldx #'S'
 0859 : a052                     ldy #'R'        ;N=0, V=0, Z=0, C=0
 085b : 20f133                   jsr test_jsr
-085d =                  jsr_ret = *-1           ;last address of jsr = return address
+                        ;jsr_ret = *-1           ;last address of jsr = return address
+085e =                  jsr_ret = *
 085e : 08                       php             ;either SP or Y count will fail, if we do not hit
 085f : 88                       dey
 0860 : 88                       dey
@@ -13990,7 +13991,7 @@ ffff =                  ram_top = -1
 3417 : d0fe            >        bne *         ;failed not equal (non zero)
                         
 3419 : adfe01                   lda $1fe
-341c : c95d                     cmp #lo(jsr_ret)
+341c : c95e                     cmp #lo(jsr_ret)
                                 trap_ne
 341e : d0fe            >        bne *         ;failed not equal (non zero)
                         
