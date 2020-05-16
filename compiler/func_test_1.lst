@@ -1,7 +1,7 @@
 AS65 Assembler for R6502 [1.42].                                     Page    1
 ------------------------------ func_test_1.a65 -------------------------------
 
-6108 lines read, no errors in pass 1.
+6109 lines read, no errors in pass 1.
                         ;
                         ; 6 5 0 2   F U N C T I O N A L   T E S T
                         ;
@@ -1405,9 +1405,9 @@ ffff =                  ram_top = -1
                         
 0533 : 08               br14    php
 0534 : 68                       pla
-                                cmp_flag 0      ;flags off except break (pushe
-                        
-                                trap_ne
+                                ;cmp_flag 0      ;flags off except break (push
+0535 : c900                     cmp #0
+                        		trap_ne
                         
                                 ;crosscheck flags
                                 set_stat zero

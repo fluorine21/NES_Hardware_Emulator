@@ -1283,8 +1283,9 @@ nbr14
         trap            ;previous beq taken 
 br14    php
         pla
-        cmp_flag 0      ;flags off except break (pushed by sw) + reserved?
-        trap_ne
+        ;cmp_flag 0      ;flags off except break (pushed by sw) + reserved?
+        cmp #0
+		trap_ne
         ;crosscheck flags
         set_stat zero
         bne brzs1
