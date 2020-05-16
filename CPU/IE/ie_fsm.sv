@@ -247,8 +247,16 @@ begin
 		ie_addr <= if_addr_in;
 	end
 	
-	//Source of data will always be ALU output
-	ie_data_out <= alu_output;
+	
+	//If this happens to be a php instruction
+	if(simple_op == 8'h25) begin
+		//Set the reserve bit and break bit
+		ie_data_out <= alu_output | 8'b00110000;
+	end
+	else begin
+		//Source of data will always be ALU outpuy
+		ie_data_out <= alu_output;
+	end
 	
 	ie_write_en <= 1;
 
@@ -303,6 +311,8 @@ begin
 		a_reg: a <= alu_output;
 		x_reg: x <= alu_output;
 		y_reg: y <= alu_output;
+		//Don't store reserved and break if we're pulling into status reg
+		//status_reg: ie_status <= alu_output & 8'h11001111;
 		status_reg: ie_status <= alu_output;
 		stack_reg: stack_ptr <= alu_output;
 		
@@ -520,6 +530,7 @@ always @ (posedge clk or negedge rst) begin
 					
 					//If this instruction is a software break
 					else if(is_break) begin
+					
 						//Just go to the interrupt handler state
 						goto_interrupt();
 					end
