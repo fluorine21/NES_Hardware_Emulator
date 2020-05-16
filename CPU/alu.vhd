@@ -141,6 +141,8 @@ architecture a of alu is
 			ignore_out := '1';
 		when x"25" => --PHP
 			ignore_out := '1';
+		when x"38" => -- TXS doesn't set flags
+			ignore_out := '1';
         when x"0D" =>  -- CLC
             proc_status_temp(0) := '0';
         when x"0E" =>  --CLD
