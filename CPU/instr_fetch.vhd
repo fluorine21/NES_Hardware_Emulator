@@ -1105,7 +1105,7 @@ architecture a of instr_fetch is
 							state <= idle;
 					
 						when x"4A" => --LSR_ACC
-							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
+							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(1,16)); --length 1
 							addr_out <= std_logic_vector(resize(unsigned(acc_reg),16));
 							new_op <= x"21";
 							store_flag <= A_STORE; -- store in acc

@@ -417,7 +417,7 @@ R56
 R33
 R29
 Einstr_fetch
-Z57 w1589654237
+Z57 w1589654900
 R3
 R1
 R2
@@ -433,9 +433,9 @@ V;kg9ZfbII8<`Ydn?DZ`a:3
 !s100 9U;Z7HH1`Wo^1bci98fPd2
 R10
 32
-Z60 !s110 1589654253
+Z60 !s110 1589654962
 !i10b 1
-Z61 !s108 1589654252.000000
+Z61 !s108 1589654962.000000
 Z62 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/instr_fetch.vhd|
 Z63 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/instr_fetch.vhd|
 !i113 1
@@ -451,8 +451,8 @@ R6
 Z64 DEx4 work 11 instr_fetch 0 22 ;kg9ZfbII8<`Ydn?DZ`a:3
 l100
 L47
-VAPL;?7SmOUW44dYHEo2HH1
-!s100 <OM8g;a^mP^=:zg^7o4n73
+Vj]V`dDminAFlmjZbTT1L>1
+!s100 VNCXcYY<Eb;L;=>1`?FkA0
 R10
 32
 R60
