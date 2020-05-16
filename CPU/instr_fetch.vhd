@@ -1041,6 +1041,7 @@ architecture a of instr_fetch is
 							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"20";
 							store_flag <= Y_STORE; -- store in yreg
+							reg_load_flag <= MEM_REG_F; -- Load mem result into input A
 							mem_load_flag <= '1'; -- load from mem
 							state <= idle;
 							
