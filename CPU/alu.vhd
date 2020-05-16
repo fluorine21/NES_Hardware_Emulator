@@ -137,12 +137,22 @@ architecture a of alu is
     ------- do checks to set flags N Z VC
 
     case (opcode) is
+	
 		when x"24" => --PHA
 			ignore_out := '1';
 		when x"25" => --PHP
 			ignore_out := '1';
+			
 		when x"38" => -- TXS doesn't set flags
 			ignore_out := '1';
+			
+		when x"32" => --STX 
+			ignore_out := '1';
+		when x"33" => --STY 
+			ignore_out := '1';
+		when x"31" => --STA 
+			ignore_out := '1';
+			
         when x"0D" =>  -- CLC
             proc_status_temp(0) := '0';
         when x"0E" =>  --CLD

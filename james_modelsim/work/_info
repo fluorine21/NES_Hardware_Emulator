@@ -9,7 +9,7 @@ z2
 cModel Technology
 dC:/intelFPGA_lite/17.1
 Ealu
-Z0 w1589649801
+Z0 w1589650281
 Z1 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
 Z2 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
 Z3 DPx4 work 15 instr_fetch_pkg 0 22 OL:^k>0JF4[7N1?Q@DPA03
@@ -25,9 +25,9 @@ VRF<3XXG@_bX8lhRT7kzlP2
 !s100 Ul6SBmUM3T0BLe^V1noTz1
 Z10 OV;C;10.5b;63
 32
-Z11 !s110 1589649808
+Z11 !s110 1589650287
 !i10b 1
-Z12 !s108 1589649808.000000
+Z12 !s108 1589650287.000000
 Z13 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/alu.vhd|
 Z14 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/alu.vhd|
 !i113 1
@@ -43,8 +43,8 @@ R6
 Z17 DEx4 work 3 alu 0 22 RF<3XXG@_bX8lhRT7kzlP2
 l28
 L23
-VYn;3]7lNA^GfY[Icd4:fg2
-!s100 WoQVP]KQzai;PIz[CR>zQ3
+VL83^mN0EojH[Zh3b0@=aR2
+!s100 ET91o4MKn2aiC<1I[NA>30
 R10
 32
 R11
