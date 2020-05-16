@@ -89,6 +89,11 @@ always @ * begin
 	
 	end
 	
+	//If we're doing CPX or CPY but not with immediate
+	else if(simple_op == 8'h12 || simple_op == 8'h13) begin
+		alu_input_b_flags <= mem_load;
+	end
+	
 	//otherwise do 0 to catch transfers
 	else begin
 		alu_input_b_flags <= zero;
