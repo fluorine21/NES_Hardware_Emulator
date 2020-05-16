@@ -663,6 +663,7 @@ architecture a of instr_fetch is
 							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"14";
 							store_flag <= MEM_STORE; -- store in mem
+							reg_load_flag <= MEM_REG_F;-- load memory into 
 							mem_load_flag <= '1'; -- load from mem
 							alu_op <= SUB_OP; -- subtract
 							state <= idle;
@@ -673,6 +674,7 @@ architecture a of instr_fetch is
 							new_op <= x"14";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
+							reg_load_flag <= MEM_REG_F;-- load memory into 
 							alu_op <= SUB_OP; -- subtract
 							state <= idle;
 						
@@ -682,6 +684,7 @@ architecture a of instr_fetch is
 							new_op <= x"14";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
+							reg_load_flag <= MEM_REG_F;-- load memory into 
 							alu_op <= SUB_OP; -- subtract
 							state <= idle;
 						
@@ -691,6 +694,7 @@ architecture a of instr_fetch is
 							new_op <= x"14";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
+							reg_load_flag <= MEM_REG_F;-- load memory into 
 							alu_op <= SUB_OP; -- subtract
 							state <= idle;
 						
@@ -827,6 +831,7 @@ architecture a of instr_fetch is
 							new_op <= x"19";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
+							reg_load_flag <= MEM_REG_F; --load from mem
 							alu_op <= ADD_OP; -- add
 							state <= idle;
 						
@@ -836,6 +841,7 @@ architecture a of instr_fetch is
 							new_op <= x"19";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
+							reg_load_flag <= MEM_REG_F; --load from mem
 							alu_op <= ADD_OP; -- add
 							state <= idle;
 						
@@ -845,6 +851,7 @@ architecture a of instr_fetch is
 							new_op <= x"19";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
+							reg_load_flag <= MEM_REG_F; --load from mem
 							alu_op <= ADD_OP; -- add
 							state <= idle;
 
@@ -1094,6 +1101,7 @@ architecture a of instr_fetch is
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
 							alu_op <= SHIFT_OP; -- shift
+							state <= idle;
 							
 						when x"5E" => --LSR_ABSX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
@@ -1339,7 +1347,7 @@ architecture a of instr_fetch is
 							state <= idle;
 							
 						when x"6A" => --ROR_ACC
-							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
+							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(1,16)); --length 2
 							addr_out <= std_logic_vector(resize(unsigned(acc_reg),16));
 							new_op <= x"29";
 							store_flag <= A_STORE; -- store in acc

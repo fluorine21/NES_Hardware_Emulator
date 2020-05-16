@@ -56,14 +56,15 @@ architecture a of alu is
                 temp_output := std_logic_vector(unsigned_out(7 downto 0));
                 if (unsigned_out > to_unsigned(255,8) ) then
                     proc_status_temp(0) := '1'; ------ setting carry flag
-		else
-		    proc_status_temp(0) := '0';
-                end if;
-		if ( unsigned_out(7) /= inputA(7)) then
-                    proc_status_temp(6) := '1'; ------ setting overflow flag
-		else
-		    proc_status_temp(6) := '0';
-                end if;
+				else
+					proc_status_temp(0) := '0';
+				end if;
+			
+				if ( unsigned_out(7) /= inputA(7)) then
+						proc_status_temp(6) := '1'; ------ setting overflow flag
+				else
+					proc_status_temp(6) := '0';
+				end if;
                 -------------set overflow flag---------
             else ---inc,inx,iny all just increment and pla and plp pops PC, 
                 temp_output := std_logic_vector(unsigned(inputA) + to_unsigned(1,8));
@@ -76,25 +77,57 @@ architecture a of alu is
             ------ cpx, cpy, cmp inputA is from acc and input B from memory
             elsif (opcode = x"11" or opcode = x"12" or opcode = x"13") then
                 temp_output := std_logic_vector(unsigned(inputA) - unsigned(inputB));
-		if unsigned(inputA) >= unsigned(inputB) then
-			proc_status_temp(0) := '1'; --------carry flag
-		else 
-			proc_status_temp(0) := '0';		
-		end if;
+				if unsigned(inputA) >= unsigned(inputB) then
+					proc_status_temp(0) := '1'; --------carry flag
+				else 
+					proc_status_temp(0) := '0';		
+				end if;
             else ----- sbc
-                sbc_with_carry := resize(unsigned(inputA),9);
+			
+				-------------Origional Code----------------------------------------------------------
+                -- sbc_with_carry := resize(unsigned(inputA),9);
 
-                if unsigned(inputA) < unsigned(inputB) then
-                    sbc_with_carry := unsigned(inputA) + to_unsigned(256,9);
-                    proc_status_temp(0) := '0' ;------ reseting the carry flag
-                end if;
-		signed_diff := resize(signed(inputA),9)-resize(signed(inputB),9);
-		if ((signed_diff > 127 ) or (signed_diff < -127)) then
-			proc_status_temp(6) := '1'; --------overflow flag
-		else
-			proc_status_temp(6) := '0'; 
-		end if;
-                temp_output := std_logic_vector(resize((sbc_with_carry - unsigned(inputB)),8));
+                -- if unsigned(inputA) < unsigned(inputB) then
+                    -- sbc_with_carry := unsigned(inputA) + to_unsigned(256,9);
+                    -- proc_status_temp(0) := '0' ;------ reseting the carry flag
+                -- end if;
+				-- signed_diff := resize(signed(inputA),9)-resize(signed(inputB),9);
+				-- if ((signed_diff > 127 ) or (signed_diff < -127)) then
+					-- proc_status_temp(6) := '1'; --------overflow flag
+				-- else
+					-- proc_status_temp(6) := '0'; 
+				-- end if;
+                -- temp_output := std_logic_vector(resize((sbc_with_carry - unsigned(inputB)),8));
+				-------------------------------------------------------------------------------------
+				
+				
+				--------------Jim's code-------------------------------------------------------------
+				--If the carry flag is set
+				if(proc_status_in(0) = '1') then
+					temp_output := std_logic_vector(unsigned(inputA) - unsigned(inputB));
+				else
+					temp_output := std_logic_vector(unsigned(inputA) - unsigned(inputB) - to_unsigned(1, 8));
+				end if;
+				
+				--Set carry A was greater than mem
+				if(unsigned(inputA) >= unsigned(inputB)) then
+					proc_status_temp(0) := '1';
+				else
+					proc_status_temp(0) := '0';
+				end if;
+				
+				if(
+					( (inputA(7) = '1') and (inputB(7) = '0') and (temp_output(7) = '0')) or -- N - P = P
+					( (inputA(7) = '0') and (inputB(7) = '1') and (temp_output(7) = '1'))) -- P - N = N
+				then
+					--Set overflow
+					proc_status_temp(6) := '1';
+				
+				else
+					proc_status_temp(6) := '0';
+				end if;
+				
+				-------------------------------------------------------------------------------------
 		
             end if;
             
