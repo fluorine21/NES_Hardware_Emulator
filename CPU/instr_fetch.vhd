@@ -398,7 +398,7 @@ architecture a of instr_fetch is
 							state <= idle;
 						
 						-- BIT -- simplified opcode: x"03" -- Test Bits
-						when x"24" => --BIT_ABS
+						when x"2C" => --BIT_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
 							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"03";
@@ -407,7 +407,7 @@ architecture a of instr_fetch is
 							alu_op <= AND_OP; -- and
 							state <= idle;
 							
-						when x"2C" => --BIT_ZP
+						when x"24" => --BIT_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
 							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"03";
