@@ -39,7 +39,8 @@ entity instr_fetch is
 																											-- 10 = load from xreg, 11 = yreg 
 			signal mem_load_flag			: out std_logic := '0'; -- load to mem flag, 0 if no, 1 if loading from mem
 			
-			signal instr_valid			: out std_logic := '0'-- IF done	
+			signal instr_valid			: out std_logic := '0';-- IF done	
+			signal halt : in std_logic
 		);
 end entity instr_fetch;
 
@@ -112,7 +113,7 @@ architecture a of instr_fetch is
 			
 		else
 		
-			instr_valid <= '1';
+			instr_valid <= '0';
 		
 		end if;
 
@@ -131,7 +132,7 @@ architecture a of instr_fetch is
 			state <= idle;
 			pc <= (others => '0');
 			counter <= (others => '0');
-		elsif (rising_edge(clk)) then
+		elsif (rising_edge(clk) and halt = '0') then
 			case (state) is				
 				when idle =>
 					if (ie_ready = '1') then
@@ -167,17 +168,19 @@ architecture a of instr_fetch is
 				when decode_op => --update pc, mem address, simplify opcode
 					
 					--Default flag assignments
+					pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16));
 					alu_op <= TRA_OP;
 					mem_load_flag <= '0';
 					store_flag <= "000";
 					reg_load_flag <= A_REG_F;
+					imm_mode <= '0';
 					
 					case (instr_reg(0)) is
 										
 						-- ADC -- simplified opcode: x"00" -- Add with Carry
 						when x"6D" => --ADC_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"00";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -187,7 +190,7 @@ architecture a of instr_fetch is
 							
 						when x"7D" => --ADC_ABSX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + x_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x_reg);
 							new_op <= x"00";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -197,7 +200,7 @@ architecture a of instr_fetch is
 							
 						when x"79" => --ADC_ABSY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + y_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), y_reg);
 							new_op <= x"00";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -207,11 +210,11 @@ architecture a of instr_fetch is
 							
 						when x"69" => --ADC_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
+							addr_out <= zpg_addr(instr_reg(1), x"00");--Put immediate value on addr_out line
 							new_op <= x"00";
 							imm_mode <= '1';
 							store_flag <= A_STORE; -- store in acc
-							mem_load_flag <= '1'; -- load from mem
+							mem_load_flag <= '0'; -- Don't load anything from memory
 							reg_load_flag <= A_REG_F; --load from acc
 							alu_op <= ADD_OP; -- add
 							state <= idle;
@@ -242,7 +245,7 @@ architecture a of instr_fetch is
 						
 						when x"65" => --ADC_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= x"00" & instr_reg(1);
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"00";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -252,7 +255,7 @@ architecture a of instr_fetch is
 							
 						when x"75" => --ADC_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"00";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -264,7 +267,7 @@ architecture a of instr_fetch is
 						-- AND -- simplified opcode: x"01" -- Bitwise And with Accumulator
 						when x"2D" => --AND_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"01";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -274,7 +277,7 @@ architecture a of instr_fetch is
 							
 						when x"3D" => --AND_ABSX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + x_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x_reg);
 							new_op <= x"01";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -284,7 +287,7 @@ architecture a of instr_fetch is
 							
 						when x"39" => --AND_ABSY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + y_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), y_reg);
 							new_op <= x"01";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -294,7 +297,7 @@ architecture a of instr_fetch is
 							
 						when x"29" => --AND_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
+							addr_out <= zpg_addr(instr_reg(1), x"00");--Put immediate value on addr_out line
 							new_op <= x"01";
 							imm_mode <= '1';
 							store_flag <= A_STORE; -- store in acc
@@ -329,7 +332,7 @@ architecture a of instr_fetch is
 						
 						when x"25" => --AND_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"01";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -339,7 +342,7 @@ architecture a of instr_fetch is
 							
 						when x"35" => --AND_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"01";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -351,7 +354,7 @@ architecture a of instr_fetch is
 						-- ASL -- simplified opcode: x"02" -- Arithmetic Shift Left
 						when x"0E" => --ASL_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"02";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -360,7 +363,7 @@ architecture a of instr_fetch is
 							
 						when x"1E" => --ASL_ABSX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + x_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x_reg);
 							new_op <= x"02";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -378,7 +381,7 @@ architecture a of instr_fetch is
 
 						when x"06" => --ASL_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"02";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -387,7 +390,7 @@ architecture a of instr_fetch is
 						
 						when x"16" => --ASL_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"02";	
 							store_flag <= MEM_STORE; -- store in mem	
 							mem_load_flag <= '1'; -- load from mem
@@ -397,7 +400,7 @@ architecture a of instr_fetch is
 						-- BIT -- simplified opcode: x"03" -- Test Bits
 						when x"24" => --BIT_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"03";
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
@@ -406,7 +409,7 @@ architecture a of instr_fetch is
 							
 						when x"2C" => --BIT_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"03";
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
@@ -417,6 +420,7 @@ architecture a of instr_fetch is
 						-- BCC -- simplified opcode: x"04" -- Branch on Carry Clear
 						when x"90" =>
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
+							addr_out <= branch_addr(pc_ie, instr_reg(1));
 							new_op <= x"04";
 							alu_op <= ADD_OP; -- add
 							state <= idle;
@@ -424,6 +428,7 @@ architecture a of instr_fetch is
 						-- BCS -- simplified opcode: x"05" -- Branch on Carry Set
 						when x"B0" =>
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
+							addr_out <= branch_addr(pc_ie, instr_reg(1));
 							new_op <= x"05";
 							alu_op <= ADD_OP; -- add
 							state <= idle;
@@ -431,6 +436,7 @@ architecture a of instr_fetch is
 						-- BEQ -- simplified opcode: x"06" -- Branch on Equal
 						when x"F0" =>
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
+							addr_out <= branch_addr(pc_ie, instr_reg(1));
 							new_op <= x"06";
 							alu_op <= ADD_OP; -- add
 							state <= idle;
@@ -438,6 +444,7 @@ architecture a of instr_fetch is
 						-- BMI -- simplified opcode: x"07" -- Branch on Minus
 						when x"30" =>
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
+							addr_out <= branch_addr(pc_ie, instr_reg(1));
 							new_op <= x"07";
 							alu_op <= ADD_OP; -- add
 							state <= idle;
@@ -445,6 +452,7 @@ architecture a of instr_fetch is
 						-- BNE -- simplified opcode: x"08" -- Branch on Not Equal
 						when x"D0" =>
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
+							addr_out <= branch_addr(pc_ie, instr_reg(1));
 							new_op <= x"08";
 							alu_op <= ADD_OP; -- add
 							state <= idle;
@@ -452,6 +460,7 @@ architecture a of instr_fetch is
 						-- BPL -- simplified opcode: x"09" -- Branch on Plus
 						when x"10" =>
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
+							addr_out <= branch_addr(pc_ie, instr_reg(1));
 							new_op <= x"09";
 							alu_op <= ADD_OP; -- add
 							state <= idle;
@@ -459,6 +468,7 @@ architecture a of instr_fetch is
 						-- BVC -- simplified opcode: x"0A" -- Branch on Overflow Clear
 						when x"50" =>
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
+							addr_out <= branch_addr(pc_ie, instr_reg(1));
 							new_op <= x"0A";
 							alu_op <= ADD_OP; -- add
 							state <= idle;
@@ -466,6 +476,7 @@ architecture a of instr_fetch is
 						-- BVS -- simplified opcode: x"0B" -- Branch on Overflow Set
 						when x"70" =>
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
+							addr_out <= branch_addr(pc_ie, instr_reg(1));
 							new_op <= x"0B";
 							alu_op <= ADD_OP; -- add
 							state <= idle;
@@ -508,7 +519,7 @@ architecture a of instr_fetch is
 						-- CMP -- simplified opcode: x"11" -- Compare Accumulator
 						when x"CD" => --CMP_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"11";
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
@@ -517,7 +528,7 @@ architecture a of instr_fetch is
 							
 						when x"DD" => --CMP_ABSX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + x_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x_reg);
 							new_op <= x"11";
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
@@ -526,7 +537,7 @@ architecture a of instr_fetch is
 						
 						when x"D9" => --CMP_ABSY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + y_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), y_reg);
 							new_op <= x"11";
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
@@ -535,7 +546,7 @@ architecture a of instr_fetch is
 						
 						when x"C9" => --CMP_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
+							addr_out <= zpg_addr(instr_reg(1), x"00");--Put immediate value on addr_out line
 							new_op <= x"11";
 							imm_mode <= '1';
 							mem_load_flag <= '0'; -- load from mem
@@ -567,7 +578,7 @@ architecture a of instr_fetch is
 						
 						when x"C5" => --CMP_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"11";
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
@@ -576,7 +587,7 @@ architecture a of instr_fetch is
 						
 						when x"D5" => --CMP_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"11";
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= A_REG_F; --load from acc
@@ -587,7 +598,7 @@ architecture a of instr_fetch is
 						-- CPX -- simplified opcode: x"12" -- Compare X Register
 						when x"EC" => --CPX_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"12";
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= X_REG_F; --load from xreg
@@ -596,7 +607,7 @@ architecture a of instr_fetch is
 							
 						when x"E0" => --CPX_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
+							addr_out <= zpg_addr(instr_reg(1), x"00");--Put immediate value on addr_out line
 							new_op <= x"12";
 							imm_mode <= '1';
 							mem_load_flag <= '0'; -- load from mem
@@ -606,7 +617,7 @@ architecture a of instr_fetch is
 							
 						when x"E4" => --CPX_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"12";
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= X_REG_F; --load from xreg
@@ -617,7 +628,7 @@ architecture a of instr_fetch is
 						-- CPY -- simplified opcode: x"13" -- Compare Y Register
 						when x"CC" => --CPY_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"13";
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= Y_REG_F; --load from yreg
@@ -626,7 +637,7 @@ architecture a of instr_fetch is
 							
 						when x"C0" => --CPY_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
+							addr_out <= zpg_addr(instr_reg(1), x"00");--Put immediate value on addr_out line
 							new_op <= x"13";
 							imm_mode <= '1';
 							mem_load_flag <= '0'; -- load from mem
@@ -636,7 +647,7 @@ architecture a of instr_fetch is
 							
 						when x"C4" => --CPY_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"13";
 							mem_load_flag <= '1'; -- load from mem
 							reg_load_flag <= Y_REG_F; --load from yreg
@@ -647,7 +658,7 @@ architecture a of instr_fetch is
 						-- DEC -- simplified opcode: x"14" -- Decrement Memory
 						when x"CE" => --DEC_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"14";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -656,7 +667,7 @@ architecture a of instr_fetch is
 							
 						when x"DE" => --DEC_ABSX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + x_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x_reg);
 							new_op <= x"14";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -665,7 +676,7 @@ architecture a of instr_fetch is
 						
 						when x"C6" => --DEC_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"14";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -674,7 +685,7 @@ architecture a of instr_fetch is
 						
 						when x"D6" => --DEC_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"14";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -705,7 +716,7 @@ architecture a of instr_fetch is
 						-- EOR -- simplified opcode: x"17" -- Bitwise Exclusive OR
 						when x"4D" => --EOR_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"17";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -715,7 +726,7 @@ architecture a of instr_fetch is
 							
 						when x"5D" => --EOR_ABSX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + x_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x_reg);
 							new_op <= x"17";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -725,7 +736,7 @@ architecture a of instr_fetch is
 						
 						when x"59" => --EOR_ABSY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + y_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), y_reg);
 							new_op <= x"17";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -735,7 +746,7 @@ architecture a of instr_fetch is
 						
 						when x"49" => --EOR_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
+							addr_out <= zpg_addr(instr_reg(1), x"00");--Put immediate value on addr_out line
 							new_op <= x"17";
 							imm_mode <= '1';
 							store_flag <= A_STORE; -- store in acc
@@ -770,7 +781,7 @@ architecture a of instr_fetch is
 						
 						when x"45" => --EOR_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"17";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -780,7 +791,7 @@ architecture a of instr_fetch is
 						
 						when x"55" => --EOR_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"17";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -800,7 +811,7 @@ architecture a of instr_fetch is
 						-- INC -- simplified opcode: x"19" -- Increment Memory
 						when x"EE" => --INC_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"19";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -810,7 +821,7 @@ architecture a of instr_fetch is
 							
 						when x"FE" => --INC_ABSX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + x_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x_reg);
 							new_op <= x"19";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -819,7 +830,7 @@ architecture a of instr_fetch is
 						
 						when x"E6" => --INC_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"19";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -828,7 +839,7 @@ architecture a of instr_fetch is
 						
 						when x"F6" => --INC_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"19";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -859,7 +870,7 @@ architecture a of instr_fetch is
 						-- JMP -- simplified opcode: x"1C" -- Jump
 						when x"4C" => --JMP_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"1C";
 							alu_op <= ADD_OP; -- add to PC
 							state <= idle;
@@ -877,7 +888,7 @@ architecture a of instr_fetch is
 						-- JSR -- simplified opcode: x"1D" -- Jump to Subroutine
 						when x"20" => --JSR_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"1D";
 							store_flag <= MEM_STORE; -- store in mem in stack
 							alu_op <= SUB_OP; -- sub from SP
@@ -887,7 +898,7 @@ architecture a of instr_fetch is
 						-- LDA -- simplified opcode: x"1E" -- Load Accumulator
 						when x"AD" => --LDA_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"1E";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -897,7 +908,7 @@ architecture a of instr_fetch is
 							
 						when x"BD" => --LDA_ABSX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + x_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x_reg);
 							new_op <= x"1E";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -907,7 +918,7 @@ architecture a of instr_fetch is
 						
 						when x"B9" => --LDA_ABSY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + y_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), y_reg);
 							new_op <= x"1E";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -917,7 +928,7 @@ architecture a of instr_fetch is
 						
 						when x"A9" => --LDA_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
+							addr_out <= zpg_addr(instr_reg(1), x"00");--Put immediate value on addr_out line
 							new_op <= x"1E";
 							imm_mode <= '1';
 							store_flag <= A_STORE; -- store in acc
@@ -951,7 +962,7 @@ architecture a of instr_fetch is
 						
 						when x"A5" => --LDA_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"1E";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -961,7 +972,7 @@ architecture a of instr_fetch is
 						
 						when x"B5" => --LDA_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"1E";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -973,7 +984,7 @@ architecture a of instr_fetch is
 						-- LDX -- simplified opcode: x"1F" -- Load X Register
 						when x"AE" => --LDX_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"1F";
 							store_flag <= X_STORE; -- store in xreg
 							mem_load_flag <= '1'; -- load from mem
@@ -983,7 +994,7 @@ architecture a of instr_fetch is
 							
 						when x"BE" => --LDX_ABSY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + y_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), y_reg);
 							new_op <= x"1F";
 							store_flag <= X_STORE; -- store in xreg
 							mem_load_flag <= '1'; -- load from mem
@@ -993,7 +1004,7 @@ architecture a of instr_fetch is
 							
 						when x"A2" => --LDX_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
+							addr_out <= zpg_addr(instr_reg(1), x"00");--Put immediate value on addr_out line
 							new_op <= x"1F";
 							imm_mode <= '1';
 							store_flag <= X_STORE; -- store in xreg
@@ -1003,7 +1014,7 @@ architecture a of instr_fetch is
 							
 						when x"A6" => --LDX_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"1F";
 							store_flag <= X_STORE; -- store in xreg
 							mem_load_flag <= '1'; -- load from mem
@@ -1013,7 +1024,7 @@ architecture a of instr_fetch is
 							
 						when x"B6" => --LDX_ZPY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + y_reg;
+							addr_out <= zpg_addr(instr_reg(1), y_reg);
 							new_op <= x"1F";
 							store_flag <= X_STORE; -- store in xreg
 							mem_load_flag <= '1'; -- load from mem
@@ -1025,7 +1036,7 @@ architecture a of instr_fetch is
 						-- LDY -- simplified opcode: x"20" -- Load Y Register
 						when x"AC" => --LDY_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"20";
 							store_flag <= Y_STORE; -- store in yreg
 							mem_load_flag <= '1'; -- load from mem
@@ -1033,7 +1044,7 @@ architecture a of instr_fetch is
 							
 						when x"BC" => --LDY_ABSX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + y_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x_reg);
 							new_op <= x"20";
 							store_flag <= Y_STORE; -- store in yreg
 							mem_load_flag <= '1'; -- load from mem
@@ -1043,7 +1054,7 @@ architecture a of instr_fetch is
 							
 						when x"A0" => --LDY_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
+							addr_out <= zpg_addr(instr_reg(1), x"00");--Put immediate value on addr_out line
 							new_op <= x"20";
 							imm_mode <= '1';
 							store_flag <= Y_STORE; -- store in yreg
@@ -1053,7 +1064,7 @@ architecture a of instr_fetch is
 							
 						when x"A4" => --LDY_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"20";
 							store_flag <= Y_STORE; -- store in yreg
 							mem_load_flag <= '1'; -- load from mem
@@ -1063,7 +1074,7 @@ architecture a of instr_fetch is
 							
 						when x"B4" => --LDY_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"20";
 							store_flag <= Y_STORE; -- store in yreg
 							mem_load_flag <= '1'; -- load from mem
@@ -1075,7 +1086,7 @@ architecture a of instr_fetch is
 						-- LSR -- simplified opcode: x"21" -- Logical Shift Right
 						when x"4E" => --LSR_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"21";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -1083,7 +1094,7 @@ architecture a of instr_fetch is
 							
 						when x"5E" => --LSR_ABSX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + y_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x_reg);
 							new_op <= x"21";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -1101,7 +1112,7 @@ architecture a of instr_fetch is
 							
 						when x"46" => --LSR_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"21";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -1110,7 +1121,7 @@ architecture a of instr_fetch is
 							
 						when x"56" => --LSR_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"21";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -1128,7 +1139,7 @@ architecture a of instr_fetch is
 						-- ORA -- simplified opcode: x"23" -- bitwise OR with Accumulator
 						when x"0D" => --ORA_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"23";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -1138,7 +1149,7 @@ architecture a of instr_fetch is
 							
 						when x"1D" => --ORA_ABSX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + x_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x_reg);
 							new_op <= x"23";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -1148,7 +1159,7 @@ architecture a of instr_fetch is
 							
 						when x"19" => --ORA_ABSY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + y_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), y_reg);
 							new_op <= x"23";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -1158,7 +1169,7 @@ architecture a of instr_fetch is
 							
 						when x"09" => --ORA_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
+							addr_out <= zpg_addr(instr_reg(1), x"00");--Put immediate value on addr_out line
 							new_op <= x"23";
 							imm_mode <= '1';
 							store_flag <= A_STORE; -- store in acc
@@ -1193,7 +1204,7 @@ architecture a of instr_fetch is
 							
 						when x"05" => --ORA_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"23";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -1203,7 +1214,7 @@ architecture a of instr_fetch is
 							
 						when x"15" => --ORA_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"23";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -1218,7 +1229,7 @@ architecture a of instr_fetch is
 							new_op <= x"24";
 							store_flag <= MEM_STORE; -- store in mem
 							reg_load_flag <= A_REG_F; --load from acc
-							alu_op <= SUB_OP; -- subtract from SP
+							alu_op <= TRA_OP; --Just transfer A to the output of the ALU
 							state <= idle;
 							
 							
@@ -1226,8 +1237,9 @@ architecture a of instr_fetch is
 						when x"08" => 
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(1,16)); --length 1
 							new_op <= x"25";
+							--Don't need to set reg load flag, happens automatically for this instruction
 							store_flag <= MEM_STORE; -- store in mem
-							alu_op <= SUB_OP; -- subtract from SP
+							alu_op <= TRA_OP; -- subtract from SP
 							state <= idle;
 							
 							
@@ -1236,8 +1248,9 @@ architecture a of instr_fetch is
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(1,16)); --length 1
 							new_op <= x"26";
 							store_flag <= A_STORE; -- store in acc
+							reg_load_flag <= MEM_REG_F; -- load from memory into acc
 							mem_load_flag <= '1'; -- load from mem
-							alu_op <= ADD_OP; -- add to SP
+							alu_op <= TRA_OP; -- add to SP
 							state <= idle;
 							
 							
@@ -1246,7 +1259,8 @@ architecture a of instr_fetch is
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(1,16)); --length 1
 							new_op <= x"27";
 							mem_load_flag <= '1'; -- load from mem
-							alu_op <= ADD_OP; -- add to SP
+							reg_load_flag <= MEM_REG_F; -- load from memory into acc
+							alu_op <= TRA_OP; -- add to SP
 							state <= idle;
 							store_flag <= STATUS_STORE;
 							
@@ -1254,7 +1268,7 @@ architecture a of instr_fetch is
 						-- ROL -- simplified opcode: x"28" -- Rotate Left
 						when x"2E" => --ROL_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"28";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -1264,7 +1278,7 @@ architecture a of instr_fetch is
 							
 						when x"3E" => --ROL_ABSX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + y_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x_reg);
 							new_op <= x"28";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -1283,7 +1297,7 @@ architecture a of instr_fetch is
 							
 						when x"26" => --ROL_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"28";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -1292,7 +1306,7 @@ architecture a of instr_fetch is
 							
 						when x"36" => --ROL_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"28";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -1303,7 +1317,7 @@ architecture a of instr_fetch is
 						-- ROR -- simplified opcode: x"29" -- Rotate Right
 						when x"6E" => --ROR_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"29";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -1313,7 +1327,7 @@ architecture a of instr_fetch is
 							
 						when x"7E" => --ROR_ABSX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + y_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x_reg);
 							new_op <= x"29";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -1332,7 +1346,7 @@ architecture a of instr_fetch is
 							
 						when x"66" => --ROR_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"29";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -1342,7 +1356,7 @@ architecture a of instr_fetch is
 							
 						when x"76" => --ROR_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"29";
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
@@ -1368,7 +1382,7 @@ architecture a of instr_fetch is
 						-- SBC -- simplified opcode: x"2D" -- Subtract with Carry
 						when x"ED" => --SBC_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"2D";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -1378,7 +1392,7 @@ architecture a of instr_fetch is
 							
 						when x"FD" => --SBC_ABSX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + x_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x_reg);
 							new_op <= x"2D";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -1388,7 +1402,7 @@ architecture a of instr_fetch is
 							
 						when x"F9" => --SBC_ABSY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + y_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), y_reg);
 							new_op <= x"2D";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -1398,7 +1412,7 @@ architecture a of instr_fetch is
 							
 						when x"E9" => --SBC_IMM
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));--Put immediate value on addr_out line
+							addr_out <= zpg_addr(instr_reg(1), x"00");--Put immediate value on addr_out line
 							new_op <= x"2D";
 							imm_mode <= '1';
 							store_flag <= A_STORE; -- store in acc
@@ -1433,7 +1447,7 @@ architecture a of instr_fetch is
 							
 						when x"E5" => --SBC_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"2D";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -1443,7 +1457,7 @@ architecture a of instr_fetch is
 							
 						when x"F5" => --SBC_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"2D";
 							store_flag <= A_STORE; -- store in acc
 							mem_load_flag <= '1'; -- load from mem
@@ -1476,7 +1490,7 @@ architecture a of instr_fetch is
 						-- STA -- simplified opcode: x"31" -- Store Accumulator
 						when x"8D" => --STA_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"31";
 							store_flag <= MEM_STORE; -- store in mem
 							reg_load_flag <= A_REG_F; --load from acc
@@ -1484,7 +1498,7 @@ architecture a of instr_fetch is
 							
 						when x"9D" => --STA_ABSX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + x_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x_reg);
 							new_op <= x"31";
 							store_flag <= MEM_STORE; -- store in mem
 							reg_load_flag <= A_REG_F; --load from acc
@@ -1492,7 +1506,7 @@ architecture a of instr_fetch is
 							
 						when x"99" => --STA_ABSY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1)) + y_reg;
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), y_reg);
 							new_op <= x"31";
 							store_flag <= MEM_STORE; -- store in mem
 							reg_load_flag <= A_REG_F; --load from acc
@@ -1521,7 +1535,7 @@ architecture a of instr_fetch is
 							
 						when x"85" => --STA_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"31";
 							store_flag <= MEM_STORE; -- store in mem
 							reg_load_flag <= A_REG_F; --load from acc
@@ -1529,7 +1543,7 @@ architecture a of instr_fetch is
 							
 						when x"95" => --STA_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"31";
 							store_flag <= MEM_STORE; -- store in mem
 							reg_load_flag <= A_REG_F; --load from acc
@@ -1539,7 +1553,7 @@ architecture a of instr_fetch is
 						-- STX -- simplified opcode: x"32" -- Store X Register
 						when x"8E" => --STX_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"32";
 							store_flag <= MEM_STORE; -- store in mem
 							reg_load_flag <= X_REG_F; --load from xreg
@@ -1547,7 +1561,7 @@ architecture a of instr_fetch is
 							
 						when x"86" => --STX_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"32";
 							store_flag <= MEM_STORE; -- store in mem
 							reg_load_flag <= X_REG_F; --load from xreg
@@ -1555,7 +1569,7 @@ architecture a of instr_fetch is
 							
 						when x"96" => --STX_ZPY
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + y_reg;
+							addr_out <= zpg_addr(instr_reg(1), y_reg);
 							new_op <= x"32";
 							store_flag <= MEM_STORE; -- store in mem
 							reg_load_flag <= X_REG_F; --load from xreg
@@ -1564,7 +1578,7 @@ architecture a of instr_fetch is
 						-- STY -- simplified opcode: x"33" -- Store Y Register
 						when x"8C" => --STY_ABS
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
-							addr_out <= (instr_reg(2) & instr_reg(1));
+							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"33";
 							store_flag <= MEM_STORE; -- store in mem
 							reg_load_flag <= Y_REG_F; --load from yreg
@@ -1572,7 +1586,7 @@ architecture a of instr_fetch is
 							
 						when x"84" => --STY_ZP
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1));
+							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"33";
 							store_flag <= MEM_STORE; -- store in mem
 							reg_load_flag <= Y_REG_F; --load from yreg
@@ -1580,7 +1594,7 @@ architecture a of instr_fetch is
 							
 						when x"94" => --STY_ZPX
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
-							addr_out <= (x"00" & instr_reg(1)) + x_reg;
+							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"33";
 							store_flag <= MEM_STORE; -- store in mem
 							reg_load_flag <= Y_REG_F; --load from yreg
@@ -1627,7 +1641,8 @@ architecture a of instr_fetch is
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(1,16)); --length 1
 							new_op <= x"38";
 							reg_load_flag <= X_REG_F; --load from xreg
-							
+							store_flag <= STACK_STORE;
+							alu_op <= TRA_OP;
 							state <= idle;
 							
 							
@@ -1637,6 +1652,7 @@ architecture a of instr_fetch is
 							new_op <= x"39";	
 							store_flag <= A_STORE; -- store in acc
 							reg_load_flag <= Y_REG_F; --load from yreg
+							alu_op <= TRA_OP;
 							state <= idle;
 							
 						

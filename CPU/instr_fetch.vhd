@@ -1664,6 +1664,7 @@ architecture a of instr_fetch is
 						end case;
 						
 				when wait_indirect_x =>
+						b2b_start <= '0';
 						if mem_done = '1' then
 							addr_out <= data_2 & data_1;
 							
