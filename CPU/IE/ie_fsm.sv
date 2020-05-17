@@ -302,6 +302,12 @@ endtask
 task store_alu_output();
 begin
 
+	`ifdef DEBUG
+					
+		report_alu_operands();
+					
+	`endif
+
 	//Store the new status
 	if(alu_output_flags != status_reg) begin
 		ie_status <= alu_status_out;
@@ -388,8 +394,24 @@ begin
 end
 endtask
 
+
+reg [15:0] pc_prev;
 task read_back_interrupt_result();
 begin
+
+	
+
+	`ifdef DEBUG				
+
+		if(interrupt_pc_out == pc_prev) begin
+			
+			catch_trap();
+		
+		end
+	
+	`endif
+	
+	
 
 	//Read back pc next
 	pc_next <= interrupt_pc_out;
@@ -429,7 +451,19 @@ task report_state();
 begin
 	$display("State after is: a: %x, x: %x, y: %x, status: %x, stack ptr: %x, pc next: %x, interrupt disable: %x\n", a, x, y, ie_status, stack_ptr, pc_next, interrupt_disable); 
 end
-endtask			 
+endtask		
+
+task report_alu_operands();
+begin
+	$display("ALU input A was %x, ALU input B was %x, ALU output was %x", alu_input_a, alu_input_b, alu_output);
+end
+endtask	 
+
+task catch_trap();
+begin
+	$display("Trapped at %x", pc_next);
+end
+endtask
 				 
 task reset_regs();
 begin
@@ -476,6 +510,8 @@ always @ (posedge clk or negedge rst) begin
 			
 				//If we are being presented with a valid instruction
 				if(if_ready) begin
+				
+					pc_prev <= pc_next;
 				
 					//If we're in debug mode print out the current instruction
 					`ifdef DEBUG

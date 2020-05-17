@@ -60,11 +60,26 @@ architecture a of alu is
 					proc_status_temp(0) := '0';
 				end if;
 			
-				if ( unsigned_out(7) /= inputA(7)) then
+				------Origional Code------------------------------
+				-- if ( unsigned_out(7) /= inputA(7)) then
+						-- proc_status_temp(6) := '1'; ------ setting overflow flag
+				-- else
+					-- proc_status_temp(6) := '0';
+				-- end if;
+				----------------------------------------------------
+				
+				------Jim's Code-------------------------------------
+				if ( 
+					( (inputA(7) = '1') and (inputB(7) = '1') and (temp_output(7) = '0')) or -- N + N = P
+					( (inputA(7) = '0') and (inputB(7) = '0') and (temp_output(7) = '1'))) -- P + P = N
+				then
 						proc_status_temp(6) := '1'; ------ setting overflow flag
 				else
 					proc_status_temp(6) := '0';
 				end if;
+				----------------------------------------------------
+				
+				
                 -------------set overflow flag---------
             else ---inc,inx,iny all just increment and pla and plp pops PC, 
                 temp_output := std_logic_vector(unsigned(inputA) + to_unsigned(1,8));
@@ -101,7 +116,7 @@ architecture a of alu is
 				-------------------------------------------------------------------------------------
 				
 				
-				--------------Jim's code-------------------------------------------------------------
+				--------------Jim's code-------SBC-----------------------------------------------------
 				--If the carry flag is set
 				if(proc_status_in(0) = '1') then
 					temp_output := std_logic_vector(unsigned(inputA) - unsigned(inputB));
@@ -110,7 +125,10 @@ architecture a of alu is
 				end if;
 				
 				--Set carry A was greater than mem
-				if(unsigned(inputA) >= unsigned(inputB)) then
+				if(
+					(unsigned(inputA) >= unsigned(inputB) and proc_status_in(0) = '1') or
+					(unsigned(inputA) >= unsigned(inputB) + 1 and proc_status_in(0) = '0' and inputB /= x"FF"))
+					then
 					proc_status_temp(0) := '1';
 				else
 					proc_status_temp(0) := '0';

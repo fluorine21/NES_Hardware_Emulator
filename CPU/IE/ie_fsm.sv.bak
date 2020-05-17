@@ -163,7 +163,6 @@ alu alu_inst(
 	simple_op,
 	//proc_status_in : in std_logic_vector(7 downto 0);
 	ie_status,
-	1'b1,
 	
 	
 	//ignore_output : out std_logic;
@@ -221,7 +220,7 @@ begin
 	if(is_stack_op) begin
 		//If address is stack_ptr, increment by 1
 		//doing a pull here
-		ie_addr <= {8'h01, (stack_ptr+1)};
+		ie_addr <= 16'h0100 | ((stack_ptr+1) & 8'hFF);
 		stack_ptr <= stack_ptr + 1;
 	end
 	else begin
@@ -248,8 +247,16 @@ begin
 		ie_addr <= if_addr_in;
 	end
 	
-	//Source of data will always be ALU output
-	ie_data_out <= alu_output;
+	
+	//If this happens to be a php instruction
+	if(simple_op == 8'h25) begin
+		//Set the reserve bit and break bit
+		ie_data_out <= alu_output | 8'b00110000;
+	end
+	else begin
+		//Source of data will always be ALU outpuy
+		ie_data_out <= alu_output;
+	end
 	
 	ie_write_en <= 1;
 
@@ -295,8 +302,16 @@ endtask
 task store_alu_output();
 begin
 
+	`ifdef DEBUG
+					
+		report_alu_operands();
+					
+	`endif
+
 	//Store the new status
-	ie_status <= alu_status_out;
+	if(alu_output_flags != status_reg) begin
+		ie_status <= alu_status_out;
+	end
 	
 	//Don't do anything for mem store here, happens automatically in set_store_output
 	case(alu_output_flags)
@@ -304,6 +319,8 @@ begin
 		a_reg: a <= alu_output;
 		x_reg: x <= alu_output;
 		y_reg: y <= alu_output;
+		//Don't store reserved and break if we're pulling into status reg
+		status_reg: ie_status <= alu_output & 8'b11001111;
 		status_reg: ie_status <= alu_output;
 		stack_reg: stack_ptr <= alu_output;
 		
@@ -354,7 +371,7 @@ task push
 );
 begin
 
-	ie_addr <= {8'h01, stack_ptr};;
+	ie_addr <= {8'h01, stack_ptr};
 	ie_data_out <= val;
 	ie_write_en <= 1;
 	stack_ptr <= stack_ptr - 1;
@@ -379,6 +396,16 @@ endtask
 
 task read_back_interrupt_result();
 begin
+
+	`ifdef DEBUG				
+
+		if(interrupt_pc_out == pc_next) begin
+			
+			catch_trap();
+		
+		end
+	
+	`endif
 
 	//Read back pc next
 	pc_next <= interrupt_pc_out;
@@ -409,7 +436,7 @@ begin
 	
 	$display("OP DECODE OUTPUTS: is load: %x, is store: %x, is branch: %x, is jsr: %x, is rts: %x, is rti: %x, is break: %x, is stack op: %x, is nop: %x, is flag inst: %x, input a flags: %x, input b flags: %x, output flags: %x", is_load, is_store, is_branch, is_jsr, is_rts, is_rti, is_break, is_stack_op, is_nop, is_flag_inst, alu_input_a_flags, alu_input_b_flags, alu_output_flags);
 	
-	$display("State before is: a: %x, x: %x, y: %x, status: %x, stack ptr: %x, pc next: %x, interrupt disable: %x", a, x, y, ie_status, stack_ptr, pc_next, interrupt_disable); 
+	$display("State before is: a: %x, x: %x, y: %x, status: %x, stack ptr: %x, pc now: %x, interrupt disable: %x", a, x, y, ie_status, stack_ptr, pc_next, interrupt_disable); 
 
 end
 endtask
@@ -418,7 +445,19 @@ task report_state();
 begin
 	$display("State after is: a: %x, x: %x, y: %x, status: %x, stack ptr: %x, pc next: %x, interrupt disable: %x\n", a, x, y, ie_status, stack_ptr, pc_next, interrupt_disable); 
 end
-endtask			 
+endtask		
+
+task report_alu_operands();
+begin
+	$display("ALU input A was %x, ALU input B was %x, ALU output was %x", alu_input_a, alu_input_b, alu_output);
+end
+endtask	 
+
+task catch_trap();
+begin
+	$display("Trapped at %x", pc_next);
+end
+endtask
 				 
 task reset_regs();
 begin
@@ -492,7 +531,7 @@ always @ (posedge clk or negedge rst) begin
 					else if(is_jsr) begin
 					
 						//Queue up a push of pc_next low
-						push(if_pc_next[7:0]);
+						push(if_pc_next[15:8]);
 						
 						//set pc next to addr in
 						pc_next <= if_addr_in;
@@ -521,6 +560,7 @@ always @ (posedge clk or negedge rst) begin
 					
 					//If this instruction is a software break
 					else if(is_break) begin
+					
 						//Just go to the interrupt handler state
 						goto_interrupt();
 					end
@@ -663,7 +703,7 @@ always @ (posedge clk or negedge rst) begin
 			state_jump_1: begin
 				
 				//Queue up the high byte next
-				push(if_pc_next[15:8]);
+				push(if_pc_next[7:0]);
 				
 				goto_interrupt();
 				
@@ -682,7 +722,7 @@ always @ (posedge clk or negedge rst) begin
 			state_return_2: begin
 				
 				//Read the high byte off the data bus
-				pc_next[15:8] <= mem_data_in;
+				pc_next[7:0] <= mem_data_in;
 				
 				state <= state_return_3;
 			
@@ -691,7 +731,7 @@ always @ (posedge clk or negedge rst) begin
 			state_return_3: begin
 				
 				//Read in the low byte
-				pc_next[7:0] <= mem_data_in;
+				pc_next[15:8] <= mem_data_in;
 				
 				goto_interrupt();
 			
