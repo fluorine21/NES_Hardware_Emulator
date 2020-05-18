@@ -116,7 +116,7 @@ package body instr_fetch_pkg is
 	begin
 	
 		--Add two because it's relative to next address
-		pc_out := std_logic_vector(to_unsigned(to_integer(signed(pc_in)) + to_integer(signed(instr_byte_1)) + 2, 16));
+		pc_out := std_logic_vector(to_unsigned(to_integer(unsigned(pc_in)) + to_integer(signed(instr_byte_1)) + 2, 16));
 		return pc_out;
 	end;
  

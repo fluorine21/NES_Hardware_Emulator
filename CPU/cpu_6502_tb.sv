@@ -14,7 +14,7 @@ wire [7:0] cpu_data_in;
 wire cpu_write_en;
 wire cpu_read_en;
 
-reg [15:0] pc_reset = 16'h0400;//Just above the stack
+reg [15:0] pc_reset = 16'h8000;//Just above the stack
 reg [7:0] ppu_status = 0;
 
 integer i = 0;
