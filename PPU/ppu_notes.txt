@@ -1,7 +1,0 @@
-Memory map notes for PPU
-
-
-
-
-0000-2FFF is going to stay the same
-Image palette at 3F00 will start at 3000
