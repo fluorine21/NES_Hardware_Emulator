@@ -174,6 +174,7 @@ architecture a of instr_fetch is
 					store_flag <= "000";
 					reg_load_flag <= A_REG_F;
 					imm_mode <= '0';
+					state <= idle; -- default to idle state
 					
 					case (instr_reg(0)) is
 										

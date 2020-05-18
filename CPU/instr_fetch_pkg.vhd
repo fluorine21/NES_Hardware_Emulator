@@ -102,7 +102,6 @@ package body instr_fetch_pkg is
 		return std_logic_vector is variable addr : std_logic_vector(15 downto 0) := x"0000";
 	begin
 	
-	
 		addr := (x"00" & (x"FF" AND (instr_byte_1 + reg_byte)));	
 		return addr;		
 	
@@ -118,6 +117,7 @@ package body instr_fetch_pkg is
 		--Add two because it's relative to next address
 		pc_out := std_logic_vector(to_unsigned(to_integer(unsigned(pc_in)) + to_integer(signed(instr_byte_1)) + 2, 16));
 		return pc_out;
+		
 	end;
  
 end package body;

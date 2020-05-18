@@ -22,7 +22,8 @@ module cpu_6502
 	input wire [7:0] ppu_status,
 	
 	input wire halt,
-	input wire nIRQ
+	input wire nIRQ,
+	output wire [15:0] pc_6502
 
 );
 
@@ -110,6 +111,8 @@ ie_fsm inst_exec_inst
 	nIRQ
 	
 );
+
+assign pc_6502 = pc_from_ie;
 
 //MUX for memory 
 assign mem_addr = instr_valid ? ie_mem_addr : if_mem_addr;
