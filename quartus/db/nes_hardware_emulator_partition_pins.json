@@ -1,0 +1,501 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "cpu_data_out[0]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_data_out[1]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_data_out[2]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_data_out[3]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_data_out[4]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_data_out[5]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_data_out[6]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_data_out[7]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_ctrl1[0]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_ctrl1[1]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_ctrl1[2]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_ctrl1[3]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_ctrl1[4]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_ctrl1[5]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_ctrl1[6]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_ctrl1[7]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_ctrl2[0]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_ctrl2[1]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_ctrl2[2]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_ctrl2[3]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_ctrl2[4]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_ctrl2[5]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_ctrl2[6]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_ctrl2[7]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_scroll_addr[0]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_scroll_addr[1]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_scroll_addr[2]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_scroll_addr[3]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_scroll_addr[4]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_scroll_addr[5]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_scroll_addr[6]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_scroll_addr[7]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_scroll_addr[8]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_scroll_addr[9]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_scroll_addr[10]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_scroll_addr[11]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_scroll_addr[12]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_scroll_addr[13]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_scroll_addr[14]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_scroll_addr[15]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_data[0]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_data[1]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_data[2]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_data[3]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_data[4]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_data[5]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_data[6]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_data[7]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_ppu_data[0]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_ppu_data[1]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_ppu_data[2]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_ppu_data[3]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_ppu_data[4]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_ppu_data[5]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_ppu_data[6]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_ppu_data[7]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_cpu_addr[0]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_cpu_addr[1]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_cpu_addr[2]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_cpu_addr[3]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_cpu_addr[4]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_cpu_addr[5]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_cpu_addr[6]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_cpu_addr[7]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_status_read",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[14]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[15]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[13]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[3]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[4]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[11]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[12]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[5]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[6]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[7]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[8]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[9]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[10]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[0]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[1]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_addr[2]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_status[0]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_status[1]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_status[2]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_status[3]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_status[4]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_status[5]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_status[6]",
+					"strict" : false
+				},
+				{
+					"name" : "ppu_status[7]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_data_in[0]",
+					"strict" : false
+				},
+				{
+					"name" : "clk",
+					"strict" : false
+				},
+				{
+					"name" : "rst",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_write_en",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[13]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[0]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[1]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[2]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[3]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[4]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[5]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[11]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[12]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[8]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[9]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[10]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[6]",
+					"strict" : false
+				},
+				{
+					"name" : "vram_ppu_addr[7]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_read_en",
+					"strict" : false
+				},
+				{
+					"name" : "spram_ppu_addr[0]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_ppu_addr[1]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_ppu_addr[2]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_ppu_addr[3]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_ppu_addr[4]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_ppu_addr[5]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_ppu_addr[6]",
+					"strict" : false
+				},
+				{
+					"name" : "spram_ppu_addr[7]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_data_in[1]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_data_in[2]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_data_in[3]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_data_in[4]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_data_in[5]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_data_in[6]",
+					"strict" : false
+				},
+				{
+					"name" : "cpu_data_in[7]",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

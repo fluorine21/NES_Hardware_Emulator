@@ -1,0 +1,365 @@
+
+
+
+
+module ppu_sprite_color_load_tb();
+
+integer vram_listing[64] = 
+{
+	16'h3F00, 16'h0000,
+	16'h3F01, 16'h0001,
+	16'h3F02, 16'h0002,
+	16'h3F03, 16'h0003,
+	16'h3F04, 16'h0004,
+	16'h3F05, 16'h0005,
+	16'h3F06, 16'h0006,
+	16'h3F07, 16'h0007,
+	16'h3F08, 16'h0008,
+	16'h3F09, 16'h0009,
+	16'h3F0A, 16'h0010,
+	16'h3F0B, 16'h0011,
+	16'h3F0C, 16'h0012,
+	16'h3F0D, 16'h0013,
+	16'h3F0E, 16'h0014,
+	16'h3F0F, 16'h0015,
+	16'h3F10, 16'h0016,
+	16'h3F11, 16'h0017,
+	16'h3F12, 16'h0018,
+	16'h3F13, 16'h0019,
+	16'h3F14, 16'h0020,
+	16'h3F15, 16'h0021,
+	16'h3F16, 16'h0022,
+	16'h3F17, 16'h0023,
+	16'h3F18, 16'h0024,
+	16'h3F19, 16'h0025,
+	16'h3F1A, 16'h0026,
+	16'h3F1B, 16'h0027,
+	16'h3F1C, 16'h0028,
+	16'h3F1D, 16'h0029,
+	16'h3F1E, 16'h0030,
+	16'h3F1F, 16'h0031
+	
+};
+
+integer spram_listing[64] = 
+{
+	//Sprite 0
+	8'h00, 8'h00, //row 0
+	8'h01, 8'h00, // Tile 1F
+	8'h02, 8'h1F, // Attribute bytes
+	8'h03, 8'h00, //Col 0
+	
+	//Sprite 1
+	8'h04, 8'h00, //row 0
+	8'h05, 8'h01, // Tile 1F
+	8'h06, 8'h1F, // Attribute bytes
+	8'h07, 8'h08, //Col 8
+	
+	//Sprite 2
+	8'h08, 8'h00, //row 0
+	8'h09, 8'h02, // Tile 1F
+	8'h0A, 8'h1F, // Attribute bytes
+	8'h0B, 8'h10, //Col 16
+	
+	//Sprite 3
+	8'h0C, 8'h00, //row 0
+	8'h0D, 8'h03, // Tile 1F
+	8'h0E, 8'h1F, // Attribute bytes
+	8'h0F, 8'h18, //Col 24
+	
+	//Sprite 4
+	8'h10, 8'h00, //row 0
+	8'h11, 8'h04, // Tile 1F
+	8'h12, 8'h1F, // Attribute bytes
+	8'h13, 8'h20, //Col 32
+	
+	//Sprite 5
+	8'h14, 8'h00, //row 0
+	8'h15, 8'h05, // Tile 1F
+	8'h16, 8'h1F, // Attribute bytes
+	8'h17, 8'h28, //Col 40
+	
+	//Sprite 6
+	8'h18, 8'h00, //row 0
+	8'h19, 8'h06, // Tile 1F
+	8'h1A, 8'h1F, // Attribute bytes
+	8'h1B, 8'h30, //Col 48
+	
+	//Sprite 7
+	8'h1C, 8'h00, //row 0
+	8'h1D, 8'h07, // Tile 1F
+	8'h1E, 8'h1F, // Attribute bytes
+	8'h1F, 8'h38 //Col 56
+};
+
+
+
+reg clk, rst;
+
+wire [7:0] spram_addr, spram_data_in;
+
+reg [8:0] curr_row, curr_col;
+
+wire sprite_0_on_tile; 
+wire [7:0] sprite_0_tile_num, sprite_0_row, sprite_0_col, sprite_0_attr;
+
+wire sprite_1_on_tile;
+wire [7:0] sprite_1_tile_num, sprite_1_row, sprite_1_col, sprite_1_attr;
+
+
+wire sprite_overflow;
+reg sprite_start;
+wire sprite_busy;
+reg [7:0] cpu_sprite_addr;
+wire sprite_0_is_0, sprite_1_is_0;
+
+
+integer i;
+
+ppu_sprite_load_fsm sprite_load_dut
+(
+	clk,
+	rst,
+	
+	spram_addr,
+	spram_data_in,
+	
+	curr_row,
+	curr_col,
+	
+	sprite_0_on_tile,
+	sprite_0_tile_num, 
+	sprite_0_row, 
+	sprite_0_col, 
+	sprite_0_attr,
+	
+	sprite_1_on_tile,
+	sprite_1_tile_num, 
+	sprite_1_row, 
+	sprite_1_col, 
+	sprite_1_attr,
+	
+	sprite_overflow,
+	sprite_start,
+	sprite_busy,
+	cpu_sprite_addr,
+	
+	sprite_0_is_0,
+	sprite_1_is_0
+	
+);
+
+wire [15:0] vram_read_addr;
+wire [7:0] vram_read_data;
+
+wire [127:0] background_colors, sprite_colors;
+reg color_start;
+wire color_busy;
+ppu_color_load_fsm color_load_dut
+(
+	clk,
+	rst,
+	
+	vram_read_addr,
+	vram_read_data,
+	color_start,
+	color_busy,
+	
+	background_colors,
+	sprite_colors
+);
+
+//VRAM
+reg [15:0] vram_write_addr;
+reg [7:0] vram_write_data;
+wire [7:0] vram_dummy_data_out;
+reg vram_write_en;
+generic_ram #(16384, 16) vram_inst
+(
+	clk,
+	
+	vram_write_addr,
+	vram_write_data,
+	vram_dummy_data_out,
+	vram_write_en,
+	
+	//Connections for vram load fsm
+	vram_read_addr,
+	vram_read_data
+	
+);
+
+
+//SPRAM
+reg [7:0] spram_write_addr;
+reg [7:0] spram_write_data;
+wire [7:0] spram_dummy_data_out;
+reg spram_write_en;
+generic_ram #(256, 8) spram_inst
+(
+	clk,
+	
+	spram_write_addr,
+	spram_write_data,
+	spram_dummy_data_out,
+	spram_write_en,
+	
+	//Connections for vram load fsm
+	spram_addr,
+	spram_data_in
+	
+);
+
+
+task write_vram();
+begin
+	#1
+	vram_write_en = 1;
+	#1
+	//Loop through the vram listing and load all of the values
+	for(i = 0; i < $size(vram_listing); i = i + 2) begin
+	
+		//Load the address and data
+		vram_write_addr <= vram_listing[i];
+		vram_write_data <= vram_listing[i+1][7:0];
+		
+		//Write in the data
+		clk_cycle();
+	
+	end
+	#1
+	vram_write_en = 0;
+	//#1
+end
+endtask
+
+task write_spram();
+begin
+	#1
+	spram_write_en = 1;
+	#1
+	//Loop through the vram listing and load all of the values
+	for(i = 0; i < $size(spram_listing); i = i + 2) begin
+	
+		//Load the address and data
+		spram_write_addr <= spram_listing[i];
+		spram_write_data <= spram_listing[i+1][7:0];
+		
+		//Write in the data
+		clk_cycle();
+	
+	end
+	#1
+	spram_write_en = 0;
+	//#1
+end
+endtask
+
+
+
+initial begin
+
+
+	clk = 0;
+	rst = 0;
+	
+	spram_write_addr = 0;
+	spram_write_data = 0;
+	spram_write_en = 0;
+	
+	//Start on row 5
+	//Have 8 sprites in memory on same row, 8 cols apart
+	
+	curr_row = 5;
+	curr_col = 0;
+	
+	cpu_sprite_addr = 0;
+	
+	sprite_start = 0;
+	color_start = 0;
+	
+	vram_write_addr = 0;
+	vram_write_data = 0;
+	vram_write_en = 0;
+	
+	//Reset everything
+	reset();
+	
+	//Write the two memories
+	write_spram();
+	write_vram();
+	
+	//Run the color load test
+	color_start = 1;
+	
+	clk_cycle();
+	
+	color_start = 0;
+	
+	while(color_busy) begin
+		clk_cycle();
+	end
+	
+	repeat(10) clk_cycle();
+	
+	//Run the sprite load test
+	sprite_start = 1;
+	
+	clk_cycle();
+	
+	sprite_start = 0;
+	
+	while(sprite_busy) begin
+		clk_cycle();
+	end
+	
+	repeat(10) clk_cycle();
+	
+	curr_col = 5;
+	
+	repeat(10) clk_cycle();
+	
+	curr_col = 9;
+	
+	repeat(10) clk_cycle();
+	
+	curr_col = 17;
+	
+	repeat(10) clk_cycle();
+
+
+end
+
+
+
+task clk_cycle;
+begin
+	#1
+	clk <= 1'b1;
+	#1
+	clk <= 1'b0;
+end
+endtask
+
+
+task reset;
+begin
+	
+	repeat(10) clk_cycle();
+	
+	rst <= 1'b0;
+	
+	repeat(10) clk_cycle();
+	
+	rst <= 1'b1;
+	
+	repeat(10) clk_cycle();
+
+end
+endtask
+
+
+
+
+
+endmodule

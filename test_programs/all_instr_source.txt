@@ -1,0 +1,165 @@
+*=$0200
+
+LDA #0
+STA 0
+
+
+LDA #16
+STA $FFFE
+LDA #02
+STA $FFFF
+
+
+
+LDA #$ff
+ADC #1
+ADC #$FF
+CMP #0
+BEQ L0
+INC 0
+L0
+
+
+LDA #$FF
+STA 1
+LDA #$0F
+AND 1
+CMP #$F0
+BEQ L1
+INC 0
+L1
+
+
+LDA #81
+ASL A
+BCS L5
+INC 0
+L5
+CMP #$02
+BEQ L3
+INC 0
+L3
+ASL A
+CMP #$04
+BEQ L4
+INC 0
+L4
+
+LDA #0
+STA 1
+CLI
+BRK
+SEI
+CMP 0
+BEQ L6
+INC 0
+L6
+BRK
+CMP 0
+BNE L7
+INC 0
+L7
+
+
+;;testing_LDY_MEM_and_CPY
+
+LDA #5
+STA 3
+LDY 3
+CPY #4
+BNE L8
+INC 0
+L8
+CPY #5
+BEQ L9
+INC 0
+L9
+
+;;testing_LDX_and_CPX
+
+LDX 3
+CPX #4
+BNE L10
+INC 0
+L10
+CPX #5
+BEQ L11
+INC 0
+L11
+
+;;testing_DEC
+LDA #0
+STA 3
+DEC 3
+LDA 3
+CMP #$FF
+BEQ L12
+INC 0
+L12
+
+
+;;testing_LSR
+LDA #$FF
+STA 3
+LSR 3
+LDA #$7F
+CMP 3
+BEQ L13
+INC 0
+L13
+
+
+;;testing_or_a
+LDA #$0F
+STA 3
+LDA #$F0
+ORA 3
+CMP #$FF
+BEQ L14
+INC 0
+L14
+
+;;Testing_set_carry_push_status_pop_status_branch_on_carry
+SEC
+PHP
+CLC
+BCC L15
+INC 0
+L15
+PLP
+BCS L16
+INC 0
+L16
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;;BRK_software_interrupt
+IRQ_ISR
+LDA #2
+RTI
+
+
+
+
+
+
+
+
+
+
+
+
+
