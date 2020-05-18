@@ -1598,8 +1598,7 @@ ind_ret
         ldx #'S'
         ldy #'R'        ;N=0, V=0, Z=0, C=0
         jsr test_jsr
-;jsr_ret = *-1           ;last address of jsr = return address
-jsr_ret = *
+jsr_ret = *-1           ;last address of jsr = return address
         php             ;either SP or Y count will fail, if we do not hit
         dey
         dey

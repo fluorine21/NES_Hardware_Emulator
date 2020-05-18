@@ -505,6 +505,9 @@ end
 endtask
 
 
+wire [15:0] jsr_pc = if_pc_next - 1;
+
+
 always @ (posedge clk or negedge rst) begin
 
 
@@ -550,7 +553,7 @@ always @ (posedge clk or negedge rst) begin
 					else if(is_jsr) begin
 					
 						//Queue up a push of pc_next low
-						push(if_pc_next[15:8]);
+						push(jsr_pc[15:8]);
 						
 						//set pc next to addr in
 						pc_next <= if_addr_in;
@@ -747,7 +750,7 @@ always @ (posedge clk or negedge rst) begin
 			state_jump_1: begin
 				
 				//Queue up the high byte next
-				push(if_pc_next[7:0]);
+				push(jsr_pc[7:0]);
 				
 				goto_interrupt();
 				
@@ -775,7 +778,10 @@ always @ (posedge clk or negedge rst) begin
 			state_return_3: begin
 				
 				//Read in the low byte
-				pc_next[15:8] <= mem_data_in;
+				//pc_next[15:8] <= mem_data_in;
+				
+				//Need to return at + 1
+				pc_next <= {mem_data_in, pc_next[7:0]} + 1;
 				
 				goto_interrupt();
 			
