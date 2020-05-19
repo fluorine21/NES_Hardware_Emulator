@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import serial
+from random import seed
+from random import randint
+from datetime import datetime
 
 DEFAULT_BAUD = 9600
 UART_TIMEOUT = 0.1
@@ -430,16 +433,20 @@ class NES_FPGA:
         
         bytestream = bytearray.fromhex(lst_string)
         
+        if(len(bytestream) > 0x8000):
+            print("Error, cannot call loag pgrom on the test program!")
+            return
+        
         #Write the bytestream
         print("Writing " + hex(len(bytestream)) + " PGROM bytes...")
         for i in range(0, len(bytestream)):
             
-            self.write_byte(self, i, bytestream[i])
+            self.write_byte(self, i+0x8000, bytestream[i])
             
         print("Verifying PGROM bytes...")
         for i in range(0, len(bytestream)):
             
-            byte_result = self.read_byte(i)
+            byte_result = self.read_byte(i+0x8000)
             
             if(byte_result != bytestream[i]):
                 print("Error verifying PGROM bytes")
@@ -449,6 +456,163 @@ class NES_FPGA:
         print("Successfully verrified " + str(len(bytestream)) + " CHROM bytes")
         
         return 
+    
+    
+    def test_cpu_mem(self):
+        
+        seed(datetime.now())
+        
+        succ = 1
+        
+        #test 0 to 0x2000 first
+        #This will automatically test the mirror region
+        
+        for i in range(0, 0x2000):
+            
+            
+            #Write a random byte to memory at i
+            byte_val = randint(0, 255)
+            
+            self.write_byte(i, byte_val)
+            
+            #Write something to 0 just to refresh the latch
+            self.write_byte(0xFFFF, 0xFF)
+            
+            returned_val = self.read_byte(i)
+            
+            if(returned_val != byte_val):
+                print("Error testing memory at address " + hex(i))
+                print("Expected value was " + hex(byte_val) + ", recieved " + hex(returned_val))
+                succ = 0
+                break
+            
+        #Check the mirror at 0x800
+        self.write_byte(1, 0xAB)
+        self.write_byte(2, 0xCD)
+        res = self.read_byte(0x0801)
+        
+        if(res != 0xAB):
+            print("CPU memory failed mirror check for RAM mirror!")
+            succ = 0
+        
+        
+        #then test everything from 0x4020 to 0xFFFF
+        
+        for i in range(0x4020, 0xFFFF):
+            
+            
+            #Write a random byte to memory at i
+            byte_val = randint(0, 255)
+            
+            self.write_byte(i, byte_val)
+            
+            #Write something to 0 just to refresh the latch
+            self.write_byte(0x0, 0xFF)
+            
+            returned_val = self.read_byte(i)
+            
+            if(returned_val != byte_val):
+                print("Error testing memory at address " + hex(i))
+                print("Expected value was " + hex(byte_val) + ", recieved " + hex(returned_val))
+                succ = 0
+                break
+            
+        if(succ == 1):
+            print("CPU memory test success!")
+        else:
+            print("CPU memory test failed!")
+                
+        
+        return
+    
+    
+    def test_ppu_mem(self):
+        
+        seed(datetime.now())
+        
+        succ = 1
+        
+        #test 0 to 0xFFFF first
+        #This will automatically test the mirror region
+        
+        for i in range(0, 0xFFFF):
+            
+            
+            #Write a random byte to memory at i
+            byte_val = randint(0, 255)
+            
+            self.write_vram_byte(i, byte_val)
+            
+            #Write something to 0 just to refresh the latch
+            self.write_byte(0xFFFF, 0xFF)
+            
+            returned_val = self.read_vram_byte(i)
+            returned_val = self.read_vram_byte(i)
+            
+            if(returned_val != byte_val):
+                print("Error testing memory at address " + hex(i))
+                print("Expected value was " + hex(byte_val) + ", recieved " + hex(returned_val))
+                succ = 0
+                break
+        
+        #Test the mirror at 0x3000
+        self.write_vram_byte(0x2001, 0xAB)
+        self.write_vram_byte(0x2002, 0xCD)
+
+        r_v = self.read_vram_byte(0x2001)
+        r_v = self.read_vram_byte(0x2001)
+
+        if(r_v != 0xAB):
+            print("PPU mirror check failed for 0x3000")
+            succ = 0
+        
+            
+        if(succ == 1):
+            print("CPU memory test success!")
+        else:
+            print("CPU memory test failed!")
+                
+        
+        return
+    
+    
+    def dma_test(self):
+        
+        succ = 1
+        
+        seed(datetime.now())
+        
+        #Start by filling up first 256 bytes of mem with random stuff
+        mem_bytes = []
+        
+        for i in range(0, 256):
+            
+            byte_res = randint(0, 255)
+            mem_bytes.append(byte_res)
+            self.write_byte(i, byte_res)
+            
+            
+        #Start a DMA transfer by writing a 0 to 0x4014
+        self.write_byte(0x4014, 0)
+        
+        
+        
+        #Read back sprite memory to see if we got the correct value
+        for i in range(0 256):
+            
+            self.write_byte(0x2003, i)
+            b_r = self.read_byte(0x2004, i)
+            
+            if(b_r != mem_bytes[i]):
+                print("DMA check failed at " + hex(i))
+                print("Expected " + hex(mem_bytes[i]) + " got " + hex(b_r))
+                succ = 0
+                
+         
+        if(succ == 1):
+            print("DMA test success!")
+        else:
+            print("DMA test failed!")
         
         
         

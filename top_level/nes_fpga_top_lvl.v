@@ -26,7 +26,7 @@ module nes_fpga_top_lvl
 	output wire cpu_halt,
 	
 	//Program counter of 6502
-	output wire [27:0] pc_out
+	output wire [27:0] pc_out,
 	
 	//Sys ctrl address out
 	output wire [27:0] sys_out
@@ -43,6 +43,12 @@ clkdiv2 clkdiv2_inst
 	
 	clk//25MHz
 );
+
+//CPU address bus
+wire [15:0] cpu_mem_addr;
+wire [7:0] cpu_data_out;
+wire cpu_write_en;
+wire cpu_read_en;
 
 //PPU creation
 wire [15:0] ppu_vram_addr;
@@ -66,7 +72,7 @@ ppu_fsm ppu_fsm_inst
 	ppu_vram_addr,
 	ppu_vram_data,
 	
-	cpu_addr_in,//Used to determine when to reset vsync
+	cpu_mem_addr,//Used to determine when to reset vsync
 	
 	spram_addr,
 	spram_data_in,
@@ -173,7 +179,6 @@ wire [7:0] state;
 wire [15:0] sys_addr;
 wire [7:0] sys_data_out;
 wire sys_write_en, sys_read_en;
-wire cpu_halt;
 
 sys_ctrl_fsm sys_ctrl_inst
 (
@@ -200,12 +205,6 @@ sys_ctrl_fsm sys_ctrl_inst
 	
 );
 
-//CPU address bus
-wire [15:0] cpu_mem_addr;
-wire [7:0] cpu_data_out;
-wire cpu_write_en;
-wire cpu_read_en;
-
 wire [15:0] pc_6502;
 
 wire [15:0] pc_reset = 16'h8000;
@@ -214,7 +213,7 @@ cpu_6502 cpu_6502_dut
 (
 	clk,
 	(rst && cpu_rst),
-	soft_rst,
+	1'b1,
 	
 	cpu_mem_addr,
 	cpu_data_out,
@@ -239,11 +238,11 @@ assign mem_write_en = cpu_sys_mux_ctrl ? sys_write_en : cpu_write_en;
 assign mem_read_en = cpu_sys_mux_ctrl ? sys_read_en : cpu_read_en;
 
 genvar i;
-for (i = 0 i < 4; i = i + 1) begin
+for (i = 0; i < 4; i = i + 1) begin
   
   //Declare the CPU and SYS CTRL address decoders
   leddcd leddcd_cpu_inst(pc_6502[i*4+:4], pc_out[i*7+:7]);
-  leddcd leddcd_cpu_inst(sys_addr[i*4+:4], sys_out[i*7+:7]);
+  leddcd leddcd_sys_inst(sys_addr[i*4+:4], sys_out[i*7+:7]);
   
 end
 

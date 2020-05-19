@@ -136,9 +136,6 @@ always @ (posedge clk or negedge rst) begin
 
 			state_idle: begin
 			
-				//Stop resetting
-				cpu_rst <= 1;
-			
 				//Reset TX start
 				tx_start <= 0;
 			

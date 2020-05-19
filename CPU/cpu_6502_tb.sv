@@ -19,6 +19,7 @@ reg [7:0] ppu_status = 0;
 
 integer i = 0;
 reg halt = 0;
+wire [15:0] pc_6502;
 cpu_6502 cpu_6502_dut
 (
 	clk,
@@ -36,7 +37,8 @@ cpu_6502 cpu_6502_dut
 	ppu_status,
 	
 	halt,
-	1'b1//Set IRQ to 1, won't be triggered
+	1'b1,//Set IRQ to 1, won't be triggered
+	pc_6502
 );
 
 reg [15:0] tb_mem_addr;
