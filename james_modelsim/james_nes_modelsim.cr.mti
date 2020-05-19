@@ -77,6 +77,13 @@ Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  
 Top level modules:
 	ppu_fsm_tb
 
+} {} {}} {C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/nametable_decoder_tb.v} {1 {vlog -work work -stats=none {C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/nametable_decoder_tb.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module nametable_decoder_tb
+
+Top level modules:
+	nametable_decoder_tb
+
 } {} {}} {C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/open_source_uart/uart_rx.v} {1 {vlog -work work -stats=none {C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/open_source_uart/uart_rx.v}
 Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
 -- Compiling module uart_rx
@@ -209,6 +216,13 @@ Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  
 Top level modules:
 	interrupt_handler
 
+} {} {}} {C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v} {1 {vlog -work work -stats=none {C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module nes_fpga_top_lvl
+
+Top level modules:
+	nes_fpga_top_lvl
+
 } {} {}} {C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/instr_fetch.vhd} {1 {vcom -work work -2002 -explicit -stats=none {C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/instr_fetch.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
 -- Loading package STANDARD
@@ -277,13 +291,6 @@ Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  
 
 Top level modules:
 	ppu_sprite_color_load_tb
-
-} {} {}} {C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v} {1 {vlog -work work -stats=none {C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v}
-Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
--- Compiling module ppu_fsm
-
-Top level modules:
-	ppu_fsm
 
 } {} {}} {C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/cpu_6502_tb.sv} {1 {vlog -work work -sv -stats=none {C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/cpu_6502_tb.sv}
 Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016

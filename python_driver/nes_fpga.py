@@ -4,6 +4,8 @@ import serial
 from random import seed
 from random import randint
 from datetime import datetime
+import time
+
 
 DEFAULT_BAUD = 9600
 UART_TIMEOUT = 0.1
@@ -595,10 +597,10 @@ class NES_FPGA:
         #Start a DMA transfer by writing a 0 to 0x4014
         self.write_byte(0x4014, 0)
         
-        
+        time.sleep(1)
         
         #Read back sprite memory to see if we got the correct value
-        for i in range(0 256):
+        for i in range(0, 256):
             
             self.write_byte(0x2003, i)
             b_r = self.read_byte(0x2004, i)

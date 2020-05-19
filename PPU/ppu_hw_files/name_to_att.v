@@ -38,10 +38,10 @@ assign attr_byte_addr = nametable_base_addr + 16'h03C0 + ({8'b0, attr_row} << 3)
 always @ * begin
 
 	//Even row
-	if(nametable_row[0] == 1'b0) begin
+	if(nametable_row[1:0] == 2'b00 || nametable_row[1:0] == 2'b01) begin
 	
 		//Even row even col
-		if(nametable_col == 1'b0) begin
+		if(nametable_col[1:0] == 2'b00 || nametable_col[1:0] == 2'b01) begin
 			
 			attr_bit_offset = 0;
 		
@@ -59,7 +59,7 @@ always @ * begin
 	else begin
 	
 		//Odd row even col
-		if(nametable_col == 1'b0) begin
+		if(nametable_col[1:0] == 2'b00 || nametable_col[1:0] == 2'b01) begin
 		
 			attr_bit_offset = 2;
 		

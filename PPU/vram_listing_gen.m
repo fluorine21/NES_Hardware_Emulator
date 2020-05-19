@@ -45,20 +45,23 @@ gen_spram_payload(vram_file);
 %Payload preamble
 fprintf(vram_file, "integer vram_listing[] = \n{\n\n\n");
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%Pattern Tables%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Write one pattern of all FF to both tables
-for i = 0 : 15
+for i = 0 : 31
     %have the pattern alternate so we can see different colors show up in
     %background
-    if(mod(i,2) == 1)
+    if(i/16 < 1)
         write_value(vram_file, i, '00FF',0);
     else
         write_value(vram_file, i, '0000',0);
     end
 end
-for i = hex2dec('1000'):hex2dec('100F')
+for i = hex2dec('1000'):hex2dec('101F')
     %have the pattern alternate so we can see different colors show up in
     %background
-    if(mod(i,2) == 1)
+    if((i- hex2dec('1000'))/16 < 1)
         write_value(vram_file, i, '00FF',0);
     else
         write_value(vram_file, i, '0000',0);
@@ -66,14 +69,26 @@ for i = hex2dec('1000'):hex2dec('100F')
 end
 
 
-%Write the first nametable with all 0 to select tile 0
-%Also zero out the attribute table
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%Name Tables%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 for i = hex2dec('2000'):hex2dec('23FF')
     
+    %If we're in the nametable
     if(i < hex2dec('23C0'))
-        write_value(vram_file, i, 0, 0);
+        %Write alternating tiles
+        if(mod(i, 2) == 0)
+            write_value(vram_file, i, 0, 0);
+        else
+            write_value(vram_file, i, 1, 0);
+        end
     else
-        write_value(vram_file, i, '0000', 0);
+        %Alternate attribute bytes between 0 and 3
+        if(mod(i, 2) == 0)
+            write_value(vram_file, i, 0, 0);
+        else
+            write_value(vram_file, i, 255, 0);
+        end
     end
     
 end

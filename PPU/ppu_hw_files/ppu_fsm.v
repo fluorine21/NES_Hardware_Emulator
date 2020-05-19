@@ -31,6 +31,21 @@ module ppu_fsm
 );
 
 
+reg [15:0] cnt;//Counter used for delay to slow down ppu
+localparam [15:0] wait_cycles = 100;
+reg [7:0] state;
+localparam [7:0] state_idle = 0, 
+				 state_wait_colors_1 = 1,
+				 state_wait_colors_2 = 2,				 
+				 state_wait_sprite_1 = 3, 
+				 state_wait_sprite_2 = 4, 
+				 state_draw_row_1 = 5,
+				 state_draw_row_2 = 6,
+				 state_draw_row_3 = 7,
+				 state_wait_vga = 8,
+				 state_wait = 9;
+
+
 
 //Starting position of pixel in nametable 2x2
 wire [9:0] col_offset = {1'b0, ppu_ctrl1[0], cpu_scroll_addr[7:0]}; 
@@ -102,6 +117,40 @@ ppu_color_load_fsm color_load_inst
 	sprite_colors
 );
 
+
+reg [15:0] cpu_scroll_addr_latch;
+reg [7:0] ppu_ctrl1_latch;
+//Implements latching for x (horiz col) and y(vert row) offsets at h and v blank
+always @ (posedge clk or negedge rst) begin
+	
+	if(!rst) begin
+		cpu_scroll_addr_latch <= cpu_scroll_addr;
+		ppu_ctrl1_latch <= ppu_ctrl1;
+	end
+	else begin
+	
+		//Always update the rest of ppu_ctrl1
+		ppu_ctrl1_latch[7:2] <= ppu_ctrl1[7:2];
+		
+		//If we're doing a horizontal blank
+		if(state == state_wait) begin
+			//Write the low bits of x into the latch
+			cpu_scroll_addr_latch[15:8] <= cpu_scroll_addr[15:8];
+			ppu_ctrl1_latch[0] <= ppu_ctrl1[0]; 
+		end
+		
+		//If we're about to start a new frame
+		if(state == state_idle) begin
+		
+			//Write the low bits of y into the latch
+			cpu_scroll_addr_latch[7:0] <= cpu_scroll_addr[7:0];
+			ppu_ctrl1_latch[1] <= ppu_ctrl1[1]; 
+		
+		end
+	
+	end
+end
+
 //nametable address lookup
 wire [15:0] nametable_ptr;
 wire [2:0] pattern_table_offset;
@@ -110,8 +159,8 @@ pixel_to_nametable_ptr pixel_to_nametable_inst
 	screen_pixel_row,
 	screen_pixel_col,
 	
-	cpu_scroll_addr,
-	ppu_ctrl1,
+	cpu_scroll_addr_latch,
+	ppu_ctrl1_latch,
 	
 	nametable_ptr,
 	pattern_table_offset
@@ -191,7 +240,6 @@ ppu_vram_load_fsm vram_load_inst
 
 //An input to ppu status fsm
 wire sprite_0_hit_strobe = (sprite_0_hit && sprite_0_is_0) || (sprite_1_hit && sprite_1_is_0);
-reg [7:0] state;
 reg ppu_vsync_reg;
 
 //status register latch
@@ -214,19 +262,7 @@ ppu_status_latch ppu_status_inst
 
 assign vram_addr = color_load_busy ? color_vram_addr : render_8_vram_addr;
 
-reg [15:0] cnt;//Counter used for delay to slow down ppu
-localparam [15:0] wait_cycles = 100;
 
-localparam [7:0] state_idle = 0, 
-				 state_wait_colors_1 = 1,
-				 state_wait_colors_2 = 2,				 
-				 state_wait_sprite_1 = 3, 
-				 state_wait_sprite_2 = 4, 
-				 state_draw_row_1 = 5,
-				 state_draw_row_2 = 6,
-				 state_draw_row_3 = 7,
-				 state_wait_vga = 8,
-				 state_wait = 9;
 
 task reset_state();
 begin

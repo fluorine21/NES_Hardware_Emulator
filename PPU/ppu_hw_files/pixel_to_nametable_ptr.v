@@ -5,8 +5,8 @@ module pixel_to_nametable_ptr
 (
 
 	//Relative to the nametables, not the screen
-	input wire signed [8:0] screen_pixel_row,
-	input wire signed [8:0] screen_pixel_col,
+	input wire [8:0] screen_pixel_row,
+	input wire [8:0] screen_pixel_col,
 	
 	//Used to determine the pixel position relative to the nametables
 	input wire [15:0] cpu_scroll_addr,
@@ -20,12 +20,10 @@ module pixel_to_nametable_ptr
 
 //These are relative to the nametables
 //Need the 9 bits to count past 512 to do the wrap around
-//wire [9:0] pixel_row = {1'b0, screen_pixel_row} + {2'b0, cpu_scroll_addr[15:8]} + (ppu_ctrl1[1] ? 240 : 0);
-
-signed wire [9:0] pixel_row = + {2'b0, cpu_scroll_addr[15:8]} + (ppu_ctrl1[1] ? 240 : 0);
+wire [9:0] pixel_row = {1'b0, screen_pixel_row} + {2'b0, cpu_scroll_addr[15:8]} + (ppu_ctrl1[1] ? 240 : 0);
 
 
-wire [9:0] pixel_col = {1'b0, screen_pixel_col} + {1'b0, ppu_ctrl1[2], cpu_scroll_addr[7:0]};
+wire [9:0] pixel_col = {{1{screen_pixel_col[8]}}, screen_pixel_col} + {1'b0, ppu_ctrl1[0], cpu_scroll_addr[7:0]};
 
 assign pattern_table_offset = pixel_row[2:0];
 
