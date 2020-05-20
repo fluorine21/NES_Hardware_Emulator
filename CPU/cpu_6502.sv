@@ -23,7 +23,8 @@ module cpu_6502
 	
 	input wire halt,
 	input wire nIRQ,
-	output wire [15:0] pc_6502
+	output wire [15:0] pc_6502,
+	input wire [7:0] ppu_ctrl1
 
 );
 
@@ -42,7 +43,8 @@ wire ie_ready, imm_mode;
 wire [2:0] store_flag;
 wire [1:0] reg_load_flag;
 wire instr_valid;
-
+wire if_start;
+wire mem_load_flag;
 instr_fetch instr_fetch_inst
 (
 

@@ -47,6 +47,7 @@ architecture a of alu is
 
     proc_status_temp := proc_status_in; ----set new proc status to old proc status then edit what you are allowed to
     ignore_out:= '0';
+	 temp_output := x"00";
 
     case (alu_op) is
         when ADD_OP => -------add

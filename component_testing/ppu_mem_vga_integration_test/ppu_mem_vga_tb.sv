@@ -136,7 +136,7 @@ initial begin
 	resume_cpu();
 
 	//Set the CPU address so we're always resetting vsync
-	read_byte(16'h2002);	
+	//read_byte(16'h2002);	
 
 
 	#1

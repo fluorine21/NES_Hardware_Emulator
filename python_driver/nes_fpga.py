@@ -12,6 +12,8 @@ UART_TIMEOUT = 0.1
 
 HALT_CPU = 0x00 
 RESUME_CPU = 0x01
+SET_CPU = 0x07
+RST_CPU = 0x06
 WRITE_BYTE = 0x02
 READ_BYTE = 0x03
 RESET_CPU = 0x04
@@ -89,6 +91,7 @@ class NES_FPGA:
         #Send the halt CPU command
         if(self.write_bytes([HALT_CPU]) == -1):
             print("Error halting cpu\n")
+        self.write_bytes([RST_CPU])
         
     def reset_cpu(self):
         
@@ -103,6 +106,7 @@ class NES_FPGA:
          #Send the start CPU command
         if(self.write_bytes([RESUME_CPU]) == -1):
             print("Error resuming cpu\n")
+        self.write_bytes([SET_CPU])
 
     #Returns a byte read from the CPU's memory space at address
     #Returns -1 if request timed out
@@ -404,16 +408,21 @@ class NES_FPGA:
         
         bytestream = bytearray.fromhex(lst_string)
         
+        if(len(bytestream) > 0x2000):
+            print("Error, CHROM of incorrect length, must be 0x2000")
+            return
+        
         #Write the bytestream
         print("Writing " + str(len(bytestream)) + " CHROM bytes...")
         for i in range(0, len(bytestream)):
             
-            self.write_vram_byte(i, bytestream[i])
+            #Just write 1 byte at 0x2007, this should be sufficient
+            #self.write_vram_byte(i, bytestream[i])
+            self.write_byte(0x2007, bytestream[i])
             
         print("Verifying CHROM bytes...")
         for i in range(0, len(bytestream)):
             
-            byte_result = self.read_vram_byte(i)
             byte_result = self.read_vram_byte(i)
             byte_result = self.read_vram_byte(i)
             
@@ -435,7 +444,7 @@ class NES_FPGA:
         
         bytestream = bytearray.fromhex(lst_string)
         
-        if(len(bytestream) > 0x8000):
+        if(len(bytestream) != 0x8000):
             print("Error, cannot call loag pgrom on the test program!")
             return
         
@@ -443,7 +452,7 @@ class NES_FPGA:
         print("Writing " + hex(len(bytestream)) + " PGROM bytes...")
         for i in range(0, len(bytestream)):
             
-            self.write_byte(self, i+0x8000, bytestream[i])
+            self.write_byte(i+0x8000, bytestream[i])
             
         print("Verifying PGROM bytes...")
         for i in range(0, len(bytestream)):
@@ -462,6 +471,8 @@ class NES_FPGA:
     
     def test_cpu_mem(self):
         
+        print("Starting CPU memory test...")
+        
         seed(datetime.now())
         
         succ = 1
@@ -469,24 +480,31 @@ class NES_FPGA:
         #test 0 to 0x2000 first
         #This will automatically test the mirror region
         
-        for i in range(0, 0x2000):
+        mem_arr = []
+        
+        for i in range(0, 0x0800):
             
             
             #Write a random byte to memory at i
             byte_val = randint(0, 255)
+            mem_arr.append(byte_val)
             
             self.write_byte(i, byte_val)
             
             #Write something to 0 just to refresh the latch
-            self.write_byte(0xFFFF, 0xFF)
+            #self.write_byte(0xFFFF, 0xFF)
+            
+        for i in range(0, 0x2000):
             
             returned_val = self.read_byte(i)
             
-            if(returned_val != byte_val):
+            if(returned_val != mem_arr[i&0x7FF]):
                 print("Error testing memory at address " + hex(i))
-                print("Expected value was " + hex(byte_val) + ", recieved " + hex(returned_val))
+                print("Expected value was " + hex(mem_arr[i]) + ", recieved " + hex(returned_val))
                 succ = 0
                 break
+            
+            
             
         #Check the mirror at 0x800
         self.write_byte(1, 0xAB)
@@ -499,21 +517,22 @@ class NES_FPGA:
         
         
         #then test everything from 0x4020 to 0xFFFF
-        
+        mem_2 = []
         for i in range(0x4020, 0xFFFF):
             
             
             #Write a random byte to memory at i
             byte_val = randint(0, 255)
+            mem_2.append(byte_val)
             
             self.write_byte(i, byte_val)
             
-            #Write something to 0 just to refresh the latch
-            self.write_byte(0x0, 0xFF)
+            
+        for i in range(0x4020, 0xFFFF):
             
             returned_val = self.read_byte(i)
             
-            if(returned_val != byte_val):
+            if(returned_val != mem_2[i-0x4020]):
                 print("Error testing memory at address " + hex(i))
                 print("Expected value was " + hex(byte_val) + ", recieved " + hex(returned_val))
                 succ = 0
@@ -533,6 +552,8 @@ class NES_FPGA:
         seed(datetime.now())
         
         succ = 1
+        
+        print("Starting PPU memory test...")
         
         #test 0 to 0xFFFF first
         #This will automatically test the mirror region
@@ -617,7 +638,56 @@ class NES_FPGA:
             print("DMA test failed!")
         
         
+    def load_test_program(self, file_name):
         
+        
+        succ = 1
+        
+        chr_file = open(file_name, "r")
+        
+        #Read entire listing in as string
+        lst_string = chr_file.readline()
+        
+        bytestream = bytearray.fromhex(lst_string)
+        
+        print("Loading functional test, stops at 0xAF6D if successful")
+        
+        if(len(bytestream) != 0xFFFF + 1):
+            print("Error, test program ROM bytestream of incorrect length")
+            return
+        
+        
+        for i in range(0, 0x800):
+            self.write_byte(i, bytestream[i])
             
             
+        for i in range(0x8000, 0x10000):
+            self.write_byte(i, bytestream[i])
+            
+            
+        print("Done loading program, verrifying...")
+        
+        
+        for i in range(0, 0x800):
+            b_r = self.read_byte(i)
+            if(b_r != bytestream[i]):
+                print("Error testing memory at address " + hex(i))
+                print("Expected value was " + hex(byte_val) + ", recieved " + hex(returned_val))
+                succ = 0
+                break
+            
+            
+        for i in range(0x8000, 0x10000):
+            b_r = self.read_byte(i)
+            if(b_r != bytestream[i]):
+                print("Error testing memory at address " + hex(i))
+                print("Expected value was " + hex(byte_val) + ", recieved " + hex(returned_val))
+                succ = 0
+                break
+            
+            
+        if(succ == 1):
+            print("Test program successfully loaded!")
+        else:
+            print("Failed to load test program!") 
             

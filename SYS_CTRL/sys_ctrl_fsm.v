@@ -30,7 +30,7 @@ module sys_ctrl_fsm
 	
 );
 
-wire bus_safe = (cpu_halt && cpu_is_halted || cpu_rst == 0);
+wire bus_safe = ( (cpu_halt && cpu_is_halted) || cpu_rst == 0);
 //Take over the bus via the mux whenever we halt the CPU
 assign cpu_sys_mux_ctrl = bus_safe;
 

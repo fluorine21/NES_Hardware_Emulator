@@ -127,12 +127,15 @@ initial begin
 	
 	
 	//CPU memory
-	load_pgrom_test();
-	check_pgrom_test();
+	//load_pgrom_test();
+	//check_pgrom_test();
 	
 	//PPU memory
-	//load_chrom();
-	//check_chrom();
+	load_chrom();
+	check_chrom();
+	
+	load_pgrom();
+	check_pgrom();
 	
 	//Take the CPU PPU out of reset
 	set_cpu();
@@ -207,7 +210,7 @@ begin
 	load_raw_listing(listing, ppu_str);
 
 	//Read all of CPU memory
-	for(cnt = 0; cnt <  $size(listing); cnt = cnt + 2) begin
+	for(cnt = 0; cnt <  $size(listing); cnt = cnt + 1) begin
 
 		//Send the write byte commands
 		//Set the address first
@@ -219,8 +222,8 @@ begin
 		
 		//But only if we're not reading the color
 		if(cnt < 16'h3F00) begin
-			write_byte(16'h2006, listing[cnt][15:8]);
-			write_byte(16'h2006, listing[cnt][7:0]);
+			write_byte(16'h2006, cnt[15:8]);
+			write_byte(16'h2006, cnt[7:0]);
 			read_byte(16'h2007);
 		end
 		
@@ -228,7 +231,7 @@ begin
 		
 			fail_count = fail_count + 1;
 			local_fail_count = local_fail_count + 1;
-			report_error(listing[cnt], listing[cnt+1][7:0], uart_result);
+			report_error(cnt, listing[cnt][7:0], uart_result);
 		
 		end
 		else begin

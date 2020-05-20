@@ -50,7 +50,9 @@ module ie_fsm
 	
 	
 	input wire halt,//CPU halts execution if 1
-	input wire nIRQ
+	input wire nIRQ,
+	
+	input wire [7:0] ppu_ctrl1
 
 );
 
@@ -114,6 +116,7 @@ wire [15:0] interrupt_pc_out;
 wire [7:0] interrupt_status_out;
 wire [7:0] interrupt_stack_out;
 wire interrupt_disable;
+wire interrupt_done;
 interrupt_handler interrupt_handler_inst
 (
 
@@ -147,7 +150,9 @@ interrupt_handler interrupt_handler_inst
 	interrupt_disable,
 	
 	halt,
-	nIRQ
+	nIRQ,
+	
+	ppu_ctrl1
 
 );
 
@@ -330,7 +335,7 @@ begin
 		y_reg: y <= alu_output;
 		//Don't store reserved and break if we're pulling into status reg
 		status_reg: ie_status <= alu_output & 8'b11001111;
-		status_reg: ie_status <= alu_output;
+		//status_reg: ie_status <= alu_output;
 		stack_reg: stack_ptr <= alu_output;
 		
 	endcase

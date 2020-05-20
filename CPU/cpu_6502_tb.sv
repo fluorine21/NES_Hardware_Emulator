@@ -1,4 +1,4 @@
-import ie_defs::*;
+/* import ie_defs::*;
 
 string fn = "../test_programs/bubble.txt";
 string fn_i = "../test_programs/interrupt_test.txt";
@@ -265,3 +265,4 @@ endtask
 	
 endmodule
 
+ */

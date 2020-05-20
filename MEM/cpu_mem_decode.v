@@ -57,18 +57,10 @@ always @ (addr_in) begin
 
 		end
 
-		//If we're in the 0 to 7FF mirror region
-		else if(addr_in >= 16'h0800) begin
-
-			//Just need to subtract 0x0800
-			addr_out <= addr_in - 16'h0800;
-
-		end	
-
 		//If we don't need to decode anything
 		else begin
 
-			addr_out <= addr_in;
+			addr_out <= addr_in & 16'h07FF;
 
 		end
 	

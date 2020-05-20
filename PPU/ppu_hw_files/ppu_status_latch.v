@@ -94,6 +94,7 @@ always @ (posedge clk or negedge rst) begin
 		if(vsync_reg == 0) begin
 			//If we need to set the flag
 			//if we're in the PPU wait state
+			//if(ppu_vsync_reg && ppu_ctrl1[7]) begin
 			if(ppu_vsync_reg && ppu_ctrl1[7]) begin
 				vsync_reg <= 1;
 			end

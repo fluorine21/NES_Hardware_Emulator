@@ -124,8 +124,10 @@ reg [7:0] ppu_ctrl1_latch;
 always @ (posedge clk or negedge rst) begin
 	
 	if(!rst) begin
-		cpu_scroll_addr_latch <= cpu_scroll_addr;
-		ppu_ctrl1_latch <= ppu_ctrl1;
+		//cpu_scroll_addr_latch <= cpu_scroll_addr;
+		//ppu_ctrl1_latch <= ppu_ctrl1;
+		cpu_scroll_addr_latch <= 0;
+		ppu_ctrl1_latch <= 0;
 	end
 	else begin
 	

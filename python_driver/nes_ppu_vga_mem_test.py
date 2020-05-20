@@ -24,7 +24,7 @@ for i in range(0, 224):
     
     
 #Create the NES object
-NES_obj = nes_fpga.NES_FPGA("COM9")
+NES_obj = nes_fpga.NES_FPGA("COM8")
 
 NES_obj.open_nes()
 
@@ -55,12 +55,12 @@ else:
 
 #Set the PPU control registers to display sprites and background
 NES_obj.halt_cpu()
-NES_obj.write_byte(0x2000, 0x08)
+NES_obj.write_byte(0x2000, 0x88)
 NES_obj.write_byte(0x2001, 0x18)
 
 
 #Try reading those registers back to make sure they were set
-if(NES_obj.read_byte(0x2000) != 0x08):
+if(NES_obj.read_byte(0x2000) != 0x88):
     print("Failed to write ppu_ctrl1")
 else:
     print("Successfully wrote ppu_ctrl1")

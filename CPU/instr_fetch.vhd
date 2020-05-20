@@ -123,7 +123,7 @@ architecture a of instr_fetch is
 	b2b_inst : b2b_access
 		port map( clk, rst, addr_1, addr_2, data_1, data_2, mem_read, mem_done, b2b_start, b2b_busy, mem_addr, mem_data_in);
 	
-		instr_fetch_process : process(clk, rst)
+		instr_fetch_process : process(clk, rst, halt)
 		begin
 		
 	

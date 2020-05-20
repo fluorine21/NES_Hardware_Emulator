@@ -49,11 +49,12 @@ module interrupt_handler
 	
 	input wire halt,
 	
-	input wire nIRQ
+	input wire nIRQ,
+	
+	input wire [7:0] ppu_ctrl1
 	
 );
 
-reg [7:0] pc_high;
 
 //State machine variables
 reg [7:0] state;
@@ -69,6 +70,7 @@ localparam [7:0] state_idle = 0,
 				 state_wait_1 = 9;
 
 //Interrupt disable flag is in status 2
+wire break_disable;
 assign break_disable = status_in[2];
 
 wire break_flag = break_in;
@@ -139,7 +141,6 @@ task reset_regs();
 begin
 
 	state <= state_idle;
-	pc_high = 0;
 	addr_low = 0;
 	interrupt_disable = 0;
 	cpu_addr_next = 0;
@@ -215,7 +216,7 @@ always @ (posedge clk or negedge rst) begin
 					
 					end
 					//or a ppu blanking
-					else if(ppu_status_int) begin
+					else if(ppu_status_int && ppu_ctrl1[7]) begin
 					
 						//Lookup the interrupt vector at 0xFFFA (low) and 0xFFFB (high)
 						cpu_addr <= 16'hFFFA;

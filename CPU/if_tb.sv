@@ -1,4 +1,4 @@
-import ie_defs::*;
+/* import ie_defs::*;
 
 
 module if_tb();
@@ -139,14 +139,14 @@ begin
 	tb_write_en = 1;
 	#1
 	
-	for(i = 0; i < $size(mem_listing_1); i = i + 2) begin
+ 	for(i = 0; i < $size(mem_listing_1); i = i + 2) begin
 	
 		tb_addr = mem_listing_1[i];
 		tb_data_in = mem_listing_1[i+1];
 		
 		clk_cycle();
 	
-	end
+	end 
 
 	#1
 	tb_write_en = 0;
@@ -189,4 +189,4 @@ endtask
 
 
 
-endmodule
+endmodule */

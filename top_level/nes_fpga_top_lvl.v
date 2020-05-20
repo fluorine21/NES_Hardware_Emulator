@@ -227,7 +227,9 @@ cpu_6502 cpu_6502_dut
 	
 	(cpu_halt || mem_ctrl_busy),//Halt if mem ctrl is busy with DMA
 	1'b1,//Set IRQ to 1, won't be triggered
-	pc_6502
+	pc_6502,
+	
+	ppu_ctrl1
 );
 
 
@@ -238,14 +240,15 @@ assign mem_write_en = cpu_sys_mux_ctrl ? sys_write_en : cpu_write_en;
 assign mem_read_en = cpu_sys_mux_ctrl ? sys_read_en : cpu_read_en;
 
 genvar i;
-for (i = 0; i < 4; i = i + 1) begin
+generate 
+for (i = 0; i < 4; i = i + 1) begin : led_drivers
   
   //Declare the CPU and SYS CTRL address decoders
   leddcd leddcd_cpu_inst(pc_6502[i*4+:4], pc_out[i*7+:7]);
   leddcd leddcd_sys_inst(sys_addr[i*4+:4], sys_out[i*7+:7]);
   
 end
-
+endgenerate
 
 
 endmodule
