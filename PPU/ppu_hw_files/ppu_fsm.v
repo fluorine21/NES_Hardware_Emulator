@@ -33,6 +33,7 @@ module ppu_fsm
 //Scroll ptr latches
 reg [15:0] cpu_scroll_addr_latch;
 reg [7:0] ppu_ctrl1_latch;
+reg [7:0] ppu_ctrl2_latch;
 
 
 reg [15:0] cnt;//Counter used for delay to slow down ppu
@@ -131,6 +132,7 @@ always @ (posedge clk or negedge rst) begin
 		//ppu_ctrl1_latch <= ppu_ctrl1;
 		cpu_scroll_addr_latch <= 0;
 		ppu_ctrl1_latch <= 0;
+		ppu_ctrl2_latch <= 0;
 	end
 	else begin
 	
@@ -151,6 +153,7 @@ always @ (posedge clk or negedge rst) begin
 			//Write the low bits of y into the latch
 			cpu_scroll_addr_latch[15:8] <= cpu_scroll_addr[15:8];
 			ppu_ctrl1_latch[1] <= ppu_ctrl1[1]; 
+			ppu_ctrl2_latch <= ppu_ctrl2;
 		
 		end
 	
@@ -208,8 +211,8 @@ ppu_vram_load_fsm vram_load_inst
 	render_8_vram_addr,
 	vram_data_in,
 	
-	ppu_ctrl1,
-	ppu_ctrl2,
+	ppu_ctrl1_latch,
+	ppu_ctrl2_latch,
 	
 	//Background info
 	background_colors,

@@ -1,12 +1,12 @@
-Analysis & Synthesis Status : Successful - Thu May 21 16:07:52 2020
+Analysis & Synthesis Status : Successful - Thu May 21 17:27:09 2020
 Quartus Prime Version : 17.1.0 Build 590 10/25/2017 SJ Lite Edition
 Revision Name : nes_fpga
 Top-level Entity Name : nes_fpga_top_lvl
 Family : Cyclone IV E
-Total logic elements : 5,537
-    Total combinational functions : 4,742
-    Dedicated logic registers : 1,764
-Total registers : 1764
+Total logic elements : 5,515
+    Total combinational functions : 4,717
+    Dedicated logic registers : 1,767
+Total registers : 1767
 Total pins : 111
 Total virtual pins : 0
 Total memory bits : 1,148,928
