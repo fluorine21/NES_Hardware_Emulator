@@ -11,7 +11,7 @@ module name_to_att
 
 );
 
-wire [15:0] nametable_base_addr = {nametable_addr[15:10], 10'b0000000000};
+wire [15:0] nametable_base_addr = nametable_addr & 16'h03FF;
 
 
 wire [15:0] nametable_offset = nametable_addr - nametable_base_addr;
