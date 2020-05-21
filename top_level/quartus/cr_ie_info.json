@@ -1,0 +1,22 @@
+{
+	"system" : {
+		"platform" : "windows64",
+		"os_name" : "Windows 10",
+		"os_version" : "10.0"
+	},
+	"error" : {
+		"executable" : "quartus_fit",
+		"comment" : "none",
+		"error_message" : "Internal Error",
+		"source_file" : "/quartus/fitter/vpr20k/altera_arch_common/altera_arch_rr_graph_template.c",
+		"line" : "1383",
+		"stack_trace" : "\t0x7ffbb76b3520: fitter_vpr20kmain + 0x573520 (vpr_qi_jump_to_exit + 0x70)\n\t0x7ffbb72316b7: fitter_vpr20kmain + 0xf16b7 (vpr_exit_at_line + 0x97)\n\t0x7ffbb7231700: fitter_vpr20kmain + 0xf1700 (handle_assertion_failure_stripped + 0x30)\n\t0x7ffbb75afe05: fitter_vpr20kmain + 0x46fe05 (aa_rr_graph_template_count_and_initialize_rr_edges + 0x605)\n\t0x7ffbb759ea52: fitter_vpr20kmain + 0x45ea52 (aa_rr_build_full_rr_graph + 0x532)\n\t0x7ffbb73af347: fitter_vpr20kmain + 0x26f347 (l_do_routing_phase_for_fpga_router_flow + 0x157)\n\t0x7ffbb73aeb0d: fitter_vpr20kmain + 0x26eb0d (l_do_single_routing_attempt + 0x19d)\n\t0x7ffbb73ae7ef: fitter_vpr20kmain + 0x26e7ef (aa_flow_route + 0x3f)\n\t0x7ffbb73aa762: fitter_vpr20kmain + 0x26a762 (aa_flow_fit + 0x122)\n\t0x7ffbb76b2c0e: fitter_vpr20kmain + 0x572c0e (?vpr_qi_main@VPR_QI_FACADE@@UEAA_NXZ + 0x6e)\n\t0x7ffbc6f0384e: fitter_fitapi + 0x3384e (fitapi_run_vpr + 0x7e)\n\t0x7ffbf0757298: FITTER_FITCC + 0x57298 (?run_vpr@FITCC_EXPERT@@QEBA_NXZ + 0x138)\n\t0x7ffbf0756d65: FITTER_FITCC + 0x56d65 (?place_and_route@FITCC_EXPERT@@QEBA_NXZ + 0xf5)\n\t0x7ffbf075622d: FITTER_FITCC + 0x5622d (?invoke_fitter@FITCC_EXPERT@@QEBA_NXZ + 0x69d)\n\t0x7ffbc70c9ccb: fitter_fcuda + 0x9ccb (fcuda_execute + 0x1eb)\n\t0x7ffc17e7e8d0: FITTER_FMAIN + 0xe8d0 (?fmain_start@@YA_NPEAVCMP_FACADE@@@Z + 0x900)\n\t0x7ffbc7d441b1: comp_qfit_legacy_flow + 0x41b1 (qfit_execute_fit + 0x1bd)\n\t0x7ffbc7d45384: comp_qfit_legacy_flow + 0x5384 (QFIT_FRAMEWORK::execute + 0x2a0)\n\t0x7ffbc7d4267f: comp_qfit_legacy_flow + 0x267f (qfit_legacy_flow_run_legacy_fitter_flow + 0x1c7)\n\t 0x5a374410: tcl86 + 0x14410 (TclInvokeStringCommand + 0xf0)\n\t 0x5a3761e2: tcl86 + 0x161e2 (TclNRRunCallbacks + 0x62)\n\t 0x5a377a65: tcl86 + 0x17a65 (TclEvalEx + 0xa65)\n\t 0x5a406f8b: tcl86 + 0xa6f8b (Tcl_FSEvalFileEx + 0x22b)\n\t 0x5a405646: tcl86 + 0xa5646 (Tcl_EvalFile + 0x36)\n\t0x7ffc233f2606: comp_qexe + 0x12606 (?qexe_evaluate_tcl_script@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z + 0x376)\n\t0x7ffc233f1864: comp_qexe + 0x11864 (qexe_do_tcl + 0x334)\n\t0x7ffc233f6755: comp_qexe + 0x16755 (?qexe_run_tcl_option@@YA_NPEAVQEXE_FRAMEWORK@@PEBDPEAV?$list@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@_N@Z + 0x585)\n\t0x7ffbe83d80c3: comp_qcu + 0x380c3 (?qcu_run_tcl_option@@YA_NPEAVQCU_FRAMEWORK@@PEBDPEAV?$list@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@_N@Z + 0x1003)\n\t0x7ffc233f60aa: comp_qexe + 0x160aa (qexe_run + 0x39a)\n\t0x7ffc233f6e51: comp_qexe + 0x16e51 (?qexe_standard_main@@YAHPEAVQEXE_FRAMEWORK@@PEAPEBUQEXE_OPTION_DEFINITION@@HPEAPEBD@Z + 0xc1)\n\t0x7ff728b72233: quartus_fit + 0x2233 (?qfit2_main@@YAHHPEAPEBD@Z + 0x73)\n\t0x7ffc41192e98: CCL_MSG + 0x12e98 (?msg_main_thread@@YAPEAXPEAX@Z + 0x18)\n\t0x7ffc4119467e: CCL_MSG + 0x1467e (?msg_thread_wrapper@@YAPEAXP6APEAXPEAX@Z0@Z + 0x6e)\n\t0x7ffc41296660: ccl_mem + 0x16660 (?mem_thread_wrapper@@YAPEAXP6APEAXPEAX@Z0@Z + 0x70)\n\t0x7ffc41192761: CCL_MSG + 0x12761 (?msg_exe_main@@YAHHPEAPEBDP6AHH0@Z@Z + 0xa1)\n\t0x7ff728b7287e: quartus_fit + 0x287e (__tmainCRTStartup + 0x10e)\n\t0x7ffc5f937bd3: KERNEL32 + 0x17bd3 (BaseThreadInitThunk + 0x13)\n\t0x7ffc6130ce50: ntdll + 0x6ce50 (RtlUserThreadStart + 0x20)\n",
+		"subsystem" : "VPR20KMAIN"
+	},
+	"quartus" : {
+		"quartus_bits" : "64",
+		"version" : "17.1.0",
+		"build" : "590",
+		"edition" : "Lite Edition"
+	}
+}

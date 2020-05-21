@@ -71,6 +71,7 @@ ppu_fsm ppu_fsm_inst
 	ppu_vram_data,
 	
 	cpu_addr_in,//Used to determine when to reset vsync
+	1'b1,
 	
 	spram_addr,
 	spram_data_in,
@@ -125,7 +126,10 @@ mem_ctrl mem_ctrl_inst
 	joycon_2,
 
 
-	mem_ctrl_busy
+	mem_ctrl_busy,
+	
+	1'b0,//h
+	1'b1//v
 
 );
 

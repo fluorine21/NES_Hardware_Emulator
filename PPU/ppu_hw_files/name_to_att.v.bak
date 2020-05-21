@@ -11,13 +11,13 @@ module name_to_att
 
 );
 
-wire [15:0] nametable_base_addr = {nametable_addr[15:10], 10'b0};
+
 wire [15:0] nametable_offset = nametable_addr & 16'h03FF;
 
 //Divide by 32 to get nametable row
 wire [7:0] nametable_row = (nametable_offset >> 5);
 //Just take the last 5 bits to get the col
-wire [7:0] nametable_col = {3'b0, nametable_offset[4:0]};
+wire [7:0] nametable_col = nametable_offset[4:0];
 
 //To get the attributr row we need to access, divide nametable_row by 4
 wire [7:0] attr_row = (nametable_row >> 2);

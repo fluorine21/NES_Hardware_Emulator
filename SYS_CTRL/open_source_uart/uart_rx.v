@@ -20,8 +20,8 @@
 //-- Serial receiver unit module
 module uart_rx #(
       //parameter BAUDRATE = `B_25_9600   //-- Default baudrate
-		parameter BAUDRATE = `B_25_115200
-	   //parameter BAUDRATE = `B_MODELSIM
+		//parameter BAUDRATE = `B_25_115200
+	   parameter BAUDRATE = `B_MODELSIM
 )(
          input wire clk,         //-- System clock (12MHz in the ICEstick)
          input wire rstn,        //-- Reset (Active low)
