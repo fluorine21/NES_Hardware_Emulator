@@ -88,13 +88,7 @@ always @ (posedge clk or negedge rst) begin
 	else begin
 		
 		s1 <= ppu_status;
-		s2 <= s1;
-		s3 <= s2;
-		s4 <= s3;
-		s5 <= s4;
-		s6 <= s5;
-		s7 <= s6;
-		ppu_status_out  <= s7;
+		ppu_status_out <= s1;
 	
 	
 	end

@@ -60,7 +60,8 @@ wire [7:0] cpu_mem_data_out;
 wire cpu_mem_write_en = (cpu_addr_valid && cpu_write_en) ? 1'b1 : 1'b0;
 wire [7:0] cpu_mem_data_out_2;
 
-generic_ram #(51168, 16) cpu_mem (clk, cpu_mem_addr, cpu_mem_data_in, cpu_mem_data_out, cpu_mem_write_en, 16'h0, cpu_mem_data_out_2);
+//generic_ram #(51168, 16) cpu_mem (clk, cpu_mem_addr, cpu_mem_data_in, cpu_mem_data_out, cpu_mem_write_en, 16'h0, cpu_mem_data_out_2);
+generic_ram #(65536) cpu_mem (clk, cpu_mem_addr, cpu_mem_data_in, cpu_mem_data_out, cpu_mem_write_en, 16'h0, cpu_mem_data_out_2);
 
 //SPRAM declaration
 wire [7:0] spram_mem_cpu_addr = spram_cpu_addr;
@@ -77,7 +78,9 @@ wire [7:0] vram_mem_cpu_data_in = cpu_data_in;
 wire [7:0] vram_mem_cpu_data_out;
 wire vram_mem_cpu_write_en = (cpu_addr_int == 16'h2007 && cpu_addr_valid == 1'b0 && cpu_write_en) ? 1'b1 : 1'b0;
 
-generic_ram #(12320, 16) vram_mem (clk, vram_mem_cpu_addr, vram_mem_cpu_data_in, vram_mem_cpu_data_out, vram_mem_cpu_write_en, vram_ppu_addr_int, vram_ppu_data);
+//generic_ram #(12320, 16) vram_mem (clk, vram_mem_cpu_addr, vram_mem_cpu_data_in, vram_mem_cpu_data_out, vram_mem_cpu_write_en, vram_ppu_addr_int, vram_ppu_data);
+generic_ram #(16384, 16) vram_mem (clk, vram_mem_cpu_addr, vram_mem_cpu_data_in, vram_mem_cpu_data_out, vram_mem_cpu_write_en, vram_ppu_addr_int, vram_ppu_data);
+
 
 ///////////////////////////////
 ///Next Definitons/////////////
@@ -163,6 +166,7 @@ always @ (posedge clk or negedge rst) begin
 		vram_cpu_addr <= vram_cpu_addr_next;
 	end
 end
+
 
 
 always @ * begin

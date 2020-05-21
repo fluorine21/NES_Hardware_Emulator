@@ -111,6 +111,21 @@ RTI
 
 
 
+//PPU register test
+
+
+LDA #$FF
+STA $2000
+STA $2001
+STA $2005
+LDA #$AA
+STA $2005
+LDA #$20
+STA $2006
+LDA #$01
+STA $2006
+
+
 
 
 

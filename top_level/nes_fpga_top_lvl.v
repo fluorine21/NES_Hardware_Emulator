@@ -1,6 +1,9 @@
 
 
 module nes_fpga_top_lvl
+#(
+	parameter clks_per_bit = 217
+)
 (
 	input wire clk_50, //50MHz clk from crystal to be divided to 25
 	input wire rst,//Reset on button 0
@@ -69,7 +72,7 @@ assign ppu_vsync = ppu_status[7];
 ppu_fsm ppu_fsm_inst
 (
 	clk,
-	(rst & ppu_rst & (!cpu_halt)),//Hold in reset if we are writing to memory
+	(rst & ppu_rst),//Hold in reset if we are writing to memory
 	
 	ppu_vram_addr,
 	ppu_vram_data,
@@ -185,7 +188,7 @@ wire [15:0] sys_addr;
 wire [7:0] sys_data_out;
 wire sys_write_en, sys_read_en;
 
-sys_ctrl_fsm sys_ctrl_inst
+sys_ctrl_fsm #(clks_per_bit) sys_ctrl_inst
 (
 	clk,
 	rst,

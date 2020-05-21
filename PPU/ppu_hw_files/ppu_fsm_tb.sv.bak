@@ -210,8 +210,8 @@ initial begin
 	
 	cpu_addr <= 16'h2002;
 	
-	ppu_ctrl1 = 0;
-	ppu_ctrl1[3] = 1;//sprite pattern table starts at 0x1000
+	ppu_ctrl1 = 1;
+	ppu_ctrl1[3] = 0;//sprite pattern table starts at 0x1000
 	ppu_ctrl2 = 0;
 	ppu_ctrl2[3] = 1;//Enable background
 	ppu_ctrl2[4] = 1;//Enable sprites

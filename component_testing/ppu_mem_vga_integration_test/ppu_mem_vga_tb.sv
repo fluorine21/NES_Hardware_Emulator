@@ -149,6 +149,10 @@ initial begin
 		if(ppu_vsync) begin
 
 			$display("PPU frame end");
+			while(ppu_vsync) begin
+
+				clk_cycle();
+			end
 		end
 	
 	end

@@ -364,11 +364,11 @@
 					"strict" : false
 				},
 				{
-					"name" : "joycon_2[2]",
+					"name" : "joycon_2[1]",
 					"strict" : false
 				},
 				{
-					"name" : "joycon_2[1]",
+					"name" : "joycon_2[2]",
 					"strict" : false
 				},
 				{
@@ -376,15 +376,7 @@
 					"strict" : false
 				},
 				{
-					"name" : "joycon_2[3]",
-					"strict" : false
-				},
-				{
 					"name" : "joycon_2[5]",
-					"strict" : false
-				},
-				{
-					"name" : "joycon_2[6]",
 					"strict" : false
 				},
 				{
@@ -392,11 +384,15 @@
 					"strict" : false
 				},
 				{
-					"name" : "joycon_2[7]",
+					"name" : "joycon_2[3]",
 					"strict" : false
 				},
 				{
-					"name" : "joycon_1[2]",
+					"name" : "joycon_2[6]",
+					"strict" : false
+				},
+				{
+					"name" : "joycon_2[7]",
 					"strict" : false
 				},
 				{
@@ -404,11 +400,15 @@
 					"strict" : false
 				},
 				{
+					"name" : "joycon_1[2]",
+					"strict" : false
+				},
+				{
 					"name" : "joycon_1[0]",
 					"strict" : false
 				},
 				{
-					"name" : "joycon_1[3]",
+					"name" : "joycon_1[7]",
 					"strict" : false
 				},
 				{
@@ -416,15 +416,15 @@
 					"strict" : false
 				},
 				{
-					"name" : "joycon_1[6]",
-					"strict" : false
-				},
-				{
 					"name" : "joycon_1[4]",
 					"strict" : false
 				},
 				{
-					"name" : "joycon_1[7]",
+					"name" : "joycon_1[3]",
+					"strict" : false
+				},
+				{
+					"name" : "joycon_1[6]",
 					"strict" : false
 				},
 				{

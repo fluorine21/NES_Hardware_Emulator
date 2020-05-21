@@ -1,6 +1,7 @@
 
 
 import ie_defs::*;
+import sv_defs::*;
 
 string cpu_str = "../games/smb/smb_cpu_mem.txt";
 string ppu_str = "../games/smb/smb_ppu_mem.txt";
@@ -43,7 +44,7 @@ clkdiv2 clkdiv2_inst
 wire cpu_halt;
 wire one_w = 1'b1;
 wire [27:0] pc_out, sys_out;
-nes_fpga_top_lvl nes_dut
+nes_fpga_top_lvl #(5) nes_dut 
 (
 	clk_50, //50MHz clk from crystal to be divided to 25
 	rst,//Reset on button 0
@@ -82,7 +83,7 @@ nes_fpga_top_lvl nes_dut
 reg tx_start;
 reg [7:0] tx_data;
 wire tx_active, tx_done;
-UART_TX uart_command_tx
+UART_TX #(5) uart_command_tx
 (
 	clk,
 	tx_start,
@@ -95,7 +96,7 @@ UART_TX uart_command_tx
 //RX module for reading out bytes
 wire rx_valid;
 wire [7:0] rx_data;
-uart_rx uart_command_rx
+uart_rx #(5) uart_command_rx
 (
 	clk,
 	rst,

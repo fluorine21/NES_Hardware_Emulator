@@ -1,7 +1,11 @@
 
 
 
-module sys_ctrl_fsm
+module sys_ctrl_fsm 
+#
+(
+	parameter clks_per_bit = 217
+)
 (
 	input wire clk,
 	input wire rst,
@@ -81,7 +85,7 @@ reg [8:0] cnt;
 //Uart RX
 wire rx_valid;
 wire [7:0] rx_data;
-uart_rx uart_rx_inst
+uart_rx #(clks_per_bit) uart_rx_inst
 (
 	clk,
 	rst,
@@ -94,7 +98,7 @@ uart_rx uart_rx_inst
 reg tx_start;
 reg [7:0] tx_data;
 wire tx_active, tx_done;
-UART_TX uart_tx_inst
+UART_TX #(clks_per_bit) uart_tx_inst
 (
 	clk,
 	tx_start,

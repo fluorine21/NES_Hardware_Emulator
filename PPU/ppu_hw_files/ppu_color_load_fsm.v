@@ -8,7 +8,7 @@ module ppu_color_load_fsm
 	input wire clk,
 	input wire rst,
 	
-	inout wire [15:0] vram_addr,
+	inout wire [15:0] vram_addr_out,
 	input wire [7:0] vram_data_in,
 	input wire start,
 	output wire busy,
@@ -17,6 +17,10 @@ module ppu_color_load_fsm
 	output wire [127:0] sprite_colors
 );
 
+
+wire [15:0] vram_addr;
+
+assign vram_addr_out = vram_addr[1:0] == 2'b00 ? 16'h3F00 : vram_addr;
 
 //3F00 to 3F0F is background_colors
 //3F10 to 3F1F is sprite colors

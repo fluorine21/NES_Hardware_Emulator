@@ -1,5 +1,5 @@
 Analysis & Synthesis report for nes_fpga
-Wed May 20 21:42:15 2020
+Thu May 21 16:07:53 2020
 Quartus Prime Version 17.1.0 Build 590 10/25/2017 SJ Lite Edition
 
 
@@ -35,40 +35,42 @@ Quartus Prime Version 17.1.0 Build 590 10/25/2017 SJ Lite Edition
  27. Multiplexer Restructuring Statistics (Restructuring Performed)
  28. Source assignments for vga_mem:vga_mem_inst|generic_ram:ram|altsyncram:mem_arr_rtl_0|altsyncram_kmc1:auto_generated
  29. Source assignments for mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:spram_mem|altsyncram:mem_arr_rtl_0|altsyncram_7vl1:auto_generated
- 30. Source assignments for mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem|altsyncram:mem_arr_rtl_0|altsyncram_0nc1:auto_generated
- 31. Source assignments for mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem|altsyncram:mem_arr_rtl_0|altsyncram_n7m1:auto_generated
- 32. Parameter Settings for User Entity Instance: mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem
- 33. Parameter Settings for User Entity Instance: mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:spram_mem
- 34. Parameter Settings for User Entity Instance: mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem
- 35. Parameter Settings for User Entity Instance: mem_ctrl:mem_ctrl_inst|joycon_ctrl:joycon_ctrl_1
- 36. Parameter Settings for User Entity Instance: mem_ctrl:mem_ctrl_inst|joycon_ctrl:joycon_ctrl_2
- 37. Parameter Settings for User Entity Instance: vga_mem:vga_mem_inst|generic_ram:ram
- 38. Parameter Settings for User Entity Instance: sys_ctrl_fsm:sys_ctrl_inst|uart_rx:uart_rx_inst
- 39. Parameter Settings for User Entity Instance: sys_ctrl_fsm:sys_ctrl_inst|uart_rx:uart_rx_inst|baudgen_rx:baudgen0
- 40. Parameter Settings for User Entity Instance: sys_ctrl_fsm:sys_ctrl_inst|UART_TX:uart_tx_inst
- 41. Parameter Settings for Inferred Entity Instance: vga_mem:vga_mem_inst|generic_ram:ram|altsyncram:mem_arr_rtl_0
- 42. Parameter Settings for Inferred Entity Instance: mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:spram_mem|altsyncram:mem_arr_rtl_0
- 43. Parameter Settings for Inferred Entity Instance: mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem|altsyncram:mem_arr_rtl_0
- 44. Parameter Settings for Inferred Entity Instance: mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem|altsyncram:mem_arr_rtl_0
- 45. altsyncram Parameter Settings by Entity Instance
- 46. Port Connectivity Checks: "cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|alu:alu_inst"
- 47. Port Connectivity Checks: "cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|interrupt_handler:interrupt_handler_inst"
- 48. Port Connectivity Checks: "cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|simple_op_decode:simple_op_decode_inst"
- 49. Port Connectivity Checks: "cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst"
- 50. Port Connectivity Checks: "cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|b2b_access:b2b_inst"
- 51. Port Connectivity Checks: "cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst"
- 52. Port Connectivity Checks: "cpu_6502:cpu_6502_dut"
- 53. Port Connectivity Checks: "sys_ctrl_fsm:sys_ctrl_inst|UART_TX:uart_tx_inst"
- 54. Port Connectivity Checks: "sys_ctrl_fsm:sys_ctrl_inst"
- 55. Port Connectivity Checks: "vga_mem:vga_mem_inst|generic_ram:ram"
- 56. Port Connectivity Checks: "vga_controller:vga_ctrl_inst|VGA_SYNC:vga_sync_inst"
- 57. Port Connectivity Checks: "mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem"
- 58. Port Connectivity Checks: "mem_ctrl:mem_ctrl_inst"
- 59. Port Connectivity Checks: "ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst"
- 60. Post-Synthesis Netlist Statistics for Top Partition
- 61. Elapsed Time Per Partition
- 62. Analysis & Synthesis Messages
- 63. Analysis & Synthesis Suppressed Messages
+ 30. Source assignments for mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem|altsyncram:mem_arr_rtl_0|altsyncram_8nc1:auto_generated
+ 31. Source assignments for mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem|altsyncram:mem_arr_rtl_0|altsyncram_j8m1:auto_generated
+ 32. Parameter Settings for User Entity Instance: Top-level Entity: |nes_fpga_top_lvl
+ 33. Parameter Settings for User Entity Instance: mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem
+ 34. Parameter Settings for User Entity Instance: mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:spram_mem
+ 35. Parameter Settings for User Entity Instance: mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem
+ 36. Parameter Settings for User Entity Instance: mem_ctrl:mem_ctrl_inst|joycon_ctrl:joycon_ctrl_1
+ 37. Parameter Settings for User Entity Instance: mem_ctrl:mem_ctrl_inst|joycon_ctrl:joycon_ctrl_2
+ 38. Parameter Settings for User Entity Instance: vga_mem:vga_mem_inst|generic_ram:ram
+ 39. Parameter Settings for User Entity Instance: sys_ctrl_fsm:sys_ctrl_inst
+ 40. Parameter Settings for User Entity Instance: sys_ctrl_fsm:sys_ctrl_inst|uart_rx:uart_rx_inst
+ 41. Parameter Settings for User Entity Instance: sys_ctrl_fsm:sys_ctrl_inst|uart_rx:uart_rx_inst|baudgen_rx:baudgen0
+ 42. Parameter Settings for User Entity Instance: sys_ctrl_fsm:sys_ctrl_inst|UART_TX:uart_tx_inst
+ 43. Parameter Settings for Inferred Entity Instance: vga_mem:vga_mem_inst|generic_ram:ram|altsyncram:mem_arr_rtl_0
+ 44. Parameter Settings for Inferred Entity Instance: mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:spram_mem|altsyncram:mem_arr_rtl_0
+ 45. Parameter Settings for Inferred Entity Instance: mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem|altsyncram:mem_arr_rtl_0
+ 46. Parameter Settings for Inferred Entity Instance: mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem|altsyncram:mem_arr_rtl_0
+ 47. altsyncram Parameter Settings by Entity Instance
+ 48. Port Connectivity Checks: "cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|alu:alu_inst"
+ 49. Port Connectivity Checks: "cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|interrupt_handler:interrupt_handler_inst"
+ 50. Port Connectivity Checks: "cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|simple_op_decode:simple_op_decode_inst"
+ 51. Port Connectivity Checks: "cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst"
+ 52. Port Connectivity Checks: "cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|b2b_access:b2b_inst"
+ 53. Port Connectivity Checks: "cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst"
+ 54. Port Connectivity Checks: "cpu_6502:cpu_6502_dut"
+ 55. Port Connectivity Checks: "sys_ctrl_fsm:sys_ctrl_inst|UART_TX:uart_tx_inst"
+ 56. Port Connectivity Checks: "sys_ctrl_fsm:sys_ctrl_inst"
+ 57. Port Connectivity Checks: "vga_mem:vga_mem_inst|generic_ram:ram"
+ 58. Port Connectivity Checks: "vga_controller:vga_ctrl_inst|VGA_SYNC:vga_sync_inst"
+ 59. Port Connectivity Checks: "mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem"
+ 60. Port Connectivity Checks: "mem_ctrl:mem_ctrl_inst"
+ 61. Port Connectivity Checks: "ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst"
+ 62. Post-Synthesis Netlist Statistics for Top Partition
+ 63. Elapsed Time Per Partition
+ 64. Analysis & Synthesis Messages
+ 65. Analysis & Synthesis Suppressed Messages
 
 
 
@@ -94,18 +96,18 @@ refer to the applicable agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Wed May 20 21:42:15 2020       ;
+; Analysis & Synthesis Status        ; Successful - Thu May 21 16:07:52 2020       ;
 ; Quartus Prime Version              ; 17.1.0 Build 590 10/25/2017 SJ Lite Edition ;
 ; Revision Name                      ; nes_fpga                                    ;
 ; Top-level Entity Name              ; nes_fpga_top_lvl                            ;
 ; Family                             ; Cyclone IV E                                ;
-; Total logic elements               ; 5,546                                       ;
-;     Total combinational functions  ; 4,754                                       ;
+; Total logic elements               ; 5,537                                       ;
+;     Total combinational functions  ; 4,742                                       ;
 ;     Dedicated logic registers      ; 1,764                                       ;
 ; Total registers                    ; 1764                                        ;
 ; Total pins                         ; 111                                         ;
 ; Total virtual pins                 ; 0                                           ;
-; Total memory bits                  ; 1,001,472                                   ;
+; Total memory bits                  ; 1,148,928                                   ;
 ; Embedded Multiplier 9-bit elements ; 0                                           ;
 ; Total PLLs                         ; 0                                           ;
 +------------------------------------+---------------------------------------------+
@@ -210,7 +212,7 @@ refer to the applicable agreement for further details.
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;   0.1%      ;
+;     Processor 2            ;   0.2%      ;
 ;     Processor 3            ;   0.1%      ;
 ;     Processor 4            ;   0.1%      ;
 +----------------------------+-------------+
@@ -273,11 +275,8 @@ refer to the applicable agreement for further details.
 ; db/decode_k8a.tdf                                                                                                          ; yes             ; Auto-Generated Megafunction  ; C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/quartus/db/decode_k8a.tdf       ;         ;
 ; db/mux_bnb.tdf                                                                                                             ; yes             ; Auto-Generated Megafunction  ; C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/quartus/db/mux_bnb.tdf          ;         ;
 ; db/altsyncram_7vl1.tdf                                                                                                     ; yes             ; Auto-Generated Megafunction  ; C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/quartus/db/altsyncram_7vl1.tdf  ;         ;
-; db/altsyncram_0nc1.tdf                                                                                                     ; yes             ; Auto-Generated Megafunction  ; C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/quartus/db/altsyncram_0nc1.tdf  ;         ;
-; db/decode_qsa.tdf                                                                                                          ; yes             ; Auto-Generated Megafunction  ; C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/quartus/db/decode_qsa.tdf       ;         ;
-; db/decode_j8a.tdf                                                                                                          ; yes             ; Auto-Generated Megafunction  ; C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/quartus/db/decode_j8a.tdf       ;         ;
-; db/mux_anb.tdf                                                                                                             ; yes             ; Auto-Generated Megafunction  ; C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/quartus/db/mux_anb.tdf          ;         ;
-; db/altsyncram_n7m1.tdf                                                                                                     ; yes             ; Auto-Generated Megafunction  ; C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/quartus/db/altsyncram_n7m1.tdf  ;         ;
+; db/altsyncram_8nc1.tdf                                                                                                     ; yes             ; Auto-Generated Megafunction  ; C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/quartus/db/altsyncram_8nc1.tdf  ;         ;
+; db/altsyncram_j8m1.tdf                                                                                                     ; yes             ; Auto-Generated Megafunction  ; C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/quartus/db/altsyncram_j8m1.tdf  ;         ;
 ; db/decode_jsa.tdf                                                                                                          ; yes             ; Auto-Generated Megafunction  ; C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/quartus/db/decode_jsa.tdf       ;         ;
 ; db/decode_c8a.tdf                                                                                                          ; yes             ; Auto-Generated Megafunction  ; C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/quartus/db/decode_c8a.tdf       ;         ;
 ; db/mux_3nb.tdf                                                                                                             ; yes             ; Auto-Generated Megafunction  ; C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/quartus/db/mux_3nb.tdf          ;         ;
@@ -289,16 +288,16 @@ refer to the applicable agreement for further details.
 +---------------------------------------------+--------------------------+
 ; Resource                                    ; Usage                    ;
 +---------------------------------------------+--------------------------+
-; Estimated Total logic elements              ; 5,546                    ;
+; Estimated Total logic elements              ; 5,537                    ;
 ;                                             ;                          ;
-; Total combinational functions               ; 4754                     ;
+; Total combinational functions               ; 4742                     ;
 ; Logic element usage by number of LUT inputs ;                          ;
-;     -- 4 input functions                    ; 2565                     ;
-;     -- 3 input functions                    ; 1268                     ;
+;     -- 4 input functions                    ; 2560                     ;
+;     -- 3 input functions                    ; 1261                     ;
 ;     -- <=2 input functions                  ; 921                      ;
 ;                                             ;                          ;
 ; Logic elements by mode                      ;                          ;
-;     -- normal mode                          ; 3637                     ;
+;     -- normal mode                          ; 3625                     ;
 ;     -- arithmetic mode                      ; 1117                     ;
 ;                                             ;                          ;
 ; Total registers                             ; 1764                     ;
@@ -306,14 +305,14 @@ refer to the applicable agreement for further details.
 ;     -- I/O registers                        ; 0                        ;
 ;                                             ;                          ;
 ; I/O pins                                    ; 111                      ;
-; Total memory bits                           ; 1001472                  ;
+; Total memory bits                           ; 1148928                  ;
 ;                                             ;                          ;
 ; Embedded Multiplier 9-bit elements          ; 0                        ;
 ;                                             ;                          ;
 ; Maximum fan-out node                        ; clkdiv2:clkdiv2_inst|out ;
-; Maximum fan-out                             ; 1909                     ;
-; Total fan-out                               ; 26364                    ;
-; Average fan-out                             ; 3.83                     ;
+; Maximum fan-out                             ; 1917                     ;
+; Total fan-out                               ; 26493                    ;
+; Average fan-out                             ; 3.85                     ;
 +---------------------------------------------+--------------------------+
 
 
@@ -322,14 +321,14 @@ refer to the applicable agreement for further details.
 +--------------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------+--------------+
 ; Compilation Hierarchy Node                             ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                                      ; Entity Name            ; Library Name ;
 +--------------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------+--------------+
-; |nes_fpga_top_lvl                                      ; 4754 (35)           ; 1764 (0)                  ; 1001472     ; 0            ; 0       ; 0         ; 111  ; 0            ; |nes_fpga_top_lvl                                                                                                                                                        ; nes_fpga_top_lvl       ; work         ;
+; |nes_fpga_top_lvl                                      ; 4742 (29)           ; 1764 (0)                  ; 1148928     ; 0            ; 0       ; 0         ; 111  ; 0            ; |nes_fpga_top_lvl                                                                                                                                                        ; nes_fpga_top_lvl       ; work         ;
 ;    |clkdiv2:clkdiv2_inst|                              ; 1 (1)               ; 1 (1)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|clkdiv2:clkdiv2_inst                                                                                                                                   ; clkdiv2                ; work         ;
-;    |cpu_6502:cpu_6502_dut|                             ; 1330 (33)           ; 388 (0)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut                                                                                                                                  ; cpu_6502               ; work         ;
-;       |ie_fsm:inst_exec_inst|                          ; 671 (298)           ; 192 (119)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst                                                                                                            ; ie_fsm                 ; work         ;
-;          |alu:alu_inst|                                ; 195 (195)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|alu:alu_inst                                                                                               ; alu                    ; work         ;
-;          |interrupt_handler:interrupt_handler_inst|    ; 152 (152)           ; 73 (73)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|interrupt_handler:interrupt_handler_inst                                                                   ; interrupt_handler      ; work         ;
+;    |cpu_6502:cpu_6502_dut|                             ; 1322 (33)           ; 388 (0)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut                                                                                                                                  ; cpu_6502               ; work         ;
+;       |ie_fsm:inst_exec_inst|                          ; 665 (299)           ; 192 (119)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst                                                                                                            ; ie_fsm                 ; work         ;
+;          |alu:alu_inst|                                ; 194 (194)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|alu:alu_inst                                                                                               ; alu                    ; work         ;
+;          |interrupt_handler:interrupt_handler_inst|    ; 146 (146)           ; 73 (73)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|interrupt_handler:interrupt_handler_inst                                                                   ; interrupt_handler      ; work         ;
 ;          |simple_op_decode:simple_op_decode_inst|      ; 26 (26)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|simple_op_decode:simple_op_decode_inst                                                                     ; simple_op_decode       ; work         ;
-;       |instr_fetch:instr_fetch_inst|                   ; 626 (607)           ; 196 (159)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst                                                                                                     ; instr_fetch            ; work         ;
+;       |instr_fetch:instr_fetch_inst|                   ; 624 (605)           ; 196 (159)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst                                                                                                     ; instr_fetch            ; work         ;
 ;          |b2b_access:b2b_inst|                         ; 19 (19)             ; 37 (37)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|b2b_access:b2b_inst                                                                                 ; b2b_access             ; work         ;
 ;    |leddcd:led_drivers[0].leddcd_cpu_inst|             ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|leddcd:led_drivers[0].leddcd_cpu_inst                                                                                                                  ; leddcd                 ; work         ;
 ;    |leddcd:led_drivers[0].leddcd_sys_inst|             ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|leddcd:led_drivers[0].leddcd_sys_inst                                                                                                                  ; leddcd                 ; work         ;
@@ -339,33 +338,33 @@ refer to the applicable agreement for further details.
 ;    |leddcd:led_drivers[2].leddcd_sys_inst|             ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|leddcd:led_drivers[2].leddcd_sys_inst                                                                                                                  ; leddcd                 ; work         ;
 ;    |leddcd:led_drivers[3].leddcd_cpu_inst|             ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|leddcd:led_drivers[3].leddcd_cpu_inst                                                                                                                  ; leddcd                 ; work         ;
 ;    |leddcd:led_drivers[3].leddcd_sys_inst|             ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|leddcd:led_drivers[3].leddcd_sys_inst                                                                                                                  ; leddcd                 ; work         ;
-;    |mem_ctrl:mem_ctrl_inst|                            ; 527 (49)            ; 208 (0)                   ; 509952      ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst                                                                                                                                 ; mem_ctrl               ; work         ;
+;    |mem_ctrl:mem_ctrl_inst|                            ; 527 (47)            ; 208 (0)                   ; 657408      ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst                                                                                                                                 ; mem_ctrl               ; work         ;
 ;       |dma_module:dma_module_inst|                     ; 55 (55)             ; 57 (57)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|dma_module:dma_module_inst                                                                                                      ; dma_module             ; work         ;
-;       |joycon_ctrl:joycon_ctrl_1|                      ; 13 (13)             ; 5 (5)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|joycon_ctrl:joycon_ctrl_1                                                                                                       ; joycon_ctrl            ; work         ;
-;       |joycon_ctrl:joycon_ctrl_2|                      ; 20 (20)             ; 5 (5)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|joycon_ctrl:joycon_ctrl_2                                                                                                       ; joycon_ctrl            ; work         ;
-;       |mem_decode:mem_decode_inst|                     ; 390 (215)           ; 141 (65)                  ; 509952      ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst                                                                                                      ; mem_decode             ; work         ;
+;       |joycon_ctrl:joycon_ctrl_1|                      ; 11 (11)             ; 5 (5)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|joycon_ctrl:joycon_ctrl_1                                                                                                       ; joycon_ctrl            ; work         ;
+;       |joycon_ctrl:joycon_ctrl_2|                      ; 21 (21)             ; 5 (5)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|joycon_ctrl:joycon_ctrl_2                                                                                                       ; joycon_ctrl            ; work         ;
+;       |mem_decode:mem_decode_inst|                     ; 393 (237)           ; 141 (65)                  ; 657408      ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst                                                                                                      ; mem_decode             ; work         ;
 ;          |cpu_mem_decode:cpu_decode|                   ; 36 (36)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|cpu_mem_decode:cpu_decode                                                                            ; cpu_mem_decode         ; work         ;
-;          |generic_ram:cpu_mem|                         ; 20 (6)              ; 12 (9)                    ; 409344      ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem                                                                                  ; generic_ram            ; work         ;
-;             |altsyncram:mem_arr_rtl_0|                 ; 14 (0)              ; 3 (0)                     ; 409344      ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem|altsyncram:mem_arr_rtl_0                                                         ; altsyncram             ; work         ;
-;                |altsyncram_0nc1:auto_generated|        ; 14 (0)              ; 3 (3)                     ; 409344      ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem|altsyncram:mem_arr_rtl_0|altsyncram_0nc1:auto_generated                          ; altsyncram_0nc1        ; work         ;
-;                   |decode_j8a:rden_decode_b|           ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem|altsyncram:mem_arr_rtl_0|altsyncram_0nc1:auto_generated|decode_j8a:rden_decode_b ; decode_j8a             ; work         ;
-;                   |decode_qsa:decode2|                 ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem|altsyncram:mem_arr_rtl_0|altsyncram_0nc1:auto_generated|decode_qsa:decode2       ; decode_qsa             ; work         ;
+;          |generic_ram:cpu_mem|                         ; 24 (7)              ; 12 (9)                    ; 524288      ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem                                                                                  ; generic_ram            ; work         ;
+;             |altsyncram:mem_arr_rtl_0|                 ; 17 (0)              ; 3 (0)                     ; 524288      ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem|altsyncram:mem_arr_rtl_0                                                         ; altsyncram             ; work         ;
+;                |altsyncram_8nc1:auto_generated|        ; 17 (0)              ; 3 (3)                     ; 524288      ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem|altsyncram:mem_arr_rtl_0|altsyncram_8nc1:auto_generated                          ; altsyncram_8nc1        ; work         ;
+;                   |decode_k8a:rden_decode_b|           ; 9 (9)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem|altsyncram:mem_arr_rtl_0|altsyncram_8nc1:auto_generated|decode_k8a:rden_decode_b ; decode_k8a             ; work         ;
+;                   |decode_rsa:decode2|                 ; 8 (8)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem|altsyncram:mem_arr_rtl_0|altsyncram_8nc1:auto_generated|decode_rsa:decode2       ; decode_rsa             ; work         ;
 ;          |generic_ram:spram_mem|                       ; 14 (14)             ; 25 (25)                   ; 2048        ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:spram_mem                                                                                ; generic_ram            ; work         ;
 ;             |altsyncram:mem_arr_rtl_0|                 ; 0 (0)               ; 0 (0)                     ; 2048        ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:spram_mem|altsyncram:mem_arr_rtl_0                                                       ; altsyncram             ; work         ;
 ;                |altsyncram_7vl1:auto_generated|        ; 0 (0)               ; 0 (0)                     ; 2048        ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:spram_mem|altsyncram:mem_arr_rtl_0|altsyncram_7vl1:auto_generated                        ; altsyncram_7vl1        ; work         ;
-;          |generic_ram:vram_mem|                        ; 36 (26)             ; 39 (37)                   ; 98560       ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem                                                                                 ; generic_ram            ; work         ;
-;             |altsyncram:mem_arr_rtl_0|                 ; 10 (0)              ; 2 (0)                     ; 98560       ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem|altsyncram:mem_arr_rtl_0                                                        ; altsyncram             ; work         ;
-;                |altsyncram_n7m1:auto_generated|        ; 10 (0)              ; 2 (2)                     ; 98560       ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem|altsyncram:mem_arr_rtl_0|altsyncram_n7m1:auto_generated                         ; altsyncram_n7m1        ; work         ;
-;                   |decode_jsa:decode2|                 ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem|altsyncram:mem_arr_rtl_0|altsyncram_n7m1:auto_generated|decode_jsa:decode2      ; decode_jsa             ; work         ;
-;                   |mux_3nb:mux4|                       ; 8 (8)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem|altsyncram:mem_arr_rtl_0|altsyncram_n7m1:auto_generated|mux_3nb:mux4            ; mux_3nb                ; work         ;
-;          |ppu_mem_decode:read_decode|                  ; 36 (36)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|ppu_mem_decode:read_decode                                                                           ; ppu_mem_decode         ; work         ;
-;          |ppu_mem_decode:write_decode|                 ; 33 (33)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|ppu_mem_decode:write_decode                                                                          ; ppu_mem_decode         ; work         ;
-;    |ppu_fsm:ppu_fsm_inst|                              ; 2324 (98)           ; 954 (42)                  ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst                                                                                                                                   ; ppu_fsm                ; work         ;
-;       |pixel_to_nametable_ptr:pixel_to_nametable_inst| ; 28 (28)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|pixel_to_nametable_ptr:pixel_to_nametable_inst                                                                                    ; pixel_to_nametable_ptr ; work         ;
-;       |ppu_color_load_fsm:color_load_inst|             ; 97 (97)             ; 275 (275)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_color_load_fsm:color_load_inst                                                                                                ; ppu_color_load_fsm     ; work         ;
-;       |ppu_sprite_load_fsm:sprite_load_inst|           ; 1036 (1036)         ; 324 (324)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst                                                                                              ; ppu_sprite_load_fsm    ; work         ;
-;       |ppu_status_latch:ppu_status_inst|               ; 11 (11)             ; 27 (27)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst                                                                                                  ; ppu_status_latch       ; work         ;
-;       |ppu_vram_load_fsm:vram_load_inst|               ; 1054 (667)          ; 286 (259)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst                                                                                                  ; ppu_vram_load_fsm      ; work         ;
+;          |generic_ram:vram_mem|                        ; 36 (26)             ; 39 (37)                   ; 131072      ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem                                                                                 ; generic_ram            ; work         ;
+;             |altsyncram:mem_arr_rtl_0|                 ; 10 (0)              ; 2 (0)                     ; 131072      ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem|altsyncram:mem_arr_rtl_0                                                        ; altsyncram             ; work         ;
+;                |altsyncram_j8m1:auto_generated|        ; 10 (0)              ; 2 (2)                     ; 131072      ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem|altsyncram:mem_arr_rtl_0|altsyncram_j8m1:auto_generated                         ; altsyncram_j8m1        ; work         ;
+;                   |decode_jsa:decode2|                 ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem|altsyncram:mem_arr_rtl_0|altsyncram_j8m1:auto_generated|decode_jsa:decode2      ; decode_jsa             ; work         ;
+;                   |mux_3nb:mux4|                       ; 8 (8)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem|altsyncram:mem_arr_rtl_0|altsyncram_j8m1:auto_generated|mux_3nb:mux4            ; mux_3nb                ; work         ;
+;          |ppu_mem_decode:read_decode|                  ; 25 (25)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|ppu_mem_decode:read_decode                                                                           ; ppu_mem_decode         ; work         ;
+;          |ppu_mem_decode:write_decode|                 ; 21 (21)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|ppu_mem_decode:write_decode                                                                          ; ppu_mem_decode         ; work         ;
+;    |ppu_fsm:ppu_fsm_inst|                              ; 2326 (105)          ; 954 (60)                  ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst                                                                                                                                   ; ppu_fsm                ; work         ;
+;       |pixel_to_nametable_ptr:pixel_to_nametable_inst| ; 30 (30)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|pixel_to_nametable_ptr:pixel_to_nametable_inst                                                                                    ; pixel_to_nametable_ptr ; work         ;
+;       |ppu_color_load_fsm:color_load_inst|             ; 98 (98)             ; 275 (275)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_color_load_fsm:color_load_inst                                                                                                ; ppu_color_load_fsm     ; work         ;
+;       |ppu_sprite_load_fsm:sprite_load_inst|           ; 1031 (1031)         ; 324 (324)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst                                                                                              ; ppu_sprite_load_fsm    ; work         ;
+;       |ppu_status_latch:ppu_status_inst|               ; 10 (10)             ; 9 (9)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst                                                                                                  ; ppu_status_latch       ; work         ;
+;       |ppu_vram_load_fsm:vram_load_inst|               ; 1052 (665)          ; 286 (259)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst                                                                                                  ; ppu_vram_load_fsm      ; work         ;
 ;          |color_selector:color_selector_inst|          ; 192 (192)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|color_selector:color_selector_inst                                                               ; color_selector         ; work         ;
 ;          |render_8_pixels:render_8_inst|               ; 195 (181)           ; 27 (27)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|render_8_pixels:render_8_inst                                                                    ; render_8_pixels        ; work         ;
 ;             |pixel_mux:pixel_mux_inst|                 ; 14 (14)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|render_8_pixels:render_8_inst|pixel_mux:pixel_mux_inst                                           ; pixel_mux              ; work         ;
@@ -391,9 +390,9 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +--------------------------------------------------------------------------------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+--------+------+
 ; Name                                                                                                                                       ; Type ; Mode             ; Port A Depth ; Port A Width ; Port B Depth ; Port B Width ; Size   ; MIF  ;
 +--------------------------------------------------------------------------------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+--------+------+
-; mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem|altsyncram:mem_arr_rtl_0|altsyncram_0nc1:auto_generated|ALTSYNCRAM   ; AUTO ; Simple Dual Port ; 51168        ; 8            ; 51168        ; 8            ; 409344 ; None ;
+; mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem|altsyncram:mem_arr_rtl_0|altsyncram_8nc1:auto_generated|ALTSYNCRAM   ; AUTO ; Simple Dual Port ; 65536        ; 8            ; 65536        ; 8            ; 524288 ; None ;
 ; mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:spram_mem|altsyncram:mem_arr_rtl_0|altsyncram_7vl1:auto_generated|ALTSYNCRAM ; AUTO ; True Dual Port   ; 256          ; 8            ; 256          ; 8            ; 2048   ; None ;
-; mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem|altsyncram:mem_arr_rtl_0|altsyncram_n7m1:auto_generated|ALTSYNCRAM  ; AUTO ; True Dual Port   ; 12320        ; 8            ; 12320        ; 8            ; 98560  ; None ;
+; mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem|altsyncram:mem_arr_rtl_0|altsyncram_j8m1:auto_generated|ALTSYNCRAM  ; AUTO ; True Dual Port   ; 16384        ; 8            ; 16384        ; 8            ; 131072 ; None ;
 ; vga_mem:vga_mem_inst|generic_ram:ram|altsyncram:mem_arr_rtl_0|altsyncram_kmc1:auto_generated|ALTSYNCRAM                                    ; AUTO ; Simple Dual Port ; 61440        ; 8            ; 61440        ; 8            ; 491520 ; None ;
 +--------------------------------------------------------------------------------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+--------+------+
 
@@ -595,12 +594,6 @@ Encoding Type:  One-Hot
 ; Register name                                                                                                       ; Reason for Removal                                                                                             ;
 +---------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
 ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s1[0..4]                                                      ; Stuck at GND due to stuck port data_in                                                                         ;
-; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s2[0..4]                                                      ; Stuck at GND due to stuck port data_in                                                                         ;
-; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s3[0..4]                                                      ; Stuck at GND due to stuck port data_in                                                                         ;
-; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s4[0..4]                                                      ; Stuck at GND due to stuck port data_in                                                                         ;
-; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s5[0..4]                                                      ; Stuck at GND due to stuck port data_in                                                                         ;
-; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s6[0..4]                                                      ; Stuck at GND due to stuck port data_in                                                                         ;
-; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s7[0..4]                                                      ; Stuck at GND due to stuck port data_in                                                                         ;
 ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|ppu_status_out[0..4]                                          ; Stuck at GND due to stuck port data_in                                                                         ;
 ; cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|interrupt_handler:interrupt_handler_inst|soft_reset_int                 ; Stuck at GND due to stuck port data_in                                                                         ;
 ; cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|interrupt_handler:interrupt_handler_inst|nIRQ_int                       ; Stuck at VCC due to stuck port data_in                                                                         ;
@@ -677,7 +670,7 @@ Encoding Type:  One-Hot
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|state~13                                                  ; Lost fanout                                                                                                    ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|state~14                                                  ; Lost fanout                                                                                                    ;
 ; cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|interrupt_handler:interrupt_handler_inst|cpu_addr_next.1111111111111101 ; Stuck at GND due to stuck port data_in                                                                         ;
-; Total Number of Removed Registers = 123                                                                             ;                                                                                                                ;
+; Total Number of Removed Registers = 93                                                                              ;                                                                                                                ;
 +---------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
 
 
@@ -686,41 +679,16 @@ Encoding Type:  One-Hot
 +-------------------------------------------------------------+---------------------------+-------------------------------------------------------------------------+
 ; Register name                                               ; Reason for Removal        ; Registers Removed due to This Register                                  ;
 +-------------------------------------------------------------+---------------------------+-------------------------------------------------------------------------+
-; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s1[4] ; Stuck at GND              ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s2[4],            ;
-;                                                             ; due to stuck port data_in ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s3[4],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s4[4],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s5[4],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s6[4],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s7[4],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|ppu_status_out[4] ;
-; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s1[3] ; Stuck at GND              ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s2[3],            ;
-;                                                             ; due to stuck port data_in ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s3[3],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s4[3],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s5[3],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s6[3],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s7[3],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|ppu_status_out[3] ;
-; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s1[2] ; Stuck at GND              ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s2[2],            ;
-;                                                             ; due to stuck port data_in ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s3[2],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s4[2],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s5[2],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s6[2],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s7[2],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|ppu_status_out[2] ;
-; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s1[1] ; Stuck at GND              ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s2[1],            ;
-;                                                             ; due to stuck port data_in ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s3[1],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s4[1],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s5[1],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s6[1],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s7[1],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|ppu_status_out[1] ;
-; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s1[0] ; Stuck at GND              ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s2[0],            ;
-;                                                             ; due to stuck port data_in ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s3[0],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s4[0],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s5[0],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s6[0],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s7[0],            ;
-;                                                             ;                           ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|ppu_status_out[0] ;
+; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s1[4] ; Stuck at GND              ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|ppu_status_out[4] ;
+;                                                             ; due to stuck port data_in ;                                                                         ;
+; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s1[3] ; Stuck at GND              ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|ppu_status_out[3] ;
+;                                                             ; due to stuck port data_in ;                                                                         ;
+; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s1[2] ; Stuck at GND              ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|ppu_status_out[2] ;
+;                                                             ; due to stuck port data_in ;                                                                         ;
+; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s1[1] ; Stuck at GND              ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|ppu_status_out[1] ;
+;                                                             ; due to stuck port data_in ;                                                                         ;
+; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|s1[0] ; Stuck at GND              ; ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst|ppu_status_out[0] ;
+;                                                             ; due to stuck port data_in ;                                                                         ;
 +-------------------------------------------------------------+---------------------------+-------------------------------------------------------------------------+
 
 
@@ -734,7 +702,7 @@ Encoding Type:  One-Hot
 ; Number of registers using Synchronous Load   ; 194   ;
 ; Number of registers using Asynchronous Clear ; 1429  ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 1405  ;
+; Number of registers using Clock Enable       ; 1423  ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -745,56 +713,56 @@ Encoding Type:  One-Hot
 ; Inverted Register                                                         ; Fan out ;
 +---------------------------------------------------------------------------+---------+
 ; cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|pc_next[15]                   ; 16      ;
-; sys_ctrl_fsm:sys_ctrl_inst|cpu_rst                                        ; 27      ;
-; cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|stack_ptr[2]                  ; 9       ;
-; cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|stack_ptr[1]                  ; 9       ;
-; cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|stack_ptr[0]                  ; 7       ;
+; sys_ctrl_fsm:sys_ctrl_inst|cpu_rst                                        ; 21      ;
 ; cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|if_start                      ; 4       ;
-; cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|stack_ptr[6]                  ; 9       ;
 ; cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|stack_ptr[5]                  ; 9       ;
 ; cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|stack_ptr[4]                  ; 9       ;
 ; cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|stack_ptr[3]                  ; 9       ;
+; cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|stack_ptr[2]                  ; 9       ;
+; cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|stack_ptr[1]                  ; 9       ;
+; cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|stack_ptr[0]                  ; 7       ;
+; cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|stack_ptr[6]                  ; 9       ;
 ; cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|stack_ptr[7]                  ; 9       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[55] ; 4       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[54] ; 3       ;
+; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[53] ; 3       ;
+; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[52] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[51] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[50] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[49] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[48] ; 3       ;
-; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[53] ; 3       ;
-; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[52] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[7]  ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[6]  ; 3       ;
+; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[5]  ; 3       ;
+; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[4]  ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[3]  ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[2]  ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[1]  ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[0]  ; 4       ;
-; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[5]  ; 3       ;
-; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[4]  ; 3       ;
+; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[15] ; 4       ;
+; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[14] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[13] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[12] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[11] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[10] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[9]  ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[8]  ; 3       ;
-; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[15] ; 4       ;
-; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[14] ; 3       ;
-; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[21] ; 3       ;
-; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[20] ; 3       ;
-; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[19] ; 3       ;
-; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[18] ; 3       ;
-; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[17] ; 3       ;
-; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[16] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[23] ; 4       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[22] ; 3       ;
+; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[21] ; 3       ;
+; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[20] ; 3       ;
+; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[17] ; 3       ;
+; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[16] ; 3       ;
+; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[19] ; 3       ;
+; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[18] ; 3       ;
+; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[31] ; 4       ;
+; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[30] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[29] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[28] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[27] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[26] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[25] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[24] ; 3       ;
-; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[31] ; 4       ;
-; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[30] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[39] ; 4       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[38] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[37] ; 3       ;
@@ -807,18 +775,18 @@ Encoding Type:  One-Hot
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[46] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[45] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[44] ; 3       ;
-; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[43] ; 3       ;
-; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[42] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[41] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[40] ; 3       ;
+; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[43] ; 3       ;
+; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[42] ; 3       ;
+; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[63] ; 3       ;
+; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[62] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[61] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[60] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[59] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[58] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[57] ; 3       ;
 ; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[56] ; 3       ;
-; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[63] ; 3       ;
-; ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[62] ; 3       ;
 ; Total number of inverted registers = 75                                   ;         ;
 +---------------------------------------------------------------------------+---------+
 
@@ -962,139 +930,136 @@ Encoding Type:  One-Hot
 +--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------------------------------------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                                                                                ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------------------------------------------------------------------+
-; 3:1                ; 9 bits    ; 18 LEs        ; 9 LEs                ; 9 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|render_8_pixels:render_8_inst|vga_addr_col[4]     ;
-; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |nes_fpga_top_lvl|vga_controller:vga_ctrl_inst|VGA_SYNC:vga_sync_inst|v_count[6]                                          ;
+; 3:1                ; 9 bits    ; 18 LEs        ; 9 LEs                ; 9 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|render_8_pixels:render_8_inst|vga_addr_col[7]     ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |nes_fpga_top_lvl|vga_controller:vga_ctrl_inst|VGA_SYNC:vga_sync_inst|v_count[2]                                          ;
 ; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|vram_cpu_addr[2]                                      ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|spram_mem_cpu_addr[0]                                 ;
-; 4:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|background_colors_out[0]                          ;
-; 4:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_1_colors_out[0]                            ;
-; 4:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_0_colors_out[19]                           ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|spram_mem_cpu_addr[7]                                 ;
+; 4:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|background_colors_out[27]                         ;
+; 4:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_1_colors_out[31]                           ;
+; 4:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_0_colors_out[23]                           ;
 ; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |nes_fpga_top_lvl|sys_ctrl_fsm:sys_ctrl_inst|uart_rx:uart_rx_inst|bitc[0]                                                 ;
 ; 4:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; Yes        ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|vram_cpu_addr[8]                                      ;
-; 4:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|joycon_ctrl:joycon_ctrl_1|cnt[4]                                                 ;
-; 4:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|joycon_ctrl:joycon_ctrl_2|cnt[3]                                                 ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |nes_fpga_top_lvl|sys_ctrl_fsm:sys_ctrl_inst|uart_rx:uart_rx_inst|baudgen_rx:baudgen0|divcounter[7]                       ;
-; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|interrupt_handler:interrupt_handler_inst|cpu_data_out[3]    ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|dma_module:dma_module_inst|mem_data_out[5]                                       ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|interrupt_handler:interrupt_handler_inst|pc_out[8]          ;
-; 4:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|b2b_access:b2b_inst|mem_addr[6]                      ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_0_pattern_low[3]                           ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_0_pattern_high[2]                          ;
+; 4:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|joycon_ctrl:joycon_ctrl_1|cnt[1]                                                 ;
+; 4:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|joycon_ctrl:joycon_ctrl_2|cnt[0]                                                 ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |nes_fpga_top_lvl|sys_ctrl_fsm:sys_ctrl_inst|uart_rx:uart_rx_inst|baudgen_rx:baudgen0|divcounter[6]                       ;
+; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|interrupt_handler:interrupt_handler_inst|cpu_data_out[7]    ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|dma_module:dma_module_inst|mem_data_out[3]                                       ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|interrupt_handler:interrupt_handler_inst|pc_out[13]         ;
+; 4:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|b2b_access:b2b_inst|mem_addr[14]                     ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_0_pattern_low[5]                           ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_0_pattern_high[7]                          ;
 ; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_1_pattern_low[2]                           ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_1_pattern_high[7]                          ;
-; 9:1                ; 30 bits   ; 180 LEs       ; 180 LEs              ; 0 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_0_col[7]                               ;
-; 9:1                ; 30 bits   ; 180 LEs       ; 180 LEs              ; 0 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_1_tile_num[3]                          ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_1_pattern_high[0]                          ;
+; 9:1                ; 30 bits   ; 180 LEs       ; 180 LEs              ; 0 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_0_attr[1]                              ;
+; 9:1                ; 30 bits   ; 180 LEs       ; 180 LEs              ; 0 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_1_col[1]                               ;
 ; 5:1                ; 8 bits    ; 24 LEs        ; 8 LEs                ; 16 LEs                 ; Yes        ; |nes_fpga_top_lvl|sys_ctrl_fsm:sys_ctrl_inst|data[7]                                                                      ;
-; 5:1                ; 5 bits    ; 15 LEs        ; 5 LEs                ; 10 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|interrupt_handler:interrupt_handler_inst|status_out[3]      ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|interrupt_handler:interrupt_handler_inst|stack_ptr_out[4]   ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|interrupt_handler:interrupt_handler_inst|pc_out[3]          ;
-; 5:1                ; 13 bits   ; 39 LEs        ; 13 LEs               ; 26 LEs                 ; Yes        ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|dma_module:dma_module_inst|mem_addr[3]                                           ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 8 LEs                ; 16 LEs                 ; Yes        ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|dma_module:dma_module_inst|mem_start_addr[7]                                     ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 8 LEs                ; 16 LEs                 ; Yes        ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|dma_module:dma_module_inst|mem_start_addr[10]                                    ;
+; 5:1                ; 5 bits    ; 15 LEs        ; 5 LEs                ; 10 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|interrupt_handler:interrupt_handler_inst|status_out[7]      ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|interrupt_handler:interrupt_handler_inst|stack_ptr_out[7]   ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|interrupt_handler:interrupt_handler_inst|pc_out[1]          ;
+; 5:1                ; 13 bits   ; 39 LEs        ; 13 LEs               ; 26 LEs                 ; Yes        ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|dma_module:dma_module_inst|mem_addr[8]                                           ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 8 LEs                ; 16 LEs                 ; Yes        ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|dma_module:dma_module_inst|mem_start_addr[1]                                     ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 8 LEs                ; 16 LEs                 ; Yes        ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|dma_module:dma_module_inst|mem_start_addr[11]                                    ;
 ; 5:1                ; 16 bits   ; 48 LEs        ; 16 LEs               ; 32 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_color_load_fsm:color_load_inst|vram_addr_int[7]                                ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 8 LEs                ; 16 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|dma_cnt[7]                                                  ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 8 LEs                ; 16 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_hit_cnt[6]                             ;
-; 5:1                ; 16 bits   ; 48 LEs        ; 16 LEs               ; 32 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|counter[2]                                           ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 8 LEs                ; 16 LEs                 ; Yes        ; |nes_fpga_top_lvl|sys_ctrl_fsm:sys_ctrl_inst|addr[8]                                                                      ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 8 LEs                ; 16 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|dma_cnt[6]                                                  ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 8 LEs                ; 16 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_hit_cnt[0]                             ;
+; 5:1                ; 16 bits   ; 48 LEs        ; 16 LEs               ; 32 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|counter[12]                                          ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 8 LEs                ; 16 LEs                 ; Yes        ; |nes_fpga_top_lvl|sys_ctrl_fsm:sys_ctrl_inst|addr[11]                                                                     ;
 ; 5:1                ; 8 bits    ; 24 LEs        ; 8 LEs                ; 16 LEs                 ; Yes        ; |nes_fpga_top_lvl|sys_ctrl_fsm:sys_ctrl_inst|addr[3]                                                                      ;
 ; 6:1                ; 6 bits    ; 24 LEs        ; 12 LEs               ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|ie_data_out[6]                                              ;
-; 6:1                ; 8 bits    ; 32 LEs        ; 8 LEs                ; 24 LEs                 ; Yes        ; |nes_fpga_top_lvl|sys_ctrl_fsm:sys_ctrl_inst|tx_data[1]                                                                   ;
-; 6:1                ; 3 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; Yes        ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|dma_module:dma_module_inst|mem_addr[0]                                           ;
-; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_cols[8]                                ;
-; 6:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_attrs[9]                               ;
-; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_tile_nums[14]                          ;
-; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_cols[22]                               ;
-; 6:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_attrs[17]                              ;
-; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_tile_nums[20]                          ;
-; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_cols[24]                               ;
-; 6:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_attrs[30]                              ;
-; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_tile_nums[24]                          ;
-; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_cols[32]                               ;
-; 6:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_attrs[33]                              ;
-; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_tile_nums[33]                          ;
-; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_cols[46]                               ;
+; 6:1                ; 8 bits    ; 32 LEs        ; 8 LEs                ; 24 LEs                 ; Yes        ; |nes_fpga_top_lvl|sys_ctrl_fsm:sys_ctrl_inst|tx_data[2]                                                                   ;
+; 6:1                ; 3 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; Yes        ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|dma_module:dma_module_inst|mem_addr[2]                                           ;
+; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_cols[14]                               ;
+; 6:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_attrs[14]                              ;
+; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_tile_nums[13]                          ;
+; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_cols[21]                               ;
+; 6:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_attrs[21]                              ;
+; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_tile_nums[17]                          ;
+; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_cols[30]                               ;
+; 6:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_attrs[29]                              ;
+; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_tile_nums[27]                          ;
+; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_cols[37]                               ;
+; 6:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_attrs[38]                              ;
+; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_tile_nums[32]                          ;
+; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_cols[44]                               ;
 ; 6:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_attrs[41]                              ;
-; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_tile_nums[41]                          ;
-; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_cols[53]                               ;
-; 6:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_attrs[53]                              ;
-; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_tile_nums[54]                          ;
+; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_tile_nums[45]                          ;
+; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_cols[54]                               ;
+; 6:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_attrs[49]                              ;
+; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_tile_nums[51]                          ;
 ; 6:1                ; 8 bits    ; 32 LEs        ; 8 LEs                ; 24 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_cols[57]                               ;
-; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_attrs[61]                              ;
+; 6:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_attrs[57]                              ;
 ; 6:1                ; 8 bits    ; 32 LEs        ; 8 LEs                ; 24 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_tile_nums[62]                          ;
-; 4:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |nes_fpga_top_lvl|sys_ctrl_fsm:sys_ctrl_inst|UART_TX:uart_tx_inst|r_Clock_Count[14]                                       ;
-; 33:1               ; 16 bits   ; 352 LEs       ; 16 LEs               ; 336 LEs                ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|cnt[3]                                                                             ;
-; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_cols[7]                                ;
-; 6:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_attrs[5]                               ;
-; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_tile_nums[1]                           ;
-; 6:1                ; 32 bits   ; 128 LEs       ; 32 LEs               ; 96 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|addr_pc[10]                                          ;
-; 7:1                ; 7 bits    ; 28 LEs        ; 14 LEs               ; 14 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|pc_next[14]                                                 ;
-; 7:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|ie_data_out[4]                                              ;
-; 10:1               ; 8 bits    ; 48 LEs        ; 32 LEs               ; 16 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|alu_input_b[6]                                              ;
+; 4:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |nes_fpga_top_lvl|sys_ctrl_fsm:sys_ctrl_inst|UART_TX:uart_tx_inst|r_Clock_Count[7]                                        ;
+; 33:1               ; 16 bits   ; 352 LEs       ; 16 LEs               ; 336 LEs                ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|cnt[2]                                                                             ;
+; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_cols[1]                                ;
+; 6:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_attrs[1]                               ;
+; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_tile_nums[7]                           ;
+; 6:1                ; 32 bits   ; 128 LEs       ; 32 LEs               ; 96 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|addr_pc[15]                                          ;
+; 7:1                ; 7 bits    ; 28 LEs        ; 14 LEs               ; 14 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|pc_next[8]                                                  ;
+; 7:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|ie_data_out[5]                                              ;
+; 10:1               ; 8 bits    ; 48 LEs        ; 32 LEs               ; 16 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|alu_input_b[7]                                              ;
 ; 34:1               ; 9 bits    ; 198 LEs       ; 9 LEs                ; 189 LEs                ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|screen_pixel_row[0]                                                                ;
-; 34:1               ; 3 bits    ; 66 LEs        ; 3 LEs                ; 63 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|screen_pixel_col[2]                                                                ;
-; 8:1                ; 8 bits    ; 40 LEs        ; 24 LEs               ; 16 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|pc_next[3]                                                  ;
-; 256:1              ; 8 bits    ; 1360 LEs      ; 8 LEs                ; 1352 LEs               ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|addr_2[10]                                           ;
-; 256:1              ; 8 bits    ; 1360 LEs      ; 16 LEs               ; 1344 LEs               ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|addr_2[7]                                            ;
-; 256:1              ; 16 bits   ; 2720 LEs      ; 32 LEs               ; 2688 LEs               ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|pc[1]                                                ;
-; 18:1               ; 6 bits    ; 72 LEs        ; 30 LEs               ; 42 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|alu_input_a[0]                                              ;
-; 8:1                ; 8 bits    ; 40 LEs        ; 16 LEs               ; 24 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|spram_addr_out[4]                             ;
-; 9:1                ; 2 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|interrupt_handler:interrupt_handler_inst|cpu_addr[8]        ;
-; 123:1              ; 8 bits    ; 656 LEs       ; 8 LEs                ; 648 LEs                ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|addr_1[7]                                            ;
-; 115:1              ; 8 bits    ; 608 LEs       ; 8 LEs                ; 600 LEs                ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|addr_1[13]                                           ;
-; 10:1               ; 4 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_1_pattern_high_out[5]                      ;
-; 10:1               ; 4 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_0_pattern_low_out[4]                       ;
-; 36:1               ; 6 bits    ; 144 LEs       ; 12 LEs               ; 132 LEs                ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|screen_pixel_col[5]                                                                ;
-; 11:1               ; 4 bits    ; 28 LEs        ; 20 LEs               ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_1_pattern_high_out[3]                      ;
-; 11:1               ; 4 bits    ; 28 LEs        ; 16 LEs               ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_1_pattern_high_out[7]                      ;
-; 11:1               ; 4 bits    ; 28 LEs        ; 20 LEs               ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_0_pattern_low_out[2]                       ;
-; 11:1               ; 4 bits    ; 28 LEs        ; 16 LEs               ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_0_pattern_low_out[6]                       ;
-; 10:1               ; 8 bits    ; 48 LEs        ; 8 LEs                ; 40 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|ie_addr[12]                                                 ;
+; 34:1               ; 3 bits    ; 66 LEs        ; 3 LEs                ; 63 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|screen_pixel_col[0]                                                                ;
+; 8:1                ; 8 bits    ; 40 LEs        ; 24 LEs               ; 16 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|pc_next[6]                                                  ;
+; 256:1              ; 8 bits    ; 1360 LEs      ; 8 LEs                ; 1352 LEs               ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|addr_2[15]                                           ;
+; 256:1              ; 8 bits    ; 1360 LEs      ; 16 LEs               ; 1344 LEs               ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|addr_2[1]                                            ;
+; 256:1              ; 16 bits   ; 2720 LEs      ; 32 LEs               ; 2688 LEs               ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|pc[2]                                                ;
+; 18:1               ; 6 bits    ; 72 LEs        ; 30 LEs               ; 42 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|alu_input_a[7]                                              ;
+; 8:1                ; 8 bits    ; 40 LEs        ; 16 LEs               ; 24 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|spram_addr_out[3]                             ;
+; 9:1                ; 2 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|interrupt_handler:interrupt_handler_inst|cpu_addr[10]       ;
+; 123:1              ; 8 bits    ; 656 LEs       ; 8 LEs                ; 648 LEs                ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|addr_1[6]                                            ;
+; 115:1              ; 8 bits    ; 608 LEs       ; 8 LEs                ; 600 LEs                ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|addr_1[8]                                            ;
+; 10:1               ; 4 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_1_pattern_high_out[4]                      ;
+; 10:1               ; 4 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_0_pattern_high_out[4]                      ;
+; 36:1               ; 6 bits    ; 144 LEs       ; 12 LEs               ; 132 LEs                ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|screen_pixel_col[8]                                                                ;
+; 11:1               ; 4 bits    ; 28 LEs        ; 20 LEs               ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_1_pattern_high_out[2]                      ;
+; 11:1               ; 4 bits    ; 28 LEs        ; 16 LEs               ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_1_pattern_high_out[6]                      ;
+; 11:1               ; 4 bits    ; 28 LEs        ; 20 LEs               ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_0_pattern_high_out[3]                      ;
+; 11:1               ; 4 bits    ; 28 LEs        ; 16 LEs               ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_0_pattern_low_out[7]                       ;
+; 10:1               ; 8 bits    ; 48 LEs        ; 8 LEs                ; 40 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|ie_addr[14]                                                 ;
 ; 12:1               ; 2 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|vram_addr[12]                                     ;
 ; 12:1               ; 3 bits    ; 24 LEs        ; 12 LEs               ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|vram_addr[2]                                      ;
 ; 12:1               ; 4 bits    ; 32 LEs        ; 20 LEs               ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|vram_addr[7]                                      ;
 ; 12:1               ; 2 bits    ; 16 LEs        ; 10 LEs               ; 6 LEs                  ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|vram_addr[5]                                      ;
-; 13:1               ; 4 bits    ; 32 LEs        ; 20 LEs               ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_1_pattern_low_out[1]                       ;
+; 13:1               ; 4 bits    ; 32 LEs        ; 20 LEs               ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_1_pattern_low_out[0]                       ;
 ; 13:1               ; 4 bits    ; 32 LEs        ; 20 LEs               ; 12 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|sprite_0_pattern_low_out[0]                       ;
 ; 13:1               ; 7 bits    ; 56 LEs        ; 42 LEs               ; 14 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|interrupt_handler:interrupt_handler_inst|cpu_addr[4]        ;
-; 13:1               ; 2 bits    ; 16 LEs        ; 12 LEs               ; 4 LEs                  ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|alu_input_a[5]                                              ;
-; 13:1               ; 8 bits    ; 64 LEs        ; 16 LEs               ; 48 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|ie_addr[6]                                                  ;
-; 41:1               ; 2 bits    ; 54 LEs        ; 6 LEs                ; 48 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|state[1]                                                                           ;
+; 13:1               ; 2 bits    ; 16 LEs        ; 12 LEs               ; 4 LEs                  ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|alu_input_a[4]                                              ;
+; 13:1               ; 8 bits    ; 64 LEs        ; 16 LEs               ; 48 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|ie_addr[1]                                                  ;
+; 41:1               ; 2 bits    ; 54 LEs        ; 6 LEs                ; 48 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|state[4]                                                                           ;
 ; 41:1               ; 2 bits    ; 54 LEs        ; 6 LEs                ; 48 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|state[3]                                                                           ;
-; 88:1               ; 8 bits    ; 464 LEs       ; 48 LEs               ; 416 LEs                ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|addr_out[3]                                          ;
+; 88:1               ; 8 bits    ; 464 LEs       ; 48 LEs               ; 416 LEs                ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|addr_out[2]                                          ;
 ; 81:1               ; 8 bits    ; 432 LEs       ; 32 LEs               ; 400 LEs                ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|addr_out[14]                                         ;
 ; 105:1              ; 8 bits    ; 560 LEs       ; 64 LEs               ; 496 LEs                ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|render_8_pixels:render_8_inst|vga_data[2]         ;
-; 7:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[8]                                ;
-; 7:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[20]                               ;
-; 7:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[26]                               ;
-; 7:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[33]                               ;
-; 7:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[42]                               ;
-; 7:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[50]                               ;
-; 7:1                ; 8 bits    ; 32 LEs        ; 8 LEs                ; 24 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[59]                               ;
-; 7:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[3]                                ;
-; 12:1               ; 8 bits    ; 64 LEs        ; 16 LEs               ; 48 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|stack_ptr[7]                                                ;
+; 7:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[12]                               ;
+; 7:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[19]                               ;
+; 7:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[24]                               ;
+; 7:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[34]                               ;
+; 7:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[44]                               ;
+; 7:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[53]                               ;
+; 7:1                ; 8 bits    ; 32 LEs        ; 8 LEs                ; 24 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[62]                               ;
+; 7:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|sprite_rows[2]                                ;
+; 12:1               ; 8 bits    ; 64 LEs        ; 16 LEs               ; 48 LEs                 ; Yes        ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|stack_ptr[2]                                                ;
 ; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|simple_op_decode:simple_op_decode_inst|alu_input_a_flags[2] ;
 ; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|Mux0                                              ;
 ; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |nes_fpga_top_lvl|sys_ctrl_fsm:sys_ctrl_inst|UART_TX:uart_tx_inst|r_Bit_Index                                             ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |nes_fpga_top_lvl|vga_mem:vga_mem_inst|vga_data[2]                                                                        ;
-; 3:1                ; 9 bits    ; 18 LEs        ; 18 LEs               ; 0 LEs                  ; No         ; |nes_fpga_top_lvl|mem_data_in[4]                                                                                          ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|ppu_mem_decode:read_decode|addr_out[4]                ;
-; 3:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; No         ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|cpu_mem_decode:cpu_decode|addr_out[7]                 ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; No         ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|ppu_mem_decode:write_decode|addr_out[7]               ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; No         ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|ppu_mem_decode:read_decode|addr_out[6]                ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |nes_fpga_top_lvl|vga_mem:vga_mem_inst|vga_data[5]                                                                        ;
+; 3:1                ; 9 bits    ; 18 LEs        ; 18 LEs               ; 0 LEs                  ; No         ; |nes_fpga_top_lvl|mem_data_in[0]                                                                                          ;
+; 3:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; No         ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|cpu_mem_decode:cpu_decode|addr_out[10]                ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|ppu_mem_decode:write_decode|addr_out[10]              ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|ppu_mem_decode:read_decode|addr_out[9]                ;
 ; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|interrupt_handler:interrupt_handler_inst|cpu_addr_next      ;
-; 4:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; No         ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|mem_addr[15]                                                                      ;
-; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|ppu_mem_decode:write_decode|addr_out[10]              ;
-; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|ppu_mem_decode:read_decode|addr_out[10]               ;
-; 6:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; No         ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|ppu_mem_decode:write_decode|addr_out[12]              ;
-; 6:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; No         ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|ppu_mem_decode:read_decode|addr_out[13]               ;
-; 6:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |nes_fpga_top_lvl|sys_ctrl_fsm:sys_ctrl_inst|uart_rx:uart_rx_inst|Selector3                                               ;
+; 4:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; No         ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|mem_addr[13]                                                                      ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|ppu_mem_decode:write_decode|addr_out[12]              ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|ppu_mem_decode:read_decode|addr_out[12]               ;
+; 6:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |nes_fpga_top_lvl|sys_ctrl_fsm:sys_ctrl_inst|uart_rx:uart_rx_inst|Selector0                                               ;
 ; 7:1                ; 3 bits    ; 12 LEs        ; 9 LEs                ; 3 LEs                  ; No         ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|state.wait_indirect_y                                ;
-; 8:1                ; 2 bits    ; 10 LEs        ; 6 LEs                ; 4 LEs                  ; No         ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|Selector537                                   ;
-; 15:1               ; 6 bits    ; 60 LEs        ; 48 LEs               ; 12 LEs                 ; No         ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|alu:alu_inst|Mux1                                           ;
+; 8:1                ; 2 bits    ; 10 LEs        ; 6 LEs                ; 4 LEs                  ; No         ; |nes_fpga_top_lvl|ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst|Selector534                                   ;
+; 15:1               ; 6 bits    ; 60 LEs        ; 48 LEs               ; 12 LEs                 ; No         ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|alu:alu_inst|Mux4                                           ;
 ; 10:1               ; 2 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; No         ; |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|state                                                       ;
-; 9:1                ; 4 bits    ; 24 LEs        ; 12 LEs               ; 12 LEs                 ; No         ; |nes_fpga_top_lvl|sys_ctrl_fsm:sys_ctrl_inst|Selector18                                                                   ;
+; 9:1                ; 4 bits    ; 24 LEs        ; 12 LEs               ; 12 LEs                 ; No         ; |nes_fpga_top_lvl|sys_ctrl_fsm:sys_ctrl_inst|Selector13                                                                   ;
 ; 14:1               ; 4 bits    ; 36 LEs        ; 36 LEs               ; 0 LEs                  ; No         ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|cpu_data_out[1]                                       ;
-; 14:1               ; 3 bits    ; 27 LEs        ; 27 LEs               ; 0 LEs                  ; No         ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|cpu_data_out[7]                                       ;
+; 14:1               ; 3 bits    ; 27 LEs        ; 27 LEs               ; 0 LEs                  ; No         ; |nes_fpga_top_lvl|mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|cpu_data_out[5]                                       ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------------------------------------------------------------------+
 
 
@@ -1117,7 +1082,7 @@ Encoding Type:  One-Hot
 
 
 +------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Source assignments for mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem|altsyncram:mem_arr_rtl_0|altsyncram_0nc1:auto_generated ;
+; Source assignments for mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem|altsyncram:mem_arr_rtl_0|altsyncram_8nc1:auto_generated ;
 +---------------------------------+--------------------+------+----------------------------------------------------------------------------------------+
 ; Assignment                      ; Value              ; From ; To                                                                                     ;
 +---------------------------------+--------------------+------+----------------------------------------------------------------------------------------+
@@ -1126,7 +1091,7 @@ Encoding Type:  One-Hot
 
 
 +-------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Source assignments for mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem|altsyncram:mem_arr_rtl_0|altsyncram_n7m1:auto_generated ;
+; Source assignments for mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem|altsyncram:mem_arr_rtl_0|altsyncram_j8m1:auto_generated ;
 +---------------------------------+--------------------+------+-----------------------------------------------------------------------------------------+
 ; Assignment                      ; Value              ; From ; To                                                                                      ;
 +---------------------------------+--------------------+------+-----------------------------------------------------------------------------------------+
@@ -1134,12 +1099,22 @@ Encoding Type:  One-Hot
 +---------------------------------+--------------------+------+-----------------------------------------------------------------------------------------+
 
 
++----------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: Top-level Entity: |nes_fpga_top_lvl ;
++----------------+-------+---------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                    ;
++----------------+-------+---------------------------------------------------------+
+; clks_per_bit   ; 217   ; Signed Integer                                          ;
++----------------+-------+---------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
 +--------------------------------------------------------------------------------------------------------------------+
 ; Parameter Settings for User Entity Instance: mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem ;
 +----------------+-------+-------------------------------------------------------------------------------------------+
 ; Parameter Name ; Value ; Type                                                                                      ;
 +----------------+-------+-------------------------------------------------------------------------------------------+
-; size           ; 51168 ; Signed Integer                                                                            ;
+; size           ; 65536 ; Signed Integer                                                                            ;
 ; addr_width     ; 16    ; Signed Integer                                                                            ;
 +----------------+-------+-------------------------------------------------------------------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
@@ -1161,7 +1136,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+-------+--------------------------------------------------------------------------------------------+
 ; Parameter Name ; Value ; Type                                                                                       ;
 +----------------+-------+--------------------------------------------------------------------------------------------+
-; size           ; 12320 ; Signed Integer                                                                             ;
+; size           ; 16384 ; Signed Integer                                                                             ;
 ; addr_width     ; 16    ; Signed Integer                                                                             ;
 +----------------+-------+--------------------------------------------------------------------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
@@ -1195,6 +1170,16 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; size           ; 61440 ; Signed Integer                                           ;
 ; addr_width     ; 16    ; Signed Integer                                           ;
 +----------------+-------+----------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: sys_ctrl_fsm:sys_ctrl_inst ;
++----------------+-------+------------------------------------------------+
+; Parameter Name ; Value ; Type                                           ;
++----------------+-------+------------------------------------------------+
+; clks_per_bit   ; 217   ; Signed Integer                                 ;
++----------------+-------+------------------------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
@@ -1364,7 +1349,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; OPERATION_MODE                     ; DUAL_PORT            ; Untyped                                                                             ;
 ; WIDTH_A                            ; 8                    ; Untyped                                                                             ;
 ; WIDTHAD_A                          ; 16                   ; Untyped                                                                             ;
-; NUMWORDS_A                         ; 51168                ; Untyped                                                                             ;
+; NUMWORDS_A                         ; 65536                ; Untyped                                                                             ;
 ; OUTDATA_REG_A                      ; UNREGISTERED         ; Untyped                                                                             ;
 ; ADDRESS_ACLR_A                     ; NONE                 ; Untyped                                                                             ;
 ; OUTDATA_ACLR_A                     ; NONE                 ; Untyped                                                                             ;
@@ -1373,7 +1358,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; BYTEENA_ACLR_A                     ; NONE                 ; Untyped                                                                             ;
 ; WIDTH_B                            ; 8                    ; Untyped                                                                             ;
 ; WIDTHAD_B                          ; 16                   ; Untyped                                                                             ;
-; NUMWORDS_B                         ; 51168                ; Untyped                                                                             ;
+; NUMWORDS_B                         ; 65536                ; Untyped                                                                             ;
 ; INDATA_REG_B                       ; CLOCK1               ; Untyped                                                                             ;
 ; WRCONTROL_WRADDRESS_REG_B          ; CLOCK1               ; Untyped                                                                             ;
 ; RDCONTROL_REG_B                    ; CLOCK1               ; Untyped                                                                             ;
@@ -1406,7 +1391,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                ; Untyped                                                                             ;
 ; WIDTH_ECCSTATUS                    ; 3                    ; Untyped                                                                             ;
 ; DEVICE_FAMILY                      ; Cyclone IV E         ; Untyped                                                                             ;
-; CBXI_PARAMETER                     ; altsyncram_0nc1      ; Untyped                                                                             ;
+; CBXI_PARAMETER                     ; altsyncram_8nc1      ; Untyped                                                                             ;
 +------------------------------------+----------------------+-------------------------------------------------------------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
@@ -1425,7 +1410,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; OPERATION_MODE                     ; BIDIR_DUAL_PORT      ; Untyped                                                                              ;
 ; WIDTH_A                            ; 8                    ; Untyped                                                                              ;
 ; WIDTHAD_A                          ; 14                   ; Untyped                                                                              ;
-; NUMWORDS_A                         ; 12320                ; Untyped                                                                              ;
+; NUMWORDS_A                         ; 16384                ; Untyped                                                                              ;
 ; OUTDATA_REG_A                      ; UNREGISTERED         ; Untyped                                                                              ;
 ; ADDRESS_ACLR_A                     ; NONE                 ; Untyped                                                                              ;
 ; OUTDATA_ACLR_A                     ; NONE                 ; Untyped                                                                              ;
@@ -1434,7 +1419,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; BYTEENA_ACLR_A                     ; NONE                 ; Untyped                                                                              ;
 ; WIDTH_B                            ; 8                    ; Untyped                                                                              ;
 ; WIDTHAD_B                          ; 14                   ; Untyped                                                                              ;
-; NUMWORDS_B                         ; 12320                ; Untyped                                                                              ;
+; NUMWORDS_B                         ; 16384                ; Untyped                                                                              ;
 ; INDATA_REG_B                       ; CLOCK0               ; Untyped                                                                              ;
 ; WRCONTROL_WRADDRESS_REG_B          ; CLOCK0               ; Untyped                                                                              ;
 ; RDCONTROL_REG_B                    ; CLOCK1               ; Untyped                                                                              ;
@@ -1467,7 +1452,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                ; Untyped                                                                              ;
 ; WIDTH_ECCSTATUS                    ; 3                    ; Untyped                                                                              ;
 ; DEVICE_FAMILY                      ; Cyclone IV E         ; Untyped                                                                              ;
-; CBXI_PARAMETER                     ; altsyncram_n7m1      ; Untyped                                                                              ;
+; CBXI_PARAMETER                     ; altsyncram_j8m1      ; Untyped                                                                              ;
 +------------------------------------+----------------------+--------------------------------------------------------------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
@@ -1503,10 +1488,10 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; Entity Instance                           ; mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem|altsyncram:mem_arr_rtl_0   ;
 ;     -- OPERATION_MODE                     ; DUAL_PORT                                                                                        ;
 ;     -- WIDTH_A                            ; 8                                                                                                ;
-;     -- NUMWORDS_A                         ; 51168                                                                                            ;
+;     -- NUMWORDS_A                         ; 65536                                                                                            ;
 ;     -- OUTDATA_REG_A                      ; UNREGISTERED                                                                                     ;
 ;     -- WIDTH_B                            ; 8                                                                                                ;
-;     -- NUMWORDS_B                         ; 51168                                                                                            ;
+;     -- NUMWORDS_B                         ; 65536                                                                                            ;
 ;     -- ADDRESS_REG_B                      ; CLOCK0                                                                                           ;
 ;     -- OUTDATA_REG_B                      ; UNREGISTERED                                                                                     ;
 ;     -- RAM_BLOCK_TYPE                     ; AUTO                                                                                             ;
@@ -1514,10 +1499,10 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; Entity Instance                           ; mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem|altsyncram:mem_arr_rtl_0  ;
 ;     -- OPERATION_MODE                     ; BIDIR_DUAL_PORT                                                                                  ;
 ;     -- WIDTH_A                            ; 8                                                                                                ;
-;     -- NUMWORDS_A                         ; 12320                                                                                            ;
+;     -- NUMWORDS_A                         ; 16384                                                                                            ;
 ;     -- OUTDATA_REG_A                      ; UNREGISTERED                                                                                     ;
 ;     -- WIDTH_B                            ; 8                                                                                                ;
-;     -- NUMWORDS_B                         ; 12320                                                                                            ;
+;     -- NUMWORDS_B                         ; 16384                                                                                            ;
 ;     -- ADDRESS_REG_B                      ; CLOCK0                                                                                           ;
 ;     -- OUTDATA_REG_B                      ; UNREGISTERED                                                                                     ;
 ;     -- RAM_BLOCK_TYPE                     ; AUTO                                                                                             ;
@@ -1670,29 +1655,29 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; boundary_port         ; 111                         ;
 ; cycloneiii_ff         ; 1764                        ;
-;     CLR               ; 194                         ;
+;     CLR               ; 176                         ;
 ;     CLR SLD           ; 1                           ;
 ;     ENA               ; 114                         ;
-;     ENA CLR           ; 998                         ;
+;     ENA CLR           ; 1016                        ;
 ;     ENA CLR SCLR      ; 83                          ;
 ;     ENA CLR SCLR SLD  ; 16                          ;
 ;     ENA CLR SLD       ; 137                         ;
 ;     ENA SCLR          ; 17                          ;
 ;     ENA SLD           ; 40                          ;
 ;     plain             ; 164                         ;
-; cycloneiii_lcell_comb ; 4763                        ;
+; cycloneiii_lcell_comb ; 4751                        ;
 ;     arith             ; 1117                        ;
 ;         2 data inputs ; 520                         ;
 ;         3 data inputs ; 597                         ;
-;     normal            ; 3646                        ;
+;     normal            ; 3634                        ;
 ;         0 data inputs ; 25                          ;
 ;         1 data inputs ; 72                          ;
 ;         2 data inputs ; 313                         ;
-;         3 data inputs ; 671                         ;
-;         4 data inputs ; 2565                        ;
-; cycloneiii_ram_block  ; 144                         ;
+;         3 data inputs ; 664                         ;
+;         4 data inputs ; 2560                        ;
+; cycloneiii_ram_block  ; 152                         ;
 ;                       ;                             ;
-; Max LUT depth         ; 17.70                       ;
+; Max LUT depth         ; 17.50                       ;
 ; Average LUT depth     ; 7.01                        ;
 +-----------------------+-----------------------------+
 
@@ -1702,7 +1687,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:21     ;
+; Top            ; 00:00:29     ;
 +----------------+--------------+
 
 
@@ -1712,7 +1697,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 17.1.0 Build 590 10/25/2017 SJ Lite Edition
-    Info: Processing started: Wed May 20 21:41:35 2020
+    Info: Processing started: Thu May 21 16:06:59 2020
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off nes_fpga -c nes_fpga
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
@@ -1802,16 +1787,14 @@ Warning (10222): Verilog HDL Parameter Declaration warning at uart_tx_rx.v(181):
 Warning (10222): Verilog HDL Parameter Declaration warning at uart_tx_rx.v(182): Parameter Declaration in module "UART_TX" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/uart_tx_rx.v Line: 182
 Warning (10222): Verilog HDL Parameter Declaration warning at uart_tx_rx.v(183): Parameter Declaration in module "UART_TX" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/uart_tx_rx.v Line: 183
 Info (12127): Elaborating entity "nes_fpga_top_lvl" for the top level hierarchy
-Info (12128): Elaborating entity "clkdiv2" for hierarchy "clkdiv2:clkdiv2_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v Line: 47
-Info (12128): Elaborating entity "ppu_fsm" for hierarchy "ppu_fsm:ppu_fsm_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v Line: 99
-Warning (10036): Verilog HDL or VHDL warning at ppu_fsm.v(122): object "cpu_scroll_addr_latch" assigned a value but never read File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 122
-Warning (10036): Verilog HDL or VHDL warning at ppu_fsm.v(123): object "ppu_ctrl1_latch" assigned a value but never read File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 123
-Warning (10230): Verilog HDL assignment warning at ppu_fsm.v(189): truncated value with size 32 to match size of target (16) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 189
-Warning (10230): Verilog HDL assignment warning at ppu_fsm.v(481): truncated value with size 32 to match size of target (9) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 481
-Warning (10230): Verilog HDL assignment warning at ppu_fsm.v(420): truncated value with size 32 to match size of target (9) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 420
-Warning (10230): Verilog HDL assignment warning at ppu_fsm.v(434): truncated value with size 32 to match size of target (9) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 434
-Warning (10230): Verilog HDL assignment warning at ppu_fsm.v(452): truncated value with size 32 to match size of target (16) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 452
-Info (12128): Elaborating entity "ppu_sprite_load_fsm" for hierarchy "ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 100
+Info (12128): Elaborating entity "clkdiv2" for hierarchy "clkdiv2:clkdiv2_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v Line: 50
+Info (12128): Elaborating entity "ppu_fsm" for hierarchy "ppu_fsm:ppu_fsm_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v Line: 102
+Warning (10230): Verilog HDL assignment warning at ppu_fsm.v(191): truncated value with size 32 to match size of target (16) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 191
+Warning (10230): Verilog HDL assignment warning at ppu_fsm.v(483): truncated value with size 32 to match size of target (9) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 483
+Warning (10230): Verilog HDL assignment warning at ppu_fsm.v(422): truncated value with size 32 to match size of target (9) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 422
+Warning (10230): Verilog HDL assignment warning at ppu_fsm.v(436): truncated value with size 32 to match size of target (9) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 436
+Warning (10230): Verilog HDL assignment warning at ppu_fsm.v(454): truncated value with size 32 to match size of target (16) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 454
+Info (12128): Elaborating entity "ppu_sprite_load_fsm" for hierarchy "ppu_fsm:ppu_fsm_inst|ppu_sprite_load_fsm:sprite_load_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 103
 Warning (10230): Verilog HDL assignment warning at ppu_sprite_load_fsm.sv(275): truncated value with size 32 to match size of target (9) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_sprite_load_fsm.sv Line: 275
 Warning (10230): Verilog HDL assignment warning at ppu_sprite_load_fsm.sv(305): truncated value with size 32 to match size of target (9) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_sprite_load_fsm.sv Line: 305
 Warning (10230): Verilog HDL assignment warning at ppu_sprite_load_fsm.sv(323): truncated value with size 32 to match size of target (9) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_sprite_load_fsm.sv Line: 323
@@ -1821,15 +1804,15 @@ Warning (10230): Verilog HDL assignment warning at ppu_sprite_load_fsm.sv(119): 
 Warning (10230): Verilog HDL assignment warning at ppu_sprite_load_fsm.sv(76): truncated value with size 32 to match size of target (8) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_sprite_load_fsm.sv Line: 76
 Warning (10230): Verilog HDL assignment warning at ppu_sprite_load_fsm.sv(156): truncated value with size 32 to match size of target (9) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_sprite_load_fsm.sv Line: 156
 Warning (10230): Verilog HDL assignment warning at ppu_sprite_load_fsm.sv(102): truncated value with size 32 to match size of target (8) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_sprite_load_fsm.sv Line: 102
-Info (12128): Elaborating entity "ppu_color_load_fsm" for hierarchy "ppu_fsm:ppu_fsm_inst|ppu_color_load_fsm:color_load_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 119
-Warning (10230): Verilog HDL assignment warning at ppu_color_load_fsm.v(25): truncated value with size 32 to match size of target (16) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_color_load_fsm.v Line: 25
-Warning (10230): Verilog HDL assignment warning at ppu_color_load_fsm.v(80): truncated value with size 32 to match size of target (16) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_color_load_fsm.v Line: 80
-Warning (10230): Verilog HDL assignment warning at ppu_color_load_fsm.v(102): truncated value with size 32 to match size of target (16) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_color_load_fsm.v Line: 102
-Info (12128): Elaborating entity "pixel_to_nametable_ptr" for hierarchy "ppu_fsm:ppu_fsm_inst|pixel_to_nametable_ptr:pixel_to_nametable_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 174
+Info (12128): Elaborating entity "ppu_color_load_fsm" for hierarchy "ppu_fsm:ppu_fsm_inst|ppu_color_load_fsm:color_load_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 122
+Warning (10230): Verilog HDL assignment warning at ppu_color_load_fsm.v(29): truncated value with size 32 to match size of target (16) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_color_load_fsm.v Line: 29
+Warning (10230): Verilog HDL assignment warning at ppu_color_load_fsm.v(84): truncated value with size 32 to match size of target (16) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_color_load_fsm.v Line: 84
+Warning (10230): Verilog HDL assignment warning at ppu_color_load_fsm.v(106): truncated value with size 32 to match size of target (16) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_color_load_fsm.v Line: 106
+Info (12128): Elaborating entity "pixel_to_nametable_ptr" for hierarchy "ppu_fsm:ppu_fsm_inst|pixel_to_nametable_ptr:pixel_to_nametable_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 176
 Warning (10230): Verilog HDL assignment warning at pixel_to_nametable_ptr.v(23): truncated value with size 32 to match size of target (10) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/pixel_to_nametable_ptr.v Line: 23
-Info (12128): Elaborating entity "name_to_att" for hierarchy "ppu_fsm:ppu_fsm_inst|name_to_att:name_to_att_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 184
+Info (12128): Elaborating entity "name_to_att" for hierarchy "ppu_fsm:ppu_fsm_inst|name_to_att:name_to_att_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 186
 Warning (10230): Verilog HDL assignment warning at name_to_att.v(18): truncated value with size 16 to match size of target (8) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/name_to_att.v Line: 18
-Info (12128): Elaborating entity "ppu_vram_load_fsm" for hierarchy "ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 248
+Info (12128): Elaborating entity "ppu_vram_load_fsm" for hierarchy "ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 250
 Warning (10230): Verilog HDL assignment warning at ppu_vram_load_fsm.v(117): truncated value with size 32 to match size of target (16) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_vram_load_fsm.v Line: 117
 Warning (10230): Verilog HDL assignment warning at ppu_vram_load_fsm.v(123): truncated value with size 32 to match size of target (16) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_vram_load_fsm.v Line: 123
 Warning (10230): Verilog HDL assignment warning at ppu_vram_load_fsm.v(144): truncated value with size 32 to match size of target (8) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_vram_load_fsm.v Line: 144
@@ -1840,51 +1823,58 @@ Info (12128): Elaborating entity "color_selector" for hierarchy "ppu_fsm:ppu_fsm
 Info (12128): Elaborating entity "render_8_pixels" for hierarchy "ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|render_8_pixels:render_8_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_vram_load_fsm.v Line: 240
 Warning (10230): Verilog HDL assignment warning at render_8_pixels.v(153): truncated value with size 32 to match size of target (9) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/render_8_pixels.v Line: 153
 Info (12128): Elaborating entity "pixel_mux" for hierarchy "ppu_fsm:ppu_fsm_inst|ppu_vram_load_fsm:vram_load_inst|render_8_pixels:render_8_inst|pixel_mux:pixel_mux_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/render_8_pixels.v Line: 81
-Info (12128): Elaborating entity "ppu_status_latch" for hierarchy "ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 272
-Info (12128): Elaborating entity "mem_ctrl" for hierarchy "mem_ctrl:mem_ctrl_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v Line: 141
+Info (12128): Elaborating entity "ppu_status_latch" for hierarchy "ppu_fsm:ppu_fsm_inst|ppu_status_latch:ppu_status_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v Line: 274
+Warning (10036): Verilog HDL or VHDL warning at ppu_status_latch.v(74): object "s2" assigned a value but never read File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_status_latch.v Line: 74
+Warning (10036): Verilog HDL or VHDL warning at ppu_status_latch.v(74): object "s3" assigned a value but never read File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_status_latch.v Line: 74
+Warning (10036): Verilog HDL or VHDL warning at ppu_status_latch.v(74): object "s4" assigned a value but never read File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_status_latch.v Line: 74
+Warning (10036): Verilog HDL or VHDL warning at ppu_status_latch.v(74): object "s5" assigned a value but never read File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_status_latch.v Line: 74
+Warning (10036): Verilog HDL or VHDL warning at ppu_status_latch.v(74): object "s6" assigned a value but never read File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_status_latch.v Line: 74
+Warning (10036): Verilog HDL or VHDL warning at ppu_status_latch.v(74): object "s7" assigned a value but never read File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_status_latch.v Line: 74
+Info (12128): Elaborating entity "mem_ctrl" for hierarchy "mem_ctrl:mem_ctrl_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v Line: 144
 Info (12128): Elaborating entity "mem_decode" for hierarchy "mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_ctrl.v Line: 96
-Warning (10230): Verilog HDL assignment warning at mem_decode.v(88): truncated value with size 32 to match size of target (16) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_decode.v Line: 88
-Warning (10230): Verilog HDL assignment warning at mem_decode.v(89): truncated value with size 32 to match size of target (16) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_decode.v Line: 89
-Warning (10230): Verilog HDL assignment warning at mem_decode.v(194): truncated value with size 16 to match size of target (8) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_decode.v Line: 194
+Warning (10230): Verilog HDL assignment warning at mem_decode.v(91): truncated value with size 32 to match size of target (16) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_decode.v Line: 91
+Warning (10230): Verilog HDL assignment warning at mem_decode.v(92): truncated value with size 32 to match size of target (16) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_decode.v Line: 92
+Warning (10230): Verilog HDL assignment warning at mem_decode.v(198): truncated value with size 16 to match size of target (8) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_decode.v Line: 198
 Info (12128): Elaborating entity "ppu_mem_decode" for hierarchy "mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|ppu_mem_decode:read_decode" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_decode.v Line: 47
 Info (12128): Elaborating entity "cpu_mem_decode" for hierarchy "mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|cpu_mem_decode:cpu_decode" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_decode.v Line: 53
-Info (12128): Elaborating entity "generic_ram" for hierarchy "mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_decode.v Line: 63
-Info (12128): Elaborating entity "generic_ram" for hierarchy "mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:spram_mem" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_decode.v Line: 71
-Info (12128): Elaborating entity "generic_ram" for hierarchy "mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_decode.v Line: 80
+Info (12128): Elaborating entity "generic_ram" for hierarchy "mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_decode.v Line: 64
+Info (12128): Elaborating entity "generic_ram" for hierarchy "mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:spram_mem" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_decode.v Line: 72
+Info (12128): Elaborating entity "generic_ram" for hierarchy "mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_decode.v Line: 82
 Info (12128): Elaborating entity "dma_module" for hierarchy "mem_ctrl:mem_ctrl_inst|dma_module:dma_module_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_ctrl.v Line: 116
 Warning (10230): Verilog HDL assignment warning at dma_module.v(133): truncated value with size 32 to match size of target (16) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/dma_module.v Line: 133
 Info (12128): Elaborating entity "joycon_ctrl" for hierarchy "mem_ctrl:mem_ctrl_inst|joycon_ctrl:joycon_ctrl_1" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_ctrl.v Line: 131
 Warning (10230): Verilog HDL assignment warning at joycon_ctrl.v(51): truncated value with size 32 to match size of target (5) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/joycon_ctrl.v Line: 51
 Info (12128): Elaborating entity "joycon_ctrl" for hierarchy "mem_ctrl:mem_ctrl_inst|joycon_ctrl:joycon_ctrl_2" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_ctrl.v Line: 144
 Warning (10230): Verilog HDL assignment warning at joycon_ctrl.v(51): truncated value with size 32 to match size of target (5) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/joycon_ctrl.v Line: 51
-Info (12128): Elaborating entity "vga_controller" for hierarchy "vga_controller:vga_ctrl_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v Line: 161
+Info (12128): Elaborating entity "vga_controller" for hierarchy "vga_controller:vga_ctrl_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v Line: 164
 Warning (10230): Verilog HDL assignment warning at vga_controller.v(28): truncated value with size 32 to match size of target (10) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/VGA/vga_controller.v Line: 28
 Warning (10230): Verilog HDL assignment warning at vga_controller.v(29): truncated value with size 32 to match size of target (10) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/VGA/vga_controller.v Line: 29
 Info (12128): Elaborating entity "VGA_SYNC" for hierarchy "vga_controller:vga_ctrl_inst|VGA_SYNC:vga_sync_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/VGA/vga_controller.v Line: 40
 Info (12128): Elaborating entity "vga_color_decode" for hierarchy "vga_controller:vga_ctrl_inst|vga_color_decode:color_decode_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/VGA/vga_controller.v Line: 47
-Info (12128): Elaborating entity "vga_mem" for hierarchy "vga_mem:vga_mem_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v Line: 177
+Info (12128): Elaborating entity "vga_mem" for hierarchy "vga_mem:vga_mem_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v Line: 180
 Warning (10230): Verilog HDL assignment warning at vga_mem.v(20): truncated value with size 32 to match size of target (1) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/vga_mem.v Line: 20
 Info (12128): Elaborating entity "generic_ram" for hierarchy "vga_mem:vga_mem_inst|generic_ram:ram" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/vga_mem.v Line: 40
-Info (12128): Elaborating entity "sys_ctrl_fsm" for hierarchy "sys_ctrl_fsm:sys_ctrl_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v Line: 211
-Warning (10230): Verilog HDL assignment warning at sys_ctrl_fsm.v(63): truncated value with size 32 to match size of target (1) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/sys_ctrl_fsm.v Line: 63
-Warning (10230): Verilog HDL assignment warning at sys_ctrl_fsm.v(64): truncated value with size 32 to match size of target (1) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/sys_ctrl_fsm.v Line: 64
-Warning (10230): Verilog HDL assignment warning at sys_ctrl_fsm.v(317): truncated value with size 32 to match size of target (9) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/sys_ctrl_fsm.v Line: 317
-Info (12128): Elaborating entity "uart_rx" for hierarchy "sys_ctrl_fsm:sys_ctrl_inst|uart_rx:uart_rx_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/sys_ctrl_fsm.v Line: 91
+Info (12128): Elaborating entity "sys_ctrl_fsm" for hierarchy "sys_ctrl_fsm:sys_ctrl_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v Line: 214
+Warning (10230): Verilog HDL assignment warning at sys_ctrl_fsm.v(67): truncated value with size 32 to match size of target (1) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/sys_ctrl_fsm.v Line: 67
+Warning (10230): Verilog HDL assignment warning at sys_ctrl_fsm.v(68): truncated value with size 32 to match size of target (1) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/sys_ctrl_fsm.v Line: 68
+Warning (10230): Verilog HDL assignment warning at sys_ctrl_fsm.v(321): truncated value with size 32 to match size of target (9) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/sys_ctrl_fsm.v Line: 321
+Info (12128): Elaborating entity "uart_rx" for hierarchy "sys_ctrl_fsm:sys_ctrl_inst|uart_rx:uart_rx_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/sys_ctrl_fsm.v Line: 95
 Warning (10230): Verilog HDL assignment warning at uart_rx.v(69): truncated value with size 32 to match size of target (4) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/open_source_uart/uart_rx.v Line: 69
 Info (12128): Elaborating entity "baudgen_rx" for hierarchy "sys_ctrl_fsm:sys_ctrl_inst|uart_rx:uart_rx_inst|baudgen_rx:baudgen0" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/open_source_uart/uart_rx.v Line: 60
 Warning (10230): Verilog HDL assignment warning at baudgen_rx.v(59): truncated value with size 32 to match size of target (8) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/open_source_uart/baudgen_rx.v Line: 59
 Warning (10230): Verilog HDL assignment warning at baudgen_rx.v(63): truncated value with size 32 to match size of target (8) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/open_source_uart/baudgen_rx.v Line: 63
 Warning (10230): Verilog HDL assignment warning at baudgen_rx.v(67): truncated value with size 32 to match size of target (1) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/open_source_uart/baudgen_rx.v Line: 67
-Info (12128): Elaborating entity "UART_TX" for hierarchy "sys_ctrl_fsm:sys_ctrl_inst|UART_TX:uart_tx_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/sys_ctrl_fsm.v Line: 105
+Info (12128): Elaborating entity "UART_TX" for hierarchy "sys_ctrl_fsm:sys_ctrl_inst|UART_TX:uart_tx_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/sys_ctrl_fsm.v Line: 109
 Warning (10230): Verilog HDL assignment warning at uart_tx_rx.v(223): truncated value with size 32 to match size of target (16) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/uart_tx_rx.v Line: 223
 Warning (10230): Verilog HDL assignment warning at uart_tx_rx.v(241): truncated value with size 32 to match size of target (16) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/uart_tx_rx.v Line: 241
 Warning (10230): Verilog HDL assignment warning at uart_tx_rx.v(251): truncated value with size 32 to match size of target (3) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/uart_tx_rx.v Line: 251
 Warning (10230): Verilog HDL assignment warning at uart_tx_rx.v(271): truncated value with size 32 to match size of target (16) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/uart_tx_rx.v Line: 271
-Info (12128): Elaborating entity "cpu_6502" for hierarchy "cpu_6502:cpu_6502_dut" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v Line: 238
+Info (12128): Elaborating entity "cpu_6502" for hierarchy "cpu_6502:cpu_6502_dut" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v Line: 241
 Info (12128): Elaborating entity "instr_fetch" for hierarchy "cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/cpu_6502.sv Line: 73
 Warning (10036): Verilog HDL or VHDL warning at instr_fetch.vhd(80): object "mem_read" assigned a value but never read File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/instr_fetch.vhd Line: 80
 Info (12128): Elaborating entity "b2b_access" for hierarchy "cpu_6502:cpu_6502_dut|instr_fetch:instr_fetch_inst|b2b_access:b2b_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/instr_fetch.vhd Line: 123
 Info (12128): Elaborating entity "ie_fsm" for hierarchy "cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/cpu_6502.sv Line: 116
+Warning (10036): Verilog HDL or VHDL warning at ie_fsm.sv(412): object "pc_prev" assigned a value but never read File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/ie_fsm.sv Line: 412
 Warning (10230): Verilog HDL assignment warning at ie_fsm.sv(513): truncated value with size 32 to match size of target (16) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/ie_fsm.sv Line: 513
 Warning (10230): Verilog HDL assignment warning at ie_fsm.sv(491): truncated value with size 16 to match size of target (8) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/ie_fsm.sv Line: 491
 Warning (10230): Verilog HDL assignment warning at ie_fsm.sv(391): truncated value with size 32 to match size of target (8) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/ie_fsm.sv Line: 391
@@ -1905,7 +1895,7 @@ Warning (10230): Verilog HDL assignment warning at interrupt_handler.v(318): tru
 Warning (10230): Verilog HDL assignment warning at interrupt_handler.v(334): truncated value with size 32 to match size of target (16) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/interrupt_handler/interrupt_handler.v Line: 334
 Warning (10230): Verilog HDL assignment warning at interrupt_handler.v(337): truncated value with size 32 to match size of target (8) File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/interrupt_handler/interrupt_handler.v Line: 337
 Info (12128): Elaborating entity "alu" for hierarchy "cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|alu:alu_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/ie_fsm.sv Line: 187
-Info (12128): Elaborating entity "leddcd" for hierarchy "leddcd:led_drivers[0].leddcd_cpu_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v Line: 252
+Info (12128): Elaborating entity "leddcd" for hierarchy "leddcd:led_drivers[0].leddcd_cpu_inst" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v Line: 255
 Warning (276020): Inferred RAM node "vga_mem:vga_mem_inst|generic_ram:ram|mem_arr_rtl_0" from synchronous design logic.  Pass-through logic has been added to match the read-during-write behavior of the original design.
 Warning (276020): Inferred RAM node "mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:spram_mem|mem_arr_rtl_0" from synchronous design logic.  Pass-through logic has been added to match the read-during-write behavior of the original design.
 Warning (276020): Inferred RAM node "mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:cpu_mem|mem_arr_rtl_0" from synchronous design logic.  Pass-through logic has been added to match the read-during-write behavior of the original design.
@@ -1951,10 +1941,10 @@ Info (19000): Inferred 4 megafunctions from design logic
         Info (286033): Parameter OPERATION_MODE set to DUAL_PORT
         Info (286033): Parameter WIDTH_A set to 8
         Info (286033): Parameter WIDTHAD_A set to 16
-        Info (286033): Parameter NUMWORDS_A set to 51168
+        Info (286033): Parameter NUMWORDS_A set to 65536
         Info (286033): Parameter WIDTH_B set to 8
         Info (286033): Parameter WIDTHAD_B set to 16
-        Info (286033): Parameter NUMWORDS_B set to 51168
+        Info (286033): Parameter NUMWORDS_B set to 65536
         Info (286033): Parameter ADDRESS_ACLR_A set to NONE
         Info (286033): Parameter OUTDATA_REG_B set to UNREGISTERED
         Info (286033): Parameter ADDRESS_ACLR_B set to NONE
@@ -1968,8 +1958,8 @@ Info (19000): Inferred 4 megafunctions from design logic
         Info (286033): Parameter WIDTH_B set to 8
         Info (286033): Parameter WIDTHAD_A set to 14
         Info (286033): Parameter WIDTHAD_B set to 14
-        Info (286033): Parameter NUMWORDS_A set to 12320
-        Info (286033): Parameter NUMWORDS_B set to 12320
+        Info (286033): Parameter NUMWORDS_A set to 16384
+        Info (286033): Parameter NUMWORDS_B set to 16384
         Info (286033): Parameter OUTDATA_REG_A set to UNREGISTERED
         Info (286033): Parameter OUTDATA_REG_B set to UNREGISTERED
         Info (286033): Parameter ADDRESS_REG_B set to CLOCK0
@@ -2030,10 +2020,10 @@ Info (12133): Instantiated megafunction "mem_ctrl:mem_ctrl_inst|mem_decode:mem_d
     Info (12134): Parameter "OPERATION_MODE" = "DUAL_PORT"
     Info (12134): Parameter "WIDTH_A" = "8"
     Info (12134): Parameter "WIDTHAD_A" = "16"
-    Info (12134): Parameter "NUMWORDS_A" = "51168"
+    Info (12134): Parameter "NUMWORDS_A" = "65536"
     Info (12134): Parameter "WIDTH_B" = "8"
     Info (12134): Parameter "WIDTHAD_B" = "16"
-    Info (12134): Parameter "NUMWORDS_B" = "51168"
+    Info (12134): Parameter "NUMWORDS_B" = "65536"
     Info (12134): Parameter "ADDRESS_ACLR_A" = "NONE"
     Info (12134): Parameter "OUTDATA_REG_B" = "UNREGISTERED"
     Info (12134): Parameter "ADDRESS_ACLR_B" = "NONE"
@@ -2041,14 +2031,8 @@ Info (12133): Instantiated megafunction "mem_ctrl:mem_ctrl_inst|mem_decode:mem_d
     Info (12134): Parameter "ADDRESS_REG_B" = "CLOCK0"
     Info (12134): Parameter "INDATA_ACLR_A" = "NONE"
     Info (12134): Parameter "WRCONTROL_ACLR_A" = "NONE"
-Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_0nc1.tdf
-    Info (12023): Found entity 1: altsyncram_0nc1 File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/quartus/db/altsyncram_0nc1.tdf Line: 33
-Info (12021): Found 1 design units, including 1 entities, in source file db/decode_qsa.tdf
-    Info (12023): Found entity 1: decode_qsa File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/quartus/db/decode_qsa.tdf Line: 22
-Info (12021): Found 1 design units, including 1 entities, in source file db/decode_j8a.tdf
-    Info (12023): Found entity 1: decode_j8a File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/quartus/db/decode_j8a.tdf Line: 22
-Info (12021): Found 1 design units, including 1 entities, in source file db/mux_anb.tdf
-    Info (12023): Found entity 1: mux_anb File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/quartus/db/mux_anb.tdf Line: 22
+Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_8nc1.tdf
+    Info (12023): Found entity 1: altsyncram_8nc1 File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/quartus/db/altsyncram_8nc1.tdf Line: 33
 Info (12130): Elaborated megafunction instantiation "mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem|altsyncram:mem_arr_rtl_0"
 Info (12133): Instantiated megafunction "mem_ctrl:mem_ctrl_inst|mem_decode:mem_decode_inst|generic_ram:vram_mem|altsyncram:mem_arr_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "BIDIR_DUAL_PORT"
@@ -2056,8 +2040,8 @@ Info (12133): Instantiated megafunction "mem_ctrl:mem_ctrl_inst|mem_decode:mem_d
     Info (12134): Parameter "WIDTH_B" = "8"
     Info (12134): Parameter "WIDTHAD_A" = "14"
     Info (12134): Parameter "WIDTHAD_B" = "14"
-    Info (12134): Parameter "NUMWORDS_A" = "12320"
-    Info (12134): Parameter "NUMWORDS_B" = "12320"
+    Info (12134): Parameter "NUMWORDS_A" = "16384"
+    Info (12134): Parameter "NUMWORDS_B" = "16384"
     Info (12134): Parameter "OUTDATA_REG_A" = "UNREGISTERED"
     Info (12134): Parameter "OUTDATA_REG_B" = "UNREGISTERED"
     Info (12134): Parameter "ADDRESS_REG_B" = "CLOCK0"
@@ -2068,8 +2052,8 @@ Info (12133): Instantiated megafunction "mem_ctrl:mem_ctrl_inst|mem_decode:mem_d
     Info (12134): Parameter "ADDRESS_ACLR_A" = "NONE"
     Info (12134): Parameter "ADDRESS_ACLR_B" = "NONE"
     Info (12134): Parameter "OUTDATA_ACLR_B" = "NONE"
-Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_n7m1.tdf
-    Info (12023): Found entity 1: altsyncram_n7m1 File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/quartus/db/altsyncram_n7m1.tdf Line: 33
+Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_j8m1.tdf
+    Info (12023): Found entity 1: altsyncram_j8m1 File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/quartus/db/altsyncram_j8m1.tdf Line: 33
 Info (12021): Found 1 design units, including 1 entities, in source file db/decode_jsa.tdf
     Info (12023): Found entity 1: decode_jsa File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/quartus/db/decode_jsa.tdf Line: 22
 Info (12021): Found 1 design units, including 1 entities, in source file db/decode_c8a.tdf
@@ -2079,25 +2063,25 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/mux_
 Info (13000): Registers with preset signals will power-up high File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/ie_fsm.sv Line: 524
 Info (13003): DEV_CLRn pin will set, and not reset, register with preset signal due to NOT Gate Push-Back
 Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "uart_cts" is stuck at VCC File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v Line: 13
-    Warning (13410): Pin "vga_sync_n" is stuck at VCC File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v Line: 19
+    Warning (13410): Pin "uart_cts" is stuck at VCC File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v Line: 16
+    Warning (13410): Pin "vga_sync_n" is stuck at VCC File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v Line: 22
 Info (286030): Timing-Driven Synthesis is running
 Info (17049): 63 registers lost all their fanouts during netlist optimizations.
 Info (144001): Generated suppressed messages file C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/quartus/output_files/nes_fpga.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
 Warning (21074): Design contains 1 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "uart_rts" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v Line: 12
-Info (21057): Implemented 5937 device resources after synthesis - the final resource count might be different
+    Warning (15610): No output dependent on input pin "uart_rts" File: C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v Line: 15
+Info (21057): Implemented 5932 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 22 input pins
     Info (21059): Implemented 89 output pins
-    Info (21061): Implemented 5682 logic cells
-    Info (21064): Implemented 144 RAM segments
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 81 warnings
-    Info: Peak virtual memory: 4861 megabytes
-    Info: Processing ended: Wed May 20 21:42:15 2020
-    Info: Elapsed time: 00:00:40
-    Info: Total CPU time (on all processors): 00:00:57
+    Info (21061): Implemented 5669 logic cells
+    Info (21064): Implemented 152 RAM segments
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 86 warnings
+    Info: Peak virtual memory: 4881 megabytes
+    Info: Processing ended: Thu May 21 16:07:53 2020
+    Info: Elapsed time: 00:00:54
+    Info: Total CPU time (on all processors): 00:01:17
 
 
 +------------------------------------------+

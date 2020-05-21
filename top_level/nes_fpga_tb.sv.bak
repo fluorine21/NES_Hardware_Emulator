@@ -1,6 +1,7 @@
 
 
 import ie_defs::*;
+import sv_defs::*;
 
 string cpu_str = "../games/smb/smb_cpu_mem.txt";
 string ppu_str = "../games/smb/smb_ppu_mem.txt";
@@ -43,7 +44,7 @@ clkdiv2 clkdiv2_inst
 wire cpu_halt;
 wire one_w = 1'b1;
 wire [27:0] pc_out, sys_out;
-nes_fpga_top_lvl nes_dut
+nes_fpga_top_lvl #(5) nes_dut 
 (
 	clk_50, //50MHz clk from crystal to be divided to 25
 	rst,//Reset on button 0
@@ -72,7 +73,9 @@ nes_fpga_top_lvl nes_dut
 	pc_out,
 	
 	//Sys ctrl address out
-	sys_out
+	sys_out,
+	
+	1'b1
 
 );
 
@@ -138,8 +141,8 @@ initial begin
 	
 	$display("Loading pgrom");
 	load_pgrom();
-	$display("Checking PGROM");
-	check_pgrom();
+	//$display("Checking PGROM");
+	//check_pgrom();
 	
 	//Take the CPU PPU out of reset
 	set_cpu();

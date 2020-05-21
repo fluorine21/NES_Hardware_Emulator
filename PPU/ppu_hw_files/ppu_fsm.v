@@ -30,10 +30,13 @@ module ppu_fsm
 	output wire vga_write_en
 
 );
+//Scroll ptr latches
+reg [15:0] cpu_scroll_addr_latch;
+reg [7:0] ppu_ctrl1_latch;
 
 
 reg [15:0] cnt;//Counter used for delay to slow down ppu
-localparam [15:0] wait_cycles = 0;
+localparam [15:0] wait_cycles = 3;
 reg [7:0] state;
 localparam [7:0] state_idle = 0, 
 				 state_wait_colors_1 = 1,
@@ -49,7 +52,7 @@ localparam [7:0] state_idle = 0,
 
 
 //Starting position of pixel in nametable 2x2
-wire [9:0] col_offset = {1'b0, ppu_ctrl1[0], cpu_scroll_addr[7:0]}; 
+wire [9:0] col_offset = {1'b0, ppu_ctrl1_latch[0], cpu_scroll_addr_latch[7:0]}; 
 
 
 //These tell us which pixel we're currently drawing relative to the screen, not the nametables
@@ -119,8 +122,7 @@ ppu_color_load_fsm color_load_inst
 );
 
 
-reg [15:0] cpu_scroll_addr_latch;
-reg [7:0] ppu_ctrl1_latch;
+
 //Implements latching for x (horiz col) and y(vert row) offsets at h and v blank
 always @ (posedge clk or negedge rst) begin
 	
@@ -136,7 +138,7 @@ always @ (posedge clk or negedge rst) begin
 		ppu_ctrl1_latch[7:2] <= ppu_ctrl1[7:2];
 		
 		//If we're doing a horizontal blank
-		if(state == state_wait) begin
+		if(state == state_wait_sprite_1 || state == state_idle) begin
 			//Write the low bits of x into the latch
 			cpu_scroll_addr_latch[7:0] <= cpu_scroll_addr[7:0];
 			ppu_ctrl1_latch[0] <= ppu_ctrl1[0]; 
@@ -144,7 +146,7 @@ always @ (posedge clk or negedge rst) begin
 		end
 		
 		//If we're about to start a new frame
-		if(state == state_idle) begin
+		if(state == state_wait_colors_1 || state == state_idle) begin
 		
 			//Write the low bits of y into the latch
 			cpu_scroll_addr_latch[15:8] <= cpu_scroll_addr[15:8];
@@ -163,11 +165,11 @@ pixel_to_nametable_ptr pixel_to_nametable_inst
 	screen_pixel_row,
 	screen_pixel_col,
 	
-	//cpu_scroll_addr_latch,
-	//ppu_ctrl1_latch,
+	cpu_scroll_addr_latch,
+	ppu_ctrl1_latch,
 	
-	cpu_scroll_addr,
-	ppu_ctrl1,
+	//cpu_scroll_addr,
+	//ppu_ctrl1,
 	
 	nametable_ptr,
 	pattern_table_offset

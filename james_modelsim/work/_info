@@ -25,9 +25,9 @@ VRF<3XXG@_bX8lhRT7kzlP2
 !s100 Ul6SBmUM3T0BLe^V1noTz1
 Z10 OV;C;10.5b;63
 32
-Z11 !s110 1590026386
+Z11 !s110 1590096790
 !i10b 1
-Z12 !s108 1590026386.000000
+Z12 !s108 1590096790.000000
 Z13 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/alu.vhd|
 Z14 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/alu.vhd|
 !i113 1
@@ -97,7 +97,7 @@ R21
 R15
 R16
 vbaudgen_rx
-Z22 !s110 1590026385
+Z22 !s110 1590096788
 !i10b 1
 !s100 D8FcDFBNiGD<c3XSc7Pmg0
 IVAQfj4EhL2I6KV3Qh8Jo61
@@ -111,14 +111,14 @@ Z24 OV;L;10.5b;63
 r1
 !s85 0
 31
-Z25 !s108 1590026385.000000
+Z25 !s108 1590096788.000000
 !s107 C:\Users\James Williams\Google Drive\Northwestern\Spring Quarter 2020\EECS 392\git_repo\SYS_CTRL\open_source_uart\baudgen.vh|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/open_source_uart/baudgen_rx.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/open_source_uart/baudgen_rx.v|
 !i113 1
 Z26 o-work work
 Z27 tCvgOpt 0
 vclkdiv2
-R22
+Z28 !s110 1590096787
 !i10b 1
 !s100 64@m?MCBJ4@zoR=bRTgO00
 Ioa0;G?8NS`E_N?GSQR>j:0
@@ -132,14 +132,14 @@ R24
 r1
 !s85 0
 31
-Z28 !s108 1590026384.000000
+Z29 !s108 1590096787.000000
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/clkdiv.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/clkdiv.v|
 !i113 1
 R26
 R27
 vcolor_selector
-Z29 !s110 1590026382
+Z30 !s110 1590096781
 !i10b 1
 !s100 _mUORfSkW_haKkKc?:4zb3
 IBaNPMb;nb4DZ?78ZnoN<I0
@@ -153,14 +153,14 @@ R24
 r1
 !s85 0
 31
-Z30 !s108 1590026382.000000
+Z31 !s108 1590096781.000000
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/color_selector.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/color_selector.v|
 !i113 1
 R26
 R27
 vcpu_6502
-Z31 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+Z32 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
 R11
 !i10b 1
 !s100 <a1PI@Y<I[WDoa`el@Hak3
@@ -181,11 +181,11 @@ R12
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/cpu_6502.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/cpu_6502.sv|
 !i113 1
-Z32 o-work work -sv
+Z33 o-work work -sv
 R27
 vcpu_6502_tb
-R31
-Z33 DXx4 work 7 ie_defs 0 22 M_H`o;>fa?5`UdmEhQaRf3
+R32
+Z34 DXx4 work 7 ie_defs 0 22 M_H`o;>fa?5`UdmEhQaRf3
 DXx4 work 19 cpu_6502_tb_sv_unit 0 22 [NfShaT1?EbAXF69_8mJj0
 R23
 r1
@@ -197,20 +197,20 @@ IA@0kjKX4KI1<f@7=k0`oh2
 !s105 cpu_6502_tb_sv_unit
 S1
 R7
-Z34 w1589853626
-Z35 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/cpu_6502_tb.sv
-Z36 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/cpu_6502_tb.sv
+Z35 w1589853626
+Z36 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/cpu_6502_tb.sv
+Z37 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/cpu_6502_tb.sv
 L0 7
 R24
-Z37 !s108 1589910972.000000
-Z38 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/cpu_6502_tb.sv|
-Z39 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/cpu_6502_tb.sv|
+Z38 !s108 1589910972.000000
+Z39 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/cpu_6502_tb.sv|
+Z40 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/cpu_6502_tb.sv|
 !i113 1
-R32
+R33
 R27
 Xcpu_6502_tb_sv_unit
-R31
-R33
+R32
+R34
 V[NfShaT1?EbAXF69_8mJj0
 r1
 !s85 0
@@ -221,19 +221,19 @@ I[NfShaT1?EbAXF69_8mJj0
 !i103 1
 S1
 R7
-R34
 R35
 R36
+R37
 L0 1
 R24
-R37
 R38
 R39
+R40
 !i113 1
-R32
+R33
 R27
 vcpu_mem_decode
-Z40 !s110 1590026381
+Z41 !s110 1590096779
 !i10b 1
 !s100 JVhQMR`@c>lUng@Pzg3Q41
 IZf]0XRK;4zlfjKk0SQe?k3
@@ -247,14 +247,14 @@ R24
 r1
 !s85 0
 31
-Z41 !s108 1590026381.000000
+!s108 1590096778.000000
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/cpu_mem_decode.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/cpu_mem_decode.v|
 !i113 1
 R26
 R27
 vdma_module
-R29
+Z42 !s110 1590096780
 !i10b 1
 !s100 Gf5m>PLC^[T@e2HRbo[0_1
 I^d0o42Df>PlCJn[]:N7J71
@@ -268,14 +268,14 @@ R24
 r1
 !s85 0
 31
-R30
+Z43 !s108 1590096780.000000
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/dma_module.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/dma_module.v|
 !i113 1
 R26
 R27
 vgeneric_ram
-R40
+R41
 !i10b 1
 !s100 S<X;U=lkNj`S]g6SCoj`@1
 InLhRUVcAUGFZK0gnlfk;;2
@@ -289,22 +289,22 @@ R24
 r1
 !s85 0
 31
-R41
+Z44 !s108 1590096779.000000
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/generic_ram.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/generic_ram.v|
 !i113 1
 R26
 R27
 Xie_defs
-R31
-R22
+R32
+Z45 !s110 1590096789
 !i10b 1
-!s100 [Pbj]1c@]A_=nZ8Nc?F`W3
-I_kBAb@23dcA4l<?lO[J?V1
-V_kBAb@23dcA4l<?lO[J?V1
+!s100 gGie0cCJMTK;z51Ej7gP:3
+I:S<ZA9QolSgZXY3F<hSLG0
+V:S<ZA9QolSgZXY3F<hSLG0
 S1
 R7
-w1590013824
+w1590031291
 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/ie_defs.sv
 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/ie_defs.sv
 L0 3
@@ -312,64 +312,64 @@ R24
 r1
 !s85 0
 31
-R25
+Z46 !s108 1590096789.000000
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/ie_defs.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/ie_defs.sv|
 !i113 1
-R32
+R33
 R27
 vie_fsm
-R31
-Z42 DXx4 work 7 ie_defs 0 22 _kBAb@23dcA4l<?lO[J?V1
-DXx4 work 14 ie_fsm_sv_unit 0 22 ITf0:Em`Wz8C4:MKAd@8b0
+R32
+Z47 DXx4 work 7 ie_defs 0 22 :S<ZA9QolSgZXY3F<hSLG0
+DXx4 work 14 ie_fsm_sv_unit 0 22 <QA[QTRbGL1ieBPck1h7L3
 R23
 r1
 !s85 0
 31
 !i10b 1
-!s100 6l=`P4]X=V<G7m_cKmoNY3
-IjOWUhF5?Dd;hlhiBGF=<k2
+!s100 >EEkTWdSV^`6TzBPfo:WO0
+IcQ`c>e:94z4fdPR6RDicM0
 !s105 ie_fsm_sv_unit
 S1
 R7
-Z43 w1590014812
-Z44 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/ie_fsm.sv
-Z45 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/ie_fsm.sv
+Z48 w1590031243
+Z49 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/ie_fsm.sv
+Z50 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/ie_fsm.sv
 L0 7
 R24
-R25
-Z46 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/ie_fsm.sv|
-Z47 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/ie_fsm.sv|
+R46
+Z51 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/ie_fsm.sv|
+Z52 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/ie_fsm.sv|
 !i113 1
-R32
+R33
 R27
 Xie_fsm_sv_unit
-R31
-R42
-VITf0:Em`Wz8C4:MKAd@8b0
+R32
+R47
+V<QA[QTRbGL1ieBPck1h7L3
 r1
 !s85 0
 31
 !i10b 1
 !s100 4=ceJFg;Ff9ki<8ca=U=O3
-IITf0:Em`Wz8C4:MKAd@8b0
+I<QA[QTRbGL1ieBPck1h7L3
 !i103 1
 S1
 R7
-R43
-R44
-R45
+R48
+R49
+R50
 L0 1
 R24
-R25
 R46
-R47
+R51
+R52
 !i113 1
-R32
+R33
 R27
 vif_tb
-R31
-R33
+R32
+R34
 DXx4 work 13 if_tb_sv_unit 0 22 hDN2>P[`_7WY[YB@anC4K2
 R23
 r1
@@ -381,20 +381,20 @@ If4Zc2Pdz45RDS:6_2I7U`3
 !s105 if_tb_sv_unit
 S1
 R7
-Z48 w1589135931
-Z49 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/if_tb.sv
-Z50 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/if_tb.sv
+Z53 w1589135931
+Z54 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/if_tb.sv
+Z55 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/if_tb.sv
 L0 4
 R24
-Z51 !s108 1589910973.000000
-Z52 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/if_tb.sv|
-Z53 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/if_tb.sv|
+Z56 !s108 1589910973.000000
+Z57 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/if_tb.sv|
+Z58 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/if_tb.sv|
 !i113 1
-R32
+R33
 R27
 Xif_tb_sv_unit
-R31
-R33
+R32
+R34
 VhDN2>P[`_7WY[YB@anC4K2
 r1
 !s85 0
@@ -405,19 +405,19 @@ IhDN2>P[`_7WY[YB@anC4K2
 !i103 1
 S1
 R7
-R48
-R49
-R50
+R53
+R54
+R55
 L0 1
 R24
-R51
-R52
-R53
+R56
+R57
+R58
 !i113 1
-R32
+R33
 R27
 Einstr_fetch
-Z54 w1589984064
+Z59 w1589984064
 R3
 R1
 R2
@@ -425,19 +425,19 @@ R4
 R5
 R6
 R7
-Z55 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/instr_fetch.vhd
-Z56 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/instr_fetch.vhd
+Z60 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/instr_fetch.vhd
+Z61 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/instr_fetch.vhd
 l0
 L9
 V;kg9ZfbII8<`Ydn?DZ`a:3
 !s100 9U;Z7HH1`Wo^1bci98fPd2
 R10
 32
-R11
+Z62 !s110 1590096791
 !i10b 1
-R12
-Z57 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/instr_fetch.vhd|
-Z58 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/instr_fetch.vhd|
+Z63 !s108 1590096791.000000
+Z64 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/instr_fetch.vhd|
+Z65 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/instr_fetch.vhd|
 !i113 1
 R15
 R16
@@ -455,11 +455,11 @@ Vch]^gP5H[3=Hn894]]]d;0
 !s100 ]k<jAjf?Y`UGZ]F>VkJT31
 R10
 32
-R11
+R62
 !i10b 1
-R12
-R57
-R58
+R63
+R64
+R65
 !i113 1
 R15
 R16
@@ -469,10 +469,10 @@ R2
 R4
 R5
 R6
-Z59 w1589818112
+Z66 w1589818112
 R7
-Z60 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/instr_fetch_pkg.vhd
-Z61 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/instr_fetch_pkg.vhd
+Z67 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/instr_fetch_pkg.vhd
+Z68 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/instr_fetch_pkg.vhd
 l0
 L8
 VOL:^k>0JF4[7N1?Q@DPA03
@@ -480,11 +480,11 @@ VOL:^k>0JF4[7N1?Q@DPA03
 R10
 32
 b1
-R11
+R62
 !i10b 1
-R12
-Z62 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/instr_fetch_pkg.vhd|
-Z63 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/instr_fetch_pkg.vhd|
+R63
+Z69 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/instr_fetch_pkg.vhd|
+Z70 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/instr_fetch_pkg.vhd|
 !i113 1
 R15
 R16
@@ -501,16 +501,16 @@ Ve[lji<HS:PTR;2Q<ZdZd01
 !s100 c`M_aB<<16_iE9Hl65cL41
 R10
 32
-R11
-!i10b 1
-R12
 R62
+!i10b 1
 R63
+R69
+R70
 !i113 1
 R15
 R16
 vinterrupt_handler
-R22
+R45
 !i10b 1
 !s100 16@R:ejaTOVlUC=o:bC^L1
 IfG[kE_PA@a^6S`kiWXlbl1
@@ -524,15 +524,15 @@ R24
 r1
 !s85 0
 31
-R25
+R46
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/interrupt_handler/interrupt_handler.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/interrupt_handler/interrupt_handler.v|
 !i113 1
 R26
 R27
 vinterrupt_handler_tb
-R31
-R22
+R32
+R45
 !i10b 1
 !s100 <10i<iA7dLeKIdQgeH=n_0
 I:X2PH:a`6GT;]T>7iYh;C0
@@ -548,20 +548,20 @@ R24
 r1
 !s85 0
 31
-R25
+R46
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/interrupt_handler/interrupt_handler_tb.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/interrupt_handler/interrupt_handler_tb.sv|
 !i113 1
-R32
+R33
 R27
 vjoycon_ctrl
-R29
+R42
 !i10b 1
-!s100 O`ec=GZQ35[?^hCLYROZa3
-Ibof_VNI9IcO4=M_JFEN8T1
+!s100 =7N=5@NFZ[kTk29M<MhU=1
+I@CkXf@Z^aZQASP8:11XbP3
 R23
 R7
-w1590011350
+w1590083732
 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/joycon_ctrl.v
 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/joycon_ctrl.v
 L0 6
@@ -569,19 +569,19 @@ R24
 r1
 !s85 0
 31
-R30
+R43
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/joycon_ctrl.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/joycon_ctrl.v|
 !i113 1
 R26
 R27
 Eleddcd
-Z64 w1588372276
+Z71 w1588372276
 R5
 R6
 R7
-Z65 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/leddcd.vhd
-Z66 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/leddcd.vhd
+Z72 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/leddcd.vhd
+Z73 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/leddcd.vhd
 l0
 L5
 Vl9EEXHFZ35eLP7?@hTd[03
@@ -591,8 +591,8 @@ R10
 R22
 !i10b 1
 R25
-Z67 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/leddcd.vhd|
-Z68 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/leddcd.vhd|
+Z74 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/leddcd.vhd|
+Z75 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/leddcd.vhd|
 !i113 1
 R15
 R16
@@ -609,13 +609,13 @@ R10
 R22
 !i10b 1
 R25
-R67
-R68
+R74
+R75
 !i113 1
 R15
 R16
 vmem_ctrl
-R29
+R42
 !i10b 1
 !s100 ZL[8?VULn1`n7oULJD3`H1
 IO1Go9:jeT5dcz2gdaz[Q[2
@@ -629,14 +629,14 @@ R24
 r1
 !s85 0
 31
-R30
+R43
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_ctrl.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_ctrl.v|
 !i113 1
 R26
 R27
 vmem_ctrl_tb
-R29
+R30
 !i10b 1
 !s100 c9WNP4?CV6NZo_5F8XR1E0
 IQdNKW@BX=cfVzL3hN5nd83
@@ -650,20 +650,20 @@ R24
 r1
 !s85 0
 31
-R30
+R43
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_ctrl_tb.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_ctrl_tb.v|
 !i113 1
 R26
 R27
 vmem_decode
-R40
+R41
 !i10b 1
-!s100 M;JBOZSI9TMDXo7HDA9>11
-InY_8kClM=T4S25hlEhkl;1
+!s100 XFg@E04dHX^V[e<YzE[:Z3
+IifKkL>Ga?VlVR>4dMLS:V0
 R23
 R7
-w1590014894
+w1590086168
 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_decode.v
 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_decode.v
 L0 4
@@ -671,14 +671,14 @@ R24
 r1
 !s85 0
 31
-R41
+R44
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_decode.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_decode.v|
 !i113 1
 R26
 R27
 vmem_decode_tb
-R40
+R41
 !i10b 1
 !s100 KYN:Z`iGY7D1DaP^MQE:=0
 I3ETIABbFPhh`iJ1JhjGeC1
@@ -692,14 +692,14 @@ R24
 r1
 !s85 0
 31
-R41
+R44
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_decode_tb.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/mem_decode_tb.v|
 !i113 1
 R26
 R27
 vname_to_att
-!s110 1590028792
+R30
 !i10b 1
 !s100 cn:a3RYP]^D3C55STif^52
 I2jQa6:l@QaS_bR3X_W7T92
@@ -713,14 +713,14 @@ R24
 r1
 !s85 0
 31
-!s108 1590028792.000000
+R31
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/name_to_att.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/name_to_att.v|
 !i113 1
 R26
 R27
 vnametable_decoder_tb
-Z69 !s110 1590026387
+Z76 !s110 1590096792
 !i10b 1
 !s100 bmTP`;Nn58@aoN1A8jh0[3
 ISjbhobEgQQCFg;`=D:6:@0
@@ -734,69 +734,71 @@ R24
 r1
 !s85 0
 31
-Z70 !s108 1590026387.000000
+Z77 !s108 1590096792.000000
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/nametable_decoder_tb.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/nametable_decoder_tb.v|
 !i113 1
 R26
 R27
 vnes_fpga_tb
-R31
-R42
-DXx4 work 19 nes_fpga_tb_sv_unit 0 22 TVHYGJRn47QOoh909f_of0
+R32
+R47
+Z78 DXx4 work 7 sv_defs 0 22 f]2P;F`nnj?^RTPE]MQXh1
+DXx4 work 19 nes_fpga_tb_sv_unit 0 22 eG@>n@0VA[=0[0D6aRcj93
 R23
 r1
 !s85 0
 31
 !i10b 1
-!s100 ;:;f1e[j2c]Bl_b09Vd<C2
-IRlnjXgYKhFal_HEzIEVS83
+!s100 OVK>Y0zI79H6je_6:N;W=1
+IPSH5DNVLillS87l6kkk_M2
 !s105 nes_fpga_tb_sv_unit
 S1
 R7
-Z71 w1590015926
-Z72 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_tb.sv
-Z73 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_tb.sv
-L0 10
+Z79 w1590077588
+Z80 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_tb.sv
+Z81 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_tb.sv
+L0 11
 R24
-R70
-Z74 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_tb.sv|
-Z75 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_tb.sv|
+R63
+Z82 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_tb.sv|
+Z83 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_tb.sv|
 !i113 1
-R32
+R33
 R27
 Xnes_fpga_tb_sv_unit
-R31
-R42
-VTVHYGJRn47QOoh909f_of0
+R32
+R47
+R78
+VeG@>n@0VA[=0[0D6aRcj93
 r1
 !s85 0
 31
 !i10b 1
-!s100 ^fC6:LHfU16n;_zNcHmGC0
-ITVHYGJRn47QOoh909f_of0
+!s100 j;aUe[XGVkA<8EZf=nOle1
+IeG@>n@0VA[=0[0D6aRcj93
 !i103 1
 S1
 R7
-R71
-R72
-R73
+R79
+R80
+R81
 L0 3
 R24
-R70
-R74
-R75
+R63
+R82
+R83
 !i113 1
-R32
+R33
 R27
 vnes_fpga_top_lvl
-R69
+R76
 !i10b 1
-!s100 Faz@Lbeo`k8Q9G^jP[79R1
-IHTZWEa1?OIl@TVYaD5T_K3
+!s100 A4el]n;JROPR@Q]=nzaX_0
+I]djIac19SHji?7ebKbIFH1
 R23
 R7
-w1590015878
+w1590076788
 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v
 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v
 L0 3
@@ -804,14 +806,14 @@ R24
 r1
 !s85 0
 31
-R70
+R77
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/top_level/nes_fpga_top_lvl.v|
 !i113 1
 R26
 R27
 vpixel_mux
-R29
+Z84 !s110 1590096782
 !i10b 1
 !s100 1DcTIBY2`?SlIL9kfZhW@2
 IcS8KMYgK3Flz@1Mei4nF51
@@ -825,14 +827,14 @@ R24
 r1
 !s85 0
 31
-R30
+Z85 !s108 1590096782.000000
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/pixel_mux.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/pixel_mux.v|
 !i113 1
 R26
 R27
 vpixel_to_nametable_ptr
-R29
+R84
 !i10b 1
 !s100 ckmRZiUbl=;VCgQJab=dS3
 I_^_9[mUZgW7Dh:<]><_=G0
@@ -846,20 +848,20 @@ R24
 r1
 !s85 0
 31
-R30
+R85
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/pixel_to_nametable_ptr.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/pixel_to_nametable_ptr.v|
 !i113 1
 R26
 R27
 vppu_color_load_fsm
-Z76 !s110 1590026383
+Z86 !s110 1590096784
 !i10b 1
-!s100 `nN6SdbNnIjjOf>SJGmEO0
-IEj<42Ye:>2ofDOmFUI:DF3
+!s100 >O:6034D>3fQ>CLhBIfd_3
+IF:nnMPC<i5bGaSCndUGJE3
 R23
 R7
-w1588177825
+w1590083077
 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_color_load_fsm.v
 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_color_load_fsm.v
 L0 6
@@ -867,20 +869,20 @@ R24
 r1
 !s85 0
 31
-Z77 !s108 1590026383.000000
+Z87 !s108 1590096783.000000
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_color_load_fsm.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_color_load_fsm.v|
 !i113 1
 R26
 R27
 vppu_fsm
-R76
+Z88 !s110 1590096785
 !i10b 1
-!s100 LiH46IICB71aRaijW8:0[2
-I;XX>8HCl2oQ=ODNieMc8K3
+!s100 n3nP@0TDi:_iZiKbUkjYl3
+ICB83]4:6PS]JWSknXRhTd0
 R23
 R7
-w1590025015
+w1590088201
 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v
 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v
 L0 2
@@ -888,69 +890,69 @@ R24
 r1
 !s85 0
 31
-R77
+Z89 !s108 1590096784.000000
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm.v|
 !i113 1
 R26
 R27
 vppu_fsm_tb
-R31
-Z78 DXx4 work 12 vram_listing 0 22 <Hm>RG7CGAfZI2jjCj3`71
-DXx4 work 18 ppu_fsm_tb_sv_unit 0 22 8=UN4Rh0QKgRTgimLB0GX3
+R32
+Z90 DXx4 work 12 vram_listing 0 22 ;QN:FGT@<9hhAYCohPWK40
+DXx4 work 18 ppu_fsm_tb_sv_unit 0 22 2^lzMLE_a76C`ZEigiZ][3
 R23
 r1
 !s85 0
 31
 !i10b 1
-!s100 akjhclQdJccQ;[fmR=JAh0
-Iz>g;=<98f^@H25JXlXejg3
+!s100 Uob`?G=kC`m@oJV:XmNoL1
+I7?4]I?4B3U;RW@ANZ584G1
 !s105 ppu_fsm_tb_sv_unit
 S1
 R7
-Z79 w1590027213
-Z80 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm_tb.sv
-Z81 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm_tb.sv
+Z91 w1590096029
+Z92 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm_tb.sv
+Z93 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm_tb.sv
 L0 3
 R24
-Z82 !s108 1590027214.000000
-Z83 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm_tb.sv|
-Z84 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm_tb.sv|
+Z94 !s108 1590096785.000000
+Z95 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm_tb.sv|
+Z96 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_fsm_tb.sv|
 !i113 1
-R32
+R33
 R27
 Xppu_fsm_tb_sv_unit
-R31
-R78
-V8=UN4Rh0QKgRTgimLB0GX3
+R32
+R90
+V2^lzMLE_a76C`ZEigiZ][3
 r1
 !s85 0
 31
 !i10b 1
 !s100 4IaA1?7XO_3d@OlZR3lgo1
-I8=UN4Rh0QKgRTgimLB0GX3
+I2^lzMLE_a76C`ZEigiZ][3
 !i103 1
 S1
 R7
-R79
-R80
-R81
+R91
+R92
+R93
 L0 1
 R24
-R82
-R83
-R84
+R94
+R95
+R96
 !i113 1
-R32
+R33
 R27
 vppu_mem_decode
-R40
+R42
 !i10b 1
-!s100 F4>f6>0iDBGU1MnB9^c1Q3
-IfPBJOo7K@F>C3Ce3>D?i83
+!s100 iPI^F4?o8j5>WN0N=g?X@1
+I5zH]8ohAgP`B4zEZlfQ:91
 R23
 R7
-w1590018456
+w1590082997
 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/ppu_mem_decode.v
 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/ppu_mem_decode.v
 L0 7
@@ -958,63 +960,63 @@ R24
 r1
 !s85 0
 31
-R41
+R44
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/ppu_mem_decode.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/ppu_mem_decode.v|
 !i113 1
 R26
 R27
 vppu_mem_vga_tb
-R31
-R78
-DXx4 work 22 ppu_mem_vga_tb_sv_unit 0 22 >FKz2bHX^m3HbGbHQkd_;2
+R32
+R90
+DXx4 work 22 ppu_mem_vga_tb_sv_unit 0 22 oX>C;6>LXiDjOPna4UJNA0
 R23
 r1
 !s85 0
 31
 !i10b 1
-!s100 ;MLj_7C>RcYHCZKzW;oDc0
-INQaK>8Z]jeYmYP[nd=bbH2
+!s100 ]JeE?[TLCe4`3C2UAJ_eW0
+IJjkhEk4MJCc3;6hchz@bU1
 !s105 ppu_mem_vga_tb_sv_unit
 S1
 R7
-Z85 w1589939585
-Z86 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/component_testing/ppu_mem_vga_integration_test/ppu_mem_vga_tb.sv
-Z87 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/component_testing/ppu_mem_vga_integration_test/ppu_mem_vga_tb.sv
+Z97 w1590029641
+Z98 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/component_testing/ppu_mem_vga_integration_test/ppu_mem_vga_tb.sv
+Z99 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/component_testing/ppu_mem_vga_integration_test/ppu_mem_vga_tb.sv
 L0 3
 R24
-R25
-Z88 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/component_testing/ppu_mem_vga_integration_test/ppu_mem_vga_tb.sv|
-Z89 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/component_testing/ppu_mem_vga_integration_test/ppu_mem_vga_tb.sv|
+R29
+Z100 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/component_testing/ppu_mem_vga_integration_test/ppu_mem_vga_tb.sv|
+Z101 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/component_testing/ppu_mem_vga_integration_test/ppu_mem_vga_tb.sv|
 !i113 1
-R32
+R33
 R27
 Xppu_mem_vga_tb_sv_unit
-R31
-R78
-V>FKz2bHX^m3HbGbHQkd_;2
+R32
+R90
+VoX>C;6>LXiDjOPna4UJNA0
 r1
 !s85 0
 31
 !i10b 1
-!s100 0S?H68I7IWa=nj>oO3<V61
-I>FKz2bHX^m3HbGbHQkd_;2
+!s100 QXYaUGXBDabTlA@c]bK=l2
+IoX>C;6>LXiDjOPna4UJNA0
 !i103 1
 S1
 R7
-R85
-R86
-R87
+R97
+R98
+R99
 L0 1
 R24
-R25
-R88
-R89
+R29
+R100
+R101
 !i113 1
-R32
+R33
 R27
 vppu_mem_vga_top_lvl
-!s110 1590027215
+R28
 !i10b 1
 !s100 <G8R7CTC5:^iJnga`KEa_3
 I`Te_7mml?F1bb;hfA>aKm1
@@ -1028,15 +1030,15 @@ R24
 r1
 !s85 0
 31
-!s108 1590027215.000000
+R29
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/component_testing/ppu_mem_vga_integration_test/ppu_mem_vga_top_lvl.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/component_testing/ppu_mem_vga_integration_test/ppu_mem_vga_top_lvl.v|
 !i113 1
 R26
 R27
 vppu_sprite_color_load_tb
-R31
-R76
+R32
+R86
 !i10b 1
 !s100 fnmJWj4kZFBgHLJ<5O6YT1
 IZVYYX0Ikj?IZhiKnKcjnA0
@@ -1052,15 +1054,15 @@ R24
 r1
 !s85 0
 31
-R77
+R89
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_sprite_color_load_tb.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_sprite_color_load_tb.sv|
 !i113 1
-R32
+R33
 R27
 vppu_sprite_load_fsm
-R31
-R76
+R32
+R86
 !i10b 1
 !s100 NZGiBM4<nH>a@Q;B=;aB11
 I7m^=9:4izb46S0alY60SN1
@@ -1076,20 +1078,20 @@ R24
 r1
 !s85 0
 31
-R77
+R89
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_sprite_load_fsm.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_sprite_load_fsm.sv|
 !i113 1
-R32
+R33
 R27
 vppu_status_latch
-R76
+R86
 !i10b 1
-!s100 H^QUN;nm6odD@E?[IdEOg1
-IJangEFB0T7zXQm1mJU30L1
+!s100 OmM2DmZFRo053O?_LY?fh2
+IN2l6`3lzOEnZkRLPH`Y:b0
 R23
 R7
-w1590009814
+w1590095189
 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_status_latch.v
 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_status_latch.v
 L0 4
@@ -1097,14 +1099,14 @@ R24
 r1
 !s85 0
 31
-R77
+R89
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_status_latch.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_status_latch.v|
 !i113 1
 R26
 R27
 vppu_vram_load_fsm
-R76
+R84
 !i10b 1
 !s100 P^>97M`L=PK]1HNUDTh@Y0
 IB[l^TGUmC>dDe2VE2lgd`2
@@ -1118,15 +1120,15 @@ R24
 r1
 !s85 0
 31
-R30
+R85
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_vram_load_fsm.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_vram_load_fsm.v|
 !i113 1
 R26
 R27
 vppu_vram_load_fsm_tb
-R31
-R76
+R32
+Z102 !s110 1590096783
 !i10b 1
 !s100 X1m[FLOAnf<<CELnIFA2`2
 I?NNO[odHW2VHBDNV=fIal0
@@ -1142,14 +1144,14 @@ R24
 r1
 !s85 0
 31
-R77
+R85
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_vram_load_tb.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/ppu_vram_load_tb.sv|
 !i113 1
-R32
+R33
 R27
 vrender_8_pixels
-R29
+R30
 !i10b 1
 !s100 Tl9^Jm6jh3_[99G<1FMnZ2
 Id`WBZ3@b[S]YFlf<aQM@e1
@@ -1163,16 +1165,16 @@ R24
 r1
 !s85 0
 31
-R30
+R31
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/render_8_pixels.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/ppu_hw_files/render_8_pixels.v|
 !i113 1
 R26
 R27
 vsimple_op_decode
-R31
-R42
-DXx4 work 24 simple_op_decode_sv_unit 0 22 U^BaR>kbR;Li?2C@X`RFe2
+R32
+R47
+DXx4 work 24 simple_op_decode_sv_unit 0 22 ZLP_A5aGD?1T:LY=7XKEO0
 R23
 r1
 !s85 0
@@ -1183,49 +1185,72 @@ I_T5o@z?Pj5`D_jcbKZSa00
 !s105 simple_op_decode_sv_unit
 S1
 R7
-Z90 w1589652512
-Z91 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/simple_op_decode.sv
-Z92 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/simple_op_decode.sv
+Z103 w1589652512
+Z104 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/simple_op_decode.sv
+Z105 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/simple_op_decode.sv
 L0 6
 R24
 R12
-Z93 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/simple_op_decode.sv|
-Z94 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/simple_op_decode.sv|
+Z106 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/simple_op_decode.sv|
+Z107 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/IE/simple_op_decode.sv|
 !i113 1
-R32
+R33
 R27
 Xsimple_op_decode_sv_unit
-R31
-R42
-VU^BaR>kbR;Li?2C@X`RFe2
+R32
+R47
+VZLP_A5aGD?1T:LY=7XKEO0
 r1
 !s85 0
 31
 !i10b 1
 !s100 J;j`[Ya=[N_bFL_JanC]`2
-IU^BaR>kbR;Li?2C@X`RFe2
+IZLP_A5aGD?1T:LY=7XKEO0
 !i103 1
 S1
 R7
-R90
-R91
-R92
+R103
+R104
+R105
 L0 2
 R24
 R12
-R93
-R94
+R106
+R107
 !i113 1
+R33
+R27
+Xsv_defs
 R32
+R76
+!i10b 1
+!s100 GT=dnQAf_:m1`I2Aol8FG3
+If]2P;F`nnj?^RTPE]MQXh1
+Vf]2P;F`nnj?^RTPE]MQXh1
+S1
+R7
+w1590031370
+8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/sv_defs.sv
+FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/sv_defs.sv
+L0 2
+R24
+r1
+!s85 0
+31
+R77
+!s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/sv_defs.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/CPU/sv_defs.sv|
+!i113 1
+R33
 R27
 vsys_ctrl_fsm
-Z95 !s110 1590026384
+R88
 !i10b 1
-!s100 b<TkC17D?iMnMNEzMFdYl1
-I]Q:`T;L^c1gd[FRID<L2>1
+!s100 [L:NoY8J0a=43K466d<O30
+IKz[2AA^KSKW;;ibCiJH3i3
 R23
 R7
-w1589933824
+w1590031114
 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/sys_ctrl_fsm.v
 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/sys_ctrl_fsm.v
 L0 4
@@ -1233,15 +1258,15 @@ R24
 r1
 !s85 0
 31
-R28
+R94
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/sys_ctrl_fsm.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/sys_ctrl_fsm.v|
 !i113 1
 R26
 R27
 vsys_ctrl_fsm_tb
-R31
-R95
+R32
+R88
 !i10b 1
 !s100 c`n0MCo8gk=gFQ3R]`6XE1
 I5?P^[Y`Uf4W_5a6H3edhM1
@@ -1257,14 +1282,14 @@ R24
 r1
 !s85 0
 31
-R28
+R94
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/sys_ctrl_fsm_tb.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/sys_ctrl_fsm_tb.sv|
 !i113 1
-R32
+R33
 R27
 vtest_tb
-R76
+R102
 !i10b 1
 !s100 YkEBbcXk]dDiGcIhK0mDM0
 IP@7enV7J_1DhW332jTHVU3
@@ -1278,20 +1303,20 @@ R24
 r1
 !s85 0
 31
-R77
+R87
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/testing/test_tb.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/testing/test_tb.v|
 !i113 1
 R26
 R27
 vuart_rx
-Z96 !s110 1590029000
+R22
 !i10b 1
-!s100 A;oI;zD<Yg<K3C3bdJZCl3
-IUVToJL0kXcYd?Vd5lAl0J1
+!s100 i_?AbD7?fO`7gW8ohO6JK2
+I?_VM=aRz^Fb02HI0aJH3n0
 R23
 R7
-w1590028988
+w1590031156
 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/open_source_uart/uart_rx.v
 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/open_source_uart/uart_rx.v
 L0 21
@@ -1299,20 +1324,20 @@ R24
 r1
 !s85 0
 31
-Z97 !s108 1590029000.000000
+R25
 !s107 C:\Users\James Williams\Google Drive\Northwestern\Spring Quarter 2020\EECS 392\git_repo\SYS_CTRL\open_source_uart\baudgen.vh|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/open_source_uart/uart_rx.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/open_source_uart/uart_rx.v|
 !i113 1
 R26
 R27
 vUART_TX
-R96
+Z108 !s110 1590096786
 !i10b 1
-!s100 bB9IC47Xi62<>]@?NZ3@E0
-IhJVZmj@`<GEAn;U3PINgo0
+!s100 XhlzQEo88m?kTNRelWO_Q0
+I];TFD5IZjCSd7LS76B^Ld3
 R23
 R7
-w1590028993
+w1590031164
 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/uart_tx_rx.v
 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/uart_tx_rx.v
 L0 164
@@ -1320,7 +1345,7 @@ R24
 r1
 !s85 0
 31
-R97
+Z109 !s108 1590096786.000000
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/uart_tx_rx.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/SYS_CTRL/uart_tx_rx.v|
 !i113 1
@@ -1328,7 +1353,7 @@ R26
 R27
 n@u@a@r@t_@t@x
 vvga_color_decode
-R95
+R108
 !i10b 1
 !s100 JZ6lTUe?YZ7WVdoPT>9eQ1
 I@72B0?:eOXJGmANF]b@dG0
@@ -1342,14 +1367,14 @@ R24
 r1
 !s85 0
 31
-R28
+R109
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/VGA/vga_color_decode.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/VGA/vga_color_decode.v|
 !i113 1
 R26
 R27
 vvga_controller
-R95
+R108
 !i10b 1
 !s100 ^^A;2i8^<eA69LVYaSQLd3
 IXJIYJOOWdgA_T<BdW2hUO3
@@ -1363,14 +1388,14 @@ R24
 r1
 !s85 0
 31
-R28
+R109
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/VGA/vga_controller.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/VGA/vga_controller.v|
 !i113 1
 R26
 R27
 vvga_mem
-R76
+R102
 !i10b 1
 !s100 =XP];_JB^ZSaVM3@O`52A2
 I^=mFmOKUF50fSP6`2^la73
@@ -1384,32 +1409,32 @@ R24
 r1
 !s85 0
 31
-R77
+R87
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/vga_mem.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/MEM/vga_mem.v|
 !i113 1
 R26
 R27
 Evga_sync
-Z98 w1588117658
+Z110 w1588117658
 R2
 R1
 R5
 R6
 R7
-Z99 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/VGA/vga_sync.vhd
-Z100 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/VGA/vga_sync.vhd
+Z111 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/VGA/vga_sync.vhd
+Z112 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/VGA/vga_sync.vhd
 l0
 L7
 VObVdV?66IBM]LOZUM`g4<3
 !s100 de^2ELWb3KS^^`C<CFRcG3
 R10
 32
-R95
-!i10b 1
 R28
-Z101 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/VGA/vga_sync.vhd|
-Z102 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/VGA/vga_sync.vhd|
+!i10b 1
+R29
+Z113 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/VGA/vga_sync.vhd|
+Z114 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/VGA/vga_sync.vhd|
 !i113 1
 R15
 R16
@@ -1425,24 +1450,24 @@ ViLao2g>1NRKW16P<>UfEF0
 !s100 2Wz>:<:3H?CIz0`l?Bb;j3
 R10
 32
-R95
-!i10b 1
 R28
-R101
-R102
+!i10b 1
+R29
+R113
+R114
 !i113 1
 R15
 R16
 Xvram_listing
-R31
-R95
+R32
+R88
 !i10b 1
-!s100 eVE>gF>7ZgITo]^@D3h^`1
-I<Hm>RG7CGAfZI2jjCj3`71
-V<Hm>RG7CGAfZI2jjCj3`71
+!s100 GU2hT[4Ob];[o]aW?831g2
+I;QN:FGT@<9hhAYCohPWK40
+V;QN:FGT@<9hhAYCohPWK40
 S1
 R7
-w1590019225
+w1590096755
 8C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/vram_listing.sv
 FC:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/vram_listing.sv
 L0 3
@@ -1450,9 +1475,9 @@ R24
 r1
 !s85 0
 31
-R28
+R94
 !s107 C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/vram_listing.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/James Williams/Google Drive/Northwestern/Spring Quarter 2020/EECS 392/git_repo/PPU/vram_listing.sv|
 !i113 1
-R32
+R33
 R27
