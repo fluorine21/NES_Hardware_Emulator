@@ -14,7 +14,7 @@ module dma_module
 	input wire [7:0] mem_data_in, //Incomming data from CPU mem_addr
 	output reg [7:0] mem_data_out, // outgoing data to sprite mem
 	output reg mem_write_en,
-	output reg busy // Used to switch the memory bus mux
+	output wire busy // Used to switch the memory bus mux
 
 );
 
@@ -33,8 +33,10 @@ localparam [3:0] state_idle = 4'h0,
 				 state_transfer_write = 4'h3,
 				 state_fix_spram_addr = 4'h4,
 				 state_busy = 4'h5,
-				 state_transfer_wait = 4'h6;
+				 state_transfer_wait = 4'h6,
+				 state_wait = 4'h7;
 
+assign busy = (state != state_idle && state != state_wait);
 
 always @ (posedge clk or negedge rst) begin
 
@@ -52,9 +54,6 @@ always @ (posedge clk or negedge rst) begin
 		
 			//If the CPU is trying to write to 0x4014 
 			if(cpu_addr == 16'h4014 && cpu_write_en == 1'b1) begin
-			
-				//Set the busy line
-				busy <= 1'b1;
 
 				//Read the current spram pointer
 				mem_addr <= 16'h2003;
@@ -68,7 +67,6 @@ always @ (posedge clk or negedge rst) begin
 			else begin
 			
 				//Give access back to CPU
-				busy <= 1'b0;
 				mem_write_en <= 1'b0;
 			
 			end
@@ -144,8 +142,18 @@ always @ (posedge clk or negedge rst) begin
 			mem_addr <= 16'h2003;
 			mem_data_out <= spram_addr_old;
 			
-			state <= state_idle;
+			state <= state_wait;
 			
+		end
+		
+		state_wait: begin
+			mem_write_en <= 0;
+			//If the CPU has moved on to something else
+			if(cpu_addr != 16'h4014) begin
+				state <= state_idle;
+			end
+		
+		
 		end
 		
 		
@@ -169,7 +177,6 @@ begin
 	mem_addr <= 16'b0;
 	mem_data_out <= 8'b0;
 	mem_write_en <= 1'b0;
-	busy <= 1'b0;
 	spram_addr_old <= 8'b0;
 	mem_start_addr <= 16'b0;
 	state <= state_idle;

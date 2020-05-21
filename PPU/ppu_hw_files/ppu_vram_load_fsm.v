@@ -334,7 +334,8 @@ always @ (posedge clk or negedge rst) begin
 				nametable_result <= vram_data_in;
 				
 				//Load in pattern table low
-				vram_addr <= background_pattern_base + (vram_data_in << 4) + pattern_table_offset;
+				//vram_addr <= background_pattern_base + ({8'h00, vram_data_in} << 4) + pattern_table_offset;
+				vram_addr <= name_to_pattern(background_pattern_base, vram_data_in, pattern_table_offset);
 				
 				//Go to state 4
 				state <= state_draw_col_4;
@@ -347,7 +348,8 @@ always @ (posedge clk or negedge rst) begin
 				attr_table_result <= vram_data_in;
 				
 				//Load in pattern table high
-				vram_addr <= background_pattern_base + (nametable_result << 4) + 8 + pattern_table_offset;
+				//vram_addr <= background_pattern_base + (nametable_result << 4) + 8 + pattern_table_offset;
+				vram_addr <= name_to_pattern(background_pattern_base, nametable_result, pattern_table_offset) + 8;
 				
 				//Go to state 5
 				state <= state_draw_col_5;
@@ -548,6 +550,18 @@ for(i = 0; i < 8; i = i + 1) begin
 
 end
 
+endfunction
+
+
+function [15:0] name_to_pattern;
+input [15:0] p_b;
+input [7:0] n_b;
+input [2:0] p_o;
+begin
+
+	name_to_pattern = p_b + p_o + ({8'h00, n_b} << 4);
+	
+end
 endfunction
 
 endmodule

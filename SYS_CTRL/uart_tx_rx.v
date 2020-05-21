@@ -164,7 +164,8 @@ endmodule // UART_RX */
 module UART_TX 
   #(
   //parameter CLKS_PER_BIT = 2604
-  parameter CLKS_PER_BIT = 5
+  parameter CLKS_PER_BIT = 217
+  //parameter CLKS_PER_BIT = 5
   )
   (
    input       i_Clock,

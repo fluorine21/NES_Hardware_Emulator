@@ -17,30 +17,46 @@ parameter reg_addr = 16'h4016
 	input wire cpu_read_en,
 	
 	//Register seen by the CPU
-	output reg [7:0] joycon_cpu_reg,
+	output wire [7:0] joycon_cpu_reg,
 	
 	// Gets the current button press states
 	input wire [7:0] joycon_ctrl_input 
 	
 );
 
-reg [2:0] cnt;
+reg [4:0] cnt;
+
+wire [31:0] shift_reg = {8'h00, 4'h0, 4'h1, 8'h00, joycon_ctrl_input};
+
+assign joycon_cpu_reg = {7'b0, ~shift_reg[cnt]};
+
 
 always @ (posedge clk or negedge rst) begin
 	
-	if(rst == 1'b0) begin
+	if(!rst) begin
 	
-		cnt <= 3'b0;
+		cnt <= 0;
 	
 	end 
 	
 	else begin
 	
-		//If the CPU is trying to read/write this register:
-		if(cpu_addr == reg_addr && (cpu_write_en || cpu_read_en)) begin
+		//If the CPU is trying to read this register:
+		if(cpu_addr == reg_addr && cpu_read_en) begin
+			
+			if(cnt >= 23) begin
+				cnt <= 0;
+			end
+			else begin
+				cnt <= cnt + 1;
+			end
+			
 		
-			joycon_cpu_reg <= {7'b0, joycon_ctrl_input[cnt]};
-			cnt <= cnt + 1;
+		end
+		//If we're trying to reset this device
+		else if(cpu_addr == reg_addr && cpu_write_en) begin
+			
+			cnt <= 0;
 		
 		end
 	

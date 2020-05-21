@@ -7,6 +7,10 @@
 module ppu_mem_decode
 (
 	input wire [15:0] addr_in,
+	
+	input wire h_mirror,
+	input wire v_mirror,
+	
 	output reg [15:0] addr_out
 );
 
@@ -22,15 +26,24 @@ always @ * begin
 		
 		//Need to subtract 0x3F20 to find offset, do mod 0x20 and then add to 0x3000
 		
-		addr_out = ((addr_int - 16'h3F20) % 16'h0020) + 16'h3000;
+		addr_out <= ((addr_int - 16'h3F20) % 16'h0020) + 16'h3000;
 		
 	end
 	
 	//If we're in the image and sprite palette region 3F00 to 3F1F
 	else if(addr_int >= 16'h3F00) begin
 	
-		//Need to subtract 0F00 to get to correct location
-		addr_out = addr_int - 16'hF00;
+		if(addr_int[1:0] == 2'b00) begin
+		
+			addr_out <= 16'h3F00;
+			
+		end
+		else begin
+			//Need to subtract 0F00 to get to correct location
+			addr_out <= addr_int - 16'h0F00;
+		end
+	
+		
 	
 	end
 	
@@ -42,9 +55,47 @@ always @ * begin
 	
 	end
 	
+	//Somethwere in nametables or pattern tables
 	else begin
-		//Don't need to do any translation
-		addr_out <= addr_int;
+	
+		//If we're in the nametables
+		if(addr_int >= 16'h2000) begin
+		
+			//If we're doing vertical mirroring
+			if(v_mirror) begin
+			
+				if(addr_int >= 16'h2800) begin
+				
+					//Subtract 800 to get to the proper nametables
+					addr_out <= addr_int - 16'h0800;
+				
+				end
+				
+				else begin
+				
+					//Don't need to do any translation
+					addr_out <= addr_int;
+				
+				end
+			end
+			else if(h_mirror) begin
+			
+				//TODO
+				addr_out <= addr_int;
+			
+			end
+			else begin
+			
+				//Don't need to do any translation
+				addr_out <= addr_int;
+			
+			end
+		
+		end
+		else begin
+			//Don't need to do any translation
+			addr_out <= addr_int;
+		end
 	end
 	
 

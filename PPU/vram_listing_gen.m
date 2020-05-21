@@ -72,25 +72,17 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%Name Tables%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-for i = hex2dec('2000'):hex2dec('23FF')
+for i = hex2dec('2000'):hex2dec('27FF')
     
-    %If we're in the nametable
-    if(i < hex2dec('23C0'))
-        %Write alternating tiles
-        if(mod(i, 2) == 0)
-            write_value(vram_file, i, 0, 0);
-        else
-            write_value(vram_file, i, 1, 0);
-        end
+    %If we're in the first nametable
+    if(i < hex2dec('23FF'))
+        
+        write_value(vram_file, i, 0, 0);
+    
+    %If we're in the second
     else
-        %Alternate attribute bytes between 0 and 3
-        if(mod(i, 2) == 0)
-            write_value(vram_file, i, 0, 0);
-        else
-            write_value(vram_file, i, 255, 0);
-        end
-    end
-    
+        write_value(vram_file, i, 1, 0);
+    end  
 end
 
 %Color table

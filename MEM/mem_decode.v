@@ -28,7 +28,9 @@ module mem_decode
 	output wire ppu_status_read,
 	
 	input wire [7:0] joycon_1,//Need to be connected to shift register
-	input wire [7:0] joycon_2
+	input wire [7:0] joycon_2,
+	
+	input wire h_mirror, v_mirror
 );
 
 
@@ -42,8 +44,8 @@ reg [15:0] vram_cpu_addr;
 //VRAM Memory address decoder
 wire [15:0] vram_ppu_addr_int;
 wire [15:0] vram_cpu_addr_int;
-ppu_mem_decode read_decode(vram_ppu_addr, vram_ppu_addr_int);
-ppu_mem_decode write_decode(vram_cpu_addr, vram_cpu_addr_int);
+ppu_mem_decode read_decode(vram_ppu_addr, h_mirror, v_mirror, vram_ppu_addr_int);
+ppu_mem_decode write_decode(vram_cpu_addr, h_mirror, v_mirror, vram_cpu_addr_int);
 
 //CPU address decoding
 wire [15:0] cpu_addr_int;
@@ -113,7 +115,7 @@ always @ (posedge clk or negedge rst) begin
 	end
 	else begin
 		//If the CPU is reading from 0x2002
-		if(cpu_addr_int == 16'h2002) begin
+		if(cpu_addr_int == 16'h2002 && cpu_read_en) begin
 			//Reset the togggle bit
 			scroll_toggle <= 0;
 		end
@@ -140,7 +142,7 @@ always @ (posedge clk or negedge rst) begin
 		ppu_ctrl1 <= 0;
 		ppu_ctrl2 <= 0;
 	end
-	else if(cpu_write_en && !cpu_addr_valid) begin
+	else if(cpu_write_en) begin
 		if(cpu_addr_int == 16'h2000) begin
 			ppu_ctrl1 <= cpu_data_in;
 		end

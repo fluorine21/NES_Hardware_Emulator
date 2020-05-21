@@ -7,7 +7,7 @@ from datetime import datetime
 import time
 
 
-DEFAULT_BAUD = 9600
+DEFAULT_BAUD = 115200
 UART_TIMEOUT = 0.1
 
 HALT_CPU = 0x00 
@@ -399,7 +399,7 @@ class NES_FPGA:
         return ret_v
     
     
-    def load_chrom(self, file_name):
+    def load_chrom(self, file_name, do_check):
         
         chr_file = open(file_name, "r")
         
@@ -419,23 +419,26 @@ class NES_FPGA:
             #Just write 1 byte at 0x2007, this should be sufficient
             #self.write_vram_byte(i, bytestream[i])
             self.write_byte(0x2007, bytestream[i])
-            
-        print("Verifying CHROM bytes...")
-        for i in range(0, len(bytestream)):
-            
-            byte_result = self.read_vram_byte(i)
-            byte_result = self.read_vram_byte(i)
-            
-            if(byte_result != bytestream[i]):
-                print("Error verifying CHROM bytes")
-                print("Reading at address " + hex(i) + ", expected " + hex(bytestream[i]) + ", got " + hex(byte_result))
-                return
         
-        print("Successfully verrified " + str(len(bytestream)) + " CHROM bytes")
+        if(do_check):
+            print("Verifying CHROM bytes...")
+            for i in range(0, len(bytestream)):
+                
+                byte_result = self.read_vram_byte(i)
+                byte_result = self.read_vram_byte(i)
+                
+                if(byte_result != bytestream[i]):
+                    print("Error verifying CHROM bytes")
+                    print("Reading at address " + hex(i) + ", expected " + hex(bytestream[i]) + ", got " + hex(byte_result))
+                    return
+            
+            print("Successfully verrified " + str(len(bytestream)) + " CHROM bytes")
+        else:
+            print("Skiping CHROM check")
         
         return 
     
-    def load_pgrom(self, file_name):
+    def load_pgrom(self, file_name, do_check):
         
         chr_file = open(file_name, "r")
         
@@ -454,17 +457,20 @@ class NES_FPGA:
             
             self.write_byte(i+0x8000, bytestream[i])
             
-        print("Verifying PGROM bytes...")
-        for i in range(0, len(bytestream)):
-            
-            byte_result = self.read_byte(i+0x8000)
-            
-            if(byte_result != bytestream[i]):
-                print("Error verifying PGROM bytes")
-                print("Reading at address " + hex(i) + ", expected " + hex(bytestream[i]) + ", got " + hex(byte_result))
-                return
+        if(do_check):
+            print("Verifying PGROM bytes...")
+            for i in range(0, len(bytestream)):
+                
+                byte_result = self.read_byte(i+0x8000)
+                
+                if(byte_result != bytestream[i]):
+                    print("Error verifying PGROM bytes")
+                    print("Reading at address " + hex(i) + ", expected " + hex(bytestream[i]) + ", got " + hex(byte_result))
+                    return
         
-        print("Successfully verrified " + str(len(bytestream)) + " CHROM bytes")
+            print("Successfully verrified " + str(len(bytestream)) + " CHROM bytes")
+        else:
+            print("Skiping PGROM check")
         
         return 
     
@@ -614,17 +620,17 @@ class NES_FPGA:
             mem_bytes.append(byte_res)
             self.write_byte(i, byte_res)
             
-            
+        print("Finished writing DMA payload, starting DMA")
         #Start a DMA transfer by writing a 0 to 0x4014
         self.write_byte(0x4014, 0)
         
-        time.sleep(1)
+        time.sleep(2)
         
         #Read back sprite memory to see if we got the correct value
         for i in range(0, 256):
             
             self.write_byte(0x2003, i)
-            b_r = self.read_byte(0x2004, i)
+            b_r = self.read_byte(0x2004)
             
             if(b_r != mem_bytes[i]):
                 print("DMA check failed at " + hex(i))
@@ -664,7 +670,7 @@ class NES_FPGA:
         for i in range(0x8000, 0x10000):
             self.write_byte(i, bytestream[i])
             
-            
+       
         print("Done loading program, verrifying...")
         
         
@@ -672,7 +678,7 @@ class NES_FPGA:
             b_r = self.read_byte(i)
             if(b_r != bytestream[i]):
                 print("Error testing memory at address " + hex(i))
-                print("Expected value was " + hex(byte_val) + ", recieved " + hex(returned_val))
+                print("Expected value was " + hex(bytestream[i]) + ", recieved " + hex(b_r))
                 succ = 0
                 break
             
@@ -681,9 +687,10 @@ class NES_FPGA:
             b_r = self.read_byte(i)
             if(b_r != bytestream[i]):
                 print("Error testing memory at address " + hex(i))
-                print("Expected value was " + hex(byte_val) + ", recieved " + hex(returned_val))
+                print("Expected value was " + hex(bytestream[i]) + ", recieved " + hex(b_r))
                 succ = 0
                 break
+
             
             
         if(succ == 1):
@@ -691,3 +698,35 @@ class NES_FPGA:
         else:
             print("Failed to load test program!") 
             
+            
+            
+    def color_test(self):
+        
+
+        print("Running color test")
+        succ = 1
+        seed(datetime.now())
+        color_arr = []
+        for i in range(0, 32):
+            
+            val = randint(0, 255)
+            color_arr.append(val)
+            self.write_vram_byte(i + 0x3F00, val)
+            
+        for i in range(0, 32):
+            
+            res = self.read_vram_byte(i + 0x3F00)
+            res = self.read_vram_byte(i + 0x3F00)
+            if(res != color_arr[i]):
+                print("Color test failed at address " + hex(i+0x3F00))
+                succ = 0
+                
+        if(succ):
+            print("Color test passed!")
+        else:
+            print("Color test failed!")
+                
+                
+        
+        
+        

@@ -1671,7 +1671,7 @@ architecture a of instr_fetch is
 						-- OTHERS
 						when OTHERS =>
 							new_op <= x"22";
-							
+							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(1,16)); --length 1
 							state <= idle;
 						end case;
 						

@@ -142,8 +142,9 @@ always @ (posedge clk or negedge rst) begin
 			
 			end
 			else begin
+			
 				//Always writing in this state
-				vga_write_en <= (vga_addr_row < 240 && vga_addr_col < 256) ?1'b1 : 1'b0;
+				vga_write_en <= 1;
 		
 				//move the next pixel onto the data line
 				//Should be 8 as we need to be 1 up on pattern_index for this load

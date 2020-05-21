@@ -36,6 +36,7 @@ ppu_fsm ppu_fsm_inst
 	vram_read_data,
 	
 	cpu_addr,//Used to determine when to reset vsync
+	1'b1,
 	
 	spram_addr,
 	spram_data_in,
@@ -235,6 +236,8 @@ initial begin
 	
 	//Reset everything
 	reset();
+
+	rst = 0;
 	
 	//Load memory
 	load_vram();
@@ -251,8 +254,44 @@ initial begin
 	vga_done = 0;
 	#1
 	
+	rst = 1;
+
+	#1
+	vga_done = 1;
+	#1
+
 	while(1) begin 
 		clk_cycle();
+		if(ppu_status & 8'h80) begin
+		
+			#1
+			vga_done = 0;
+			#1
+		
+			$display("PPU vsync");
+			
+			if(cpu_scroll_addr == 16'h00FF) begin
+				cpu_scroll_addr <= 0;
+				ppu_ctrl1 <= ppu_ctrl1 | 8'h01;
+			
+			end
+			else begin
+			
+				cpu_scroll_addr <= cpu_scroll_addr + 1;
+			
+			end
+			
+			
+			while(!(ppu_status & 8'h80))begin
+				clk_cycle();
+			end
+			
+			repeat(100) clk_cycle();
+			
+			#1
+			vga_done = 1;
+			
+		end
 	end
 	
 	

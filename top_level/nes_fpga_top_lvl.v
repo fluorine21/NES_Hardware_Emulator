@@ -29,7 +29,9 @@ module nes_fpga_top_lvl
 	output wire [27:0] pc_out,
 	
 	//Sys ctrl address out
-	output wire [27:0] sys_out
+	output wire [27:0] sys_out,
+	
+	input wire cpu_halt_button
 
 );
 
@@ -73,6 +75,7 @@ ppu_fsm ppu_fsm_inst
 	ppu_vram_data,
 	
 	cpu_mem_addr,//Used to determine when to reset vsync
+	cpu_read_en,
 	
 	spram_addr,
 	spram_data_in,
@@ -131,7 +134,9 @@ mem_ctrl mem_ctrl_inst
 	joycon_1,
 	joycon_2,
 	
-	mem_ctrl_busy
+	mem_ctrl_busy,
+	
+	1'b0, 1'b1//v mirror set, h mirror unset
 
 );
 
@@ -225,7 +230,7 @@ cpu_6502 cpu_6502_dut
 	
 	ppu_status,
 	
-	(cpu_halt || mem_ctrl_busy),//Halt if mem ctrl is busy with DMA
+	(cpu_halt || mem_ctrl_busy || (~cpu_halt_button)),//Halt if mem ctrl is busy with DMA
 	1'b1,//Set IRQ to 1, won't be triggered
 	pc_6502,
 	

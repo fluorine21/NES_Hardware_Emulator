@@ -72,7 +72,9 @@ nes_fpga_top_lvl nes_dut
 	pc_out,
 	
 	//Sys ctrl address out
-	sys_out
+	sys_out,
+	
+	1'b1
 
 );
 
@@ -131,11 +133,15 @@ initial begin
 	//check_pgrom_test();
 	
 	//PPU memory
+	$display("Loading chrom...");
 	load_chrom();
-	check_chrom();
+	//$display("Checking chrom...");
+	//check_chrom();
 	
+	$display("Loading pgrom");
 	load_pgrom();
-	check_pgrom();
+	//$display("Checking PGROM");
+	//check_pgrom();
 	
 	//Take the CPU PPU out of reset
 	set_cpu();
@@ -258,15 +264,9 @@ begin
 	//Write all of vram
 	for(cnt = 0; cnt <  $size(listing); cnt = cnt + 1) begin
 
-
 		cnt_inc = (cnt + 16'h8000);
 		//Set the address first
-		write_byte(16'h2006, cnt_inc[15:8]);
-		write_byte(16'h2006, cnt_inc[7:0]);
-		
-		
-		//Set the data last
-		write_byte(16'h2007, listing[cnt][7:0]);
+		write_byte(cnt_inc[15:0], listing[cnt]);
 
 	end
 end

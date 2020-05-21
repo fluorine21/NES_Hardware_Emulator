@@ -110,7 +110,8 @@ ie_fsm inst_exec_inst
 	acc_reg, x_reg, y_reg,
 	stack_ptr,
 	halt,
-	nIRQ
+	nIRQ,
+	ppu_ctrl1
 	
 );
 

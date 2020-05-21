@@ -688,6 +688,8 @@ always @ (posedge clk or negedge rst) begin
 			
 			state_dma_delay: begin
 			
+				ie_write_en <= 0;
+			
 				if(dma_cnt > dma_delay) begin
 				
 					dma_cnt <= 0;

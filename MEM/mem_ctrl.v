@@ -35,7 +35,8 @@ module mem_ctrl
 	input wire [7:0] joycon_1,
 	input wire [7:0] joycon_2,
 	
-	output wire busy //1 if DMA is running
+	output wire busy, //1 if DMA is running
+	input wire h_mirror, v_mirror
 
 );
 
@@ -88,7 +89,9 @@ mem_decode mem_decode_inst
 	ppu_status_read,
 	
 	joycon_1_in,
-	joycon_2_in
+	joycon_2_in,
+	
+	h_mirror, v_mirror
 
 );
 

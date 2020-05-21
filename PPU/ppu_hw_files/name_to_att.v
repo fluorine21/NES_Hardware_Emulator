@@ -17,7 +17,7 @@ wire [15:0] nametable_base_addr = {nametable_addr[15:10], 10'b0000000000};
 wire [15:0] nametable_offset = nametable_addr - nametable_base_addr;
 
 //Divide by 32 to get nametable row
-wire [7:0] nametable_row = (nametable_offset >> 32);
+wire [7:0] nametable_row = (nametable_offset >> 5);
 //Just take the last 5 bits to get the col
 wire [7:0] nametable_col = nametable_offset[4:0];
 

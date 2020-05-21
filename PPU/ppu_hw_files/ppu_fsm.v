@@ -1,4 +1,4 @@
-
+//Its only not shifting correctly after the scan line changes
 module ppu_fsm
 (
 	input wire clk,
@@ -8,6 +8,7 @@ module ppu_fsm
 	input wire [7:0] vram_data_in,
 	
 	input wire [15:0] cpu_addr,//Used to determine when to reset vsync
+	input wire cpu_read,
 	
 	output wire [7:0] spram_addr,
 	input wire [7:0] spram_data_in,
@@ -32,7 +33,7 @@ module ppu_fsm
 
 
 reg [15:0] cnt;//Counter used for delay to slow down ppu
-localparam [15:0] wait_cycles = 100;
+localparam [15:0] wait_cycles = 0;
 reg [7:0] state;
 localparam [7:0] state_idle = 0, 
 				 state_wait_colors_1 = 1,
@@ -137,15 +138,16 @@ always @ (posedge clk or negedge rst) begin
 		//If we're doing a horizontal blank
 		if(state == state_wait) begin
 			//Write the low bits of x into the latch
-			cpu_scroll_addr_latch[15:8] <= cpu_scroll_addr[15:8];
+			cpu_scroll_addr_latch[7:0] <= cpu_scroll_addr[7:0];
 			ppu_ctrl1_latch[0] <= ppu_ctrl1[0]; 
+			
 		end
 		
 		//If we're about to start a new frame
 		if(state == state_idle) begin
 		
 			//Write the low bits of y into the latch
-			cpu_scroll_addr_latch[7:0] <= cpu_scroll_addr[7:0];
+			cpu_scroll_addr_latch[15:8] <= cpu_scroll_addr[15:8];
 			ppu_ctrl1_latch[1] <= ppu_ctrl1[1]; 
 		
 		end
@@ -161,8 +163,11 @@ pixel_to_nametable_ptr pixel_to_nametable_inst
 	screen_pixel_row,
 	screen_pixel_col,
 	
-	cpu_scroll_addr_latch,
-	ppu_ctrl1_latch,
+	//cpu_scroll_addr_latch,
+	//ppu_ctrl1_latch,
+	
+	cpu_scroll_addr,
+	ppu_ctrl1,
 	
 	nametable_ptr,
 	pattern_table_offset
@@ -179,8 +184,11 @@ name_to_att name_to_att_inst
 );
 
 //vram load fsm
-wire [15:0] background_pattern_base = ppu_ctrl1[4] ? 16'h1000 : 0;
+//wire [15:0] background_pattern_base = ppu_ctrl1[4] ? 16'h1000 : 0;
+wire [15:0] background_pattern_base = 16'h1000;
 wire [15:0] sprite_pattern_base = ppu_ctrl1[3] ? 16'h1000 : 0;
+
+
 wire sprite_0_hit, sprite_1_hit;
 reg vram_load_start;
 wire vram_load_busy;
@@ -257,6 +265,8 @@ ppu_status_latch ppu_status_inst
 	state,
 	
 	cpu_addr,
+	cpu_read,
+	
 	ppu_status
 	
 );
@@ -393,7 +403,7 @@ always @ (posedge clk or negedge rst) begin
 				if(vram_load_busy == 0) begin
 				
 					//if we're about to go over the edge of a column
-					if(screen_pixel_col + 8 >= 256) begin
+					if(screen_pixel_col + 8 >= 256 && ~screen_pixel_col[8]) begin
 					
 						//if we're on the last row
 						if(screen_pixel_row >= 239) begin
@@ -468,7 +478,7 @@ end//always
 task set_col_counter();
 begin
 
-	screen_pixel_col <= (~col_offset[2:0] + 1);
+	screen_pixel_col <= (~{6'b0, col_offset[2:0]} + 1);
 
 end
 endtask

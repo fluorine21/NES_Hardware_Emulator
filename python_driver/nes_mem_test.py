@@ -32,7 +32,8 @@ NES_obj.halt_cpu();
 #NES_obj.halt_cpu();
 #NES_obj.test_cpu_mem();
 
-NES_obj.load_test_program("../test_programs/func_test_1.txt")
+#NES_obj.load_test_program("../test_programs/func_test_1.txt")
+NES_obj.dma_test()
 
 NES_obj.resume_cpu();    
     
