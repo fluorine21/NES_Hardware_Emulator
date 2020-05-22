@@ -19,12 +19,12 @@ always @ (addr_in) begin
 	//If this address is in a register
 	if( addr_in >= 16'h2000 && addr_in < 16'h4020) begin
 	
-		addr_valid <= 1'b0;
+		addr_valid = 1'b0;
 		
 		//If it's in the top IO region
 		if(addr_in >= 16'h4000) begin
 		
-			addr_out <= addr_in;
+			addr_out = addr_in;
 		
 		end
 		
@@ -38,7 +38,7 @@ always @ (addr_in) begin
 		//If we're just in the PPU ctrl region
 		else begin
 		
-			addr_out <= addr_in;
+			addr_out = addr_in;
 		
 		end
 		
@@ -53,14 +53,14 @@ always @ (addr_in) begin
 		if(addr_in >= 16'h4020)begin
 			
 			//Just need to subtract 0x4020 and add 0x800
-			addr_out <= addr_in - 16'h4020 + 16'h0800;
+			addr_out = addr_in - 16'h4020 + 16'h0800;
 
 		end
 
 		//If we don't need to decode anything
 		else begin
 
-			addr_out <= addr_in & 16'h07FF;
+			addr_out = addr_in & 16'h07FF;
 
 		end
 	

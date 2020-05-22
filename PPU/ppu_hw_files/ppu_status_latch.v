@@ -105,6 +105,8 @@ reg [31:0] sprite_0_hit_cnt;
 always @ (posedge clk or negedge rst) begin
 	if(rst == 0) begin
 		sprite_0_hit_reg <= 0;
+		sprite_0_hit_state <= 0;
+		sprite_0_hit_cnt <= 0;
 	end
 	else begin
 		//If sprite 0 hit is not set
@@ -117,15 +119,15 @@ always @ (posedge clk or negedge rst) begin
 		//If it is set
 		else begin
 			//If the PPU has just restarted
-			//if(ppu_state == 1) begin
+			if(ppu_state == 1) begin
 				//Reset the flag here
-				//sprite_0_hit_reg <= 0;
+				sprite_0_hit_reg <= 0;
 			
-			//end
+			end
 			
 			////////////////////////////////////////////////
 			//////////////////Reset when VGA done instead
-			case(sprite_0_hit_state)
+/* 			case(sprite_0_hit_state)
 			
 				0: begin
 				
@@ -143,7 +145,7 @@ always @ (posedge clk or negedge rst) begin
 				
 					sprite_0_hit_cnt <= sprite_0_hit_cnt + 1;
 					
-					if(sprite_0_hit_cnt > 50000 || vga_done == 0) begin
+					if(sprite_0_hit_cnt > 5 || vga_done == 0) begin
 						//Now we go low
 						sprite_0_hit_reg <= 0;
 						sprite_0_hit_state <= 0;
@@ -153,7 +155,7 @@ always @ (posedge clk or negedge rst) begin
 				
 				end
 			
-			endcase
+			endcase */
 			
 			
 		end

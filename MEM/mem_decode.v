@@ -49,7 +49,7 @@ wire [15:0] vram_ppu_addr_int;
 wire [15:0] vram_cpu_addr_int;
 reg [15:0] vram_cpu_addr_buff;
 ppu_mem_decode read_decode(vram_ppu_addr, h_mirror, v_mirror, vram_ppu_addr_int);
-ppu_mem_decode write_decode(vram_cpu_addr, h_mirror, v_mirror, vram_cpu_addr_int);
+ppu_mem_decode write_decode(vram_cpu_addr_buff, h_mirror, v_mirror, vram_cpu_addr_int);
 
 //CPU address decoding
 wire [15:0] cpu_addr_int;
@@ -122,6 +122,7 @@ always @ (posedge clk or negedge rst) begin
 	end
 	else if(!cpu_addr_valid)begin
 	
+		vram_cpu_addr_buff <= vram_cpu_addr;
 	
 		//If the CPU is reading from 0x2002
 		if(cpu_addr_int == 16'h2002 && cpu_read_en) begin
@@ -235,7 +236,7 @@ always @ * begin
 		16'h2005: cpu_data_out = ppu_scroll_addr[7:0];
 		
 		//vram addr
-		16'h2006: cpu_data_out = vram_cpu_addr;
+		16'h2006: cpu_data_out = vram_cpu_addr[7:0];
 			
 		//vram data
 		//Need to buffer this if we are accessing 

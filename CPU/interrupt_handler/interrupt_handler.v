@@ -83,7 +83,7 @@ assign ie_dis = interrupt_disable;
 reg [15:0] cpu_addr_next;//For loading interrupt vector
 
 assign done = state == state_wait_1;
-assign accessing_memory = state != state_idle;
+assign accessing_memory = (state != state_idle && state != state_wait_1);
 
 
 //Latches
@@ -216,7 +216,8 @@ always @ (posedge clk or negedge rst) begin
 					
 					end
 					//or a ppu blanking
-					else if(ppu_status_int && ppu_ctrl1[7]) begin
+					//else if(ppu_status_int && ppu_ctrl1[7]) begin
+					else if(ppu_status[7] && ppu_ctrl1[7])begin
 					
 						//Lookup the interrupt vector at 0xFFFA (low) and 0xFFFB (high)
 						cpu_addr <= 16'hFFFA;

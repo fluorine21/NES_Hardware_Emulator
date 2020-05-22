@@ -28,7 +28,7 @@ reg [4:0] cnt;
 
 wire [31:0] shift_reg = {8'h00, 4'h0, 4'h1, 8'h00, joycon_ctrl_input};
 
-assign joycon_cpu_reg = {7'b0, ~shift_reg[cnt - 1]};
+assign joycon_cpu_reg = {7'b0, ~shift_reg[cnt]};
 
 
 always @ (posedge clk or negedge rst) begin

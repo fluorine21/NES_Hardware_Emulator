@@ -37,7 +37,7 @@ reg [7:0] ppu_ctrl2_latch;
 
 
 reg [15:0] cnt;//Counter used for delay to slow down ppu
-localparam [15:0] wait_cycles = 3;
+localparam [15:0] wait_cycles = 300;
 reg [7:0] state;
 localparam [7:0] state_idle = 0, 
 				 state_wait_colors_1 = 1,

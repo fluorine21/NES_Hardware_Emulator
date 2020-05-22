@@ -320,7 +320,7 @@ class NES_FPGA:
     
     def write_vram_byte(self, addr, data):
         
-        self.halt_cpu()
+        #self.halt_cpu()
         ret_v = 0
         payload = [WRITE_BYTE, 0x20, 0x06, int(addr/256)&255, WRITE_BYTE, 0x20, 0x06, int(addr)&255, WRITE_BYTE, 0x20, 0x07, int(data)&255]
         self.port.write(payload)
@@ -726,7 +726,25 @@ class NES_FPGA:
         else:
             print("Color test failed!")
                 
-                
+            
+    def override_color_table(self):
+        
+        self.write_bytes([HALT_CPU])
+        
+        print("Writing color pallets")
+        
+        
+        arr_cols = [0x22, 0x29, 0x1A, 0x0F, 0x22, 0x36, 0x17, 0x0F, 0x22, 0x30, 0x21, 0x0F, 0x22, 0x27, 0x17, 0x0F, 0x00, 0x16, 0x27, 0x18, 0x00, 0x1A, 0x30, 0x27, 0x00, 0x16, 0x30, 0x27, 0x00, 0x0F, 0x36, 0x17]
+        
+        for i in range(0, 32):
+            
+            self.write_vram_byte(i+0x3F00, arr_cols[i])
+            
+            
+        self.write_bytes([RESUME_CPU])
+        
+        
+        return
         
         
         
