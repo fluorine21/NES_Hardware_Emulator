@@ -24,11 +24,12 @@ parameter reg_addr = 16'h4016
 	
 );
 
-reg [4:0] cnt;
+//reg [2:0] cnt;
 
-wire [31:0] shift_reg = {8'h00, 4'h0, 4'h1, 8'h00, joycon_ctrl_input};
+//wire [31:0] shift_reg = {8'h00, 4'hF, 4'h8, 8'hFF, joycon_ctrl_input};
+wire [7:0] shift_reg = joycon_ctrl_input;
 
-assign joycon_cpu_reg = {7'b0, ~shift_reg[cnt]};
+assign joycon_cpu_reg = {7'b0, shift_reg[cnt]};
 
 
 always @ (posedge clk or negedge rst) begin
@@ -44,12 +45,12 @@ always @ (posedge clk or negedge rst) begin
 		//If the CPU is trying to read this register:
 		if(cpu_addr == reg_addr && cpu_read_en) begin
 			
-			if(cnt >= 23) begin
-				cnt <= 0;
-			end
-			else begin
+			//if(cnt >= 23) begin
+				//cnt <= 0;
+			//end
+			//else begin
 				cnt <= cnt + 1;
-			end
+			//end
 			
 		
 		end

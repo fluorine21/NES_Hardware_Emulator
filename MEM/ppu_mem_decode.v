@@ -19,8 +19,9 @@ wire [15:0] addr_int = {2'b00, addr_in[13:0]};
 
 always @ * begin
 
+	addr_out <= addr_int;
 
-
+/* 
 	//If we're in the mirror region 3F20 to 4000
 	if(addr_int >= 16'h3F20) begin
 		
@@ -96,7 +97,7 @@ always @ * begin
 			//Don't need to do any translation
 			addr_out <= addr_int;
 		end
-	end
+	end */
 	
 
 end
