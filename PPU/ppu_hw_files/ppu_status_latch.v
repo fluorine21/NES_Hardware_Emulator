@@ -15,7 +15,9 @@ module ppu_status_latch
 	input wire [15:0] cpu_addr,//Needed to determine when CPU is reading 2002
 	input wire cpu_read,
 	
-	output reg [7:0] ppu_status_out
+	output reg [7:0] ppu_status_out,
+	
+	input wire vga_done
 	
 );
 //This module is responsible for:
@@ -71,18 +73,18 @@ wire [7:0] ppu_status = {vsync_reg, sprite_0_hit_reg, sprite_overflow_reg, 5'b0}
 // end
 
 
-reg [7:0] s1, s2, s3, s4, s5, s6, s7;
+reg [7:0] s1;// s2, s3, s4, s5, s6, s7;
 always @ (posedge clk or negedge rst) begin
 
 	if(!rst) begin
 	
 		s1 <= 0;
-		s2 <= 0;
-		s3 <= 0;
-		s4 <= 0;
-		s5 <= 0;
-		s6 <= 0;
-		s7 <= 0;
+//		s2 <= 0;
+//		s3 <= 0;
+//		s4 <= 0;
+//		s5 <= 0;
+//		s6 <= 0;
+//		s7 <= 0;
 		ppu_status_out <= 0;
 	end
 	else begin
@@ -98,6 +100,8 @@ always @ (posedge clk or negedge rst) begin
 end
 
 //Always for setting sprite 0 hit
+reg sprite_0_hit_state;
+reg [31:0] sprite_0_hit_cnt;
 always @ (posedge clk or negedge rst) begin
 	if(rst == 0) begin
 		sprite_0_hit_reg <= 0;
@@ -113,11 +117,45 @@ always @ (posedge clk or negedge rst) begin
 		//If it is set
 		else begin
 			//If the PPU has just restarted
-			if(ppu_state == 1) begin
+			//if(ppu_state == 1) begin
 				//Reset the flag here
-				sprite_0_hit_reg <= 0;
+				//sprite_0_hit_reg <= 0;
 			
-			end
+			//end
+			
+			////////////////////////////////////////////////
+			//////////////////Reset when VGA done instead
+			case(sprite_0_hit_state)
+			
+				0: begin
+				
+					//If we're waiting on VGA to be busy
+					if(ppu_state == 8) begin
+						
+						//Start counting 
+						sprite_0_hit_state <= 1;
+						sprite_0_hit_cnt <= 0;
+					end
+				end
+				
+				
+				1: begin
+				
+					sprite_0_hit_cnt <= sprite_0_hit_cnt + 1;
+					
+					if(sprite_0_hit_cnt > 50000 || vga_done == 0) begin
+						//Now we go low
+						sprite_0_hit_reg <= 0;
+						sprite_0_hit_state <= 0;
+					
+					end
+				
+				
+				end
+			
+			endcase
+			
+			
 		end
 	end
 end

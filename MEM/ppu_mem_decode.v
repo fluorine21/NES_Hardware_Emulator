@@ -26,7 +26,7 @@ always @ * begin
 		
 		//Need to subtract 0x3F20 to find offset, do mod 0x20 and then add to 0x3000
 		
-		addr_out <= ((addr_int - 16'h3F20) % 16'h0020) + 16'h3000;
+		addr_out <= ((addr_int - 16'h3F20) & 16'h001F) + 16'h3000;
 		
 	end
 	

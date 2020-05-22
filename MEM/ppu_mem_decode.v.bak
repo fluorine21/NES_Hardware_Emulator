@@ -33,16 +33,16 @@ always @ * begin
 	//If we're in the image and sprite palette region 3F00 to 3F1F
 	else if(addr_int >= 16'h3F00) begin
 	
-		if(addr_int[1:0] == 2'b00) begin
+		// if(addr_int[1:0] == 2'b00) begin
 		
-			addr_int <= 16'h3F00;
+			// addr_out <= 16'h3000;
 			
-		end
-		else begin
+		// end
+		// else begin
 			//Need to subtract 0F00 to get to correct location
-			addr_out <= addr_int - 16'h0F00;
-		end
-	
+			// addr_out <= addr_int - 16'h0F00;
+		// end
+		addr_out <= addr_int - 16'h0F00;
 		
 	
 	end

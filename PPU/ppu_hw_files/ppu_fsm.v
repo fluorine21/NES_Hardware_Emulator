@@ -272,7 +272,10 @@ ppu_status_latch ppu_status_inst
 	cpu_addr,
 	cpu_read,
 	
-	ppu_status
+	ppu_status,
+	
+	
+	vga_done
 	
 );
 

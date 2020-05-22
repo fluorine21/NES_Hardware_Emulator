@@ -1,3 +1,6 @@
+
+
+
 //Main memory controller for the PPU and CPU
 
 
@@ -44,6 +47,7 @@ reg [15:0] vram_cpu_addr;
 //VRAM Memory address decoder
 wire [15:0] vram_ppu_addr_int;
 wire [15:0] vram_cpu_addr_int;
+reg [15:0] vram_cpu_addr_buff;
 ppu_mem_decode read_decode(vram_ppu_addr, h_mirror, v_mirror, vram_ppu_addr_int);
 ppu_mem_decode write_decode(vram_cpu_addr, h_mirror, v_mirror, vram_cpu_addr_int);
 
@@ -88,7 +92,7 @@ generic_ram #(16384, 16) vram_mem (clk, vram_mem_cpu_addr, vram_mem_cpu_data_in,
 wire [7:0] spram_cpu_addr_next = (cpu_addr_int == 16'h2003 && cpu_addr_valid == 1'b0 && cpu_write_en) ? cpu_data_in : (cpu_addr_int == 16'h2004 && cpu_addr_valid == 1'b0 && (cpu_write_en || cpu_read_en)) ? spram_cpu_addr + 1'b1 : spram_cpu_addr;
 
 //Vram cpu addr assignments
-wire [15:0] vram_cpu_addr_plus_1 = vram_cpu_addr + 1;
+/* wire [15:0] vram_cpu_addr_plus_1 = vram_cpu_addr + 1;
 wire [15:0] vram_cpu_addr_plus_32 = vram_cpu_addr + 32;
 
 wire [7:0] vram_cpu_addr_next_high = (cpu_addr_int == 16'h2006 && cpu_addr_valid == 1'b0 && cpu_write_en == 1'b1) ? vram_cpu_addr[7:0] : (cpu_addr_int == 16'h2007 && cpu_addr_valid == 1'b0 && (cpu_write_en == 1'b1 || cpu_read_en == 1'b1)) ? (ppu_ctrl1[2] ? vram_cpu_addr_plus_32[15:8] : vram_cpu_addr_plus_1[15:8]) : vram_cpu_addr[15:8];
@@ -96,7 +100,7 @@ wire [7:0] vram_cpu_addr_next_high = (cpu_addr_int == 16'h2006 && cpu_addr_valid
 wire [7:0] vram_cpu_addr_next_low = (cpu_addr_int == 16'h2006 && cpu_addr_valid == 1'b0 && cpu_write_en == 1'b1) ? cpu_data_in : (cpu_addr_int == 16'h2007 && cpu_addr_valid == 1'b0 && (cpu_write_en == 1'b1 || cpu_read_en == 1'b1)) ? (ppu_ctrl1[2] ? vram_cpu_addr_plus_32[7:0] : vram_cpu_addr_plus_1[7:0]) : vram_cpu_addr[7:0];
 
 
-wire [15:0] vram_cpu_addr_next = {vram_cpu_addr_next_high, vram_cpu_addr_next_low};
+wire [15:0] vram_cpu_addr_next = {vram_cpu_addr_next_high, vram_cpu_addr_next_low}; */
 
 //Always for handing buffered return of 
 always @ (posedge clk or negedge rst) begin
@@ -116,7 +120,9 @@ always @ (posedge clk or negedge rst) begin
 		scroll_toggle <= 0;
 		ppu_scroll_addr <= 0;
 	end
-	else begin
+	else if(!cpu_addr_valid)begin
+	
+	
 		//If the CPU is reading from 0x2002
 		if(cpu_addr_int == 16'h2002 && cpu_read_en) begin
 			//Reset the togggle bit
@@ -136,6 +142,39 @@ always @ (posedge clk or negedge rst) begin
 				scroll_toggle <= 1;
 			end
 		end
+		else if(cpu_addr_int == 16'h2006 && cpu_write_en) begin
+			
+			//If the toggle bit unset
+			if(!scroll_toggle) begin
+				//Write high byte first
+				vram_cpu_addr[15:8] <= cpu_data_in;
+				scroll_toggle <= 1;
+			end
+			else begin
+				//Write low byte last
+				vram_cpu_addr[7:0] <= cpu_data_in;
+				scroll_toggle <= 0;
+			end
+		
+		end
+		else if(cpu_addr_int == 16'h2007 && (cpu_write_en || cpu_read_en)) begin
+			
+			//Increment by 1 or 32 depending on ppu_ctrl1[2]
+			if(ppu_ctrl1[2]) begin
+			
+				vram_cpu_addr <= vram_cpu_addr + 32;
+				
+			end
+			else begin
+			
+				vram_cpu_addr <= vram_cpu_addr + 1;
+			
+			end
+		end
+		
+		
+		
+		
 	end
 end
 
@@ -159,13 +198,14 @@ end
 always @ (posedge clk or negedge rst) begin
 	if(!rst) begin
 		spram_cpu_addr <= 8'b0;
-		vram_cpu_addr <= 16'b0;
 	end
 	else begin
 		spram_cpu_addr <= spram_cpu_addr_next;
-		vram_cpu_addr <= vram_cpu_addr_next;
 	end
 end
+
+
+
 
 
 

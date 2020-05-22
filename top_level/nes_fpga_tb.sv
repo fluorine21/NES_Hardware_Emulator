@@ -143,7 +143,7 @@ initial begin
 	load_pgrom();
 	//$display("Checking PGROM");
 	//check_pgrom();
-	
+	$display("Done loading.");
 	//Take the CPU PPU out of reset
 	set_cpu();
 	
