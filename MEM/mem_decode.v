@@ -91,17 +91,6 @@ generic_ram #(16384, 16) vram_mem (clk, vram_mem_cpu_addr, vram_mem_cpu_data_in,
 ///////////////////////////////
 wire [7:0] spram_cpu_addr_next = (cpu_addr_int == 16'h2003 && cpu_addr_valid == 1'b0 && cpu_write_en) ? cpu_data_in : (cpu_addr_int == 16'h2004 && cpu_addr_valid == 1'b0 && (cpu_write_en || cpu_read_en)) ? spram_cpu_addr + 1'b1 : spram_cpu_addr;
 
-//Vram cpu addr assignments
-/* wire [15:0] vram_cpu_addr_plus_1 = vram_cpu_addr + 1;
-wire [15:0] vram_cpu_addr_plus_32 = vram_cpu_addr + 32;
-
-wire [7:0] vram_cpu_addr_next_high = (cpu_addr_int == 16'h2006 && cpu_addr_valid == 1'b0 && cpu_write_en == 1'b1) ? vram_cpu_addr[7:0] : (cpu_addr_int == 16'h2007 && cpu_addr_valid == 1'b0 && (cpu_write_en == 1'b1 || cpu_read_en == 1'b1)) ? (ppu_ctrl1[2] ? vram_cpu_addr_plus_32[15:8] : vram_cpu_addr_plus_1[15:8]) : vram_cpu_addr[15:8];
-
-wire [7:0] vram_cpu_addr_next_low = (cpu_addr_int == 16'h2006 && cpu_addr_valid == 1'b0 && cpu_write_en == 1'b1) ? cpu_data_in : (cpu_addr_int == 16'h2007 && cpu_addr_valid == 1'b0 && (cpu_write_en == 1'b1 || cpu_read_en == 1'b1)) ? (ppu_ctrl1[2] ? vram_cpu_addr_plus_32[7:0] : vram_cpu_addr_plus_1[7:0]) : vram_cpu_addr[7:0];
-
-
-wire [15:0] vram_cpu_addr_next = {vram_cpu_addr_next_high, vram_cpu_addr_next_low}; */
-
 //Always for handing buffered return of 
 always @ (posedge clk or negedge rst) begin
 	if(!rst) begin
@@ -204,10 +193,6 @@ always @ (posedge clk or negedge rst) begin
 		spram_cpu_addr <= spram_cpu_addr_next;
 	end
 end
-
-
-
-
 
 
 always @ * begin

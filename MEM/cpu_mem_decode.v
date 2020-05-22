@@ -1,8 +1,5 @@
 //CPU memory decoder
 
-//Expansion ROM now starts at 0x0800 ans is 0x1FE0 bytes wide
-//SRAM and everything above it starts at 0x27E0
-
 
 module cpu_mem_decode
 (
@@ -12,12 +9,12 @@ module cpu_mem_decode
 	output reg addr_valid
 );
 
-//always @ (posedge clk or negedge rst) begin
+
 always @ (addr_in) begin
 
 
 	//If this address is in a register
-	if( addr_in >= 16'h2000 && addr_in < 16'h4020) begin
+	if(addr_in >= 16'h2000 && addr_in < 16'h4020) begin
 	
 		addr_valid = 1'b0;
 		
@@ -53,7 +50,7 @@ always @ (addr_in) begin
 		if(addr_in >= 16'h4020)begin
 			
 			//Just need to subtract 0x4020 and add 0x800
-			addr_out = addr_in - 16'h4020 + 16'h0800;
+			addr_out = addr_in;
 
 		end
 

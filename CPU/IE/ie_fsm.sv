@@ -2,7 +2,7 @@ import ie_defs::*;
 
 //Test commit
 
-`define DEBUG // Turns on instruction debug output during fetch cycle
+//`define DEBUG // Turns on instruction debug output during fetch cycle
 
 module ie_fsm
 (

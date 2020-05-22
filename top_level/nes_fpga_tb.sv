@@ -21,7 +21,7 @@ wire vga_clk, vga_hsync, vga_vsync, vga_sync_n, vga_blank_n;
 wire [7:0] vga_r, vga_b, vga_g;
 wire ppu_vsync;
 
-reg [7:0] joycon_1 = 0, joycon_2 = 0;
+reg [7:0] joycon_1 = 8'hAA, joycon_2 = 8'h55;
 
 reg [31:0] cnt;
 

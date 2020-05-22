@@ -364,6 +364,26 @@
 					"strict" : false
 				},
 				{
+					"name" : "cpu_halt_button",
+					"strict" : false
+				},
+				{
+					"name" : "joycon_2[6]",
+					"strict" : false
+				},
+				{
+					"name" : "joycon_2[5]",
+					"strict" : false
+				},
+				{
+					"name" : "joycon_2[4]",
+					"strict" : false
+				},
+				{
+					"name" : "joycon_2[7]",
+					"strict" : false
+				},
+				{
 					"name" : "joycon_2[2]",
 					"strict" : false
 				},
@@ -380,19 +400,19 @@
 					"strict" : false
 				},
 				{
-					"name" : "joycon_2[5]",
+					"name" : "joycon_1[6]",
 					"strict" : false
 				},
 				{
-					"name" : "joycon_2[6]",
+					"name" : "joycon_1[5]",
 					"strict" : false
 				},
 				{
-					"name" : "joycon_2[4]",
+					"name" : "joycon_1[4]",
 					"strict" : false
 				},
 				{
-					"name" : "joycon_2[7]",
+					"name" : "joycon_1[7]",
 					"strict" : false
 				},
 				{
@@ -409,26 +429,6 @@
 				},
 				{
 					"name" : "joycon_1[3]",
-					"strict" : false
-				},
-				{
-					"name" : "joycon_1[5]",
-					"strict" : false
-				},
-				{
-					"name" : "joycon_1[6]",
-					"strict" : false
-				},
-				{
-					"name" : "joycon_1[4]",
-					"strict" : false
-				},
-				{
-					"name" : "joycon_1[7]",
-					"strict" : false
-				},
-				{
-					"name" : "cpu_halt_button",
 					"strict" : false
 				},
 				{
