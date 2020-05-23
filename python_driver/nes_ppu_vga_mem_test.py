@@ -37,24 +37,25 @@ if(NES_obj.ping_board() != 1):
 else:
     print("Connection to board is up!")
     
+NES_obj.write_bytes([nes_fpga.HALT_CPU])
 
 #Halt the CPU to see if the LED comes on
 #NES_obj.halt_cpu()
     
-if(NES_obj.mem_test() == -1):
-    print("Mem test failed")
-else:
-    print("Mem test passed!")
+#if(NES_obj.mem_test() == -1):
+#    print("Mem test failed")
+#else:
+#    print("Mem test passed!")
     
-if(NES_obj.vram_test() == -1):
-    print("VRAM test failed")
-else:
-    print("VRAM test passed!")
+#if(NES_obj.vram_test() == -1):
+#    print("VRAM test failed")
+#else:
+#    print("VRAM test passed!")
         
 
 
 #Set the PPU control registers to display sprites and background
-NES_obj.halt_cpu()
+
 NES_obj.write_byte(0x2000, 0x88)
 NES_obj.write_byte(0x2001, 0x18)
 
@@ -72,17 +73,20 @@ else:
 #Write the scroll pointer
 NES_obj.write_byte(0x2005, 0)
 NES_obj.write_byte(0x2005, 0)
-NES_obj.resume_cpu()
 
 #write and verrify the spram listing
-NES_obj.write_spram(sl)
+#NES_obj.write_spram(sl)
 #NES_obj.verify_spram(sl)
+nametable_file = "nametable_dump.txt"
+chr_file = "../games/smb/smb_ppu_mem.txt"
+NES_obj.load_chrom(chr_file, 0)
+NES_obj.write_nametable(nametable_file)
+NES_obj.override_color_table()
 
 #write and verify the vram listing
-NES_obj.write_vram(vl)
-#NES_obj.verify_vram(vl)
+#NES_obj.resume_cpu()
 
-NES_obj.halt_cpu()
+
 #Reset the spram address pointer
 NES_obj.write_byte(0x2003, 0);
 
@@ -90,27 +94,27 @@ NES_obj.write_byte(0x2003, 0);
 NES_obj.read_byte(0x2002)
 
 
-NES_obj.resume_cpu()
+#NES_obj.resume_cpu()
 
 col_pos = 16
-for i in range(0, 50):
-    time.sleep(1)
-    
-    NES_obj.halt_cpu()
-    NES_obj.write_byte(0x2003, 0x07)
-    NES_obj.write_byte(0x2004, col_pos&255)
-    NES_obj.write_byte(0x2003, 0x07)
-    byte_res = NES_obj.read_byte(0x2004)
-    if(byte_res != col_pos&255):
-        print("Failed to write new sprite column")
-    else:
-        print("Successfully wrote new sprite column")
-    col_pos += 3
-    
-    #Reset the sprite address
-    NES_obj.write_byte(0x2003, 0)
-    
-    NES_obj.resume_cpu()
+#for i in range(0, 50):
+#    time.sleep(1)
+#    
+#    NES_obj.halt_cpu()
+#    NES_obj.write_byte(0x2003, 0x07)
+#    NES_obj.write_byte(0x2004, col_pos&255)
+#    NES_obj.write_byte(0x2003, 0x07)
+#    byte_res = NES_obj.read_byte(0x2004)
+#    if(byte_res != col_pos&255):
+#        print("Failed to write new sprite column")
+#    else:
+#        print("Successfully wrote new sprite column")
+#    col_pos += 3
+#    
+#    #Reset the sprite address
+#    NES_obj.write_byte(0x2003, 0)
+#    
+#    NES_obj.resume_cpu()
 
 
 

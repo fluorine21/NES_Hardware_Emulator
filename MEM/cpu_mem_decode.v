@@ -45,21 +45,23 @@ always @ (addr_in) begin
 	else begin
 		
 		addr_valid <= 1'b1;
+		
+		addr_out = addr_in;
 	
 		//If were in the ExROM SRAM ROM space
-		if(addr_in >= 16'h4020)begin
+		// if(addr_in >= 16'h4020)begin
 			
 			//Just need to subtract 0x4020 and add 0x800
-			addr_out = addr_in;
+			// addr_out = addr_in;
 
-		end
+		// end
 
 		//If we don't need to decode anything
-		else begin
+		// else begin
 
-			addr_out = addr_in & 16'h07FF;
+			//addr_out = addr_in & 16'h07FF;
 
-		end
+		// end
 	
 	end
 

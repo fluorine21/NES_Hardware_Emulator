@@ -728,8 +728,7 @@ class NES_FPGA:
                 
             
     def override_color_table(self):
-        
-        self.write_bytes([HALT_CPU])
+    
         
         print("Writing color pallets")
         
@@ -740,11 +739,33 @@ class NES_FPGA:
             
             self.write_vram_byte(i+0x3F00, arr_cols[i])
             
-            
-        self.write_bytes([RESUME_CPU])
         
         
         return
+    
+    
+    def read_hex_file(self, fn):
         
+        chr_file = open(fn, "r")
+        
+        #Read entire listing in as string
+        lst_string = chr_file.readline()
+        
+        return bytearray.fromhex(lst_string)
+        
+    
+    def write_nametable(self, fn):
+        
+        
+        bytestream = self.read_hex_file(fn)
+        
+        for i in range(0, 0x800):
+            
+            
+            #if(i&0x3C0):
+            if(1):
+                self.write_vram_byte(i+0x2000, bytestream[i])
+            else:
+                self.write_vram_byte(i+0x2000, bytestream[i]-0x0E)
         
         

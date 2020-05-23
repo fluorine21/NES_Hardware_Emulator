@@ -34,6 +34,8 @@ NES_obj.halt_cpu()
 
 #NES_obj.color_test()
 NES_obj.load_chrom(chr_file, 0)
+#NES_obj.write_byte(0x2006, 0x00)
+#NES_obj.write_byte(0x2006, 0x00)
 NES_obj.load_pgrom(pgr_file, 0)
 NES_obj.resume_cpu()
     

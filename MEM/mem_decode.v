@@ -92,12 +92,16 @@ generic_ram #(16384, 16) vram_mem (clk, vram_mem_cpu_addr, vram_mem_cpu_data_in,
 wire [7:0] spram_cpu_addr_next = (cpu_addr_int == 16'h2003 && cpu_addr_valid == 1'b0 && cpu_write_en) ? cpu_data_in : (cpu_addr_int == 16'h2004 && cpu_addr_valid == 1'b0 && (cpu_write_en || cpu_read_en)) ? spram_cpu_addr + 1'b1 : spram_cpu_addr;
 
 //Always for handing buffered return of 
+reg [7:0] vram_mem_cpu_buffer_2;
 always @ (posedge clk or negedge rst) begin
 	if(!rst) begin
+		vram_mem_cpu_buffer_2 <= 0;
 		vram_mem_cpu_buffer <= 0;
 	end
 	else if(cpu_read_en && cpu_addr_int == 16'h2007 && !cpu_addr_valid) begin
-		vram_mem_cpu_buffer <= vram_mem_cpu_data_out;
+		vram_mem_cpu_buffer_2 <= vram_mem_cpu_data_out;
+		vram_mem_cpu_buffer <= vram_mem_cpu_buffer_2;
+		//vram_mem_cpu_buffer_2 <= vram_mem_cpu_data_out;
 	end
 end
 
@@ -114,7 +118,7 @@ always @ (posedge clk or negedge rst) begin
 		vram_cpu_addr_buff <= vram_cpu_addr;
 	
 		//If the CPU is reading from 0x2002
-		if(cpu_addr_int == 16'h2002 && cpu_read_en) begin
+		if(cpu_addr_int == 16'h2002 && (cpu_read_en || cpu_write_en)) begin
 			//Reset the togggle bit
 			scroll_toggle <= 0;
 		end
@@ -143,7 +147,11 @@ always @ (posedge clk or negedge rst) begin
 			else begin
 				//Write low byte last
 				vram_cpu_addr[7:0] <= cpu_data_in;
-				scroll_toggle <= 0;
+				
+				//If we're not trying to write the color pallet
+				if(vram_cpu_addr[15:8] < 8'h3F) begin
+					scroll_toggle <= 0;
+				end
 			end
 		
 		end
