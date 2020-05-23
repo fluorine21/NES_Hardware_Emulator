@@ -130,17 +130,19 @@ initial begin
 	
 	
 	//CPU memory
-	//load_pgrom_test();
-	//check_pgrom_test();
+	$display("Loading test program...");
+	load_pgrom_test();
+	$display("Checking test program...");
+	check_pgrom_test();
 	
 	//PPU memory
 	$display("Loading chrom...");
-	load_chrom();
+	//load_chrom();
 	//$display("Checking chrom...");
 	//check_chrom();
 	
-	$display("Loading pgrom");
-	load_pgrom();
+	//$display("Loading pgrom");
+	//load_pgrom();
 	//$display("Checking PGROM");
 	//check_pgrom();
 	$display("Done loading.");

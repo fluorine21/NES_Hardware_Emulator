@@ -2,7 +2,7 @@ import ie_defs::*;
 
 //Test commit
 
-//`define DEBUG // Turns on instruction debug output during fetch cycle
+`define DEBUG // Turns on instruction debug output during fetch cycle
 
 module ie_fsm
 (
@@ -59,10 +59,6 @@ module ie_fsm
 
 reg [7:0] dma_cnt;
 localparam [7:0] dma_delay = 5;
-
-
-//localparam [31:0] delay_cycles = 50;
-localparam [31:0] delay_cycles = 3;
 
 //////////////////////////
 //simple op code decoder//
@@ -220,8 +216,7 @@ localparam [7:0] state_idle = 0,
 				 state_return_2 = 9, 
 				 state_return_3 = 10, 
 				 state_if_wait = 11,
-				 state_dma_delay = 12,
-				 state_delay = 13;
+				 state_dma_delay = 12;
 	
 
 
@@ -483,8 +478,7 @@ begin
 	$display("Trapped at %x", pc_next);
 end
 endtask
-			
-reg [31:0] d_cnt;			
+				 
 task reset_regs();
 begin
 
@@ -511,7 +505,6 @@ begin
 	state <= state_if_wait;
 	
 	dma_cnt <= 0;
-	d_cnt <= 0;
 
 end
 endtask
@@ -748,7 +741,7 @@ always @ (posedge clk or negedge rst) begin
 					if_start <= 0;
 				
 					//Go back to the idle state
-					state <= state_delay;
+					state <= state_idle;
 					
 					//Report the current state
 					`ifdef DEBUG
@@ -798,22 +791,6 @@ always @ (posedge clk or negedge rst) begin
 				pc_next <= {mem_data_in, pc_next[7:0]} + 1;
 				
 				goto_interrupt();
-			
-			
-			end
-			
-			
-			state_delay: begin
-			
-				d_cnt <= d_cnt + 1;
-				
-				if(d_cnt > delay_cycles) begin
-					
-					d_cnt <= 0;
-				
-					state <= state_idle;
-				
-				end
 			
 			
 			end

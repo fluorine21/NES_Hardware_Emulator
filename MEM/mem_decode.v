@@ -98,7 +98,7 @@ always @ (posedge clk or negedge rst) begin
 		vram_mem_cpu_buffer_2 <= 0;
 		vram_mem_cpu_buffer <= 0;
 	end
-	else if(cpu_read_en && cpu_addr_int == 16'h2007 && !cpu_addr_valid) begin
+	else if((cpu_read_en||cpu_write_en) && cpu_addr_int == 16'h2007 && !cpu_addr_valid) begin
 		vram_mem_cpu_buffer_2 <= vram_mem_cpu_data_out;
 		vram_mem_cpu_buffer <= vram_mem_cpu_buffer_2;
 		//vram_mem_cpu_buffer_2 <= vram_mem_cpu_data_out;
@@ -236,7 +236,7 @@ always @ * begin
 		16'h2007: begin
 			//If we don't need buffering
 			if(vram_cpu_addr >= 16'h3F00) begin
-				cpu_data_out = vram_mem_cpu_data_out;
+				cpu_data_out = vram_mem_cpu_buffer_2;
 			end
 			//If we do
 			else begin

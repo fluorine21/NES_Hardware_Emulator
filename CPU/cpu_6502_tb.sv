@@ -1,4 +1,5 @@
-/* import ie_defs::*;
+import ie_defs::*;
+import sv_defs::*;
 
 string fn = "../test_programs/bubble.txt";
 string fn_i = "../test_programs/interrupt_test.txt";
@@ -20,6 +21,9 @@ reg [7:0] ppu_status = 0;
 integer i = 0;
 reg halt = 0;
 wire [15:0] pc_6502;
+
+integer listing[];
+
 cpu_6502 cpu_6502_dut
 (
 	clk,
@@ -38,7 +42,8 @@ cpu_6502 cpu_6502_dut
 	
 	halt,
 	1'b1,//Set IRQ to 1, won't be triggered
-	pc_6502
+	pc_6502,
+	8'b0
 );
 
 reg [15:0] tb_mem_addr;
@@ -110,7 +115,7 @@ begin
 end
 endtask
 
-task load_program();
+/* task load_program();
 begin
 
 	#1
@@ -145,7 +150,7 @@ begin
 end
 endtask
 
-integer listing[];
+
 
 task load_bubble();
 begin
@@ -212,7 +217,7 @@ begin
 	tb_write_en = 0;
 	
 end
-endtask
+endtask */
 
 task run_interrupt();
 begin
@@ -265,4 +270,3 @@ endtask
 	
 endmodule
 
- */

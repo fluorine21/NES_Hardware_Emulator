@@ -83,7 +83,7 @@ assign ie_dis = interrupt_disable;
 reg [15:0] cpu_addr_next;//For loading interrupt vector
 
 assign done = state == state_wait_1;
-assign accessing_memory = (state != state_idle && state != state_wait_1);
+assign accessing_memory = (state != state_idle);
 
 
 //Latches
@@ -292,7 +292,7 @@ always @ (posedge clk or negedge rst) begin
 				cpu_addr <= 16'h0100 | ((stack_ptr_in-2) & 8'hFF);
 				
 				//If we're doing BRK (see B flag NES)
-				if(cpu_addr_next == 16'hFFFF && break_flag) begin
+				if(break_in) begin
 					//Set R, B and interrupt disable
 					cpu_data_out <= status_in | 8'b00110000;
 					status_out <= status_in | 8'b00000100;

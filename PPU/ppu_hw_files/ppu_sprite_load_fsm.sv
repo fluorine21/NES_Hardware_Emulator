@@ -289,7 +289,7 @@ always @ (posedge clk or negedge rst) begin
 			
 				//If we're looking at a sprite on this line
 				//If the row is in the range of the sprite
-				else if(curr_row >= spram_data_in && curr_row < spram_data_in + 8) begin
+				else if(curr_row >= spram_data_in && curr_row < spram_data_in + 8 && spram_data_in < 8'hEF) begin
 			
 					//If we have an overflow
 					if(sprite_hit_cnt >= 8) begin
@@ -313,6 +313,7 @@ always @ (posedge clk or negedge rst) begin
 						end
 						
 					end
+					
 				end
 				else begin
 					

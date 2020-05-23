@@ -1,19 +1,18 @@
 
 State Machine - |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|state
-Name state.state_delay state.state_dma_delay state.state_idle state.state_return_3 state.state_return_2 state.state_return_1 state.state_jump_1 state.state_interrupt_3 state.state_interrupt_2 state.state_alu_store_output state.state_load_2 state.state_load_1 state.state_if_wait 
-state.state_if_wait 0 0 0 0 0 0 0 0 0 0 0 0 0 
-state.state_load_1 0 0 0 0 0 0 0 0 0 0 0 1 1 
-state.state_load_2 0 0 0 0 0 0 0 0 0 0 1 0 1 
-state.state_alu_store_output 0 0 0 0 0 0 0 0 0 1 0 0 1 
-state.state_interrupt_2 0 0 0 0 0 0 0 0 1 0 0 0 1 
-state.state_interrupt_3 0 0 0 0 0 0 0 1 0 0 0 0 1 
-state.state_jump_1 0 0 0 0 0 0 1 0 0 0 0 0 1 
-state.state_return_1 0 0 0 0 0 1 0 0 0 0 0 0 1 
-state.state_return_2 0 0 0 0 1 0 0 0 0 0 0 0 1 
-state.state_return_3 0 0 0 1 0 0 0 0 0 0 0 0 1 
-state.state_idle 0 0 1 0 0 0 0 0 0 0 0 0 1 
-state.state_dma_delay 0 1 0 0 0 0 0 0 0 0 0 0 1 
-state.state_delay 1 0 0 0 0 0 0 0 0 0 0 0 1 
+Name state.state_dma_delay state.state_idle state.state_return_3 state.state_return_2 state.state_return_1 state.state_jump_1 state.state_interrupt_3 state.state_interrupt_2 state.state_alu_store_output state.state_load_2 state.state_load_1 state.state_if_wait 
+state.state_if_wait 0 0 0 0 0 0 0 0 0 0 0 0 
+state.state_load_1 0 0 0 0 0 0 0 0 0 0 1 1 
+state.state_load_2 0 0 0 0 0 0 0 0 0 1 0 1 
+state.state_alu_store_output 0 0 0 0 0 0 0 0 1 0 0 1 
+state.state_interrupt_2 0 0 0 0 0 0 0 1 0 0 0 1 
+state.state_interrupt_3 0 0 0 0 0 0 1 0 0 0 0 1 
+state.state_jump_1 0 0 0 0 0 1 0 0 0 0 0 1 
+state.state_return_1 0 0 0 0 1 0 0 0 0 0 0 1 
+state.state_return_2 0 0 0 1 0 0 0 0 0 0 0 1 
+state.state_return_3 0 0 1 0 0 0 0 0 0 0 0 1 
+state.state_idle 0 1 0 0 0 0 0 0 0 0 0 1 
+state.state_dma_delay 1 0 0 0 0 0 0 0 0 0 0 1 
 
 State Machine - |nes_fpga_top_lvl|cpu_6502:cpu_6502_dut|ie_fsm:inst_exec_inst|interrupt_handler:interrupt_handler_inst|state
 Name state.state_wait_1 state.state_return_4 state.state_return_3 state.state_return_2 state.state_return_1 state.state_handle_4 state.state_handle_3 state.state_handle_2 state.state_handle_1 state.state_idle 
