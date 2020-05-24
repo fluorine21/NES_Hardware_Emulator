@@ -147,11 +147,8 @@ always @ (posedge clk or negedge rst) begin
 			else begin
 				//Write low byte last
 				vram_cpu_addr[7:0] <= cpu_data_in;
-				
-				//If we're not trying to write the color pallet
-				if(vram_cpu_addr[15:8] < 8'h3F) begin
-					scroll_toggle <= 0;
-				end
+				scroll_toggle <= 0;
+
 			end
 		
 		end
@@ -202,13 +199,25 @@ always @ (posedge clk or negedge rst) begin
 	end
 end
 
+reg [15:0] cpu_addr_int_reg;
+reg cpu_addr_valid_reg;
+always @ (posedge clk or negedge rst) begin
+	if(!rst) begin
+		cpu_addr_int_reg <= 0;
+		cpu_addr_valid_reg <= 0;
+	end
+	else begin
+		cpu_addr_int_reg <= cpu_addr_int;
+		cpu_addr_valid_reg <= cpu_addr_valid;
+	end
+end
 
 always @ * begin
 
 	//If we're trying to read/write to a registers
-	if(cpu_addr_valid == 1'b0) begin
+	if(cpu_addr_valid_reg == 1'b0) begin
 	
-		case(cpu_addr_int)
+		case(cpu_addr_int_reg)
 		
 		//ppu_ctrl1
 		16'h2000: cpu_data_out = ppu_ctrl1;

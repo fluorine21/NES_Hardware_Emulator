@@ -33,7 +33,7 @@ module interrupt_handler
 	
 	//Interrupt handler status and control
 	input wire start,
-	output wire done,//Pulsed once when handler is finished
+	output reg done,//Pulsed once when handler is finished
 	output wire accessing_memory,
 	
 	//Status inputs from IE
@@ -82,7 +82,6 @@ assign ie_dis = interrupt_disable;
 
 reg [15:0] cpu_addr_next;//For loading interrupt vector
 
-assign done = state == state_wait_1;
 assign accessing_memory = (state != state_idle);
 
 
@@ -150,7 +149,7 @@ begin
 	stack_ptr_out <= 0;
 	status_out <= 0;
 	cpu_write_en <= 0;
-
+	done <= 0;
 end
 endtask
 
@@ -183,8 +182,8 @@ always @ (posedge clk or negedge rst) begin
 					pc_out <= pc_in;
 					status_out <= status_in;
 					stack_ptr_out <= stack_ptr_in;
-							
-					state <= state_wait_1;
+					
+					state <= state_idle;
 			
 					//If the interrupt disable flag is set
 					if(interrupt_disable) begin
@@ -199,6 +198,11 @@ always @ (posedge clk or negedge rst) begin
 							
 							//Queue read on high byte of return address
 							cpu_addr <= 16'h0100 | ((stack_ptr_in+1) & 8'hFF);
+						
+						end
+						else begin
+						
+							done <= 1;
 						
 						end
 					
@@ -235,8 +239,18 @@ always @ (posedge clk or negedge rst) begin
 						state <= state_handle_1;
 					
 					end
+					else begin
+					
+						done <= 1;
+					
+					end
 					
 					
+				end
+				else begin
+				
+					done <= 0;
+				
 				end
 						
 						
@@ -367,7 +381,7 @@ always @ (posedge clk or negedge rst) begin
 			state_wait_1: begin
 				
 				cpu_write_en <= 0;
-				
+				done <= 1;
 				//Just go back to idle
 				state <= state_idle;
 			

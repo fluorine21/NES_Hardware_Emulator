@@ -33,6 +33,12 @@ NES_obj.halt_cpu()
 #NES_obj.test_cpu_mem();
 
 #NES_obj.color_test()
+NES_obj.write_byte(0x2006, 0x00)
+NES_obj.write_byte(0x2006, 0x00)
+NES_obj.write_byte(0x2000, 0)
+NES_obj.write_byte(0x2006, 0x00)
+NES_obj.write_byte(0x2006, 0x00)
+NES_obj.read_byte(0x2002)
 NES_obj.load_chrom(chr_file, 0)
 #NES_obj.write_byte(0x2006, 0x00)
 #NES_obj.write_byte(0x2006, 0x00)

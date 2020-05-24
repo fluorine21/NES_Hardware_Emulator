@@ -1,0 +1,102 @@
+*=$8000
+
+
+;;Load_CHROM_First
+
+
+
+lda #$00
+sta $2006
+sta $2006
+
+sta $1
+lda #1
+sta $2
+
+
+ldx #3 
+L0
+ldy #$FF
+L1
+tya
+sta $2007
+dey
+bne L1
+tya
+sta $2007
+dex
+bne L0
+
+;;do_the_same_for_nametables
+
+lda #$20
+sta $2006
+lda #$00
+sta $2006
+
+ldx #3 
+L2
+ldy #$FF
+L3
+tya
+sta $2007
+dey
+bne L3
+tya
+sta $2007
+dex
+bne L2
+
+;;read_out_alll
+lda #$00
+sta $2006
+lda #$00
+sta $2006
+
+;;garbage_read
+lda $2007
+
+ldx #$FF
+L6
+ldy #$FF
+L5
+jsr CPY_MEM
+dey
+bne L5
+dex
+bne L6
+dex
+dex
+dex
+dex
+dex
+dex
+dex
+dex
+dex
+
+
+
+
+
+CPY_MEM
+
+tya
+pha
+ldy #0
+
+lda $2007
+sta (01),Y
+
+clc
+lda #1
+adc $1
+sta $1
+lda #1
+adc $2
+sta $2
+
+pla 
+tay
+
+rts

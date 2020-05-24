@@ -143,7 +143,8 @@ always @ (posedge clk or negedge rst) begin
 		if(state == state_wait_sprite_1 || state == state_idle) begin
 			//Write the low bits of x into the latch
 			cpu_scroll_addr_latch[7:0] <= cpu_scroll_addr[7:0];
-			ppu_ctrl1_latch[0] <= ppu_ctrl1[0]; 
+			//ppu_ctrl1_latch[0] <= ppu_ctrl1[0]; 
+			ppu_ctrl1_latch[0] <= ppu_ctrl1[0] & ppu_status[6];
 			
 		end
 		

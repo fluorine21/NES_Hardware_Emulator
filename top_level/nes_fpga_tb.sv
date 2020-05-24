@@ -7,6 +7,7 @@ string cpu_str = "../games/smb/smb_cpu_mem.txt";
 string ppu_str = "../games/smb/smb_ppu_mem.txt";
 
 string cpu_str_tst = "../test_programs/func_test_1.txt";
+string vram_test_str = "../test_programs/vram_test.txt";
 
 module nes_fpga_tb();
 
@@ -64,7 +65,7 @@ nes_fpga_top_lvl #(5) nes_dut
 	vga_blank_n,
 	vga_r, vga_g, vga_b,
 	
-	joycon_1, joycon_2,//connected to dip switches in bit order
+	//joycon_1, joycon_2,//connected to dip switches in bit order
 	
 	ppu_vsync,
 	cpu_halt,
@@ -75,7 +76,9 @@ nes_fpga_top_lvl #(5) nes_dut
 	//Sys ctrl address out
 	sys_out,
 	
-	1'b1
+	1'b1,//cpu halt button
+	
+	1'b0, 1'b0//keyboard clock and data
 
 );
 
@@ -128,23 +131,24 @@ initial begin
 	//To enable access to memory bus
 	reset_cpu();
 	
+	//Load the vram test program
+	//load_custom_pgrom();
 	
-	//CPU memory
-	$display("Loading test program...");
-	load_pgrom_test();
-	$display("Checking test program...");
-	check_pgrom_test();
+
 	
 	//PPU memory
 	$display("Loading chrom...");
-	//load_chrom();
+	load_chrom();
 	//$display("Checking chrom...");
 	//check_chrom();
 	
-	//$display("Loading pgrom");
-	//load_pgrom();
+	$display("Loading pgrom");
+	load_pgrom();
 	//$display("Checking PGROM");
 	//check_pgrom();
+	
+	
+	
 	$display("Done loading.");
 	//Take the CPU PPU out of reset
 	set_cpu();
@@ -331,6 +335,23 @@ begin
 	
 		write_byte(cnt[15:0], listing[cnt][7:0]);
 	
+	end
+	
+end
+endtask
+
+
+task load_custom_pgrom();
+begin
+
+	listing = {};
+	load_raw_listing(listing, vram_test_str);
+
+	//Write PGROM first
+	for(cnt = 0; cnt <  $size(listing); cnt = cnt + 1) begin
+		//Set the data last
+		write_byte(cnt[15:0]+16'h8000, listing[cnt][7:0]);
+
 	end
 	
 end

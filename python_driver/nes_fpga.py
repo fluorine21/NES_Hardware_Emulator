@@ -468,7 +468,7 @@ class NES_FPGA:
                     print("Reading at address " + hex(i) + ", expected " + hex(bytestream[i]) + ", got " + hex(byte_result))
                     return
         
-            print("Successfully verrified " + str(len(bytestream)) + " CHROM bytes")
+            print("Successfully verrified " + str(len(bytestream)) + " PGROM bytes")
         else:
             print("Skiping PGROM check")
         

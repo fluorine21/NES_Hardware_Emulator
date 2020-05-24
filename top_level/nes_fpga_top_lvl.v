@@ -23,7 +23,7 @@ module nes_fpga_top_lvl
 	output wire vga_blank_n,
 	output wire [7:0] vga_r, vga_g, vga_b,
 	
-	input wire [7:0] joycon_1, joycon_2,//connected to dip switches in bit order
+	//input wire [7:0] joycon_1, joycon_2,//connected to dip switches in bit order
 	
 	output wire ppu_vsync,
 	output wire cpu_halt,
@@ -34,7 +34,9 @@ module nes_fpga_top_lvl
 	//Sys ctrl address out
 	output wire [27:0] sys_out,
 	
-	input wire cpu_halt_button
+	input wire cpu_halt_button,
+	
+	input wire k_c, k_d
 
 );
 
@@ -47,6 +49,15 @@ clkdiv2 clkdiv2_inst
 	rst,
 	
 	clk//25MHz
+);
+
+//keyboard controller
+wire [7:0] joycon_1_state;
+k_to_j k_to_j_inst
+(
+	clk, rst,
+	k_c, k_d,
+	joycon_1_state
 );
 
 //CPU address bus
@@ -134,8 +145,10 @@ mem_ctrl mem_ctrl_inst
 	spram_cpu_addr,
 	ppu_status_read,
 	
-	joycon_1,
-	joycon_2,
+	//joycon_1,
+	joycon_1_state,
+	//joycon_2,
+	8'h00,
 	
 	mem_ctrl_busy,
 	

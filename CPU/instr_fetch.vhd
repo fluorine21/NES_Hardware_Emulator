@@ -1678,7 +1678,7 @@ architecture a of instr_fetch is
 				when wait_indirect_x =>
 						b2b_start <= '0';
 						if mem_done = '1' then
-							addr_out <= data_2 & data_1;
+							addr_out <= (data_2 & data_1);
 							
 							state <= idle;
 						end if;
@@ -1686,7 +1686,7 @@ architecture a of instr_fetch is
 				when wait_indirect_y =>
 						b2b_start <= '0';
 						if mem_done = '1' then
-							addr_out <= (data_2 & data_1) + y_reg;
+							addr_out <= (data_2 & data_1) + (x"00" & y_reg);
 							
 							state <= idle;	
 						end if;	

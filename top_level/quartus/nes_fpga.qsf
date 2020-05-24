@@ -49,63 +49,9 @@ set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 1
 set_global_assignment -name NOMINAL_CORE_SUPPLY_VOLTAGE 1.2V
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
-set_global_assignment -name VHDL_FILE ../../VGA/vga_sync.vhd
-set_global_assignment -name VERILOG_FILE ../../VGA/vga_controller.v
-set_global_assignment -name VERILOG_FILE ../../VGA/vga_color_decode.v
-set_global_assignment -name VERILOG_FILE ../../CPU/interrupt_handler/interrupt_handler.v
-set_global_assignment -name SYSTEMVERILOG_FILE ../../CPU/IE/simple_op_decode.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../../CPU/IE/ie_fsm.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../../CPU/IE/ie_defs.sv
-set_global_assignment -name VHDL_FILE ../../CPU/instr_fetch_pkg.vhd
-set_global_assignment -name VHDL_FILE ../../CPU/instr_fetch.vhd
-set_global_assignment -name SYSTEMVERILOG_FILE ../../CPU/cpu_6502.sv
-set_global_assignment -name VHDL_FILE ../../CPU/b2b_access.vhd
-set_global_assignment -name VHDL_FILE ../../CPU/alu.vhd
-set_global_assignment -name VERILOG_FILE ../../MEM/vga_mem.v
-set_global_assignment -name VERILOG_FILE ../../MEM/ppu_mem_decode.v
-set_global_assignment -name VERILOG_FILE ../../MEM/mem_decode.v
-set_global_assignment -name VERILOG_FILE ../../MEM/mem_ctrl.v
-set_global_assignment -name VERILOG_FILE ../../MEM/joycon_ctrl.v
-set_global_assignment -name VERILOG_FILE ../../MEM/generic_ram.v
-set_global_assignment -name VERILOG_FILE ../../MEM/dma_module.v
-set_global_assignment -name VERILOG_FILE ../../MEM/cpu_mem_decode.v
-set_global_assignment -name VERILOG_FILE ../../PPU/ppu_hw_files/render_8_pixels.v
-set_global_assignment -name VERILOG_FILE ../../PPU/ppu_hw_files/ppu_vram_load_fsm.v
-set_global_assignment -name VERILOG_FILE ../../PPU/ppu_hw_files/ppu_status_latch.v
-set_global_assignment -name SYSTEMVERILOG_FILE ../../PPU/ppu_hw_files/ppu_sprite_load_fsm.sv
-set_global_assignment -name VERILOG_FILE ../../PPU/ppu_hw_files/ppu_fsm.v
-set_global_assignment -name VERILOG_FILE ../../PPU/ppu_hw_files/ppu_color_load_fsm.v
-set_global_assignment -name VERILOG_FILE ../../PPU/ppu_hw_files/pixel_to_nametable_ptr.v
-set_global_assignment -name VERILOG_FILE ../../PPU/ppu_hw_files/pixel_mux.v
-set_global_assignment -name VERILOG_FILE ../../PPU/ppu_hw_files/name_to_att.v
-set_global_assignment -name VERILOG_FILE ../../PPU/ppu_hw_files/color_selector.v
-set_global_assignment -name VERILOG_FILE ../../SYS_CTRL/open_source_uart/uart_rx.v
-set_global_assignment -name VERILOG_FILE ../../SYS_CTRL/open_source_uart/baudgen_rx.v
-set_global_assignment -name VERILOG_FILE ../../SYS_CTRL/uart_tx_rx.v
-set_global_assignment -name VERILOG_FILE ../../SYS_CTRL/sys_ctrl_fsm.v
-set_global_assignment -name VERILOG_FILE ../nes_fpga_top_lvl.v
-set_global_assignment -name VHDL_FILE ../leddcd.vhd
-set_global_assignment -name VERILOG_FILE ../clkdiv.v
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_global_assignment -name SDC_FILE timing.sdc
-set_location_assignment PIN_AB26 -to joycon_1[7]
-set_location_assignment PIN_AD26 -to joycon_1[6]
-set_location_assignment PIN_AC26 -to joycon_1[5]
-set_location_assignment PIN_AB27 -to joycon_1[4]
-set_location_assignment PIN_AD27 -to joycon_1[3]
-set_location_assignment PIN_AC27 -to joycon_1[2]
-set_location_assignment PIN_AC28 -to joycon_1[1]
-set_location_assignment PIN_AB28 -to joycon_1[0]
-set_location_assignment PIN_AA22 -to joycon_2[7]
-set_location_assignment PIN_AA23 -to joycon_2[6]
-set_location_assignment PIN_AA24 -to joycon_2[5]
-set_location_assignment PIN_AB23 -to joycon_2[4]
-set_location_assignment PIN_AB24 -to joycon_2[3]
-set_location_assignment PIN_AC24 -to joycon_2[2]
-set_location_assignment PIN_AB25 -to joycon_2[1]
-set_location_assignment PIN_AC25 -to joycon_2[0]
 set_location_assignment PIN_F11 -to vga_blank_n
 set_location_assignment PIN_B10 -to vga_b[0]
 set_location_assignment PIN_A10 -to vga_b[1]
@@ -235,4 +181,50 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to vga_sync_n
 set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to vga_vsync
 set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to clk_50
 set_location_assignment PIN_N21 -to cpu_halt_button
+set_location_assignment PIN_G6 -to k_c
+set_location_assignment PIN_H5 -to k_d
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to k_c
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to k_d
+set_global_assignment -name VHDL_FILE ../../KB/ps2.vhd
+set_global_assignment -name VHDL_FILE ../../KB/oneshot.vhd
+set_global_assignment -name VHDL_FILE ../../KB/keyboard.vhd
+set_global_assignment -name VERILOG_FILE ../../KB/k_to_j.v
+set_global_assignment -name VHDL_FILE ../../VGA/vga_sync.vhd
+set_global_assignment -name VERILOG_FILE ../../VGA/vga_controller.v
+set_global_assignment -name VERILOG_FILE ../../VGA/vga_color_decode.v
+set_global_assignment -name VERILOG_FILE ../../CPU/interrupt_handler/interrupt_handler.v
+set_global_assignment -name SYSTEMVERILOG_FILE ../../CPU/IE/simple_op_decode.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../CPU/IE/ie_fsm.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../CPU/IE/ie_defs.sv
+set_global_assignment -name VHDL_FILE ../../CPU/instr_fetch_pkg.vhd
+set_global_assignment -name VHDL_FILE ../../CPU/instr_fetch.vhd
+set_global_assignment -name SYSTEMVERILOG_FILE ../../CPU/cpu_6502.sv
+set_global_assignment -name VHDL_FILE ../../CPU/b2b_access.vhd
+set_global_assignment -name VHDL_FILE ../../CPU/alu.vhd
+set_global_assignment -name VERILOG_FILE ../../MEM/vga_mem.v
+set_global_assignment -name VERILOG_FILE ../../MEM/ppu_mem_decode.v
+set_global_assignment -name VERILOG_FILE ../../MEM/mem_decode.v
+set_global_assignment -name VERILOG_FILE ../../MEM/mem_ctrl.v
+set_global_assignment -name VERILOG_FILE ../../MEM/joycon_ctrl.v
+set_global_assignment -name VERILOG_FILE ../../MEM/generic_ram.v
+set_global_assignment -name VERILOG_FILE ../../MEM/dma_module.v
+set_global_assignment -name VERILOG_FILE ../../MEM/cpu_mem_decode.v
+set_global_assignment -name VERILOG_FILE ../../PPU/ppu_hw_files/render_8_pixels.v
+set_global_assignment -name VERILOG_FILE ../../PPU/ppu_hw_files/ppu_vram_load_fsm.v
+set_global_assignment -name VERILOG_FILE ../../PPU/ppu_hw_files/ppu_status_latch.v
+set_global_assignment -name SYSTEMVERILOG_FILE ../../PPU/ppu_hw_files/ppu_sprite_load_fsm.sv
+set_global_assignment -name VERILOG_FILE ../../PPU/ppu_hw_files/ppu_fsm.v
+set_global_assignment -name VERILOG_FILE ../../PPU/ppu_hw_files/ppu_color_load_fsm.v
+set_global_assignment -name VERILOG_FILE ../../PPU/ppu_hw_files/pixel_to_nametable_ptr.v
+set_global_assignment -name VERILOG_FILE ../../PPU/ppu_hw_files/pixel_mux.v
+set_global_assignment -name VERILOG_FILE ../../PPU/ppu_hw_files/name_to_att.v
+set_global_assignment -name VERILOG_FILE ../../PPU/ppu_hw_files/color_selector.v
+set_global_assignment -name VERILOG_FILE ../../SYS_CTRL/open_source_uart/uart_rx.v
+set_global_assignment -name VERILOG_FILE ../../SYS_CTRL/open_source_uart/baudgen_rx.v
+set_global_assignment -name VERILOG_FILE ../../SYS_CTRL/uart_tx_rx.v
+set_global_assignment -name VERILOG_FILE ../../SYS_CTRL/sys_ctrl_fsm.v
+set_global_assignment -name VERILOG_FILE ../nes_fpga_top_lvl.v
+set_global_assignment -name VHDL_FILE ../leddcd.vhd
+set_global_assignment -name VERILOG_FILE ../clkdiv.v
+set_global_assignment -name SDC_FILE timing.sdc
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
