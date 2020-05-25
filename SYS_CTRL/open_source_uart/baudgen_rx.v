@@ -56,15 +56,15 @@ always @(posedge clk)
 
   else if (clk_ena)
     //-- Normal working: counting. When the maximum count is reached, it starts from 0
-    divcounter <= (divcounter == BAUDRATE - 1) ? 0 : divcounter + 1;
+    divcounter <= (divcounter == BAUDRATE - 1) ? 0 : divcounter + 8'h01;
   else
     //-- Counter fixed to its maximum value
     //-- When it is resumed it start from 0
-    divcounter <= BAUDRATE - 1;
+    divcounter <= BAUDRATE - 8'h01;
 
 //-- The output is 1 when the counter is in the middle of the period, if clk_ena is active
 //-- It is 1 only for one system clock cycle
-assign clk_out = (divcounter == M2) ? clk_ena : 0;
+assign clk_out = (divcounter == M2) ? clk_ena : 1'b0;
 
 
 endmodule

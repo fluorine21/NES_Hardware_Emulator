@@ -66,7 +66,7 @@ always @(posedge clk)
   if (clear)
     bitc <= 4'd0;
   else if (clear == 0 && clk_baud == 1)
-    bitc <= bitc + 1;
+    bitc <= bitc + 4'h1;
 
 
 //-- Shift register for storing the received bits

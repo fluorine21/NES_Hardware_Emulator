@@ -36,7 +36,9 @@ module nes_fpga_top_lvl
 	
 	input wire cpu_halt_button,
 	
-	input wire k_c, k_d
+	input wire k_c, k_d,
+	
+	input wire soft_rst
 
 );
 
@@ -148,7 +150,7 @@ mem_ctrl mem_ctrl_inst
 	//joycon_1,
 	joycon_1_state,
 	//joycon_2,
-	8'h00,
+	joycon_1_state,
 	
 	mem_ctrl_busy,
 	
@@ -229,12 +231,13 @@ sys_ctrl_fsm #(clks_per_bit) sys_ctrl_inst
 wire [15:0] pc_6502;
 
 wire [15:0] pc_reset = 16'h8000;
+//wire [15:0] pc_reset = 16'hC79E;
 
 cpu_6502 cpu_6502_dut
 (
 	clk,
 	(rst && cpu_rst),
-	1'b1,
+	soft_rst,
 	
 	cpu_mem_addr,
 	cpu_data_out,

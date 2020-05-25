@@ -368,6 +368,10 @@
 					"strict" : false
 				},
 				{
+					"name" : "soft_rst",
+					"strict" : false
+				},
+				{
 					"name" : "uart_rx",
 					"strict" : false
 				},

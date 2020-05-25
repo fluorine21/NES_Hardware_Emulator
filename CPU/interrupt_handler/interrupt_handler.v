@@ -67,7 +67,8 @@ localparam [7:0] state_idle = 0,
 				 state_return_2 = 6,
 				 state_return_3 = 7,
 				 state_return_4 = 8,
-				 state_wait_1 = 9;
+				 state_wait_1 = 9,
+				 state_wait_rst = 10;
 
 //Interrupt disable flag is in status 2
 wire break_disable;
@@ -210,13 +211,14 @@ always @ (posedge clk or negedge rst) begin
 						
 
 					//If this is a soft reset
-					else if(soft_reset_int) begin
+					else if(!soft_reset_n) begin
 						
 						//0xFFFC and FFFD
 						cpu_addr <= 16'hFFFC;
 						cpu_addr_next <= 16'hFFFD;
 						
-						state <= state_handle_1;
+						//state <= state_handle_1;
+						state <= state_wait_rst;
 					
 					end
 					//or a ppu blanking
@@ -261,6 +263,10 @@ always @ (posedge clk or negedge rst) begin
 				//Queue up the next address
 				cpu_addr <= cpu_addr_next;
 				
+				if(cpu_addr_next != 16'hFFFD) begin
+					interrupt_disable <= 1;
+				end
+				
 				state <= state_handle_2;
 			
 			end
@@ -291,7 +297,7 @@ always @ (posedge clk or negedge rst) begin
 				cpu_data_out <= pc_in[7:0];
 				
 				////Set the interrupt disable flag
-				interrupt_disable <= 1;
+				//interrupt_disable <= 1;
 				
 				state <= state_handle_4;
 				
@@ -384,6 +390,14 @@ always @ (posedge clk or negedge rst) begin
 				done <= 1;
 				//Just go back to idle
 				state <= state_idle;
+			
+			end
+			
+			state_wait_rst: begin
+			
+				if(soft_reset_n) begin
+					state <= state_handle_1;
+				end
 			
 			end
 		

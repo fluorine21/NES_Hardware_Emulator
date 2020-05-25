@@ -78,7 +78,9 @@ nes_fpga_top_lvl #(5) nes_dut
 	
 	1'b1,//cpu halt button
 	
-	1'b0, 1'b0//keyboard clock and data
+	1'b0, 1'b0,//keyboard clock and data,
+	
+	1'b1//soft reset
 
 );
 

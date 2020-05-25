@@ -49,7 +49,7 @@ wire [15:0] vram_ppu_addr_int;
 wire [15:0] vram_cpu_addr_int;
 reg [15:0] vram_cpu_addr_buff;
 ppu_mem_decode read_decode(vram_ppu_addr, h_mirror, v_mirror, vram_ppu_addr_int);
-ppu_mem_decode write_decode(vram_cpu_addr_buff, h_mirror, v_mirror, vram_cpu_addr_int);
+ppu_mem_decode write_decode(vram_cpu_addr, h_mirror, v_mirror, vram_cpu_addr_int);
 
 //CPU address decoding
 wire [15:0] cpu_addr_int;
@@ -98,7 +98,7 @@ always @ (posedge clk or negedge rst) begin
 		vram_mem_cpu_buffer_2 <= 0;
 		vram_mem_cpu_buffer <= 0;
 	end
-	else if((cpu_read_en||cpu_write_en) && cpu_addr_int == 16'h2007 && !cpu_addr_valid) begin
+	else if(cpu_read_en && cpu_addr_int == 16'h2007 && !cpu_addr_valid) begin
 		vram_mem_cpu_buffer_2 <= vram_mem_cpu_data_out;
 		vram_mem_cpu_buffer <= vram_mem_cpu_buffer_2;
 		//vram_mem_cpu_buffer_2 <= vram_mem_cpu_data_out;
@@ -207,8 +207,12 @@ always @ (posedge clk or negedge rst) begin
 		cpu_addr_valid_reg <= 0;
 	end
 	else begin
+	
 		cpu_addr_int_reg <= cpu_addr_int;
 		cpu_addr_valid_reg <= cpu_addr_valid;
+		
+		//cpu_addr_int_reg <= cai_r;
+		//cpu_addr_valid_reg <= cai_v;
 	end
 end
 

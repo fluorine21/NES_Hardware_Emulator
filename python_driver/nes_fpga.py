@@ -412,6 +412,11 @@ class NES_FPGA:
             print("Error, CHROM of incorrect length, must be 0x2000")
             return
         
+        
+        #Reset the ppu address latch
+        self.write_byte(0x2006, 0)
+        self.write_byte(0x2006, 0)
+        
         #Write the bytestream
         print("Writing " + str(len(bytestream)) + " CHROM bytes...")
         for i in range(0, len(bytestream)):
@@ -438,7 +443,7 @@ class NES_FPGA:
         
         return 
     
-    def load_pgrom(self, file_name, do_check):
+    def load_pgrom(self, file_name, do_check, start_addr = 0x8000):
         
         chr_file = open(file_name, "r")
         
@@ -447,21 +452,21 @@ class NES_FPGA:
         
         bytestream = bytearray.fromhex(lst_string)
         
-        if(len(bytestream) != 0x8000):
-            print("Error, cannot call loag pgrom on the test program!")
+        if(len(bytestream) > 0x7FFF + 1):
+            print("Error, bytestream too long!")
             return
         
         #Write the bytestream
         print("Writing " + hex(len(bytestream)) + " PGROM bytes...")
         for i in range(0, len(bytestream)):
             
-            self.write_byte(i+0x8000, bytestream[i])
+            self.write_byte(i+start_addr, bytestream[i])
             
         if(do_check):
             print("Verifying PGROM bytes...")
             for i in range(0, len(bytestream)):
                 
-                byte_result = self.read_byte(i+0x8000)
+                byte_result = self.read_byte(i+start_addr)
                 
                 if(byte_result != bytestream[i]):
                     print("Error verifying PGROM bytes")

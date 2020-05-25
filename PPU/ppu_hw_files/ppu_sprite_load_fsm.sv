@@ -272,7 +272,7 @@ always @ (posedge clk or negedge rst) begin
 			
 				//Push the next address onto the addr line
 				//In case we end up needing to load the next byte
-				spram_addr_out  <= spram_addr_out  + 1;
+				spram_addr_out  <= spram_addr_out  + 9'h001;
 				
 				//Go to the checkk state
 				state <= state_check;
@@ -302,7 +302,7 @@ always @ (posedge clk or negedge rst) begin
 					else begin
 						//Save the row and go to the sprite load routine
 						sprite_rows[(sprite_hit_cnt << 3)+:8] = spram_data_in;
-						spram_addr_out  <= spram_addr_out  + 1;
+						spram_addr_out  <= spram_addr_out  + 9'h001;
 						state <= state_load_sprite;
 						
 						//If this sprite is sprite 0
@@ -321,7 +321,7 @@ always @ (posedge clk or negedge rst) begin
 					sprite_rows[(sprite_hit_cnt << 3)+:8] = 8'hFF;
 				
 					//Try loading the next sprite
-					spram_addr_out <= spram_addr_out + 3;
+					spram_addr_out <= spram_addr_out + 9'h003;
 					state <= state_wait;
 				
 				end
@@ -331,7 +331,7 @@ always @ (posedge clk or negedge rst) begin
 			state_load_sprite: begin
 			
 				//Increment the address so we start loading the potential byte
-				spram_addr_out <= spram_addr_out + 1;
+				spram_addr_out <= spram_addr_out + 9'h001;
 			
 				//Check the last two bits of the address to figure out where we're storing this byte
 				case(spram_addr_out[1:0]) 
@@ -347,7 +347,7 @@ always @ (posedge clk or negedge rst) begin
 				if(spram_addr_out[1:0] == 0) begin
 				
 					//Increment the hit count
-					sprite_hit_cnt <= sprite_hit_cnt + 1;
+					sprite_hit_cnt <= sprite_hit_cnt + 8'h01;
 				
 					//Then go back to the check state, data should be there next cycle
 					state <= state_check;

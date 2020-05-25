@@ -192,7 +192,7 @@ name_to_att name_to_att_inst
 //vram load fsm
 //wire [15:0] background_pattern_base = ppu_ctrl1[4] ? 16'h1000 : 0;
 wire [15:0] background_pattern_base = 16'h1000;
-wire [15:0] sprite_pattern_base = ppu_ctrl1[3] ? 16'h1000 : 0;
+wire [15:0] sprite_pattern_base = ppu_ctrl1[3] ? 16'h1000 : 16'h0;
 
 
 wire sprite_0_hit, sprite_1_hit;
@@ -426,7 +426,7 @@ always @ (posedge clk or negedge rst) begin
 						end
 						else begin
 							//Just need to go to the next row
-							screen_pixel_row <= screen_pixel_row + 1;
+							screen_pixel_row <= screen_pixel_row + 9'h001;
 							set_col_counter();
 							
 							//Need to reload sprites here
@@ -440,7 +440,7 @@ always @ (posedge clk or negedge rst) begin
 					//No col or row overflow
 					else begin
 						//Just need to increment col by 8 and continue
-						screen_pixel_col <= screen_pixel_col + 8;
+						screen_pixel_col <= screen_pixel_col + 9'h008;
 						state <= state_draw_row_1;
 					
 					end
@@ -458,7 +458,7 @@ always @ (posedge clk or negedge rst) begin
 					state <= state_wait_colors_2;
 				end
 				else begin
-					cnt <= cnt + 1;
+					cnt <= cnt + 16'h0001;
 				end
 			
 			end
@@ -487,7 +487,7 @@ end//always
 task set_col_counter();
 begin
 
-	screen_pixel_col <= (~{6'b0, col_offset[2:0]} + 1);
+	screen_pixel_col <= (~{6'b0, col_offset[2:0]} + 9'b000000001);
 
 end
 endtask

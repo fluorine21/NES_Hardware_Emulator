@@ -64,8 +64,8 @@ reg write_en, read_en;
 //Bus control
 assign cpu_bus_addr = addr;
 assign cpu_bus_data_out = data;
-assign cpu_bus_write_en = bus_safe ? write_en : 0;
-assign cpu_bus_read_en = bus_safe ? read_en : 0;
+assign cpu_bus_write_en = bus_safe ? write_en : 1'b0;
+assign cpu_bus_read_en = bus_safe ? read_en : 1'b0;
 
 localparam [7:0] state_idle = 0,
 				 state_read_1 = 1,
@@ -318,7 +318,7 @@ always @ (posedge clk or negedge rst) begin
 				end
 				else begin
 					//Keep counting
-					cnt <= cnt + 1;
+					cnt <= cnt + 9'h001;
 				end
 			
 			end

@@ -122,6 +122,7 @@ joycon_ctrl #(16'h4016) joycon_ctrl_1
 	clk,
 	rst,
 	cpu_addr,
+	cpu_data_in,
 	cpu_write_en,
 	cpu_read_en,
 	
@@ -135,6 +136,7 @@ joycon_ctrl #(16'h4017) joycon_ctrl_2
 	clk,
 	rst,
 	cpu_addr,
+	cpu_data_in,
 	cpu_write_en,
 	cpu_read_en,
 	

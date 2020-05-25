@@ -19,32 +19,20 @@ wire [15:0] addr_int = {2'b00, addr_in[13:0]};
 
 always @ * begin
 
-	addr_out <= addr_int;
-
- 
-	//If we're in the mirror region 3F20 to 4000
-	if(addr_int >= 16'h3F20) begin
-		
-		//Need to subtract 0x3F20 to find offset, do mod 0x20 and then add to 0x3000
-		
-		addr_out <= (addr_int & 16'h001F) | 16'h3F00;
-		
-	end
+	//addr_out <= addr_int;
 	
 	//If we're in the image and sprite palette region 3F00 to 3F1F
-	else if(addr_int >= 16'h3F00) begin
-	
-		// if(addr_int[1:0] == 2'b00) begin
+	if(addr_int >= 16'h3F00) begin
+
 		
-			// addr_out <= 16'h3000;
-			
-		// end
-		// else begin
-			//Need to subtract 0F00 to get to correct location
-			// addr_out <= addr_int - 16'h0F00;
-		// end
-		addr_out <= addr_int;
+		if(addr_int == 16'h3F10) begin
+			addr_out <= 16'h3F00;
+		end
+		else begin
 		
+			addr_out <= (addr_int & 16'h001F) + 16'h3F00;
+		
+		end
 	
 	end
 	
@@ -52,7 +40,31 @@ always @ * begin
 	else if(addr_int >= 16'h3000) begin
 	
 		//Need to subtract 1000 to get to start of name table 0
-		addr_out <= addr_int - 16'h1000;
+		
+		
+		if(v_mirror) begin
+		
+			if(addr_int - 16'h1000 >= 16'h2800) begin
+			
+				addr_out <= addr_int - 16'h1000 - 16'h0800;
+			
+			end
+			else begin
+			
+				addr_out <= addr_int - 16'h1000;
+			
+			end
+		
+		end
+		else if (h_mirror) begin
+			//TODO
+			addr_out <= addr_int - 16'h1000;
+		end
+		else begin
+		
+			addr_out <= addr_int - 16'h1000;
+		end
+		
 	
 	end
 	
