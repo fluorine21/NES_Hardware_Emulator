@@ -1,4 +1,59 @@
 
+ module working_joycon
+(
+	input wire clk,
+	input wire rst,
+
+	input wire [7:0] joycon_ctrl_input,
+
+	input wire joypad_clk,
+	input wire joypad_latch,
+	output reg joycon_data
+
+);
+
+
+wire [31:0] shift_reg_val = {8'hff, 4'hf, 4'h1, 8'h00, joycon_ctrl_input};
+
+reg [31:0] shift_reg;
+reg clocked;
+always @ (posedge clk or negedge rst) begin
+
+	if(!rst) begin
+	
+		shift_reg <= 0;
+		joycon_data <= 0;
+		clocked <= 0;
+	
+	end
+	else begin
+	
+		if(joypad_latch) begin
+			shift_reg <= shift_reg_val;
+			joycon_data <= shift_reg_val[0];
+		end
+		else if(joypad_clk && !clocked) begin
+			joycon_data <= shift_reg[0];
+			shift_reg <= {1'b0, shift_reg[31:1]};
+			clocked <= 1;
+		end
+		else if(!joypad_clk) begin
+		
+			clocked <= 0;
+		
+		end
+	end
+
+
+end
+
+
+endmodule
+
+
+
+
+
  module joycon_ctrl
 #(
 parameter reg_addr = 16'h4016
@@ -21,8 +76,9 @@ parameter reg_addr = 16'h4016
 
 );
 
+wire [31:0] shift_reg_val = {8'hff, 4'hf, 4'h1, 8'h00, joycon_ctrl_input};
 
-reg [7:0] shift_reg;
+reg [31:0] shift_reg;
 always @ (posedge clk or negedge rst) begin
 
 	if(!rst) begin
@@ -34,12 +90,12 @@ always @ (posedge clk or negedge rst) begin
 	else begin
 	
 		if(cpu_addr == reg_addr && cpu_write_en) begin
-			shift_reg <= joycon_ctrl_input;
+			shift_reg <= shift_reg_val;
 			joycon_cpu_reg <= 0;
 		end
 		else if(cpu_addr == reg_addr && cpu_read_en) begin
 			joycon_cpu_reg <= {7'b0, shift_reg[0]};
-			shift_reg <= shift_reg >> 1;
+			shift_reg <= {1'b0, shift_reg[31:1]};
 		end
 	end
 

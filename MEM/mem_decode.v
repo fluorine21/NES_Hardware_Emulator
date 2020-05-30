@@ -98,10 +98,17 @@ always @ (posedge clk or negedge rst) begin
 		vram_mem_cpu_buffer_2 <= 0;
 		vram_mem_cpu_buffer <= 0;
 	end
+	//If we're attempting to read from an unbuffered region
+/* 	else if(vram_cpu_addr_int >= 16'h3F00 && cpu_read_en && cpu_addr_int == 16'h2007) begin
+		//Update all buffers
+		vram_mem_cpu_buffer_2 <= vram_mem_cpu_data_out;
+		vram_mem_cpu_buffer <= vram_mem_cpu_data_out;
+	end */
 	else if(cpu_read_en && cpu_addr_int == 16'h2007 && !cpu_addr_valid) begin
+		//Buffer normally
 		vram_mem_cpu_buffer_2 <= vram_mem_cpu_data_out;
 		vram_mem_cpu_buffer <= vram_mem_cpu_buffer_2;
-		//vram_mem_cpu_buffer_2 <= vram_mem_cpu_data_out;
+		//vram_mem_cpu_buffer <= vram_mem_cpu_data_out;
 	end
 end
 

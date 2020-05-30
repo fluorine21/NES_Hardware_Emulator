@@ -86,57 +86,6 @@ reg [15:0] cpu_addr_next;//For loading interrupt vector
 assign accessing_memory = (state != state_idle);
 
 
-//Latches
-//Check next address to figure out which flag to reset
-reg soft_reset_int;
-reg ppu_status_int;
-reg nIRQ_int;
-
-
-always @ (posedge clk or negedge rst) begin
-
-	if(!rst) begin
-	
-		soft_reset_int = 0;
-		ppu_status_int = 0;
-		nIRQ_int = 1;
-	
-	end
-	
-	else begin
-		
-		//If we need to reset soft reset
-		if(cpu_addr_next == 16'hFFFD) begin
-		
-			soft_reset_int = 0;
-		
-		end
-		else if(!soft_reset_n) begin
-			soft_reset_int = 1;
-		end
-		
-		//If we need to reset ppu status
-		if(cpu_addr_next == 16'hFFFB) begin
-		
-			ppu_status_int = 0;
-		
-		end
-		else if(ppu_status[7]) begin
-			ppu_status_int = 1;
-		end
-		
-		if(cpu_addr_next == 16'hFFFF) begin
-			nIRQ_int <= 1;
-		end
-		else if(!nIRQ) begin
-			nIRQ_int <= 0;
-		end
-	
-	
-	end
-	
-end
-
 task reset_regs();
 begin
 
@@ -233,7 +182,7 @@ always @ (posedge clk or negedge rst) begin
 					end
 					//or be a BRK or IRQ
 					//else if(break_flag && !break_disable) begin
-					else if(break_flag || (!nIRQ_int && !break_disable)) begin
+					else if(break_flag || (!nIRQ && !break_disable)) begin
 					
 						//Lookup the interrupt vector at 0xFFFE (low) and 0xFFFF (high)
 						cpu_addr <= 16'hFFFE;

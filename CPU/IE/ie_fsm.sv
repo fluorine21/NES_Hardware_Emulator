@@ -216,7 +216,8 @@ localparam [7:0] state_idle = 0,
 				 state_return_2 = 9, 
 				 state_return_3 = 10, 
 				 state_if_wait = 11,
-				 state_dma_delay = 12;
+				 state_dma_delay = 12,
+				 state_load_rst_vector = 13;
 	
 
 
@@ -488,7 +489,7 @@ begin
 	a <= 0;
 	x <= 0;
 	y <= 0;
-	stack_ptr <= 16'hFF;
+	stack_ptr <= 8'hFF;
 	interrupt_start <= 0;
 	alu_input_a <= 0;
 	alu_input_b <= 0;
@@ -498,11 +499,11 @@ begin
 	ie_write_en <= 0;
 
 	//load in the reset vector PC into PC and PC next
-	pc_next <= pc_reset;
+	pc_next <= 0;
 
 	//Start in the wait if state to load the next instruction
-	if_start <= 1;
-	state <= state_if_wait;
+	if_start <= 0;
+	state <= state_load_rst_vector;
 	
 	dma_cnt <= 0;
 
@@ -792,6 +793,18 @@ always @ (posedge clk or negedge rst) begin
 				
 				goto_interrupt();
 			
+			
+			end
+			
+			state_load_rst_vector: begin
+			
+				//Load the reset vector from PC reset
+				pc_next <= pc_reset;
+				
+				if_start <= 1;
+				
+				//Goto IF wait
+				state <= state_if_wait;
 			
 			end
 			

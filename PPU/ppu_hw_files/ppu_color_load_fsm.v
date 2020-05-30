@@ -26,7 +26,7 @@ assign vram_addr_out = vram_addr[1:0] == 2'b00 ? 16'h3F00 : vram_addr;
 //3F10 to 3F1F is sprite colors
 
 reg [15:0] vram_addr_int;
-wire [15:0] color_index = vram_addr_int - 16'h3F00 - 1;
+wire [15:0] color_index = vram_addr_int - 16'h3F00 - 16'h0001;
 reg [255:0] color_reg;
 reg [1:0] state;
 
@@ -81,7 +81,7 @@ always @ (posedge clk or negedge rst) begin
 			state_wait: begin
 			
 				//Push the second address
-				vram_addr_int <= vram_addr_int + 1;
+				vram_addr_int <= vram_addr_int + 16'h0001;
 			
 				//Go to the third state
 				state <= state_load;
@@ -103,7 +103,7 @@ always @ (posedge clk or negedge rst) begin
 				end
 				else begin
 				
-					vram_addr_int <= vram_addr_int + 1;
+					vram_addr_int <= vram_addr_int + 16'h0001;
 				
 				end
 			

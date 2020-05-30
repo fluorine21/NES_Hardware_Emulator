@@ -30,7 +30,9 @@ module sys_ctrl_fsm
 	
 	//When 1, this has bus priority
 	output wire cpu_sys_mux_ctrl,//Needed to switch the CPU mem bus into this module to avoid tristate buffers
-	output wire [7:0] state_out
+	output wire [7:0] state_out,
+	
+	output reg [15:0] pc_reset
 	
 );
 
@@ -299,6 +301,18 @@ always @ (posedge clk or negedge rst) begin
 					
 					//Go back to idle
 					state <= state_send_ack;
+					
+					
+					//If this was FFFC
+					if(addr == 16'hFFFC)begin
+						pc_reset[7:0] = rx_data;
+					end
+					else if(addr == 16'hFFFD)begin
+					
+						pc_reset[15:8] = rx_data;
+					
+					end
+					
 				
 				end
 			end

@@ -190,8 +190,8 @@ name_to_att name_to_att_inst
 );
 
 //vram load fsm
-//wire [15:0] background_pattern_base = ppu_ctrl1[4] ? 16'h1000 : 0;
-wire [15:0] background_pattern_base = 16'h1000;
+wire [15:0] background_pattern_base = ppu_ctrl1[4] ? 16'h1000 : 16'h0;
+//wire [15:0] background_pattern_base = 16'h1000;
 wire [15:0] sprite_pattern_base = ppu_ctrl1[3] ? 16'h1000 : 16'h0;
 
 

@@ -392,7 +392,7 @@ always @ (posedge clk or negedge rst) begin
 					sprite_0_pattern_high <= 8'b0;
 				
 					//Load the pallet byte low address based on sprite y position
-					
+					vram_addr <= sprite_1_tile_addr;
 					state <= state_load_sprite_1_1;
 				
 				end
@@ -401,6 +401,9 @@ always @ (posedge clk or negedge rst) begin
 					//Don't need to draw sprite 0, make it transparent
 					sprite_0_pattern_low <= 8'b0;
 					sprite_0_pattern_high <= 8'b0;
+					
+					sprite_1_pattern_low <= 8'b0;
+					sprite_1_pattern_high <= 8'b0;
 				
 					state <= state_start_render;
 				

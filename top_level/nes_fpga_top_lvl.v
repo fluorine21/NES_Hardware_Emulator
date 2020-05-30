@@ -154,7 +154,7 @@ mem_ctrl mem_ctrl_inst
 	
 	mem_ctrl_busy,
 	
-	1'b0, 1'b1//v mirror set, h mirror unset
+	1'b1, 1'b0//v mirror set, h mirror unset
 
 );
 
@@ -202,7 +202,7 @@ wire [7:0] state;
 wire [15:0] sys_addr;
 wire [7:0] sys_data_out;
 wire sys_write_en, sys_read_en;
-
+wire [15:0] pc_reset;
 sys_ctrl_fsm #(clks_per_bit) sys_ctrl_inst
 (
 	clk,
@@ -224,19 +224,22 @@ sys_ctrl_fsm #(clks_per_bit) sys_ctrl_inst
 	
 	cpu_sys_mux_ctrl,
 	
-	state
+	state,
+	
+	pc_reset
 	
 );
 
 wire [15:0] pc_6502;
 
-wire [15:0] pc_reset = 16'h8000;
+//wire [15:0] pc_reset = 16'h8000;
 //wire [15:0] pc_reset = 16'hC79E;
+// = 16'hE34B;
 
 cpu_6502 cpu_6502_dut
 (
 	clk,
-	(rst && cpu_rst),
+	(rst && cpu_rst && cpu_halt_button),
 	soft_rst,
 	
 	cpu_mem_addr,
@@ -249,7 +252,7 @@ cpu_6502 cpu_6502_dut
 	
 	ppu_status,
 	
-	(cpu_halt || mem_ctrl_busy || (~cpu_halt_button)),//Halt if mem ctrl is busy with DMA
+	(cpu_halt || mem_ctrl_busy),//Halt if mem ctrl is busy with DMA
 	1'b1,//Set IRQ to 1, won't be triggered
 	pc_6502,
 	

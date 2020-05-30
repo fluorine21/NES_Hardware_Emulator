@@ -20,7 +20,7 @@ module pixel_to_nametable_ptr
 
 //These are relative to the nametables
 //Need the 9 bits to count past 512 to do the wrap around
-wire [9:0] pixel_row = {1'b0, screen_pixel_row} + {2'b0, cpu_scroll_addr[15:8]} + (ppu_ctrl1[1] ? 240 : 0);
+wire [9:0] pixel_row = {1'b0, screen_pixel_row} + {2'b0, cpu_scroll_addr[15:8]} + (ppu_ctrl1[1] ? 10'h0F0 : 10'h0);
 
 
 wire [9:0] pixel_col = {{1{screen_pixel_col[8]}}, screen_pixel_col} + {1'b0, ppu_ctrl1[0], cpu_scroll_addr[7:0]};

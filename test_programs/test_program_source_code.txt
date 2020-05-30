@@ -127,6 +127,50 @@ STA $2006
 
 
 
+//ROL test
+
+
+*=$0300
+
+
+lda #$0a
+sta *$03
+
+rol *$03
+rol *$03
+rol *$03
+rol *$03
+rol *$03
+rol *$03
+rol *$03
+rol *$03
+rol *$03
+
+ror *$03
+ror *$03
+ror *$03
+ror *$03
+ror *$03
+ror *$03
+ror *$03
+ror *$03
+ror *$03
+
+lsr *$03
+lsr *$03
+lsr *$03
+lsr *$03
+lsr *$03
+lsr *$03
+lsr *$03
+lsr *$03
+lsr *$03
+lsr *$03
+lsr *$03
+lsr *$03
+
+
+
 
 
 

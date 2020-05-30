@@ -7,7 +7,13 @@ string cpu_str = "../games/smb/smb_cpu_mem.txt";
 string ppu_str = "../games/smb/smb_ppu_mem.txt";
 
 string cpu_str_tst = "../test_programs/func_test_1.txt";
-string vram_test_str = "../test_programs/vram_test.txt";
+//string vram_test_str = "../test_programs/vram_test.txt";
+
+string vram_test_str = "../test_programs/vram_test_rom.txt";
+string vram_test_ppu = "../test_programs/vram_test_ppu.txt";
+
+string rol_test = "../test_programs/rol_test.txt";
+
 
 module nes_fpga_tb();
 
@@ -139,15 +145,22 @@ initial begin
 
 	
 	//PPU memory
-	$display("Loading chrom...");
-	load_chrom();
+	//$display("Loading chrom...");
+	//load_chrom(vram_test_ppu);
+	//load_chrom(ppu_str);
 	//$display("Checking chrom...");
 	//check_chrom();
 	
-	$display("Loading pgrom");
-	load_pgrom();
+	//$display("Loading pgrom");
+	//load_custom_pgrom(16'hA000);
+	//load_pgrom();
 	//$display("Checking PGROM");
 	//check_pgrom();
+	
+	
+	//Custom programs
+	$display("Loading test program ROM");
+	load_custom_pgrom(16'h0300, rol_test);
 	
 	
 	
@@ -196,20 +209,22 @@ endtask
 
 integer listing[];
 
-task load_chrom();
+task load_chrom(
+input string f_str
+);
 begin
 
 	listing = {};
-	load_raw_listing(listing, ppu_str);
+	load_raw_listing(listing, f_str);
+	
+	//Set the address first
+	write_byte(16'h2000, 0);//Make sure increment is 0
+	write_byte(16'h2006, 0);
+	write_byte(16'h2006, 0);
 
 	//Write all of vram
 	for(cnt = 0; cnt <  $size(listing); cnt = cnt + 1) begin
-
-		//Set the address first
-		write_byte(16'h2006, cnt[15:8]);
-		write_byte(16'h2006, cnt[7:0]);
-		
-		
+	
 		//Set the data last
 		write_byte(16'h2007, listing[cnt][7:0]);
 
@@ -343,18 +358,25 @@ end
 endtask
 
 
-task load_custom_pgrom();
+task load_custom_pgrom(
+input [15:0] start_addr,
+input string f_str
+);
 begin
 
 	listing = {};
-	load_raw_listing(listing, vram_test_str);
+	load_raw_listing(listing, f_str);
 
 	//Write PGROM first
 	for(cnt = 0; cnt <  $size(listing); cnt = cnt + 1) begin
 		//Set the data last
-		write_byte(cnt[15:0]+16'h8000, listing[cnt][7:0]);
+		write_byte(cnt[15:0]+start_addr, listing[cnt][7:0]);
 
 	end
+	
+	//Write reset address
+	write_byte(16'hFFFC, start_addr[7:0]);
+	write_byte(16'hFFFD, start_addr[15:8]);
 	
 end
 endtask

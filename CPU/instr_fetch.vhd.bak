@@ -9,7 +9,7 @@ use work.instr_fetch_pkg.all;
 entity instr_fetch is
 	port(
 
-			signal clk: in std_logic;
+			clk: in std_logic;
 			signal rst: in std_logic;
 		
 			--memory bus
@@ -1311,6 +1311,7 @@ architecture a of instr_fetch is
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
 							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"28";
+							reg_load_flag <= A_REG_F;
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
 							alu_op <= SHIFT_OP; -- shift
@@ -1320,6 +1321,7 @@ architecture a of instr_fetch is
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
 							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"28";
+							reg_load_flag <= MEM_REG_F;
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
 							alu_op <= SHIFT_OP; -- shift
@@ -1671,14 +1673,14 @@ architecture a of instr_fetch is
 						-- OTHERS
 						when OTHERS =>
 							new_op <= x"22";
-							
+							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(1,16)); --length 1
 							state <= idle;
 						end case;
 						
 				when wait_indirect_x =>
 						b2b_start <= '0';
 						if mem_done = '1' then
-							addr_out <= data_2 & data_1;
+							addr_out <= (data_2 & data_1);
 							
 							state <= idle;
 						end if;
@@ -1686,7 +1688,7 @@ architecture a of instr_fetch is
 				when wait_indirect_y =>
 						b2b_start <= '0';
 						if mem_done = '1' then
-							addr_out <= (data_2 & data_1) + y_reg;
+							addr_out <= (data_2 & data_1) + (x"00" & y_reg);
 							
 							state <= idle;	
 						end if;	

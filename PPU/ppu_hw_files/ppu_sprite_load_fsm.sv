@@ -116,12 +116,12 @@ function check_sprite_col_0;
 input [7:0] sprite_col_in;
 reg [8:0] neg_curr_col;
 begin
-	neg_curr_col = (~curr_col) + 1;
+	neg_curr_col = (~curr_col) + 9'h001;
 
 	//If the column is negative
 	if(curr_col[8]) begin
 	
-		if(neg_curr_col + sprite_col_in < 8) begin
+		if(neg_curr_col + {1'b0, sprite_col_in} < 8) begin
 			check_sprite_col_0 = 1;
 		end
 		else begin
@@ -153,7 +153,7 @@ input [7:0] sprite_col_in;
 input [7:0] sprite_num;//Number of potential sprite #1
 reg [8:0] neg_curr_col;
 begin
-	neg_curr_col = (~curr_col) + 1;
+	neg_curr_col = (~curr_col) + 9'h001;
 
 	//If the column is negative
 	if(curr_col[8]) begin

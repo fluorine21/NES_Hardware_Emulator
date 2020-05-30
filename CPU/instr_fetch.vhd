@@ -9,7 +9,7 @@ use work.instr_fetch_pkg.all;
 entity instr_fetch is
 	port(
 
-			signal clk: in std_logic;
+			clk: in std_logic;
 			signal rst: in std_logic;
 		
 			--memory bus
@@ -358,6 +358,7 @@ architecture a of instr_fetch is
 							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"02";
 							store_flag <= MEM_STORE; -- store in mem
+							reg_load_flag <= MEM_REG_F;
 							mem_load_flag <= '1'; -- load from mem
 							alu_op <= SHIFT_OP; -- shift
 							state <= idle;
@@ -367,6 +368,7 @@ architecture a of instr_fetch is
 							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x_reg);
 							new_op <= x"02";
 							store_flag <= MEM_STORE; -- store in mem
+							reg_load_flag <= MEM_REG_F;
 							mem_load_flag <= '1'; -- load from mem
 							alu_op <= SHIFT_OP; -- shift
 							state <= idle;
@@ -385,6 +387,7 @@ architecture a of instr_fetch is
 							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"02";
 							store_flag <= MEM_STORE; -- store in mem
+							reg_load_flag <= MEM_REG_F;
 							mem_load_flag <= '1'; -- load from mem
 							alu_op <= SHIFT_OP; -- shift
 							state <= idle;
@@ -394,6 +397,7 @@ architecture a of instr_fetch is
 							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"02";	
 							store_flag <= MEM_STORE; -- store in mem	
+							reg_load_flag <= MEM_REG_F;
 							mem_load_flag <= '1'; -- load from mem
 							alu_op <= SHIFT_OP; -- shift
 							state <= idle;
@@ -1099,6 +1103,7 @@ architecture a of instr_fetch is
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
 							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"21";
+							reg_load_flag <= MEM_REG_F;
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
 							alu_op <= SHIFT_OP; -- shift
@@ -1108,6 +1113,7 @@ architecture a of instr_fetch is
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
 							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x_reg);
 							new_op <= x"21";
+							reg_load_flag <= MEM_REG_F;
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
 							alu_op <= SHIFT_OP; -- shift
@@ -1126,6 +1132,7 @@ architecture a of instr_fetch is
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
 							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"21";
+							reg_load_flag <= MEM_REG_F;
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
 							alu_op <= SHIFT_OP; -- shift
@@ -1135,6 +1142,7 @@ architecture a of instr_fetch is
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
 							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"21";
+							reg_load_flag <= MEM_REG_F;
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
 							alu_op <= SHIFT_OP; -- shift
@@ -1311,6 +1319,7 @@ architecture a of instr_fetch is
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
 							addr_out <= zpg_addr(instr_reg(1), x"00");
 							new_op <= x"28";
+							reg_load_flag <= MEM_REG_F;
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
 							alu_op <= SHIFT_OP; -- shift
@@ -1320,6 +1329,7 @@ architecture a of instr_fetch is
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(2,16)); --length 2
 							addr_out <= zpg_addr(instr_reg(1), x_reg);
 							new_op <= x"28";
+							reg_load_flag <= MEM_REG_F;
 							store_flag <= MEM_STORE; -- store in mem
 							mem_load_flag <= '1'; -- load from mem
 							alu_op <= SHIFT_OP; -- shift

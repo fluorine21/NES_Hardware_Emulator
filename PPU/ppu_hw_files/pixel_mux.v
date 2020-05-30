@@ -42,8 +42,8 @@ begin
 	b_p = background_pattern_low | background_pattern_high;
 	s_p = sprite_pattern_low | sprite_pattern_high;
 	//If we and these two together and the result is greater than 1, then a sprite pixel was on top of a background pixel
-	//get_sprite_hit = (b_p & s_p) != 0;
-	get_sprite_hit = s_p != 0;
+	get_sprite_hit = (b_p & s_p) != 0;
+	//get_sprite_hit = s_p != 0;
 
 end
 endfunction
@@ -63,7 +63,7 @@ always @ * begin
 			//sprites are enabled
 			ppu_ctrl2[4] && 
 			//This sprite is on top of the background or there is no background
-			(sprite_0_attr[5] == 0 || {background_pattern_high[i], background_pattern_low[i]} == 0)
+			(sprite_0_attr[5] == 0 || {background_pattern_high[i], background_pattern_low[i]} == 2'b00)
 		
 		) begin
 	
@@ -80,7 +80,7 @@ always @ * begin
 			//sprites are enabled
 			ppu_ctrl2[4] && 
 			//This sprite is on top of the background or there is no background
-			(sprite_1_attr[5] == 0 || {background_pattern_high[i], background_pattern_low[i]} == 0)
+			(sprite_1_attr[5] == 0 || {background_pattern_high[i], background_pattern_low[i]} == 2'b00)
 		
 		) begin
 		
