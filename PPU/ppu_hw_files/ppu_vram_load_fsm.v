@@ -158,8 +158,11 @@ end
 endfunction
 
 //If sprites are enabled and there is a sprite on the line of this tile
-wire draw_sprite_0 = ppu_ctrl2[4] & sprite_0_on_tile;
-wire draw_sprite_1 = ppu_ctrl2[4] & sprite_1_on_tile;
+//wire draw_sprite_0 = ppu_ctrl2[4] & sprite_0_on_tile;
+//wire draw_sprite_1 = ppu_ctrl2[4] & sprite_1_on_tile;
+wire draw_sprite_0 = sprite_0_on_tile;
+wire draw_sprite_1 = sprite_1_on_tile;
+
 //Will always load background even if it is not enabled
 //Sets the attribute 2 bits based on attribute shift for background
 wire [1:0] background_attr = attr_table_result[({1'b0, attr_shift} << 1)+:2];

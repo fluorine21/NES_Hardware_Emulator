@@ -89,6 +89,7 @@ endfunction
 function [7:0] get_sprite_1_num;
 input [63:0] sprite_rows_in;
 input [63:0] sprite_cols_in;
+input [7:0] sprite_0_num_in;
 integer i;
 begin
 
@@ -98,7 +99,7 @@ get_sprite_1_num = 8'hFF;
 for(i = 0; i < 64; i = i + 8) begin
 	
 	//If it's this sprite
-	if(check_sprite_col_1(sprite_cols_in[i+:8], (i>>3)) && sprite_rows_in[i+:8] != 8'hFF) begin
+	if(check_sprite_col_1(sprite_cols_in[i+:8]) && sprite_rows_in[i+:8] != 8'hFF && (i>>3) != sprite_0_num_in) begin
 		get_sprite_1_num = (i >> 3);
 		break;
 	end
@@ -132,8 +133,15 @@ begin
 	else begin
 	
 		if( 
+		
+			//OLD
+		  //(sprite_col_in >= curr_col && sprite_col_in < curr_col + 8) ||
+		  //(curr_col >= sprite_col_in && curr_col < sprite_col_in + 8)
+		  
+		  //NEW
 		  (sprite_col_in >= curr_col && sprite_col_in < curr_col + 8) ||
 		  (curr_col >= sprite_col_in && curr_col < sprite_col_in + 8)
+		  
 		)begin
 		  
 		    check_sprite_col_0 = 1;
@@ -149,8 +157,7 @@ endfunction
 
 //Checks to see if we need to draw sprite 1
 function check_sprite_col_1;
-input [7:0] sprite_col_in;
-input [7:0] sprite_num;//Number of potential sprite #1
+input [7:0] sprite_col_in_1;
 reg [8:0] neg_curr_col;
 begin
 	neg_curr_col = (~curr_col) + 9'h001;
@@ -158,7 +165,8 @@ begin
 	//If the column is negative
 	if(curr_col[8]) begin
 	
-		if(neg_curr_col + sprite_col_in < 8 && sprite_num != sprite_0_num) begin
+		//if(neg_curr_col + sprite_col_in < 8 && sprite_num != sprite_0_num) begin
+		if(neg_curr_col + sprite_col_in_1 < 8) begin
 			check_sprite_col_1 = 1;
 		end
 		else begin
@@ -169,9 +177,9 @@ begin
 	else begin
 	
 		if( 
-		  ((sprite_col_in >= curr_col && sprite_col_in < curr_col + 8) ||
-		  (curr_col >= sprite_col_in && curr_col < sprite_col_in + 8)) && 
-		  (sprite_num != sprite_0_num)//And this isn't the same as sprite 0
+		  ((sprite_col_in_1 >= curr_col && sprite_col_in_1 < curr_col + 8) ||
+		  (curr_col >= sprite_col_in_1 && curr_col < sprite_col_in_1 + 8))// && 
+		  //(sprite_num != sprite_0_num)//And this isn't the same as sprite 0
 		)begin
 		  
 		    check_sprite_col_1 = 1;
@@ -256,6 +264,7 @@ always @ (posedge clk or negedge rst) begin
 				
 					//Put the address of the first sprite on the line
 					spram_addr_out <= {1'b0, cpu_sprite_addr};
+					//spram_addr_out <= 9'b0;
 					
 					//Reset all of the sprites we previously loaded
 					reset_sprites();
@@ -392,7 +401,7 @@ task set_outputs();
 begin
 
 	sprite_0_num = get_sprite_0_num(sprite_rows, sprite_cols);
-	sprite_1_num = get_sprite_1_num(sprite_rows, sprite_cols);
+	sprite_1_num = get_sprite_1_num(sprite_rows, sprite_cols, get_sprite_0_num(sprite_rows, sprite_cols));
 
 	//If we need to draw sprite 0 (if it's number is valid
 	if(sprite_0_num != 8'hFF) begin
@@ -454,8 +463,8 @@ begin
 	sprite_1_col <= 0;
 	sprite_1_attr <= 0;
 	
-	sprite_0_num <= 0;
-	sprite_1_num <= 0;
+	sprite_0_num <= 8'hFF;
+	sprite_1_num <= 8'hFF;
 
 end
 endtask

@@ -75,13 +75,14 @@ NES_obj.write_byte(0x2005, 0)
 NES_obj.write_byte(0x2005, 0)
 
 #write and verrify the spram listing
-#NES_obj.write_spram(sl)
+NES_obj.write_spram(sl)
 #NES_obj.verify_spram(sl)
+NES_obj.write_vram(vl)
 nametable_file = "nametable_dump.txt"
 chr_file = "../games/smb/smb_ppu_mem.txt"
-NES_obj.load_chrom(chr_file, 0)
-NES_obj.write_nametable(nametable_file)
-NES_obj.override_color_table()
+#NES_obj.load_chrom(chr_file, 0)
+#NES_obj.write_nametable(nametable_file)
+#NES_obj.override_color_table()
 
 #write and verify the vram listing
 #NES_obj.resume_cpu()

@@ -1,5 +1,5 @@
 Flow report for nes_fpga
-Sat May 30 13:38:09 2020
+Sun May 31 15:21:40 2020
 Quartus Prime Version 17.1.0 Build 590 10/25/2017 SJ Lite Edition
 
 
@@ -40,15 +40,15 @@ refer to the applicable agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Sat May 30 13:38:00 2020       ;
+; Flow Status                        ; Successful - Sun May 31 15:21:18 2020       ;
 ; Quartus Prime Version              ; 17.1.0 Build 590 10/25/2017 SJ Lite Edition ;
 ; Revision Name                      ; nes_fpga                                    ;
 ; Top-level Entity Name              ; nes_fpga_top_lvl                            ;
 ; Family                             ; Cyclone IV E                                ;
 ; Device                             ; EP4CE115F29C7                               ;
 ; Timing Models                      ; Final                                       ;
-; Total logic elements               ; 5,148 / 114,480 ( 4 % )                     ;
-;     Total combinational functions  ; 4,791 / 114,480 ( 4 % )                     ;
+; Total logic elements               ; 5,137 / 114,480 ( 4 % )                     ;
+;     Total combinational functions  ; 4,771 / 114,480 ( 4 % )                     ;
 ;     Dedicated logic registers      ; 1,926 / 114,480 ( 2 % )                     ;
 ; Total registers                    ; 1926                                        ;
 ; Total pins                         ; 98 / 529 ( 19 % )                           ;
@@ -64,7 +64,7 @@ refer to the applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 05/30/2020 13:36:28 ;
+; Start date & time ; 05/31/2020 15:18:45 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; nes_fpga            ;
 +-------------------+---------------------+
@@ -75,7 +75,7 @@ refer to the applicable agreement for further details.
 +-------------------------------------+----------------------------------------+---------------+------------------+------------+
 ; Assignment Name                     ; Value                                  ; Default Value ; Entity Name      ; Section Id ;
 +-------------------------------------+----------------------------------------+---------------+------------------+------------+
-; COMPILER_SIGNATURE_ID               ; 1095295438228.159086378800140          ; --            ; --               ; --         ;
+; COMPILER_SIGNATURE_ID               ; 1095295438228.159095632520896          ; --            ; --               ; --         ;
 ; MAX_CORE_JUNCTION_TEMP              ; 85                                     ; --            ; --               ; --         ;
 ; MIN_CORE_JUNCTION_TEMP              ; 0                                      ; --            ; --               ; --         ;
 ; NOMINAL_CORE_SUPPLY_VOLTAGE         ; 1.2V                                   ; --            ; --               ; --         ;
@@ -94,11 +94,11 @@ refer to the applicable agreement for further details.
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis      ; 00:00:44     ; 1.0                     ; 4869 MB             ; 00:01:04                           ;
-; Fitter                    ; 00:00:38     ; 1.1                     ; 5833 MB             ; 00:00:57                           ;
-; Assembler                 ; 00:00:05     ; 1.0                     ; 4709 MB             ; 00:00:05                           ;
-; TimeQuest Timing Analyzer ; 00:00:08     ; 1.4                     ; 4917 MB             ; 00:00:09                           ;
-; Total                     ; 00:01:35     ; --                      ; --                  ; 00:02:15                           ;
+; Analysis & Synthesis      ; 00:00:56     ; 1.0                     ; 4880 MB             ; 00:01:16                           ;
+; Fitter                    ; 00:01:13     ; 1.1                     ; 5822 MB             ; 00:01:38                           ;
+; Assembler                 ; 00:00:15     ; 1.0                     ; 4708 MB             ; 00:00:14                           ;
+; TimeQuest Timing Analyzer ; 00:00:20     ; 1.4                     ; 4914 MB             ; 00:00:20                           ;
+; Total                     ; 00:02:44     ; --                      ; --                  ; 00:03:28                           ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

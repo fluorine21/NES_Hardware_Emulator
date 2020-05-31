@@ -160,7 +160,8 @@ initial begin
 	
 	//Custom programs
 	$display("Loading test program ROM");
-	load_custom_pgrom(16'h0300, rol_test);
+	//load_custom_pgrom(16'h0300, rol_test);
+	load_pgrom_test();
 	
 	
 	

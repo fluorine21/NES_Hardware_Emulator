@@ -904,7 +904,7 @@ architecture a of instr_fetch is
 							pc <= std_logic_vector(unsigned(pc_ie) + to_unsigned(3,16)); --length 3
 							addr_out <= abs_addr(instr_reg(1), instr_reg(2), x"00");
 							new_op <= x"1D";
-							store_flag <= MEM_STORE; -- store in mem in stack
+							--store_flag <= MEM_STORE; -- store in mem in stack
 							alu_op <= SUB_OP; -- sub from SP
 							state <= idle;
 							

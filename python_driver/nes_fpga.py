@@ -169,7 +169,7 @@ class NES_FPGA:
     def write_vram(self, listing):
         
         #Halt the cpu first
-        self.halt_cpu()
+        #self.halt_cpu()
         
         for i in range(0, int(len(listing)/2)):
             
@@ -187,7 +187,7 @@ class NES_FPGA:
             
         
         #unhalt the CPU 
-        self.resume_cpu()
+        #self.resume_cpu()
              
             
     def verify_vram(self, listing):
@@ -228,7 +228,7 @@ class NES_FPGA:
     def write_spram(self, listing):
         
         #Halt the CPU first
-        self.halt_cpu()
+        #self.halt_cpu()
         
         
         for i in range(0, int(len(listing)/2)):
@@ -246,7 +246,7 @@ class NES_FPGA:
         
         
          #unhalt the CPU 
-        self.resume_cpu()
+        #self.resume_cpu()
         #Reset spram address back to 0
         self.write_byte(0x2003, 0)
         
@@ -661,7 +661,7 @@ class NES_FPGA:
         
         bytestream = bytearray.fromhex(lst_string)
         
-        print("Loading functional test, stops at 0xAF6D if successful")
+        print("Loading functional test, stops at 0xAFDC if successful")
         
         if(len(bytestream) != 0xFFFF + 1):
             print("Error, test program ROM bytestream of incorrect length")

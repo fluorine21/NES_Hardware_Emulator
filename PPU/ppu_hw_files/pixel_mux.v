@@ -42,8 +42,12 @@ begin
 	b_p = background_pattern_low | background_pattern_high;
 	s_p = sprite_pattern_low | sprite_pattern_high;
 	//If we and these two together and the result is greater than 1, then a sprite pixel was on top of a background pixel
-	get_sprite_hit = (b_p & s_p) != 0;
-	//get_sprite_hit = s_p != 0;
+	
+	//This actually checks if the sprite is on top of background
+	//get_sprite_hit = (b_p & s_p) != 0;
+	
+	//This just forces it to happen when the sprite 0 is rendered
+	get_sprite_hit = s_p != 0;
 
 end
 endfunction
