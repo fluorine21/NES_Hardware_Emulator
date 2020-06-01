@@ -31,7 +31,7 @@ end component ps2;
 signal scan, hist1,hist21,hist31,hist01 : std_logic_vector(7 downto 0);
 signal  scan_readyo: std_logic;
 signal next_state_a, prev_state_a : std_logic := '0';
-signal next_state_W, prev_state_W : std_logic := '0';
+signal next_state_w, prev_state_w : std_logic := '0';
 signal next_state_s, prev_state_s : std_logic := '0';
 signal next_state_d, prev_state_d : std_logic := '0';
 signal next_state_tab, prev_state_tab : std_logic := '0';
