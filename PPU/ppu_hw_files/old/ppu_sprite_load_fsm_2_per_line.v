@@ -26,16 +26,6 @@ module ppu_sprite_load_fsm
 	output reg [7:0] sprite_1_col, //x
 	output reg [7:0] sprite_1_attr,
 	
-		//Everything we need to know to draw sprite 1
-	output reg sprite_2_on_tile,//If this sprite is also on this tile
-	output reg [7:0] sprite_2_tile_num,//Known from cached sprite attributes
-	output reg [7:0] sprite_2_row, //y
-	output reg [7:0] sprite_2_col, //x
-	output reg [7:0] sprite_2_attr,
-	
-	
-	
-	
 	output reg sprite_overflow,//set if sprite_cnt > 8
 	input wire start,
 	output wire busy,
@@ -51,7 +41,6 @@ module ppu_sprite_load_fsm
 //Variables
 reg [7:0] sprite_0_num;
 reg [7:0] sprite_1_num;
-reg [7:0] sprite_2_num;
 
 
 ///////////////////
@@ -112,31 +101,6 @@ for(i = 0; i < 64; i = i + 8) begin
 	//If it's this sprite
 	if(check_sprite_col_1(sprite_cols_in[i+:8]) && sprite_rows_in[i+:8] != 8'hFF && (i>>3) != sprite_0_num_in) begin
 		get_sprite_1_num = (i >> 3);
-		break;
-	end
-
-end
-
-
-end
-endfunction
-
-function [7:0] get_sprite_2_num;
-input [63:0] sprite_rows_in;
-input [63:0] sprite_cols_in;
-input [7:0] sprite_0_num_in;
-input [7:0] sprite_1_num_in;
-integer i;
-begin
-
-//Default value indicating no sprite is here
-get_sprite_2_num = 8'hFF;
-
-for(i = 0; i < 64; i = i + 8) begin
-	
-	//If it's this sprite
-	if(check_sprite_col_1(sprite_cols_in[i+:8]) && sprite_rows_in[i+:8] != 8'hFF && (i>>3) != sprite_0_num_in && (i>>3) != sprite_1_num_in) begin
-		get_sprite_2_num = (i >> 3);
 		break;
 	end
 
@@ -438,7 +402,6 @@ begin
 
 	sprite_0_num = get_sprite_0_num(sprite_rows, sprite_cols);
 	sprite_1_num = get_sprite_1_num(sprite_rows, sprite_cols, get_sprite_0_num(sprite_rows, sprite_cols));
-	sprite_2_num = get_sprite_2_num(sprite_rows, sprite_cols, get_sprite_0_num(sprite_rows, sprite_cols), get_sprite_1_num(sprite_rows, sprite_cols, get_sprite_0_num(sprite_rows, sprite_cols)));
 
 	//If we need to draw sprite 0 (if it's number is valid
 	if(sprite_0_num != 8'hFF) begin
@@ -481,26 +444,6 @@ begin
 		sprite_1_is_0 = 0;
 	
 	end
-	
-		//If we need to draw sprite 1
-	if(sprite_2_num != 8'hFF) begin
-	
-		sprite_2_on_tile = 1;
-		sprite_2_tile_num = get_sprite_val(sprite_tile_nums, sprite_2_num);
-		sprite_2_row = get_sprite_val(sprite_rows, sprite_2_num);
-		sprite_2_col = get_sprite_val(sprite_cols, sprite_2_num);
-		sprite_2_attr = get_sprite_val(sprite_attrs, sprite_2_num);
-	
-	end
-	else begin
-	
-		sprite_2_on_tile = 0;
-		sprite_2_tile_num = 0;
-		sprite_2_row = 0;
-		sprite_2_col = 0;
-		sprite_2_attr = 0;
-	
-	end
 
 end
 endtask
@@ -520,15 +463,8 @@ begin
 	sprite_1_col <= 0;
 	sprite_1_attr <= 0;
 	
-	sprite_2_on_tile <= 0;
-	sprite_2_tile_num <= 0;
-	sprite_2_row <= 0;
-	sprite_2_col <= 0;
-	sprite_2_attr <= 0;
-	
 	sprite_0_num <= 8'hFF;
 	sprite_1_num <= 8'hFF;
-	sprite_2_num <= 8'hFF;
 
 end
 endtask

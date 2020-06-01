@@ -66,8 +66,6 @@ wire sprite_0_on_tile, sprite_0_is_0;
 wire [7:0] sprite_0_tile_num, sprite_0_row, sprite_0_col, sprite_0_attr;
 wire sprite_1_on_tile, sprite_1_is_0;
 wire [7:0] sprite_1_tile_num, sprite_1_row, sprite_1_col, sprite_1_attr;
-wire sprite_2_on_tile, sprite_2_is_0; 
-wire [7:0] sprite_2_tile_num, sprite_2_row, sprite_2_col, sprite_2_attr;
 reg sprite_load_start;
 wire sprite_load_busy;
 wire sprite_overflow;
@@ -94,12 +92,6 @@ ppu_sprite_load_fsm sprite_load_inst
 	sprite_1_row, 
 	sprite_1_col, 
 	sprite_1_attr,
-	
-	sprite_2_on_tile,
-	sprite_2_tile_num, 
-	sprite_2_row, 
-	sprite_2_col, 
-	sprite_2_attr,
 	
 	sprite_overflow,
 	sprite_load_start,
@@ -249,11 +241,6 @@ ppu_vram_load_fsm vram_load_inst
 	sprite_1_col,
 	sprite_1_attr,
 
-	sprite_2_on_tile,
-	sprite_2_tile_num,
-	sprite_2_row,
-	sprite_2_col,
-	sprite_2_attr,
 	
 	vga_row,
 	vga_col,

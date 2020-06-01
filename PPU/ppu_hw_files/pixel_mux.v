@@ -16,6 +16,11 @@ module pixel_mux
 	input wire [7:0] sprite_1_attr,
 	input wire [31:0] sprite_1_colors,
 	
+	input wire [7:0] sprite_2_pattern_low,
+	input wire [7:0] sprite_2_pattern_high,
+	input wire [7:0] sprite_2_attr,
+	input wire [31:0] sprite_2_colors,
+	
 	//background information
 	input wire [7:0] ppu_ctrl2, // Figure out if we need to draw background or sprites
 	input wire [7:0] background_pattern_low,
@@ -91,6 +96,22 @@ always @ * begin
 		
 			//Then we're drawing sprite 1's color
 			pixel_out[(i<<3)+:8] <= sprite_1_colors[({6'b0, sprite_1_pattern_high[i], sprite_1_pattern_low[i]} << 3)+:8];
+		
+		end
+		else if
+		(
+			//There is a sprite 1 pixel to draw here
+			{sprite_2_pattern_high[i], sprite_2_pattern_low[i]} > 0 &&
+			//sprites are enabled
+			ppu_ctrl2[4] && 
+			//This sprite is on top of the background or there is no background
+			(sprite_2_attr[5] == 0 || {background_pattern_high[i], background_pattern_low[i]} == 2'b00)
+		
+		) begin
+		
+		
+			//Then we're drawing sprite 1's color
+			pixel_out[(i<<3)+:8] <= sprite_2_colors[({6'b0, sprite_2_pattern_high[i], sprite_2_pattern_low[i]} << 3)+:8];
 		
 		end
 		else if

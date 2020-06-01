@@ -46,12 +46,7 @@ module ppu_vram_load_fsm
 	input wire [7:0] sprite_1_col, //x
 	input wire [7:0] sprite_1_attr,
 	
-	//Everything we need to know to draw sprite 1
-	input wire sprite_2_on_tile,//If this sprite is also on this tile
-	input wire [7:0] sprite_2_tile_num,//Known from cached sprite attributes
-	input wire [7:0] sprite_2_row, //y
-	input wire [7:0] sprite_2_col, //x
-	input wire [7:0] sprite_2_attr,
+	
 	
 	//Connections to VGA memory coming from render 8
 	output wire [8:0] vga_ram_row,
@@ -84,9 +79,6 @@ localparam [7:0] state_idle = 0,
 				 state_load_sprite_1_1 = 9,
 				 state_load_sprite_1_2 = 10,
 				 state_load_sprite_1_3 = 11,
-				 state_load_sprite_2_1 = 13,
-				 state_load_sprite_2_2 = 14,
-				 state_load_sprite_2_3 = 15,
 				 state_start_render = 12;
 
 //Used to hold the result of nametable load for background
@@ -97,7 +89,7 @@ reg [7:0] attr_table_result;
 //Used to store background pattern table results
 reg [7:0] background_pattern_low, background_pattern_high;
 //Used to store sprite pattern table results loaded from VRAM
-reg [7:0] sprite_0_pattern_low, sprite_0_pattern_high, sprite_1_pattern_low, sprite_1_pattern_high, sprite_2_pattern_low, sprite_2_pattern_high;
+reg [7:0] sprite_0_pattern_low, sprite_0_pattern_high, sprite_1_pattern_low, sprite_1_pattern_high;
 
 //Sprite memory and shifting definitions
 //Pointer to the lower byte in the pattern table we need to load based on if we're flipping this sprite vertically
@@ -110,10 +102,6 @@ wire [7:0] sprite_0_pattern_high_final = sprite_shift(sprite_0_pattern_high, cur
 wire [15:0] sprite_1_tile_addr = get_sprite_tile_addr(sprite_pattern_base, sprite_1_tile_num, sprite_1_attr, sprite_1_row, curr_row);
 wire [7:0] sprite_1_pattern_low_final = sprite_shift(sprite_1_pattern_low, curr_col, sprite_1_col, sprite_1_attr);
 wire [7:0] sprite_1_pattern_high_final = sprite_shift(sprite_1_pattern_high, curr_col, sprite_1_col, sprite_1_attr);
-
-wire [15:0] sprite_2_tile_addr = get_sprite_tile_addr(sprite_pattern_base, sprite_2_tile_num, sprite_2_attr, sprite_2_row, curr_row);
-wire [7:0] sprite_2_pattern_low_final = sprite_shift(sprite_2_pattern_low, curr_col, sprite_2_col, sprite_2_attr);
-wire [7:0] sprite_2_pattern_high_final = sprite_shift(sprite_2_pattern_high, curr_col, sprite_2_col, sprite_2_attr);
 
 
 
@@ -172,11 +160,10 @@ end
 endfunction
 
 //If sprites are enabled and there is a sprite on the line of this tile
-wire draw_sprite_0 = ppu_ctrl2[4] & sprite_0_on_tile;
-wire draw_sprite_1 = ppu_ctrl2[4] & sprite_1_on_tile;
-wire draw_sprite_2 = ppu_ctrl2[4] & sprite_2_on_tile;
-//wire draw_sprite_0 = sprite_0_on_tile;
-//wire draw_sprite_1 = sprite_1_on_tile;
+//wire draw_sprite_0 = ppu_ctrl2[4] & sprite_0_on_tile;
+//wire draw_sprite_1 = ppu_ctrl2[4] & sprite_1_on_tile;
+wire draw_sprite_0 = sprite_0_on_tile;
+wire draw_sprite_1 = sprite_1_on_tile;
 
 //Will always load background even if it is not enabled
 //Sets the attribute 2 bits based on attribute shift for background
@@ -184,7 +171,7 @@ wire [1:0] background_attr = attr_table_result[({1'b0, attr_shift} << 1)+:2];
 
 
 //color decoder
-wire [31:0] background_colors_lst, sprite_0_colors_lst, sprite_1_colors_lst, sprite_2_colors_lst;
+wire [31:0] background_colors_lst, sprite_0_colors_lst, sprite_1_colors_lst;
 
 color_selector color_selector_inst
 (
@@ -196,12 +183,10 @@ color_selector color_selector_inst
 	background_attr,
 	sprite_0_attr[1:0],
 	sprite_1_attr[1:0],
-	sprite_2_attr[1:0],
 	
 	background_colors_lst,
 	sprite_0_colors_lst,
-	sprite_1_colors_lst,
-	sprite_2_colors_lst
+	sprite_1_colors_lst
 
 );
 
@@ -212,10 +197,8 @@ reg [7:0] sprite_0_pattern_low_out, sprite_0_pattern_high_out, sprite_0_attr_out
 
 reg [7:0] sprite_1_pattern_low_out, sprite_1_pattern_high_out, sprite_1_attr_out;
 
-reg [7:0] sprite_2_pattern_low_out, sprite_2_pattern_high_out, sprite_2_attr_out;
-
 //Needed to register inputs to render 8
-reg [31:0] background_colors_out, sprite_0_colors_out, sprite_1_colors_out, sprite_2_colors_out;
+reg [31:0] background_colors_out, sprite_0_colors_out, sprite_1_colors_out;
 
 reg [7:0] background_pattern_low_out, background_pattern_high_out;
 
@@ -248,11 +231,6 @@ render_8_pixels render_8_inst
 	sprite_1_attr_out,
 	sprite_1_colors_out,
 	
-	sprite_2_pattern_low_out,
-	sprite_2_pattern_high_out,
-	sprite_2_attr_out,
-	sprite_2_colors_out,
-	
 	background_pattern_low_out,
 	background_pattern_high_out,
 	background_colors_out,
@@ -282,11 +260,6 @@ begin
 	sprite_1_attr_out <= 0;
 	sprite_1_colors_out <= 0;
 	
-	sprite_2_pattern_low_out <= 0;
-	sprite_2_pattern_high_out <= 0;
-	sprite_2_attr_out <= 0;
-	sprite_2_colors_out <= 0;
-	
 	background_pattern_low_out <= 0;
 	background_pattern_high_out <= 0;
 	background_colors_out <= 0;
@@ -307,8 +280,6 @@ begin
 	sprite_0_pattern_low <= 0;
 	sprite_1_pattern_high <= 0;
 	sprite_1_pattern_low <= 0;
-	sprite_2_pattern_high <= 0;
-	sprite_2_pattern_low <= 0;
 	background_pattern_high <= 0;
 	background_pattern_low <= 0;
 	
@@ -519,65 +490,13 @@ always @ (posedge clk or negedge rst) begin
 				//Load in the high byte
 				sprite_1_pattern_high <= vram_data_in;
 			
-			
-				//If we don't need to draw sprite 2
-				if(!draw_sprite_2) begin
-				
-					sprite_2_pattern_low <= 8'b0;
-					sprite_2_pattern_high <= 8'b0;
-					
-				
-					//Go to render start
-					state <= state_start_render;
-				
-				end
-				else begin
-				
-					//Otherwise go to draw sprite 2
-					
-					//load pattern low
-					vram_addr <= sprite_2_tile_addr;
-					
-					state <= state_load_sprite_2_1;
-				
-				end
-				
-			end
-			
-			state_load_sprite_2_1: begin
-			
-				//Put the address of the high byte
-				vram_addr <= sprite_2_tile_addr + 8;
-				
-				//Go to state 2
-				state <= state_load_sprite_2_2;
-			
-			end
-			
-			
-			state_load_sprite_2_2: begin
-			
-				//Load in the low byte
-				sprite_2_pattern_low <= vram_data_in;
-			
-				//Go to state 3
-				state <= state_load_sprite_2_3;
-			
-			end
-			
-			state_load_sprite_2_3: begin
-			
-				sprite_2_pattern_high <= vram_data_in;
-				
+				//Go to render start
 				state <= state_start_render;
-			
+				
 			end
-			
 			
 			state_start_render: begin
-			
 				
-			
 				//Sprite shifts and flips are already calculated into _final values
 				
 				//If the render 8 is ready
@@ -596,11 +515,6 @@ always @ (posedge clk or negedge rst) begin
 					sprite_1_pattern_high_out <= sprite_1_pattern_high_final;
 					sprite_1_attr_out <= sprite_1_attr;
 					sprite_1_colors_out <= sprite_1_colors_lst;
-					
-					sprite_2_pattern_low_out <= sprite_2_pattern_low_final;
-					sprite_2_pattern_high_out <= sprite_2_pattern_high_final;
-					sprite_2_attr_out <= sprite_2_attr;
-					sprite_2_colors_out <= sprite_2_colors_lst;
 					
 					background_pattern_low_out <= background_pattern_low;
 					background_pattern_high_out <= background_pattern_high;

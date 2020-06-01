@@ -37,6 +37,11 @@ module render_8_pixels
 	input wire [7:0] sprite_1_attr,
 	input wire [31:0] sprite_1_colors,
 	
+	input wire [7:0] sprite_2_pattern_low,
+	input wire [7:0] sprite_2_pattern_high,
+	input wire [7:0] sprite_2_attr,
+	input wire [31:0] sprite_2_colors,
+	
 	//Background inputs
 	//Color is decoded in load section fsm
 	input wire [7:0] background_pattern_low,
@@ -67,6 +72,11 @@ pixel_mux pixel_mux_inst
 	sprite_1_pattern_high,
 	sprite_1_attr,
 	sprite_1_colors,
+	
+	sprite_2_pattern_low,
+	sprite_2_pattern_high,
+	sprite_2_attr,
+	sprite_2_colors,
 	
 	ppu_ctrl2,
 	
