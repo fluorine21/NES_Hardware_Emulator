@@ -54,7 +54,7 @@ NES_obj.write_bytes([nes_fpga.HALT_CPU])
         
 
 
-NES_obj.dma_test()
+#NES_obj.dma_test()
 
 #Set the PPU control registers to display sprites and background
 
@@ -73,7 +73,7 @@ else:
     print("Successfully wrote ppu_ctrl2")
 
 #Write the scroll pointer
-NES_obj.write_byte(0x2005, 0xAA)
+NES_obj.write_byte(0x2005, 0x01)
 NES_obj.write_byte(0x2005, 0)
 
 #write and verrify the spram listing

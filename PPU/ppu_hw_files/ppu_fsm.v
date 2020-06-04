@@ -152,7 +152,11 @@ always @ (posedge clk or negedge rst) begin
 			//Write the low bits of x into the latch
 			cpu_scroll_addr_latch[7:0] <= cpu_scroll_addr[7:0];
 			//ppu_ctrl1_latch[0] <= ppu_ctrl1[0]; 
-			ppu_ctrl1_latch[0] <= ppu_ctrl1[0] & ppu_status[6];
+			
+			//If sprite 0 hit has occured
+			//if(ppu_status[6]) begin
+				ppu_ctrl1_latch[0] <= ppu_ctrl1[0] & ppu_status[6];
+			//end
 			
 		end
 		

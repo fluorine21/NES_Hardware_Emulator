@@ -135,7 +135,12 @@ get_sprite_2_num = 8'hFF;
 for(i = 0; i < 64; i = i + 8) begin
 	
 	//If it's this sprite
-	if(check_sprite_col_1(sprite_cols_in[i+:8]) && sprite_rows_in[i+:8] != 8'hFF && (i>>3) != sprite_0_num_in && (i>>3) != sprite_1_num_in) begin
+	if(
+		check_sprite_col_1(sprite_cols_in[i+:8]) //This sprite is on the current column
+		&& sprite_rows_in[i+:8] != 8'hFF //This sprite has been loaded
+		&& (i>>3) != sprite_0_num_in //This sprite is not sprite 0 already
+		&& (i>>3) != sprite_1_num_in //This sprite is not sprite 1 already
+	) begin
 		get_sprite_2_num = (i >> 3);
 		break;
 	end
@@ -159,7 +164,8 @@ begin
 	if(curr_col[8]) begin
 	
 		if(neg_curr_col + {1'b0, sprite_col_in} < 8) begin
-			check_sprite_col_0 = 1;
+			//check_sprite_col_0 = 1;
+			check_sprite_col_0 = 0;
 		end
 		else begin
 			check_sprite_col_0 = 0;
@@ -203,7 +209,8 @@ begin
 	
 		//if(neg_curr_col + sprite_col_in < 8 && sprite_num != sprite_0_num) begin
 		if(neg_curr_col + sprite_col_in_1 < 8) begin
-			check_sprite_col_1 = 1;
+			//check_sprite_col_1 = 1;
+			check_sprite_col_1 = 0;
 		end
 		else begin
 			check_sprite_col_1 = 0;
@@ -257,13 +264,7 @@ begin
 
 	state <= state_idle;
 	spram_addr_out <= 0;
-	sprite_attrs <= 0;
-	sprite_rows <= 64'hFFFFFFFFFFFFFFFF;//So we know they aren't loaded
-	sprite_cols <= 0;
-	sprite_tile_nums <= 0;
-	sprite_hit_cnt <= 0;
-	sprite_overflow <= 0;
-	is_sprite_0 <= 0;
+	reset_sprites();
 	
 end
 endtask
@@ -441,9 +442,9 @@ begin
 	sprite_2_num = get_sprite_2_num(sprite_rows, sprite_cols, get_sprite_0_num(sprite_rows, sprite_cols), get_sprite_1_num(sprite_rows, sprite_cols, get_sprite_0_num(sprite_rows, sprite_cols)));
 
 	//If we need to draw sprite 0 (if it's number is valid
-	if(sprite_0_num != 8'hFF) begin
+	if(sprite_0_num != 8'hFF && curr_col > 6) begin
 	
-		sprite_0_on_tile = 1;
+		sprite_0_on_tile = 1 & !curr_col[8];
 		sprite_0_tile_num = get_sprite_val(sprite_tile_nums, sprite_0_num);
 		sprite_0_row = get_sprite_val(sprite_rows, sprite_0_num);
 		sprite_0_col = get_sprite_val(sprite_cols, sprite_0_num);
@@ -454,16 +455,16 @@ begin
 		
 		sprite_0_on_tile = 0;
 		sprite_0_tile_num = 0;
-		sprite_0_row = 0;
-		sprite_0_col = 0;
+		sprite_0_row = 8'hFF;
+		sprite_0_col = 8'hFF;
 		sprite_0_attr = 0;
 		sprite_0_is_0 = 0;
 	end
 	
 	//If we need to draw sprite 1
-	if(sprite_1_num != 8'hFF) begin
+	if(sprite_1_num != 8'hFF && sprite_0_num != 8'hFF && curr_col > 6) begin
 	
-		sprite_1_on_tile = 1;
+		sprite_1_on_tile = 1 & !curr_col[8];
 		sprite_1_tile_num = get_sprite_val(sprite_tile_nums, sprite_1_num);
 		sprite_1_row = get_sprite_val(sprite_rows, sprite_1_num);
 		sprite_1_col = get_sprite_val(sprite_cols, sprite_1_num);
@@ -475,15 +476,15 @@ begin
 	
 		sprite_1_on_tile = 0;
 		sprite_1_tile_num = 0;
-		sprite_1_row = 0;
-		sprite_1_col = 0;
+		sprite_1_row = 8'hFF;
+		sprite_1_col = 8'hFF;
 		sprite_1_attr = 0;
 		sprite_1_is_0 = 0;
 	
 	end
 	
 		//If we need to draw sprite 1
-	if(sprite_2_num != 8'hFF) begin
+	if(sprite_2_num != 8'hFF && sprite_1_num != 8'hFF && sprite_0_num != 8'hFF && curr_col > 6) begin
 	
 		sprite_2_on_tile = 1;
 		sprite_2_tile_num = get_sprite_val(sprite_tile_nums, sprite_2_num);
@@ -496,8 +497,8 @@ begin
 	
 		sprite_2_on_tile = 0;
 		sprite_2_tile_num = 0;
-		sprite_2_row = 0;
-		sprite_2_col = 0;
+		sprite_2_row = 8'hFF;
+		sprite_2_col = 8'hFF;
 		sprite_2_attr = 0;
 	
 	end
@@ -510,20 +511,20 @@ begin
 
 	sprite_0_on_tile <= 0;
 	sprite_0_tile_num <= 0;
-	sprite_0_row <= 0;
-	sprite_0_col <= 0;
+	sprite_0_row <= 8'hFF;
+	sprite_0_col <= 8'hFF;
 	sprite_0_attr <= 0;
 
 	sprite_1_on_tile <= 0;
 	sprite_1_tile_num <= 0;
-	sprite_1_row <= 0;
-	sprite_1_col <= 0;
+	sprite_1_row <= 8'hFF;
+	sprite_1_col <= 8'hFF;
 	sprite_1_attr <= 0;
 	
 	sprite_2_on_tile <= 0;
 	sprite_2_tile_num <= 0;
-	sprite_2_row <= 0;
-	sprite_2_col <= 0;
+	sprite_2_row <= 8'hFF;
+	sprite_2_col <= 8'hFF;
 	sprite_2_attr <= 0;
 	
 	sprite_0_num <= 8'hFF;

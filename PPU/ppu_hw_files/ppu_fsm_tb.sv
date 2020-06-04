@@ -210,13 +210,10 @@ initial begin
 	
 	cpu_addr <= 16'h2002;
 	
-	ppu_ctrl1 = 1;
-	ppu_ctrl1[3] = 0;//sprite pattern table starts at 0x1000
-	ppu_ctrl2 = 0;
-	ppu_ctrl2[3] = 1;//Enable background
-	ppu_ctrl2[4] = 0;//Enable sprites
+	ppu_ctrl1 = 8'h88;
+	ppu_ctrl2 = 8'h18;//Enable sprites
 	
-	cpu_scroll_addr = 0;
+	cpu_scroll_addr = 1;
 	
 	vga_done = 0;
 
@@ -270,16 +267,16 @@ initial begin
 		
 			$display("PPU vsync");
 			
-			if(cpu_scroll_addr == 16'h00FF) begin
-				cpu_scroll_addr <= 0;
-				ppu_ctrl1 <= ppu_ctrl1 | 8'h01;
-			
-			end
-			else begin
-			
-				cpu_scroll_addr <= cpu_scroll_addr + 1;
-			
-			end
+//			if(cpu_scroll_addr == 16'h00FF) begin
+//				cpu_scroll_addr <= 0;
+//				ppu_ctrl1 <= ppu_ctrl1 | 8'h01;
+//			
+//			end
+//			else begin
+//			
+//				cpu_scroll_addr <= cpu_scroll_addr + 1;
+//			
+//			end
 			
 			
 			while(!(ppu_status & 8'h80))begin
